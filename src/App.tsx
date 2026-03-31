@@ -10,8 +10,7 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/invitation" element={<InvitePage />} />
-        <Route path="/invite" element={<Navigate to="/invitation" replace />} />
+        <Route path="/invite" element={<InvitePage />} />
         <Route path="/rsvp" element={<RsvpPage />} />
         <Route path="/ucapan" element={<CongratulationCardPage />} />
         <Route path="/kad-ucapan" element={<UcapanCardPage />} />
