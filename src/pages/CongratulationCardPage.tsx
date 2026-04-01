@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 import { CongratulationCard } from "../components/CongratulationCard";
 import { InteractiveButtons } from "../components/InteractiveButtons";
 import { SenderForm } from "../components/SenderForm";
+import { publicUrl } from "../lib/publicAsset";
 import "../styles/congratulation.css";
 
 /** Optional background music — place a file at `public/music/congratulation.mp3` */
-const MUSIC_SRC = "/music/congratulation.mp3";
+const MUSIC_SRC = publicUrl("music/congratulation.mp3");
 
 const MAIN_MESSAGE = `Bagaikan bulan dan bintang yang saling melengkapi,
 Begitulah kalian dipertemukan dalam takdir Ilahi.

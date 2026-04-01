@@ -74,7 +74,7 @@
   z-index: 0;
   pointer-events: none;
   opacity: 0.045;
-  background-image: url("/assets/batik.jpg");
+  background-image: var(--url-assets-batik);
   background-size: 200px;
   background-repeat: repeat;
   mix-blend-mode: multiply;
@@ -86,7 +86,7 @@
   z-index: 0;
   pointer-events: none;
   opacity: 0.22;
-  background-image: url("/assets/flower2.png");
+  background-image: var(--url-assets-flower2);
   background-repeat: repeat;
   background-size: clamp(4.25rem, 8.8vw, 7.25rem);
   background-position: center;

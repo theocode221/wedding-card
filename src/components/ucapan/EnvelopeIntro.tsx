@@ -1,5 +1,7 @@
-const CLOSE_SRC = "/assets/close-envelope.png";
-const OPEN_SRC = "/assets/open-envelope.png";
+import { publicUrl } from "../../lib/publicAsset";
+
+const CLOSE_SRC = publicUrl("assets/close-envelope.png");
+const OPEN_SRC = publicUrl("assets/open-envelope.png");
 
 export type EnvelopeIntroProps = {
   envelopeStarted: boolean;

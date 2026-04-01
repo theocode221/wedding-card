@@ -1,13 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
 import { DraggableLetter } from "../components/ucapan/DraggableLetter";
 import { TypingText } from "../components/ucapan/TypingText";
+import { publicUrl } from "../lib/publicAsset";
 import "../styles/ucapan.css";
 
-const CLOSE_SRC = "/assets/close-envelope.png";
-const OPEN_SRC = "/assets/open-envelope.png";
-const STAMP_SRC = "/assets/stamp.png";
-const ENVELOPE_SURAT_SRC = "/assets/envelope-surat.png";
-const SURAT_SRC = "/assets/surat.png";
+const CLOSE_SRC = publicUrl("assets/close-envelope.png");
+const OPEN_SRC = publicUrl("assets/open-envelope.png");
+const STAMP_SRC = publicUrl("assets/stamp.png");
+const ENVELOPE_SURAT_SRC = publicUrl("assets/envelope-surat.png");
+const SURAT_SRC = publicUrl("assets/surat.png");
 
 const INTRO_LINE = "Anda menerima surat!";
 const MS_AFTER_ENVELOPE_FOR_TYPING = 920;

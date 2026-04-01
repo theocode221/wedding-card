@@ -2,7 +2,7 @@
 
 .theme-traditional {
   /* Single batik photo (tiled 200–400px); blend with gradients — not a full-bleed flat image */
-  --trad-batik-photo: url("/assets/batik.jpg");
+  --trad-batik-photo: var(--url-assets-batik);
   /* Mobile-first tile size; widens from 481px */
   --trad-batik-tile: clamp(140px, 38vw, 360px);
 

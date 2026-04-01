@@ -1,4 +1,4 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
 import { CongratulationCardPage } from "./pages/CongratulationCardPage";
 import { HomePage } from "./pages/HomePage";
 import { InvitePage } from "./pages/InvitePage";
@@ -7,7 +7,7 @@ import { UcapanCardPage } from "./pages/UcapanCardPage";
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/invite" element={<InvitePage />} />
@@ -16,6 +16,6 @@ export default function App() {
         <Route path="/kad-ucapan" element={<UcapanCardPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }

@@ -59,8 +59,8 @@
   --cg-space-block: clamp(1rem, 0.85rem + 0.65vi, 1.35rem);
   --cg-inset-inline: clamp(1rem, 0.75rem + 1.25vi, 1.35rem);
 
-  /* Ornamental frame for hero + main card (public/assets/border.png) */
-  --cg-border-frame: url("/assets/flower4.png");
+  /* Ornamental frame — URL injected in main via setupPublicAssets() */
+  --cg-border-frame: var(--url-assets-flower4);
 
   min-height: 100vh;
   min-height: 100dvh;
@@ -80,7 +80,7 @@
   z-index: 0;
   pointer-events: none;
   opacity: 0.06;
-  background-image: url("/assets/batik.jpg");
+  background-image: var(--url-assets-batik);
   background-size: 200px;
   background-repeat: repeat;
   mix-blend-mode: multiply;
