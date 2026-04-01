@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { DraggableLetter } from "../components/ucapan/DraggableLetter";
 import { TypingText } from "../components/ucapan/TypingText";
 import { publicUrl } from "../lib/publicAsset";
@@ -9,6 +9,9 @@ const OPEN_SRC = publicUrl("assets/open-envelope.png");
 const STAMP_SRC = publicUrl("assets/stamp.png");
 const ENVELOPE_SURAT_SRC = publicUrl("assets/envelope-surat.png");
 const SURAT_SRC = publicUrl("assets/surat.png");
+
+/** Same track as congratulation page — add file at `public/music/congratulation.mp3` */
+const MUSIC_SRC = publicUrl("music/congratulation.mp3");
 
 const INTRO_LINE = "Anda menerima surat!";
 const MS_AFTER_ENVELOPE_FOR_TYPING = 920;
@@ -31,6 +34,7 @@ serta sentiasa dalam lindungan-Nya.`;
 type FlowStage = "intro" | "opening" | "envelopeSurat" | "revealed";
 
 export function UcapanCardPage() {
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const [stage, setStage] = useState<FlowStage>("intro");
   const [flowKey, setFlowKey] = useState(0);
   const [openingPhase, setOpeningPhase] = useState<0 | 1 | 2>(0);
@@ -100,6 +104,27 @@ export function UcapanCardPage() {
     };
   }, [stage, flowKey]);
 
+  /* Background music when ucapan typing is shown (user has already interacted — stamp / drag) */
+  useEffect(() => {
+    if (stage !== "revealed" || !showUcapan) {
+      const el = audioRef.current;
+      if (el) {
+        el.pause();
+        el.currentTime = 0;
+      }
+      return;
+    }
+    const el = audioRef.current;
+    if (!el) return;
+    el.volume = 0.35;
+    void el.play().catch(() => {
+      /* Autoplay blocked or missing file — ignore */
+    });
+    return () => {
+      el.pause();
+    };
+  }, [stage, showUcapan]);
+
   const handleBuka = () => {
     if (stage !== "intro") return;
     setStage("opening");
@@ -121,6 +146,8 @@ export function UcapanCardPage() {
       <div className="ucapan-page__wash" aria-hidden />
       <div className="ucapan-page__batik" aria-hidden />
       <div className="ucapan-page__floral" aria-hidden />
+
+      <audio ref={audioRef} src={MUSIC_SRC} loop preload="auto" />
 
       <main className="ucapan-shell">
         {stage === "intro" && (
