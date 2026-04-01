@@ -1,13 +1,16 @@
-import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { CongratulationCardPage } from "./pages/CongratulationCardPage";
 import { HomePage } from "./pages/HomePage";
 import { InvitePage } from "./pages/InvitePage";
 import { RsvpPage } from "./pages/RsvpPage";
 import { UcapanCardPage } from "./pages/UcapanCardPage";
 
+const routerBasename =
+  import.meta.env.BASE_URL === "/" ? undefined : import.meta.env.BASE_URL.replace(/\/$/, "");
+
 export default function App() {
   return (
-    <HashRouter>
+    <BrowserRouter basename={routerBasename}>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/invite" element={<InvitePage />} />
@@ -16,6 +19,6 @@ export default function App() {
         <Route path="/kad-ucapan" element={<UcapanCardPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-    </HashRouter>
+    </BrowserRouter>
   );
 }
