@@ -1,6 +1,6 @@
 /*
  * Ucapan card — kad ucapan route
- * .ucapan-s1 intro | .ucapan-opening close→open→envelope-surat | .ucapan-pull drag | .ucapan-reveal full surat + ucapan
+ * .ucapan-s1 intro | .ucapan-opening close→open→envelope-surat | .ucapan-pull drag | .ucapan-reveal full surat + ucapan | .ucapan-surprise photo stage
  */
 
 .ucapan-page {
@@ -853,6 +853,60 @@
   padding-bottom: 0.5rem;
 }
 
+.ucapan-reveal__surprise {
+  min-height: 3rem;
+  min-width: min(100%, 17.5rem);
+  padding: 0.72rem 1.5rem;
+  font-family: var(--u-serif);
+  font-size: clamp(0.98rem, 0.9vw + 0.82rem, 1.12rem);
+  font-weight: 600;
+  font-style: italic;
+  letter-spacing: 0.04em;
+  color: var(--u-forest);
+  cursor: pointer;
+  border-radius: 999px;
+  border: 1px solid rgba(196, 160, 106, 0.55);
+  background:
+    linear-gradient(165deg, rgba(255, 252, 248, 0.96) 0%, rgba(247, 240, 230, 0.94) 48%, rgba(255, 250, 244, 0.98) 100%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.92) inset,
+    0 4px 18px rgba(var(--ucapan-depth-ink), 0.08),
+    0 0 0 1px rgba(255, 255, 255, 0.35) inset,
+    0 10px 32px rgba(196, 160, 106, 0.12);
+  transition:
+    transform 0.35s var(--u-ease-press),
+    box-shadow 0.35s var(--u-ease-soft),
+    border-color 0.3s ease,
+    background 0.35s ease;
+}
+
+.ucapan-reveal__surprise:hover {
+  border-color: rgba(196, 160, 106, 0.78);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.95) inset,
+    0 6px 26px rgba(var(--ucapan-depth-ink), 0.1),
+    0 0 0 1px rgba(255, 255, 255, 0.45) inset,
+    0 14px 40px rgba(196, 160, 106, 0.2);
+  transform: translate3d(0, -2px, 0) scale(1.02);
+}
+
+.ucapan-reveal__surprise:active {
+  transform: translate3d(0, 1px, 0) scale(0.98);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.85) inset,
+    0 2px 12px rgba(var(--ucapan-depth-ink), 0.07);
+  transition-duration: 0.12s;
+}
+
+.ucapan-reveal__surprise:focus {
+  outline: none;
+}
+
+.ucapan-reveal__surprise:focus-visible {
+  outline: 2px solid rgba(47, 79, 63, 0.45);
+  outline-offset: 4px;
+}
+
 .ucapan-reveal__replay {
   padding: 0.5rem 1.15rem;
   font-family: var(--u-sans);
@@ -891,6 +945,220 @@
 
 .ucapan-reveal__home:hover {
   color: var(--u-forest);
+}
+
+/* ========== Surprise — full-screen floating photos ========== */
+.ucapan-surprise {
+  --photo-rot: 0deg;
+  position: fixed;
+  inset: 0;
+  z-index: 220;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.55s var(--u-ease-butter),
+    visibility 0s linear 0.55s;
+  background: linear-gradient(165deg, #faf6f0 0%, #ebe4d8 42%, #e8dfd2 100%);
+}
+
+.ucapan-surprise--in {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition:
+    opacity 0.6s var(--u-ease-butter),
+    visibility 0s linear 0s;
+}
+
+.ucapan-surprise--out {
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.48s var(--u-ease-soft),
+    visibility 0s linear 0.48s;
+}
+
+.ucapan-surprise__wash {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 90% 55% at 50% -8%, rgba(255, 248, 240, 0.85), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 0% 100%, rgba(196, 160, 106, 0.12), transparent 50%),
+    radial-gradient(ellipse 45% 38% at 100% 88%, rgba(47, 79, 63, 0.08), transparent 52%);
+}
+
+.ucapan-surprise__glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(48px);
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.ucapan-surprise__glow--a {
+  width: min(72vw, 28rem);
+  height: min(72vw, 28rem);
+  top: -12%;
+  right: -8%;
+  background: radial-gradient(circle, rgba(255, 220, 200, 0.5), transparent 70%);
+}
+
+.ucapan-surprise__glow--b {
+  width: min(65vw, 24rem);
+  height: min(65vw, 24rem);
+  bottom: -10%;
+  left: -12%;
+  background: radial-gradient(circle, rgba(200, 220, 200, 0.35), transparent 72%);
+}
+
+.ucapan-surprise__particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.35;
+  background-image:
+    radial-gradient(circle at 12% 22%, rgba(255, 255, 255, 0.55) 0 1px, transparent 2px),
+    radial-gradient(circle at 88% 18%, rgba(255, 255, 255, 0.4) 0 1px, transparent 2px),
+    radial-gradient(circle at 72% 62%, rgba(196, 160, 106, 0.25) 0 1px, transparent 2px),
+    radial-gradient(circle at 28% 78%, rgba(47, 79, 63, 0.12) 0 1px, transparent 2px),
+    radial-gradient(circle at 50% 40%, rgba(255, 255, 255, 0.2) 0 1px, transparent 2px);
+  background-size: 100% 100%;
+}
+
+.ucapan-surprise__header {
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+  padding: max(1rem, env(safe-area-inset-top, 0px)) max(1rem, env(safe-area-inset-right, 0px)) 0.5rem
+    max(1rem, env(safe-area-inset-left, 0px));
+  text-align: center;
+}
+
+.ucapan-surprise__title {
+  margin: 0;
+  max-width: 18ch;
+  font-family: var(--u-serif);
+  font-size: clamp(1.35rem, 3.5vw + 0.75rem, 2.05rem);
+  font-weight: 600;
+  font-style: italic;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+  color: var(--u-forest);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.75);
+}
+
+.ucapan-surprise__back {
+  padding: 0.42rem 1rem;
+  font-family: var(--u-sans);
+  font-size: clamp(0.62rem, 0.35vw + 0.52rem + 0.1vmin, 0.72rem);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(44, 51, 40, 0.78);
+  background: rgba(255, 252, 247, 0.55);
+  border: 1px solid rgba(47, 79, 63, 0.14);
+  border-radius: 999px;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition:
+    color 0.25s ease,
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.2s var(--u-ease-press);
+}
+
+.ucapan-surprise__back:hover {
+  color: var(--u-forest);
+  background: rgba(255, 252, 247, 0.82);
+  border-color: rgba(47, 79, 63, 0.22);
+}
+
+.ucapan-surprise__back:active {
+  transform: scale(0.97);
+}
+
+.ucapan-surprise__back:focus {
+  outline: none;
+}
+
+.ucapan-surprise__back:focus-visible {
+  outline: 2px solid rgba(47, 79, 63, 0.35);
+  outline-offset: 3px;
+}
+
+.ucapan-surprise__stage {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  touch-action: none;
+  cursor: grab;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.ucapan-surprise__stage--stirring {
+  cursor: grabbing;
+}
+
+/* Motion: translate + rotate applied from JS; bounce off `.ucapan-surprise__stage` edges */
+.ucapan-surprise__photo {
+  position: absolute;
+  margin: 0;
+  transform-origin: 50% 50%;
+  pointer-events: none;
+}
+
+.ucapan-surprise__photo--bounce {
+  will-change: transform;
+}
+
+.ucapan-surprise__photoFrame {
+  display: block;
+  width: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  aspect-ratio: 1;
+  box-shadow:
+    0 2px 0 rgba(255, 255, 255, 0.75) inset,
+    0 8px 24px rgba(55, 48, 40, 0.16),
+    0 0 0 1px rgba(255, 255, 255, 0.5) inset,
+    0 2px 8px rgba(55, 48, 40, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.55), rgba(247, 240, 230, 0.4));
+}
+
+.ucapan-surprise__photoImg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.ucapan-surprise__photoVideo {
+  pointer-events: none;
+  background: rgba(42, 38, 34, 0.1);
+}
+
+@media (max-width: 480px) {
+  .ucapan-surprise__glow {
+    filter: blur(36px);
+    opacity: 0.38;
+  }
 }
 
 /* Large screens — intro line scales with width, not lost next to huge envelope */
@@ -1066,5 +1334,14 @@
     animation: none;
     opacity: 1;
     transform: none;
+  }
+
+  .ucapan-surprise__photo--bounce {
+    will-change: auto;
+  }
+
+  .ucapan-surprise__glow,
+  .ucapan-surprise__particles {
+    opacity: 0.2;
   }
 }

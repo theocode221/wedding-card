@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { DraggableLetter } from "../components/ucapan/DraggableLetter";
+import { SurpriseStage } from "../components/ucapan/SurpriseStage";
+import { SURPRISE_PHOTOS } from "../components/ucapan/surprisePhotos";
 import { TypingText } from "../components/ucapan/TypingText";
 import { publicUrl } from "../lib/publicAsset";
 import "../styles/ucapan.css";
@@ -13,11 +15,11 @@ const SURAT_SRC = publicUrl("assets/surat.png");
 /** Same track as congratulation page — add file at `public/music/congratulation.mp3` */
 const MUSIC_SRC = publicUrl("music/congratulation.mp3");
 
-const INTRO_LINE = "Anda menerima surat!";
+const INTRO_LINE = "Surat untuk Afiq Danial (Tenuk) dan Isteri";
 const MS_AFTER_ENVELOPE_FOR_TYPING = 920;
 const MS_STAMP_AFTER_TYPING = 420;
 
-const UCAPAN_POEM = `Selamat Pengantin Baru
+const UCAPAN_POEM = `!سلامت ڤڠنتين بارو تنوق دان ڤاسڠءن
 
 Dua jiwa dipertemukan dalam rahmat,
 dua hati disatukan dalam kasih.
@@ -43,6 +45,8 @@ export function UcapanCardPage() {
   const [showUcapan, setShowUcapan] = useState(false);
   const [revealBgIn, setRevealBgIn] = useState(false);
   const [pullThreshold, setPullThreshold] = useState(140);
+  const [surpriseOpen, setSurpriseOpen] = useState(false);
+  const [surpriseExiting, setSurpriseExiting] = useState(false);
 
   useEffect(() => {
     const update = () => {
@@ -135,8 +139,25 @@ export function UcapanCardPage() {
   };
 
   const handleReplay = () => {
+    setSurpriseOpen(false);
+    setSurpriseExiting(false);
     setStage("intro");
     setFlowKey((k) => k + 1);
+  };
+
+  const SURPRISE_EXIT_MS = 520;
+
+  const openSurprise = () => {
+    setSurpriseExiting(false);
+    setSurpriseOpen(true);
+  };
+
+  const closeSurprise = () => {
+    setSurpriseExiting(true);
+    window.setTimeout(() => {
+      setSurpriseOpen(false);
+      setSurpriseExiting(false);
+    }, SURPRISE_EXIT_MS);
   };
 
   const maxPull = Math.round(pullThreshold * 1.45);
@@ -262,6 +283,9 @@ export function UcapanCardPage() {
             </div>
             {showUcapan && (
               <footer className="ucapan-reveal__footer">
+                <button type="button" className="ucapan-reveal__surprise" onClick={openSurprise}>
+                  Tekan untuk kejutan
+                </button>
                 <button type="button" className="ucapan-reveal__replay" onClick={handleReplay}>
                   Lihat sekali lagi
                 </button>
@@ -269,6 +293,10 @@ export function UcapanCardPage() {
             )}
           </div>
         </div>
+      )}
+
+      {surpriseOpen && (
+        <SurpriseStage photos={SURPRISE_PHOTOS} exiting={surpriseExiting} onClose={closeSurprise} />
       )}
     </div>
   );
