@@ -19,6 +19,12 @@ export function HomePage() {
             <span className="home-selector__cardDesc">Buka kad ucapan tahniah</span>
           </Link>
         </div>
+
+        <p className="home-selector__footnote">
+          <Link to="/kad-ucapan/sunting" className="home-selector__footnoteLink">
+            Sunting teks kad ucapan (sampul, ucapan, butang, kejutan)
+          </Link>
+        </p>
       </section>
     </main>
   );

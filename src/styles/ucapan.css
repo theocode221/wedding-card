@@ -1154,6 +1154,103 @@
   background: rgba(42, 38, 34, 0.1);
 }
 
+/* Tap circle (short tap) → fullscreen preview; stir = longer drag */
+.ucapan-surprise__viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 280;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: max(0.75rem, env(safe-area-inset-top, 0px)) max(0.75rem, env(safe-area-inset-right, 0px))
+    max(0.75rem, env(safe-area-inset-bottom, 0px)) max(0.75rem, env(safe-area-inset-left, 0px));
+  pointer-events: auto;
+}
+
+.ucapan-surprise__viewerBackdrop {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+  background: rgba(22, 18, 16, 0.82);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.ucapan-surprise__viewerInner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  max-width: min(96vw, 72rem);
+  max-height: min(92dvh, 100%);
+  width: 100%;
+}
+
+.ucapan-surprise__viewerClose {
+  flex-shrink: 0;
+  padding: 0.42rem 1.1rem;
+  font-family: var(--u-sans);
+  font-size: clamp(0.62rem, 0.35vw + 0.52rem + 0.1vmin, 0.72rem);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 252, 247, 0.95);
+  background: rgba(47, 79, 63, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.15s var(--u-ease-press);
+}
+
+.ucapan-surprise__viewerClose:hover {
+  background: rgba(61, 92, 74, 0.92);
+}
+
+.ucapan-surprise__viewerClose:active {
+  transform: scale(0.97);
+}
+
+.ucapan-surprise__viewerClose:focus {
+  outline: none;
+}
+
+.ucapan-surprise__viewerClose:focus-visible {
+  outline: 2px solid rgba(255, 214, 200, 0.85);
+  outline-offset: 3px;
+}
+
+.ucapan-surprise__viewerImg {
+  display: block;
+  max-width: 100%;
+  max-height: min(78dvh, 80vh);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 10px;
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.12) inset;
+}
+
+.ucapan-surprise__viewerVideo {
+  display: block;
+  max-width: 100%;
+  max-height: min(78dvh, 80vh);
+  width: 100%;
+  border-radius: 10px;
+  background: #0f0e0c;
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+}
+
 @media (max-width: 480px) {
   .ucapan-surprise__glow {
     filter: blur(36px);

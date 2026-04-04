@@ -1,8 +1,10 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { UcapanCopyProvider } from "./context/UcapanCopyContext";
 import { CongratulationCardPage } from "./pages/CongratulationCardPage";
 import { HomePage } from "./pages/HomePage";
 import { InvitePage } from "./pages/InvitePage";
 import { RsvpPage } from "./pages/RsvpPage";
+import { UcapanCardCopyFormPage } from "./pages/UcapanCardCopyFormPage";
 import { UcapanCardPage } from "./pages/UcapanCardPage";
 
 const routerBasename =
@@ -11,14 +13,17 @@ const routerBasename =
 export default function App() {
   return (
     <BrowserRouter basename={routerBasename}>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/invite" element={<InvitePage />} />
-        <Route path="/rsvp" element={<RsvpPage />} />
-        <Route path="/ucapan" element={<CongratulationCardPage />} />
-        <Route path="/kad-ucapan" element={<UcapanCardPage />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
+      <UcapanCopyProvider>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/invite" element={<InvitePage />} />
+          <Route path="/rsvp" element={<RsvpPage />} />
+          <Route path="/ucapan" element={<CongratulationCardPage />} />
+          <Route path="/kad-ucapan" element={<UcapanCardPage />} />
+          <Route path="/kad-ucapan/sunting" element={<UcapanCardCopyFormPage />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </UcapanCopyProvider>
     </BrowserRouter>
   );
 }

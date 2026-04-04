@@ -1,9 +1,9 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useUcapanCopy } from "../../context/UcapanCopyContext";
 import type { SurprisePhotoConfig } from "./surprisePhotos";
 
 type SurpriseStageProps = {
   photos: SurprisePhotoConfig[];
-  title?: string;
   exiting: boolean;
   onClose: () => void;
 };
@@ -24,6 +24,10 @@ const STIR_MIN_RADIUS = 130;
 const STIR_MAX_RADIUS = 300;
 const STIR_POINTER_CAP = 2000;
 const STIR_VEL_SMOOTH = 0.42;
+
+/** Quick tap on a circle opens fullscreen; larger movement = stir only */
+const TAP_MAX_MOVE_PX = 14;
+const TAP_MAX_MS = 320;
 
 type StirPointerRef = {
   active: boolean;
@@ -151,6 +155,16 @@ function resolvePairCollision(
   bodyB.vy += impulse * dy;
 }
 
+function hitTestTopPhotoIndex(clientX: number, clientY: number, itemRefs: (HTMLElement | null)[], n: number): number {
+  for (let i = n - 1; i >= 0; i--) {
+    const el = itemRefs[i];
+    if (!el) continue;
+    const { cx, cy, r } = circleFromEl(el);
+    if (Math.hypot(clientX - cx, clientY - cy) <= r) return i;
+  }
+  return -1;
+}
+
 function initBodies(count: number, configs: SurprisePhotoConfig[]): BounceBody[] {
   return configs.map((p, i) => {
     const angle = (i / Math.max(count, 1)) * Math.PI * 2 + i * 0.73;
@@ -164,9 +178,16 @@ function initBodies(count: number, configs: SurprisePhotoConfig[]): BounceBody[]
   });
 }
 
-export function SurpriseStage({ photos, title = "Kejutan Buatmu 💖", exiting, onClose }: SurpriseStageProps) {
+type SurpriseViewerState =
+  | null
+  | { media: "image"; src: string; alt: string }
+  | { media: "video"; src: string };
+
+export function SurpriseStage({ photos, exiting, onClose }: SurpriseStageProps) {
+  const { copy } = useUcapanCopy();
   const [entered, setEntered] = useState(false);
   const [stirring, setStirring] = useState(false);
+  const [viewer, setViewer] = useState<SurpriseViewerState>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<(HTMLElement | null)[]>([]);
   const bodiesRef = useRef<BounceBody[]>([]);
@@ -182,6 +203,9 @@ export function SurpriseStage({ photos, title = "Kejutan Buatmu 💖", exiting, 
     vx: 0,
     vy: 0,
   });
+  const gestureRef = useRef({ startX: 0, startY: 0, startT: 0, cancelledByDrag: false });
+
+  const closeViewer = useCallback(() => setViewer(null), []);
 
   useEffect(() => {
     let inner = 0;
@@ -208,8 +232,18 @@ export function SurpriseStage({ photos, title = "Kejutan Buatmu 💖", exiting, 
       stirPointerRef.current.vx = 0;
       stirPointerRef.current.vy = 0;
       setStirring(false);
+      setViewer(null);
     }
   }, [exiting]);
+
+  useEffect(() => {
+    if (!viewer) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeViewer();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [viewer, closeViewer]);
 
   useEffect(() => {
     const root = stageRef.current;
@@ -341,10 +375,10 @@ export function SurpriseStage({ photos, title = "Kejutan Buatmu 💖", exiting, 
 
       <header className="ucapan-surprise__header">
         <h1 id="ucapan-surprise-title" className="ucapan-surprise__title">
-          {title}
+          {copy.surpriseTitle}
         </h1>
         <button type="button" className="ucapan-surprise__back" onClick={onClose}>
-          Kembali ke Ucapan
+          {copy.surpriseBack}
         </button>
       </header>
 
@@ -352,10 +386,16 @@ export function SurpriseStage({ photos, title = "Kejutan Buatmu 💖", exiting, 
         className={["ucapan-surprise__stage", stirring ? "ucapan-surprise__stage--stirring" : ""].filter(Boolean).join(" ")}
         ref={stageRef}
         role="application"
-        aria-label="Kawasan kejutan — seret untuk menggerakkan gambar"
+        aria-label={copy.surpriseStageAriaLabel}
         onPointerDown={(e) => {
           if (!entered || exiting) return;
           if (e.pointerType === "mouse" && e.button !== 0) return;
+          gestureRef.current = {
+            startX: e.clientX,
+            startY: e.clientY,
+            startT: performance.now(),
+            cancelledByDrag: false,
+          };
           const st = stirPointerRef.current;
           st.active = true;
           st.lastX = e.clientX;
@@ -369,6 +409,10 @@ export function SurpriseStage({ photos, title = "Kejutan Buatmu 💖", exiting, 
         onPointerMove={(e) => {
           const st = stirPointerRef.current;
           if (!st.active) return;
+          const g = gestureRef.current;
+          if (Math.hypot(e.clientX - g.startX, e.clientY - g.startY) > TAP_MAX_MOVE_PX) {
+            g.cancelledByDrag = true;
+          }
           const now = performance.now();
           const dtMs = now - st.lastT;
           if (dtMs < 4) return;
@@ -385,12 +429,28 @@ export function SurpriseStage({ photos, title = "Kejutan Buatmu 💖", exiting, 
           st.vy = st.vy * STIR_VEL_SMOOTH + iy * (1 - STIR_VEL_SMOOTH);
         }}
         onPointerUp={(e) => {
+          const g = gestureRef.current;
+          const elapsed = performance.now() - g.startT;
+          if (!g.cancelledByDrag && elapsed < TAP_MAX_MS && elapsed >= 0) {
+            const cfg = photosRef.current;
+            const n = cfg.length;
+            const idx = hitTestTopPhotoIndex(e.clientX, e.clientY, itemRefs.current, n);
+            if (idx >= 0) {
+              const p = cfg[idx];
+              if (p.media === "video") {
+                setViewer({ media: "video", src: p.src });
+              } else {
+                setViewer({ media: "image", src: p.src, alt: p.alt ?? "" });
+              }
+            }
+          }
           if (e.currentTarget.hasPointerCapture(e.pointerId)) {
             e.currentTarget.releasePointerCapture(e.pointerId);
           }
           endStir();
         }}
         onPointerCancel={(e) => {
+          gestureRef.current.cancelledByDrag = true;
           if (e.currentTarget.hasPointerCapture(e.pointerId)) {
             e.currentTarget.releasePointerCapture(e.pointerId);
           }
@@ -432,6 +492,32 @@ export function SurpriseStage({ photos, title = "Kejutan Buatmu 💖", exiting, 
           </figure>
         ))}
       </div>
+
+      {viewer && (
+        <div
+          className="ucapan-surprise__viewer"
+          role="dialog"
+          aria-modal="true"
+          aria-label={viewer.media === "image" ? copy.viewerImageAriaLabel : copy.viewerVideoAriaLabel}
+        >
+          <button
+            type="button"
+            className="ucapan-surprise__viewerBackdrop"
+            aria-label={copy.viewerBackdropAriaLabel}
+            onClick={closeViewer}
+          />
+          <div className="ucapan-surprise__viewerInner">
+            <button type="button" className="ucapan-surprise__viewerClose" onClick={closeViewer} autoFocus>
+              {copy.viewerCloseButton}
+            </button>
+            {viewer.media === "image" ? (
+              <img src={viewer.src} alt={viewer.alt} className="ucapan-surprise__viewerImg" decoding="async" />
+            ) : (
+              <video className="ucapan-surprise__viewerVideo" src={viewer.src} controls playsInline loop preload="metadata" />
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

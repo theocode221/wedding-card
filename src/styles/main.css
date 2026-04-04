@@ -594,6 +594,24 @@ button {
   color: #6b5340;
 }
 
+.home-selector__footnote {
+  margin: 1.25rem 0 0;
+  text-align: center;
+  font-size: clamp(0.84rem, 0.7rem + 0.45vw, 0.95rem);
+}
+
+.home-selector__footnoteLink {
+  color: #2f4f3f;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: rgba(47, 79, 63, 0.35);
+  text-underline-offset: 0.15em;
+}
+
+.home-selector__footnoteLink:hover {
+  text-decoration-color: rgba(47, 79, 63, 0.65);
+}
+
 @media (max-width: 640px) {
   .home-selector__grid {
     grid-template-columns: 1fr;

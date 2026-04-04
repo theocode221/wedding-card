@@ -11,6 +11,8 @@ export type DraggableLetterProps = {
   className?: string;
   /** Rendered above surat, below hit layer (e.g. envelope-surat); use pointer-events: none on artwork */
   envelopeOverlay: ReactNode;
+  /** Accessible name for the drag hit target (keyboard / screen readers) */
+  dragAriaLabel?: string;
 };
 
 /**
@@ -24,6 +26,7 @@ export function DraggableLetter({
   onComplete,
   className = "",
   envelopeOverlay,
+  dragAriaLabel = "Tarik surat ke atas untuk membaca",
 }: DraggableLetterProps) {
   const [offset, setOffset] = useState(0);
   const [dragging, setDragging] = useState(false);
@@ -108,7 +111,7 @@ export function DraggableLetter({
           role="button"
           tabIndex={0}
           className="ucapan-pull__hit"
-          aria-label="Tarik surat ke atas untuk membaca"
+          aria-label={dragAriaLabel}
           onPointerDown={onPointerDown}
           onPointerMove={onPointerMove}
           onPointerUp={onPointerUp}

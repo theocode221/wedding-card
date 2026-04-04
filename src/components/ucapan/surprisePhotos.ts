@@ -1,7 +1,24 @@
 import { publicUrl } from "../../lib/publicAsset";
 
+/** File extension for surprise still images under `public/assets/` (per-file override in `surprisePictureSrc`). */
+export type SurpriseImageFormat = "png" | "jpg" | "jpeg";
+
+/** Set once if most of your photos use the same type; override per image in `surprisePictureSrc("pic5", "jpeg")`. */
+export const DEFAULT_SURPRISE_IMAGE_FORMAT: SurpriseImageFormat = "png";
+
+/**
+ * Builds URL for `public/assets/<basename>.<format>` (png, jpg, or jpeg).
+ * Respects Vite `base` / GitHub Pages via `publicUrl`.
+ */
+export function surprisePictureSrc(
+  basename: string,
+  format: SurpriseImageFormat = DEFAULT_SURPRISE_IMAGE_FORMAT,
+): string {
+  return publicUrl(`assets/${basename}.${format}`);
+}
+
 export interface SurprisePhotoConfig {
-  /** Path under `public/` — image (`.png` …) or video (`.mp4` / `.webm` when `media` is `video`) */
+  /** Image/video URL — use `surprisePictureSrc("pic1", "jpg")` for stills, or `publicUrl("assets/…")` for custom paths */
   src: string;
   /** `video`: autoplay, muted, loop (required for browser autoplay). Default `image`. */
   media?: "image" | "video";
@@ -19,12 +36,12 @@ export interface SurprisePhotoConfig {
 }
 
 /**
- * Add images under `public/assets/` as `pic1.png` … `pic20.png` (except slots used as video).
- * Add three clips: `surprise-video-1.mp4`, `surprise-video-2.mp4`, `surprise-video-3.mp4`.
+ * Stills: `public/assets/pic1` … with extension from `DEFAULT_SURPRISE_IMAGE_FORMAT` or per call (`"jpg"`, `"jpeg"`).
+ * Videos: `surprise-video-1.mp4` … `surprise-video-3.mp4`.
  */
 export const SURPRISE_PHOTOS: SurprisePhotoConfig[] = [
   {
-    src: publicUrl("assets/pic1.png"),
+    src: surprisePictureSrc("pic1"),
     top: "8%",
     left: "3%",
     width: "min(22vw, 7.5rem)",
@@ -33,7 +50,7 @@ export const SURPRISE_PHOTOS: SurprisePhotoConfig[] = [
     alt: "",
   },
   {
-    src: publicUrl("assets/pic2.png"),
+    src: surprisePictureSrc("pic2"),
     top: "10%",
     right: "4%",
     width: "min(21vw, 7.25rem)",
@@ -52,7 +69,7 @@ export const SURPRISE_PHOTOS: SurprisePhotoConfig[] = [
     alt: "",
   },
   {
-    src: publicUrl("assets/pic4.png"),
+    src: surprisePictureSrc("pic4"),
     top: "36%",
     right: "7%",
     width: "min(23vw, 7.75rem)",
@@ -61,7 +78,7 @@ export const SURPRISE_PHOTOS: SurprisePhotoConfig[] = [
     alt: "",
   },
   {
-    src: publicUrl("assets/pic5.png"),
+    src: surprisePictureSrc("pic5"),
     top: "58%",
     left: "4%",
     width: "min(21vw, 7.25rem)",
@@ -70,7 +87,7 @@ export const SURPRISE_PHOTOS: SurprisePhotoConfig[] = [
     alt: "",
   },
   {
-    src: publicUrl("assets/pic6.png"),
+    src: surprisePictureSrc("pic6"),
     top: "64%",
     right: "5%",
     width: "min(20vw, 7rem)",
@@ -79,7 +96,7 @@ export const SURPRISE_PHOTOS: SurprisePhotoConfig[] = [
     alt: "",
   },
   {
-    src: publicUrl("assets/pic7.png"),
+    src: surprisePictureSrc("pic7"),
     top: "20%",
     left: "38%",
     width: "min(18vw, 6.35rem)",
@@ -88,7 +105,7 @@ export const SURPRISE_PHOTOS: SurprisePhotoConfig[] = [
     alt: "",
   },
   {
-    src: publicUrl("assets/pic8.png"),
+    src: surprisePictureSrc("pic8"),
     top: "48%",
     left: "32%",
     width: "min(19vw, 6.6rem)",
@@ -97,7 +114,7 @@ export const SURPRISE_PHOTOS: SurprisePhotoConfig[] = [
     alt: "",
   },
   {
-    src: publicUrl("assets/pic9.png"),
+    src: surprisePictureSrc("pic9"),
     top: "76%",
     left: "8%",
     width: "min(19vw, 6.6rem)",
@@ -106,7 +123,7 @@ export const SURPRISE_PHOTOS: SurprisePhotoConfig[] = [
     alt: "",
   },
   {
-    src: publicUrl("assets/pic10.png"),
+    src: surprisePictureSrc("pic10"),
     top: "80%",
     right: "10%",
     width: "min(21vw, 7.1rem)",
@@ -115,7 +132,7 @@ export const SURPRISE_PHOTOS: SurprisePhotoConfig[] = [
     alt: "",
   },
   {
-    src: publicUrl("assets/pic11.png"),
+    src: surprisePictureSrc("pic11"),
     top: "26%",
     right: "18%",
     width: "min(17vw, 6rem)",
@@ -134,7 +151,7 @@ export const SURPRISE_PHOTOS: SurprisePhotoConfig[] = [
     alt: "",
   },
   {
-    src: publicUrl("assets/pic13.png"),
+    src: surprisePictureSrc("pic13"),
     top: "14%",
     left: "50%",
     width: "min(16vw, 5.65rem)",
@@ -143,7 +160,7 @@ export const SURPRISE_PHOTOS: SurprisePhotoConfig[] = [
     alt: "",
   },
   {
-    src: publicUrl("assets/pic14.png"),
+    src: surprisePictureSrc("pic14"),
     top: "40%",
     left: "46%",
     width: "min(17vw, 5.9rem)",
@@ -152,7 +169,7 @@ export const SURPRISE_PHOTOS: SurprisePhotoConfig[] = [
     alt: "",
   },
   {
-    src: publicUrl("assets/pic15.png"),
+    src: surprisePictureSrc("pic15"),
     top: "68%",
     left: "44%",
     width: "min(15vw, 5.5rem)",
@@ -161,7 +178,7 @@ export const SURPRISE_PHOTOS: SurprisePhotoConfig[] = [
     alt: "",
   },
   {
-    src: publicUrl("assets/pic16.png"),
+    src: surprisePictureSrc("pic16"),
     top: "6%",
     left: "22%",
     width: "min(16vw, 5.6rem)",
@@ -170,7 +187,7 @@ export const SURPRISE_PHOTOS: SurprisePhotoConfig[] = [
     alt: "",
   },
   {
-    src: publicUrl("assets/pic17.png"),
+    src: surprisePictureSrc("pic17"),
     top: "86%",
     left: "20%",
     width: "min(17vw, 5.85rem)",
@@ -189,7 +206,7 @@ export const SURPRISE_PHOTOS: SurprisePhotoConfig[] = [
     alt: "",
   },
   {
-    src: publicUrl("assets/pic19.png"),
+    src: surprisePictureSrc("pic19"),
     top: "30%",
     left: "12%",
     width: "min(16vw, 5.7rem)",
@@ -198,7 +215,7 @@ export const SURPRISE_PHOTOS: SurprisePhotoConfig[] = [
     alt: "",
   },
   {
-    src: publicUrl("assets/pic20.png"),
+    src: surprisePictureSrc("pic20"),
     top: "44%",
     right: "40%",
     width: "min(17vw, 5.95rem)",

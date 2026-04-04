@@ -3,6 +3,7 @@ import { DraggableLetter } from "../components/ucapan/DraggableLetter";
 import { SurpriseStage } from "../components/ucapan/SurpriseStage";
 import { SURPRISE_PHOTOS } from "../components/ucapan/surprisePhotos";
 import { TypingText } from "../components/ucapan/TypingText";
+import { useUcapanCopy } from "../context/UcapanCopyContext";
 import { publicUrl } from "../lib/publicAsset";
 import "../styles/ucapan.css";
 
@@ -15,27 +16,14 @@ const SURAT_SRC = publicUrl("assets/surat.png");
 /** Same track as congratulation page — add file at `public/music/congratulation.mp3` */
 const MUSIC_SRC = publicUrl("music/congratulation.mp3");
 
-const INTRO_LINE = "Surat untuk Afiq Danial (Tenuk) dan Isteri";
 const MS_AFTER_ENVELOPE_FOR_TYPING = 920;
 const MS_STAMP_AFTER_TYPING = 420;
-
-const UCAPAN_POEM = `!سلامت ڤڠنتين بارو تنوق دان ڤاسڠءن
-
-Dua jiwa dipertemukan dalam rahmat,
-dua hati disatukan dalam kasih.
-Semoga setiap langkah yang bermula hari ini
-dihiasi bahagia, diselimuti sabar,
-dan dipenuhi cinta hingga ke akhir usia.
-
-Moga rumah tangga yang dibina
-menjadi taman ketenangan,
-mekar dengan mawaddah dan sakinah,
-serta sentiasa dalam lindungan-Nya.`;
 
 /** intro → opening (CSS phases) → envelopeSurat (drag) → revealed (full surat + ucapan) */
 type FlowStage = "intro" | "opening" | "envelopeSurat" | "revealed";
 
 export function UcapanCardPage() {
+  const { copy } = useUcapanCopy();
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [stage, setStage] = useState<FlowStage>("intro");
   const [flowKey, setFlowKey] = useState(0);
@@ -172,11 +160,11 @@ export function UcapanCardPage() {
 
       <main className="ucapan-shell">
         {stage === "intro" && (
-          <section key={`intro-${flowKey}`} className="ucapan-s1" aria-label="Surat untuk anda">
+          <section key={`intro-${flowKey}`} className="ucapan-s1" aria-label={copy.introSectionAriaLabel}>
             {showIntroText && (
               <TypingText
                 key={`intro-typing-${flowKey}`}
-                text={INTRO_LINE}
+                text={copy.introLine}
                 speedMs={46}
                 onComplete={handleIntroTypingComplete}
                 className="ucapan-s1-typing"
@@ -195,10 +183,10 @@ export function UcapanCardPage() {
                   decoding="async"
                 />
                 {showStamp && (
-                  <button type="button" className="ucapan-s1-stamp" onClick={handleBuka} aria-label="Buka surat">
+                  <button type="button" className="ucapan-s1-stamp" onClick={handleBuka} aria-label={copy.stampButtonAriaLabel}>
                     <span className="ucapan-s1-stamp__motion">
                       <img className="ucapan-s1-stamp__img" src={STAMP_SRC} alt="" width={256} height={256} decoding="async" />
-                      <span className="ucapan-s1-stamp__label">BUKA</span>
+                      <span className="ucapan-s1-stamp__label">{copy.stampLabel}</span>
                     </span>
                   </button>
                 )}
@@ -208,7 +196,7 @@ export function UcapanCardPage() {
         )}
 
         {stage === "opening" && (
-          <section key={`opening-${flowKey}`} className="ucapan-opening" aria-hidden={false} aria-label="Membuka sampul">
+          <section key={`opening-${flowKey}`} className="ucapan-opening" aria-hidden={false} aria-label={copy.openingSectionAriaLabel}>
             <div
               className={[
                 "ucapan-opening__scene",
@@ -233,8 +221,8 @@ export function UcapanCardPage() {
         )}
 
         {stage === "envelopeSurat" && (
-          <section key={`pull-${flowKey}`} className="ucapan-pull" aria-label="Surat dalam sampul">
-            <p className="ucapan-pull__hint">Tarik surat ke atas untuk membaca</p>
+          <section key={`pull-${flowKey}`} className="ucapan-pull" aria-label={copy.pullSectionAriaLabel}>
+            <p className="ucapan-pull__hint">{copy.pullHint}</p>
             <div className="ucapan-pull__scene">
               <div className="ucapan-pull__shadow" aria-hidden />
               <div className="ucapan-pull__bundle">
@@ -244,6 +232,7 @@ export function UcapanCardPage() {
                   threshold={pullThreshold}
                   maxPull={maxPull}
                   onComplete={handlePullComplete}
+                  dragAriaLabel={copy.pullDragHitAriaLabel}
                   envelopeOverlay={
                     <img
                       className="ucapan-pull__envelope"
@@ -262,7 +251,7 @@ export function UcapanCardPage() {
       </main>
 
       {stage === "revealed" && (
-        <div key={`reveal-${flowKey}`} className="ucapan-reveal" aria-label="Ucapan">
+        <div key={`reveal-${flowKey}`} className="ucapan-reveal" aria-label={copy.revealSectionAriaLabel}>
           <div className={["ucapan-reveal__bg", revealBgIn ? "ucapan-reveal__bg--in" : ""].filter(Boolean).join(" ")}>
             <img src={SURAT_SRC} alt="" className="ucapan-reveal__bgImg" width={1200} height={1600} decoding="async" />
           </div>
@@ -270,10 +259,10 @@ export function UcapanCardPage() {
           <div className="ucapan-reveal__scroll">
             <div className="ucapan-reveal__content">
               {showUcapan && (
-                <article className="ucapan-reveal__card" aria-label="Ucapan di atas surat">
+                <article className="ucapan-reveal__card" aria-label={copy.revealArticleAriaLabel}>
                   <TypingText
                     key={`ucapan-${flowKey}`}
-                    text={UCAPAN_POEM}
+                    text={copy.mainUcapanText}
                     speedMs={38}
                     multiline
                     className="ucapan-reveal__typing"
@@ -284,10 +273,10 @@ export function UcapanCardPage() {
             {showUcapan && (
               <footer className="ucapan-reveal__footer">
                 <button type="button" className="ucapan-reveal__surprise" onClick={openSurprise}>
-                  Tekan untuk kejutan
+                  {copy.buttonSurprise}
                 </button>
                 <button type="button" className="ucapan-reveal__replay" onClick={handleReplay}>
-                  Lihat sekali lagi
+                  {copy.buttonReplay}
                 </button>
               </footer>
             )}
