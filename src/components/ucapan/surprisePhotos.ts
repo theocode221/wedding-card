@@ -37,7 +37,7 @@ export interface SurprisePhotoConfig {
 
 /**
  * Stills: `public/assets/pic1` … with extension from `DEFAULT_SURPRISE_IMAGE_FORMAT` or per call (`"jpg"`, `"jpeg"`).
- * Videos: `surprise-video-1.mp4` … `surprise-video-3.mp4`.
+ * Videos: `surprise-video-1.mp4`, `surprise-video-2.mp4` (two only).
  */
 export const SURPRISE_PHOTOS: SurprisePhotoConfig[] = [
   {
@@ -196,11 +196,10 @@ export const SURPRISE_PHOTOS: SurprisePhotoConfig[] = [
     alt: "",
   },
   {
-    src: publicUrl("assets/surprise-video-3.mp4"),
-    media: "video",
+    src: surprisePictureSrc("pic18"),
     top: "56%",
     right: "12%",
-    width: "min(26vw, 9rem)",
+    width: "min(17vw, 6rem)",
     speedPx: 7,
     rotationDeg: 2,
     alt: "",
