@@ -382,11 +382,16 @@ export function SurpriseStage({ photos, exiting, onClose }: SurpriseStageProps) 
         </button>
       </header>
 
+      <p id="ucapan-surprise-stage-hint" className="ucapan-surprise__stageHint">
+        {copy.surpriseStageHint}
+      </p>
+
       <div
         className={["ucapan-surprise__stage", stirring ? "ucapan-surprise__stage--stirring" : ""].filter(Boolean).join(" ")}
         ref={stageRef}
         role="application"
-        aria-label={copy.surpriseStageAriaLabel}
+        aria-label="Kawasan foto kejutan"
+        aria-describedby="ucapan-surprise-stage-hint"
         onPointerDown={(e) => {
           if (!entered || exiting) return;
           if (e.pointerType === "mouse" && e.button !== 0) return;

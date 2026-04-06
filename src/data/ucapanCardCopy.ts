@@ -33,8 +33,8 @@ export type UcapanCardCopy = {
   surpriseTitle: string;
   /** Skrin kejutan — butang kembali */
   surpriseBack: string;
-  /** Skrin kejutan — perihal kawasan seret (aksesibiliti) */
-  surpriseStageAriaLabel: string;
+  /** Skrin kejutan — petunjuk kecil kelihatan di atas kawasan foto + untuk pembaca skrin */
+  surpriseStageHint: string;
   /** Paparan penuh gambar — tajuk dialog (aksesibiliti) */
   viewerImageAriaLabel: string;
   /** Paparan penuh video — tajuk dialog (aksesibiliti) */
@@ -46,39 +46,41 @@ export type UcapanCardCopy = {
 };
 
 export const defaultUcapanCardCopy: UcapanCardCopy = {
-  introLine: "Surat untuk Afiq Danial (Tenuk) dan Isteri",
-  stampLabel: "BUKA",
-  stampButtonAriaLabel: "Buka surat",
+  introLine: "Hai Din & Ila :P",
+  stampLabel: "buka",
+  stampButtonAriaLabel: "buka",
   introSectionAriaLabel: "Surat untuk anda",
   openingSectionAriaLabel: "Membuka sampul",
   pullSectionAriaLabel: "Surat dalam sampul",
-  pullHint: "Tarik surat ke atas untuk membaca",
+  pullHint: "keluakan surat",
   pullDragHitAriaLabel: "Tarik surat ke atas untuk membaca",
   revealSectionAriaLabel: "Ucapan",
   revealArticleAriaLabel: "Ucapan di atas surat",
-  mainUcapanText: `!سلامت ڤڠنتين بارو تنوق دان ڤاسڠءن
-
-Dua jiwa dipertemukan dalam rahmat,
-dua hati disatukan dalam kasih.
-Semoga setiap langkah yang bermula hari ini
-dihiasi bahagia, diselimuti sabar,
-dan dipenuhi cinta hingga ke akhir usia.
-
-Moga rumah tangga yang dibina
-menjadi taman ketenangan,
-mekar dengan mawaddah dan sakinah,
-serta sentiasa dalam lindungan-Nya.`,
-  buttonSurprise: "Tekan untuk kejutan",
+  mainUcapanText: `Kepada Din dan Ila,
+  Congrats dah lepas first stage. Semoga urusan korang untuk next step dipermudahkan!
+  
+  Best wishes from Anepo!`,
+  buttonSurprise: "Tekan kalau nak tengok something lawak",
   buttonReplay: "Lihat sekali lagi",
-  surpriseTitle: "Kejutan Buatmu 💖",
-  surpriseBack: "Kembali ke Ucapan",
-  surpriseStageAriaLabel: "Ketik pantas pada bulatan untuk lihat penuh; seret untuk menggerakkan gambar",
+  surpriseTitle: "jaga din leklok ila HAHA :D",
+  surpriseBack: "BACK",
+  surpriseStageHint: "click kat bola untuk tengok gambar penuh; bole swipe2 untuk menggerakkan gambar HAHAHA",
   viewerImageAriaLabel: "Gambar penuh",
   viewerVideoAriaLabel: "Video penuh",
   viewerBackdropAriaLabel: "Tutup",
   viewerCloseButton: "Tutup",
 };
 
+type StoredCopy = Partial<UcapanCardCopy> & { surpriseStageAriaLabel?: string };
+
+/** Merges saved JSON; maps legacy `surpriseStageAriaLabel` → `surpriseStageHint`. */
 export function mergeUcapanCardCopy(partial: Partial<UcapanCardCopy> | null | undefined): UcapanCardCopy {
-  return { ...defaultUcapanCardCopy, ...partial };
+  const raw = (partial ?? {}) as StoredCopy;
+  const legacyHint = typeof raw.surpriseStageAriaLabel === "string" ? raw.surpriseStageAriaLabel : undefined;
+  const hint =
+    (typeof raw.surpriseStageHint === "string" ? raw.surpriseStageHint : undefined) ??
+    legacyHint ??
+    defaultUcapanCardCopy.surpriseStageHint;
+  const { surpriseStageAriaLabel: _drop, ...rest } = raw;
+  return { ...defaultUcapanCardCopy, ...rest, surpriseStageHint: hint };
 }

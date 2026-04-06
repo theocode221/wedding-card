@@ -1096,6 +1096,22 @@
   outline-offset: 3px;
 }
 
+.ucapan-surprise__stageHint {
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+  max-width: min(36rem, 92vw);
+  margin: 0 auto;
+  padding: 0 max(0.85rem, env(safe-area-inset-left, 0px)) 0.35rem max(0.85rem, env(safe-area-inset-right, 0px));
+  font-family: var(--u-sans);
+  font-size: clamp(0.72rem, 0.35vw + 0.62rem + 0.15vmin, 0.82rem);
+  font-weight: 500;
+  line-height: 1.45;
+  letter-spacing: 0.02em;
+  text-align: center;
+  color: rgba(44, 51, 40, 0.72);
+}
+
 .ucapan-surprise__stage {
   position: relative;
   flex: 1;

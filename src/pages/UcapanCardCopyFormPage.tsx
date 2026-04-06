@@ -133,9 +133,9 @@ const FORM_GROUPS: GroupDef[] = [
         hint: "Kembali ke skrin ucapan penuh.",
       },
       {
-        key: "surpriseStageAriaLabel",
-        label: "Perihal kawasan foto (aksesibiliti)",
-        hint: "Terangkan seret / ketik pada gelembung.",
+        key: "surpriseStageHint",
+        label: "Petunjuk kawasan foto (teks kecil kelihatan)",
+        hint: "Dipaparkan di bawah tajuk, di atas gelembung. Juga dibaca pembaca skrin (aria-describedby).",
       },
       {
         key: "viewerImageAriaLabel",
