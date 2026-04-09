@@ -1,0 +1,633 @@
+/* Blessing wheel — champagne, rose, gold; no external assets */
+
+.blessing-page {
+  min-height: 100dvh;
+  position: relative;
+  overflow-x: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1rem, 4vw, 2rem);
+  color: #342520;
+  font-family: Georgia, "Times New Roman", serif;
+  animation: blessing-page-in 0.85s ease-out both;
+}
+
+@keyframes blessing-page-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.blessing-page__ambient {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 100% 70% at 50% -15%, rgba(232, 210, 195, 0.5), transparent 55%),
+    radial-gradient(ellipse 70% 50% at 100% 60%, rgba(210, 195, 175, 0.22), transparent 50%),
+    radial-gradient(ellipse 60% 45% at 0% 85%, rgba(195, 210, 195, 0.15), transparent 48%),
+    linear-gradient(168deg, #f8f2ea 0%, #ede4d8 40%, #e5d9cc 100%);
+}
+
+.blessing-page__inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 26rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.15rem;
+}
+
+.blessing-page__back {
+  align-self: flex-start;
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+  color: #6b5349;
+  text-decoration: none;
+  font-family: system-ui, sans-serif;
+  transition: color 0.2s ease;
+}
+
+.blessing-page__back:hover {
+  color: #8b5a4a;
+}
+
+.blessing-page__header {
+  text-align: center;
+  animation: blessing-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+}
+
+@keyframes blessing-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.blessing-page__title {
+  margin: 0;
+  font-size: clamp(1.45rem, 4.8vw, 1.75rem);
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: #2a1e1a;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+.blessing-page__subtitle {
+  margin: 0.45rem 0 0;
+  font-size: 0.95rem;
+  font-family: system-ui, sans-serif;
+  color: #5c483f;
+  letter-spacing: 0.04em;
+}
+
+.blessing-page__wheelWrap {
+  width: min(92vw, 20.5rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  animation: blessing-rise 0.95s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+  transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Room for result card + actions: slightly smaller wheel */
+.blessing-page__wheelWrap--withResult {
+  width: min(86vw, 16.75rem);
+}
+
+/* Wheel */
+.blessing-wheel {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  max-width: 20.5rem;
+  transition: max-width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.blessing-page__wheelWrap--withResult .blessing-wheel {
+  max-width: 16.75rem;
+}
+
+.blessing-wheel__pointer {
+  position: absolute;
+  left: 50%;
+  top: -2px;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 14px solid transparent;
+  border-right: 14px solid transparent;
+  border-top: 22px solid #b8956a;
+  filter: drop-shadow(0 2px 4px rgba(60, 40, 30, 0.2));
+  z-index: 4;
+  transition: transform 0.2s ease;
+}
+
+.blessing-wheel__pointer--bounce {
+  animation: blessing-pointer-bounce 0.65s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes blessing-pointer-bounce {
+  0% {
+    transform: translateX(-50%) translateY(0);
+  }
+  35% {
+    transform: translateX(-50%) translateY(10px);
+  }
+  65% {
+    transform: translateX(-50%) translateY(-3px);
+  }
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.blessing-wheel__stage {
+  position: absolute;
+  inset: 12px 0 0;
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 1px rgba(140, 110, 90, 0.2),
+    0 8px 32px rgba(70, 50, 40, 0.12),
+    0 20px 48px rgba(60, 45, 38, 0.08),
+    inset 0 2px 16px rgba(255, 255, 255, 0.35);
+}
+
+.blessing-wheel__stage--shimmer::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  pointer-events: none;
+  background: linear-gradient(
+    125deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.25) 48%,
+    rgba(255, 252, 248, 0.45) 50%,
+    rgba(255, 255, 255, 0.2) 52%,
+    transparent 65%
+  );
+  background-size: 220% 220%;
+  animation: blessing-wheel-shimmer 4s ease-in-out infinite;
+  mix-blend-mode: soft-light;
+  z-index: 3;
+}
+
+@keyframes blessing-wheel-shimmer {
+  0% {
+    background-position: 80% 50%;
+  }
+  100% {
+    background-position: 20% 50%;
+  }
+}
+
+.blessing-wheel__spin {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.blessing-wheel__svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.blessing-wheel__rim {
+  fill: none;
+  stroke: rgba(170, 140, 115, 0.45);
+  stroke-width: 2;
+}
+
+.blessing-wheel__sector {
+  stroke: rgba(255, 255, 255, 0.35);
+  stroke-width: 0.6;
+  transition:
+    filter 0.45s ease,
+    stroke 0.45s ease;
+}
+
+.blessing-wheel__sector--selected {
+  stroke: rgba(184, 149, 106, 0.95);
+  stroke-width: 2.2;
+  filter: drop-shadow(0 0 10px rgba(212, 185, 140, 0.55));
+}
+
+.blessing-wheel__sector--picked {
+  opacity: 0.42;
+}
+
+.blessing-wheel__label {
+  font-size: 11px;
+  font-weight: 600;
+  font-family: system-ui, sans-serif;
+  letter-spacing: 0.06em;
+  fill: #3d2a24;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+  pointer-events: none;
+}
+
+@media (min-width: 380px) {
+  .blessing-wheel__label {
+    font-size: 12px;
+  }
+}
+
+.blessing-wheel__hub-ring {
+  fill: rgba(255, 252, 248, 0.55);
+  stroke: rgba(160, 130, 105, 0.35);
+  stroke-width: 1;
+}
+
+.blessing-wheel__hub {
+  stroke: rgba(140, 115, 90, 0.4);
+  stroke-width: 0.8;
+}
+
+.blessing-wheel__hub-inner {
+  fill: rgba(255, 255, 255, 0.35);
+  stroke: none;
+}
+
+/* Short wait + bar after “Pusing Lagi” before next spin */
+.blessing-page__spinPrep {
+  width: 100%;
+  max-width: 20rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+  min-height: 52px;
+  justify-content: center;
+}
+
+.blessing-page__spinPrepLabel {
+  margin: 0;
+  font-size: 0.88rem;
+  font-family: system-ui, sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: #5c483f;
+}
+
+.blessing-page__spinPrepTrack {
+  width: 100%;
+  height: 7px;
+  border-radius: 999px;
+  background: rgba(120, 90, 70, 0.14);
+  box-shadow: inset 0 1px 2px rgba(60, 40, 30, 0.08);
+  overflow: hidden;
+}
+
+.blessing-page__spinPrepBar {
+  display: block;
+  height: 100%;
+  width: 100%;
+  transform-origin: left center;
+  transform: scaleX(0);
+  animation-name: blessing-spin-prep-fill;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  background: linear-gradient(90deg, #c4a574, #d4b896 45%, #a88458);
+  border-radius: inherit;
+}
+
+@keyframes blessing-spin-prep-fill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.blessing-page__spinningHint {
+  margin: 0;
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 20rem;
+  font-size: 0.98rem;
+  font-family: system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: #5c483f;
+}
+
+.blessing-page__spinBtn {
+  appearance: none;
+  border: none;
+  border-radius: 999px;
+  padding: 0.9rem 1.75rem;
+  min-height: 48px;
+  font-size: 0.98rem;
+  font-family: system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  color: #fffdf8;
+  background: linear-gradient(165deg, #c4a574, #a88458);
+  box-shadow:
+    0 3px 16px rgba(120, 90, 60, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.2s ease,
+    opacity 0.15s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.blessing-page__spinBtn:hover:not(:disabled) {
+  box-shadow:
+    0 5px 22px rgba(120, 90, 60, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.blessing-page__spinBtn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.blessing-page__spinBtn:disabled {
+  opacity: 0.75;
+  cursor: wait;
+}
+
+/* Result card */
+.blessing-result {
+  width: 100%;
+  max-width: 22rem;
+  padding: 1.15rem 1.25rem 1.25rem;
+  border-radius: 1.1rem;
+  background: linear-gradient(155deg, rgba(255, 255, 255, 0.72), rgba(250, 244, 236, 0.55));
+  box-shadow:
+    0 0 0 1px rgba(150, 120, 100, 0.18),
+    0 10px 36px rgba(70, 50, 42, 0.1);
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition:
+    opacity 0.55s ease,
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.blessing-result--visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.blessing-result--pulse {
+  animation: blessing-result-pulse 2s ease-out 1;
+}
+
+@keyframes blessing-result-pulse {
+  0% {
+    box-shadow:
+      0 0 0 1px rgba(150, 120, 100, 0.18),
+      0 10px 36px rgba(70, 50, 42, 0.1);
+  }
+  40% {
+    box-shadow:
+      0 0 0 1px rgba(184, 149, 106, 0.45),
+      0 10px 40px rgba(120, 90, 70, 0.16),
+      0 0 28px rgba(212, 185, 150, 0.35);
+  }
+  100% {
+    box-shadow:
+      0 0 0 1px rgba(150, 120, 100, 0.18),
+      0 10px 36px rgba(70, 50, 42, 0.1);
+  }
+}
+
+.blessing-result__eyebrow {
+  margin: 0 0 0.5rem;
+  font-size: 0.68rem;
+  font-family: system-ui, sans-serif;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #8a6f62;
+}
+
+.blessing-result__headRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.65rem 1rem;
+  margin-bottom: 0.65rem;
+}
+
+.blessing-result__portraitWrap {
+  flex-shrink: 0;
+  width: min(5.5rem, 30vw);
+  aspect-ratio: 1;
+  margin: 0.1rem 0 0;
+}
+
+.blessing-result__portraitSvg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 3px 12px rgba(70, 50, 40, 0.14));
+}
+
+.blessing-result__portraitFallback {
+  fill: rgba(220, 200, 188, 0.5);
+}
+
+.blessing-result__title {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  padding-top: 0.05rem;
+  font-size: clamp(1.35rem, 4.5vw, 1.75rem);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  line-height: 1.15;
+  color: #2c1f1a;
+  text-align: left;
+}
+
+.blessing-result__body {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: #453530;
+  white-space: pre-line;
+}
+
+/* Actions */
+.wheel-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  width: 100%;
+  max-width: 20rem;
+  padding: 0.15rem 0 0.35rem;
+  animation: blessing-rise 0.65s ease 0.15s both;
+}
+
+.wheel-actions__btn {
+  appearance: none;
+  border: none;
+  border-radius: 999px;
+  padding: 0.82rem 1.2rem;
+  min-height: 48px;
+  font-size: 0.92rem;
+  font-family: system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.25s ease;
+}
+
+.wheel-actions__btn:active {
+  transform: scale(0.98);
+}
+
+.wheel-actions__btn--gold {
+  color: #fffdf9;
+  background: linear-gradient(160deg, #b8986e, #9a7848);
+  box-shadow: 0 2px 14px rgba(100, 75, 50, 0.22);
+}
+
+.wheel-actions__btn--gold:hover {
+  box-shadow: 0 4px 18px rgba(100, 75, 50, 0.28);
+}
+
+.wheel-actions__btn--rose {
+  color: #3a2520;
+  background: linear-gradient(165deg, #e2c4bf, #cfa59e);
+  box-shadow: 0 2px 12px rgba(130, 85, 80, 0.18);
+}
+
+.wheel-actions__btn--rose:hover {
+  box-shadow: 0 4px 16px rgba(130, 85, 80, 0.24);
+}
+
+.wheel-actions__btn--ghost {
+  background: rgba(255, 255, 255, 0.5);
+  color: #4d3a33;
+  box-shadow: 0 0 0 1px rgba(120, 95, 82, 0.28);
+}
+
+.wheel-actions__btn--ghost:hover {
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.wheel-actions__btn--soft {
+  background: rgba(255, 252, 248, 0.75);
+  color: #4a352c;
+  box-shadow:
+    0 0 0 1px rgba(180, 150, 125, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+
+.wheel-actions__btn--soft:hover {
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.blessing-page__roundDone {
+  margin: 0;
+  max-width: 22rem;
+  text-align: center;
+  font-size: 0.88rem;
+  font-family: system-ui, sans-serif;
+  line-height: 1.55;
+  color: #5c483f;
+  padding: 0.25rem 0.5rem 0.5rem;
+}
+
+.blessing-page__roundDone strong {
+  font-weight: 600;
+  color: #3d2a24;
+}
+
+/* Floating words */
+.blessing-page__float-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.blessing-page__float-word {
+  position: absolute;
+  bottom: -8%;
+  font-size: clamp(0.82rem, 2.6vw, 1rem);
+  font-family: Georgia, serif;
+  font-weight: 500;
+  color: rgba(120, 85, 78, 0.88);
+  text-shadow: 0 0 14px rgba(255, 245, 235, 0.9);
+  animation-name: blessing-float-up;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+  white-space: nowrap;
+}
+
+@keyframes blessing-float-up {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0.94);
+  }
+  10% {
+    opacity: 0.92;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-105vh) scale(1.04);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blessing-page,
+  .blessing-page__header,
+  .blessing-page__wheelWrap,
+  .blessing-wheel__stage--shimmer::after,
+  .blessing-wheel__pointer--bounce,
+  .blessing-result--pulse,
+  .wheel-actions,
+  .blessing-page__float-word {
+    animation: none !important;
+  }
+
+  .blessing-page__wheelWrap,
+  .blessing-wheel {
+    transition: none;
+  }
+
+  .blessing-result {
+    transition: none;
+  }
+
+  .blessing-result--visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  .blessing-page__spinPrepBar {
+    animation: none !important;
+    transform: scaleX(1);
+  }
+}

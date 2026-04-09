@@ -1,8 +1,7 @@
 import type { ReactNode } from "react";
 import { useCallback, useRef, useState } from "react";
 
-export type DraggableLetterProps = {
-  suratSrc: string;
+type DraggableLetterBase = {
   /** Pull distance (px) required to complete */
   threshold: number;
   /** Max visual pull (px) */
@@ -15,12 +14,19 @@ export type DraggableLetterProps = {
   dragAriaLabel?: string;
 };
 
+export type DraggableLetterProps = DraggableLetterBase &
+  (
+    | { suratSrc: string; letterPeek?: never }
+    | { suratSrc?: undefined; letterPeek: ReactNode }
+  );
+
 /**
  * Letter peek that follows vertical drag (mouse + touch via Pointer Events).
  * Pull upward (positive delta) increases offset; releasing below threshold snaps back.
  */
 export function DraggableLetter({
   suratSrc,
+  letterPeek,
   threshold,
   maxPull,
   onComplete,
@@ -102,7 +108,13 @@ export function DraggableLetter({
           style={{ transform: `translate3d(-50%, ${-offset}px, 0)` }}
           aria-hidden
         >
-          <img className="ucapan-pull__suratPeek" src={suratSrc} alt="" width={480} height={640} decoding="async" draggable={false} />
+          {letterPeek ? (
+            <div className="ucapan-pull__suratPeek ucapan-pull__suratPeek--custom" aria-hidden>
+              {letterPeek}
+            </div>
+          ) : (
+            <img className="ucapan-pull__suratPeek" src={suratSrc!} alt="" width={480} height={640} decoding="async" draggable={false} />
+          )}
         </div>
       </div>
       <div className="ucapan-pull__envelopeSlot">{envelopeOverlay}</div>

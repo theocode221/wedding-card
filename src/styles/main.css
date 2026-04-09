@@ -559,7 +559,7 @@ button {
 
 .home-selector__grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
   gap: clamp(0.65rem, 2vw, 1rem);
 }
 
@@ -612,7 +612,7 @@ button {
   text-decoration-color: rgba(47, 79, 63, 0.65);
 }
 
-@media (max-width: 640px) {
+@media (max-width: 520px) {
   .home-selector__grid {
     grid-template-columns: 1fr;
   }

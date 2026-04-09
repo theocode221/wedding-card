@@ -18,6 +18,21 @@ export function HomePage() {
             <span className="home-selector__cardTitle">Congratulation Card</span>
             <span className="home-selector__cardDesc">Buka kad ucapan tahniah</span>
           </Link>
+
+          <Link to="/ucapan-party" className="home-selector__card">
+            <span className="home-selector__cardTitle">Party Congrats</span>
+            <span className="home-selector__cardDesc">Aliran sampul dan kejutan seperti kad ucapan — tema neon</span>
+          </Link>
+
+          <Link to="/kad-gosok" className="home-selector__card">
+            <span className="home-selector__cardTitle">Kad Gosok</span>
+            <span className="home-selector__cardDesc">Gosok untuk membuka ucapan rahsia — tiada imej luaran</span>
+          </Link>
+
+          <Link to="/roda-doa" className="home-selector__card">
+            <span className="home-selector__cardTitle">Roda Doa</span>
+            <span className="home-selector__cardDesc">Pusing roda berkat — ucapan mengikut segmen terpilih</span>
+          </Link>
         </div>
 
         <p className="home-selector__footnote">

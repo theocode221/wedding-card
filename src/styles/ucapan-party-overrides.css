@@ -1,0 +1,309 @@
+/* Neon party skin for UcapanCardExperience — same markup/classes as ucapan.css */
+
+.ucapan-page.ucapan-page--party {
+  --u-serif: "Cormorant Garamond", Georgia, serif;
+  --u-sans: "Outfit", "Source Sans 3", system-ui, sans-serif;
+  --u-happy: "Happy Monkey", cursive;
+  --u-hand: "Caveat", "Segoe Script", cursive;
+  --u-cream: #0f0822;
+  --u-parchment: #150a2e;
+  --u-ink: #f4f1ff;
+  --u-ink-soft: rgba(244, 241, 255, 0.88);
+  --u-brown: #e8b4d4;
+  --u-brown-soft: #c4b5fd;
+  --u-forest: #a78bfa;
+  --u-forest-mid: #c084fc;
+  --u-gold: #ff6b9d;
+  --ucapan-depth-ink: 124, 92, 255;
+  --ucapan-depth-warm: 255, 107, 157;
+
+  color: var(--u-ink);
+  background: var(--u-cream);
+}
+
+.ucapan-page.ucapan-page--party .ucapan-page__wash {
+  background:
+    radial-gradient(ellipse 100% 80% at 50% -25%, rgba(124, 92, 255, 0.38), transparent 55%),
+    radial-gradient(ellipse 70% 50% at 100% 100%, rgba(255, 107, 157, 0.22), transparent 50%),
+    radial-gradient(ellipse 60% 45% at 0% 90%, rgba(0, 212, 170, 0.12), transparent 50%),
+    linear-gradient(165deg, #0f0822 0%, #1a0f3a 50%, #12082a 100%);
+}
+
+.ucapan-page.ucapan-page--party .ucapan-page__batik,
+.ucapan-page.ucapan-page--party .ucapan-page__floral {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.ucapan-page.ucapan-page--party .ucapan-page__partyGrid {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.12;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse 85% 70% at 50% 45%, black 25%, transparent 72%);
+}
+
+.ucapan-party-homeLink {
+  position: fixed;
+  top: max(0.85rem, env(safe-area-inset-top, 0px));
+  left: max(0.85rem, env(safe-area-inset-left, 0px));
+  z-index: 50;
+  font-family: var(--u-sans);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: rgba(244, 241, 255, 0.78);
+  text-decoration: none;
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(10px);
+  transition:
+    color 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.ucapan-party-homeLink:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.ucapan-party-homeLink:focus-visible {
+  outline: 2px solid #34d399;
+  outline-offset: 3px;
+}
+
+/* Intro typing chip */
+.ucapan-page.ucapan-page--party .ucapan-s1-typing {
+  color: #f4f1ff;
+  font-style: italic;
+  text-shadow: 0 0 24px rgba(124, 92, 255, 0.45);
+  background: rgba(18, 12, 36, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 0 40px rgba(255, 107, 157, 0.15),
+    0 8px 32px rgba(0, 0, 0, 0.35);
+}
+
+.ucapan-page.ucapan-page--party .ucapan-typing-caret {
+  background: linear-gradient(180deg, #ff6b9d, #a78bfa);
+  opacity: 0.95;
+}
+
+/* Envelope + stamp — stronger neon rim */
+.ucapan-page.ucapan-page--party .ucapan-s1-envelope__img,
+.ucapan-page.ucapan-page--party .ucapan-opening__img,
+.ucapan-page.ucapan-page--party .ucapan-pull__envelope {
+  filter:
+    drop-shadow(0 0 20px rgba(124, 92, 255, 0.35))
+    drop-shadow(0 0 32px rgba(255, 107, 157, 0.2))
+    drop-shadow(0 14px 40px rgba(0, 0, 0, 0.45));
+}
+
+.ucapan-page.ucapan-page--party .ucapan-s1-stamp {
+  filter:
+    drop-shadow(0 4px 12px rgba(0, 0, 0, 0.35))
+    drop-shadow(0 0 28px rgba(255, 107, 157, 0.45))
+    drop-shadow(0 0 40px rgba(124, 92, 255, 0.35));
+}
+
+.ucapan-page.ucapan-page--party .ucapan-s1-stamp:hover {
+  filter:
+    drop-shadow(0 6px 16px rgba(0, 0, 0, 0.4))
+    drop-shadow(0 0 36px rgba(255, 107, 157, 0.55))
+    drop-shadow(0 0 48px rgba(124, 92, 255, 0.45));
+}
+
+.ucapan-page.ucapan-page--party .ucapan-s1-stamp:focus-visible {
+  outline: 2px solid rgba(52, 211, 153, 0.85);
+  outline-offset: 5px;
+}
+
+/* Pull hint */
+.ucapan-page.ucapan-page--party .ucapan-pull__hint {
+  color: rgba(244, 241, 255, 0.92);
+  background: rgba(18, 12, 36, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 28px rgba(124, 92, 255, 0.2);
+}
+
+.ucapan-page.ucapan-page--party .ucapan-pull__hit:focus-visible {
+  outline: 2px solid rgba(52, 211, 153, 0.8);
+  outline-offset: 4px;
+}
+
+/* Reveal */
+.ucapan-page.ucapan-page--party .ucapan-reveal {
+  background: #0a0518;
+}
+
+.ucapan-page.ucapan-page--party .ucapan-reveal__veil {
+  background: linear-gradient(
+    180deg,
+    rgba(15, 8, 34, 0.15) 0%,
+    rgba(45, 20, 80, 0.35) 50%,
+    rgba(8, 4, 22, 0.65) 100%
+  );
+}
+
+.ucapan-page.ucapan-page--party .ucapan-reveal__typing {
+  color: #fffef8;
+  text-shadow:
+    0 0 20px rgba(124, 92, 255, 0.35),
+    0 2px 12px rgba(0, 0, 0, 0.5),
+    0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.ucapan-page.ucapan-page--party .ucapan-reveal__typing .ucapan-typing-caret {
+  background: linear-gradient(180deg, #ff6b9d, #fde047);
+}
+
+.ucapan-page.ucapan-page--party .ucapan-reveal__surprise {
+  color: #fff;
+  font-style: italic;
+  border: 1px solid rgba(255, 107, 157, 0.55);
+  background: linear-gradient(135deg, rgba(124, 92, 255, 0.55) 0%, rgba(255, 107, 157, 0.45) 100%);
+  box-shadow:
+    0 0 32px rgba(255, 107, 157, 0.25),
+    0 8px 28px rgba(0, 0, 0, 0.35);
+}
+
+.ucapan-page.ucapan-page--party .ucapan-reveal__surprise:hover {
+  border-color: rgba(253, 224, 71, 0.65);
+  box-shadow:
+    0 0 40px rgba(124, 92, 255, 0.35),
+    0 12px 36px rgba(0, 0, 0, 0.4);
+}
+
+.ucapan-page.ucapan-page--party .ucapan-reveal__surprise:focus-visible {
+  outline: 2px solid #34d399;
+  outline-offset: 4px;
+}
+
+.ucapan-page.ucapan-page--party .ucapan-reveal__replay {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+}
+
+.ucapan-page.ucapan-page--party .ucapan-reveal__replay:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.38);
+}
+
+.ucapan-reveal__partyHomeFooter {
+  font-family: var(--u-sans);
+  font-size: clamp(0.62rem, 0.35vw + 0.52rem + 0.1vmin, 0.75rem);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(244, 241, 255, 0.82);
+  text-decoration: none;
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.06);
+  transition:
+    color 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.ucapan-reveal__partyHomeFooter:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+.ucapan-reveal__partyHomeFooter:focus-visible {
+  outline: 2px solid #34d399;
+  outline-offset: 3px;
+}
+
+/* Surprise stage */
+.ucapan-page.ucapan-page--party .ucapan-surprise {
+  background: linear-gradient(165deg, #12082a 0%, #1a0f3a 45%, #0f0822 100%);
+}
+
+.ucapan-page.ucapan-page--party .ucapan-surprise__wash {
+  background:
+    radial-gradient(ellipse 90% 55% at 50% -8%, rgba(124, 92, 255, 0.35), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 0% 100%, rgba(255, 107, 157, 0.2), transparent 50%),
+    radial-gradient(ellipse 45% 38% at 100% 88%, rgba(52, 211, 153, 0.12), transparent 52%);
+}
+
+.ucapan-page.ucapan-page--party .ucapan-surprise__glow--a {
+  background: radial-gradient(circle, rgba(255, 107, 157, 0.55), transparent 70%);
+}
+
+.ucapan-page.ucapan-page--party .ucapan-surprise__glow--b {
+  background: radial-gradient(circle, rgba(124, 92, 255, 0.45), transparent 72%);
+}
+
+.ucapan-page.ucapan-page--party .ucapan-surprise__title {
+  color: #f4f1ff;
+  text-shadow: 0 0 28px rgba(124, 92, 255, 0.4);
+}
+
+.ucapan-page.ucapan-page--party .ucapan-surprise__back {
+  color: rgba(244, 241, 255, 0.9);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.ucapan-page.ucapan-page--party .ucapan-surprise__back:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.ucapan-page.ucapan-page--party .ucapan-surprise__back:focus-visible {
+  outline: 2px solid #34d399;
+  outline-offset: 3px;
+}
+
+.ucapan-page.ucapan-page--party .ucapan-surprise__stageHint {
+  color: rgba(244, 241, 255, 0.72);
+}
+
+.ucapan-page.ucapan-page--party .ucapan-surprise__photoFrame {
+  box-shadow:
+    0 0 0 2px rgba(255, 107, 157, 0.35),
+    0 8px 32px rgba(124, 92, 255, 0.25),
+    0 16px 48px rgba(0, 0, 0, 0.45);
+  border-color: rgba(255, 255, 255, 0.25);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.15), rgba(124, 92, 255, 0.08));
+}
+
+.ucapan-page.ucapan-page--party .ucapan-surprise__viewerBackdrop {
+  background: rgba(6, 3, 18, 0.88);
+}
+
+.ucapan-page.ucapan-page--party .ucapan-surprise__viewerClose {
+  background: linear-gradient(135deg, rgba(255, 107, 157, 0.9), rgba(124, 92, 255, 0.85));
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.ucapan-page.ucapan-page--party .ucapan-surprise__viewerClose:hover {
+  background: linear-gradient(135deg, #ff6b9d, #7c5cff);
+}
+
+.ucapan-page.ucapan-page--party .ucapan-surprise__viewerClose:focus-visible {
+  outline: 2px solid #fde047;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ucapan-page.ucapan-page--party .ucapan-s1-typing,
+  .ucapan-page.ucapan-page--party .ucapan-pull__hint {
+    animation: none;
+  }
+}

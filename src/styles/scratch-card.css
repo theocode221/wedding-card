@@ -1,0 +1,537 @@
+/* Scratch & reveal congratulation — warm premium palette, no image assets */
+
+.scratch-page {
+  min-height: 100dvh;
+  position: relative;
+  overflow-x: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1rem, 4vw, 2.5rem);
+  color: #3d2f2a;
+  font-family: "Georgia", "Times New Roman", serif;
+  animation: scratch-page-enter 1s ease-out both;
+}
+
+@keyframes scratch-page-enter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.scratch-page__ambient {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 120% 80% at 50% -20%, rgba(232, 200, 190, 0.45), transparent 55%),
+    radial-gradient(ellipse 90% 60% at 100% 50%, rgba(212, 180, 168, 0.2), transparent 50%),
+    radial-gradient(ellipse 80% 50% at 0% 80%, rgba(200, 170, 155, 0.18), transparent 45%),
+    linear-gradient(165deg, #f7f0e8 0%, #ebe2d6 35%, #e4d8cc 70%, #ddd0c4 100%);
+}
+
+.scratch-page__inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 28rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.scratch-page__header {
+  text-align: center;
+  animation: scratch-card-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+}
+
+@keyframes scratch-card-rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.scratch-page__title {
+  margin: 0;
+  font-size: clamp(1.35rem, 4.5vw, 1.65rem);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1.35;
+  color: #352520;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.scratch-page__subtitle {
+  margin: 0.5rem 0 0;
+  font-size: 0.95rem;
+  font-family: system-ui, sans-serif;
+  color: #6b5349;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+}
+
+.scratch-page__card {
+  width: 100%;
+  animation: scratch-card-rise 0.95s cubic-bezier(0.22, 1, 0.36, 1) 0.28s both;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.6s ease;
+}
+
+.scratch-page__card--revealed {
+  transform: scale(1.02);
+}
+
+.scratch-page__cardFrame {
+  border-radius: 1.25rem;
+  padding: clamp(0.65rem, 2vw, 0.85rem);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.65), rgba(255, 248, 240, 0.35));
+  box-shadow:
+    0 0 0 1px rgba(180, 150, 130, 0.35),
+    0 4px 24px rgba(90, 60, 50, 0.12),
+    0 24px 48px rgba(80, 50, 45, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+}
+
+/* Scratch viewport */
+.scratch-reveal {
+  width: 100%;
+}
+
+.scratch-reveal__viewport {
+  position: relative;
+  width: 100%;
+  min-height: clamp(16rem, 52vw, 20rem);
+  border-radius: 0.85rem;
+  overflow: hidden;
+  box-shadow:
+    inset 0 0 0 1px rgba(120, 90, 80, 0.12),
+    inset 0 2px 12px rgba(255, 255, 255, 0.35);
+}
+
+.scratch-reveal__under {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1rem, 4vw, 1.5rem);
+  background:
+    radial-gradient(ellipse 100% 80% at 50% 0%, rgba(255, 245, 238, 0.95), transparent 60%),
+    linear-gradient(168deg, #faf5ef 0%, #f3e8df 45%, #ead9ce 100%);
+}
+
+.scratch-reveal__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: crosshair;
+  touch-action: none;
+  z-index: 2;
+  transition: opacity 0.85s ease, visibility 0.85s ease;
+}
+
+.scratch-reveal__canvas--gone {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.scratch-reveal__shimmer {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    transparent 40%,
+    rgba(255, 255, 255, 0.35) 48%,
+    rgba(255, 252, 248, 0.55) 50%,
+    rgba(255, 255, 255, 0.3) 52%,
+    transparent 60%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: scratch-shimmer 3.2s ease-in-out infinite;
+  mix-blend-mode: soft-light;
+}
+
+@keyframes scratch-shimmer {
+  0% {
+    background-position: 130% 0;
+  }
+  100% {
+    background-position: -30% 0;
+  }
+}
+
+.scratch-reveal__hint {
+  margin: 0.65rem 0 0;
+  text-align: center;
+  font-size: 0.78rem;
+  font-family: system-ui, sans-serif;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(90, 70, 62, 0.55);
+}
+
+/* Message under scratch */
+.scratch-message {
+  text-align: center;
+  max-width: 22rem;
+  animation: scratch-message-reveal 0.9s ease 0.2s both;
+}
+
+.scratch-page__card:not(.scratch-page__card--revealed) .scratch-message {
+  animation: none;
+  opacity: 0.92;
+}
+
+.scratch-page__card--revealed .scratch-message {
+  animation: scratch-message-reveal 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes scratch-message-reveal {
+  from {
+    opacity: 0.6;
+    transform: scale(0.98);
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+}
+
+.scratch-message__kicker {
+  margin: 0 0 0.35rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #9a7568;
+  font-family: system-ui, sans-serif;
+}
+
+.scratch-message__headline {
+  margin: 0 0 0.85rem;
+  font-size: clamp(1.4rem, 5vw, 1.75rem);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: #3a2820;
+  line-height: 1.25;
+}
+
+.scratch-message__headline--celebrate {
+  font-size: clamp(1.05rem, 3.8vw, 1.45rem);
+  letter-spacing: 0.06em;
+  line-height: 1.35;
+  text-transform: none;
+}
+
+.scratch-message__body {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.75;
+  color: #4d3a33;
+  white-space: pre-line;
+}
+
+.scratch-message__extra {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition:
+    max-height 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.5s ease,
+    margin 0.5s ease;
+  margin-top: 0;
+}
+
+.scratch-message__extra--open {
+  max-height: 12rem;
+  opacity: 1;
+  margin-top: 1.1rem;
+}
+
+.scratch-message__extraInner {
+  margin: 0;
+  padding-top: 0.85rem;
+  border-top: 1px solid rgba(150, 110, 95, 0.2);
+  font-size: 0.92rem;
+  line-height: 1.72;
+  color: #5c443c;
+  white-space: pre-line;
+  font-style: italic;
+}
+
+.scratch-page__bacaTop {
+  width: 100%;
+  max-width: 20rem;
+  animation: scratch-actions-enter 0.65s ease 0.2s both;
+}
+
+.scratch-page__doaSecond {
+  width: 100%;
+  max-width: 20rem;
+}
+
+.scratch-page__wheelCta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 20rem;
+  min-height: 52px;
+  padding: 0.9rem 1.35rem;
+  border-radius: 999px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 1rem;
+  font-family: system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: #fffdf9;
+  background: linear-gradient(165deg, #b8926a, #9a7348);
+  box-shadow:
+    0 3px 18px rgba(110, 80, 55, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.25s ease;
+  animation: scratch-actions-enter 0.65s ease 0.38s both;
+}
+
+.scratch-page__wheelCta:hover {
+  box-shadow:
+    0 5px 24px rgba(110, 80, 55, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.scratch-page__wheelCta:active {
+  transform: scale(0.98);
+}
+
+/* Actions */
+.reveal-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  width: 100%;
+  max-width: 20rem;
+  padding: 0.25rem 0 0.5rem;
+  overflow: visible;
+  animation: scratch-actions-enter 0.7s ease 0.4s both;
+}
+
+.reveal-actions.reveal-actions--afterBaca {
+  animation: scratch-actions-enter 0.7s ease 0.5s both;
+}
+
+@keyframes scratch-actions-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal-actions__btn {
+  appearance: none;
+  border: none;
+  border-radius: 999px;
+  padding: 0.85rem 1.25rem;
+  font-size: 0.95rem;
+  font-family: system-ui, sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+  min-height: 48px;
+}
+
+.reveal-actions__btn:active {
+  transform: scale(0.98);
+}
+
+.reveal-actions__btn--primary {
+  background: linear-gradient(160deg, #c9a87c, #b08d62);
+  color: #fffdf9;
+  box-shadow:
+    0 2px 12px rgba(140, 100, 70, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.reveal-actions__btn--primary:hover {
+  box-shadow:
+    0 4px 20px rgba(140, 100, 70, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.reveal-actions__hujanInner {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2em;
+  flex-wrap: wrap;
+}
+
+.reveal-actions__btn--hujan {
+  animation: reveal-hujan-fall 0.9s cubic-bezier(0.28, 0.85, 0.32, 1) 0.26s both;
+}
+
+@keyframes reveal-hujan-fall {
+  0% {
+    opacity: 0;
+    transform: translateY(-7.5rem);
+  }
+  55% {
+    opacity: 1;
+  }
+  78% {
+    transform: translateY(10px);
+  }
+  92% {
+    transform: translateY(-3px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal-actions__btn--rose {
+  background: linear-gradient(165deg, #e8c4c0, #d4a8a2);
+  color: #3d2520;
+  box-shadow:
+    0 2px 14px rgba(160, 100, 95, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+.reveal-actions__btn--rose:hover {
+  box-shadow:
+    0 4px 18px rgba(160, 100, 95, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.reveal-actions__btn--ghost {
+  background: rgba(255, 255, 255, 0.45);
+  color: #5c443c;
+  box-shadow:
+    0 0 0 1px rgba(130, 100, 88, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.reveal-actions__btn--ghost:hover {
+  background: rgba(255, 255, 255, 0.65);
+}
+
+/* Blessing layer */
+.scratch-page__blessing-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.scratch-page__blessing-word {
+  position: absolute;
+  bottom: -10%;
+  font-size: clamp(0.85rem, 2.8vw, 1.05rem);
+  font-family: Georgia, serif;
+  font-weight: 500;
+  color: rgba(140, 90, 85, 0.85);
+  text-shadow: 0 0 12px rgba(255, 240, 230, 0.9);
+  animation-name: scratch-bless-float;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+  white-space: nowrap;
+}
+
+@keyframes scratch-bless-float {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0.92);
+  }
+  12% {
+    opacity: 0.95;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-110vh) scale(1.05);
+  }
+}
+
+.scratch-page__blessing-sparkles {
+  position: absolute;
+  inset: 0;
+}
+
+.scratch-page__sparkle {
+  position: absolute;
+  bottom: 15%;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 248, 220, 1), rgba(212, 180, 140, 0.4));
+  box-shadow: 0 0 8px rgba(255, 230, 200, 0.8);
+  animation: scratch-sparkle-rise 2.8s ease-in infinite;
+  opacity: 0;
+}
+
+@keyframes scratch-sparkle-rise {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0.5);
+  }
+  20% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-85vh) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scratch-page,
+  .scratch-page__header,
+  .scratch-page__card,
+  .scratch-message,
+  .scratch-page__bacaTop,
+  .scratch-page__wheelCta,
+  .reveal-actions,
+  .reveal-actions__btn--hujan,
+  .scratch-reveal__shimmer,
+  .scratch-page__blessing-word,
+  .scratch-page__sparkle {
+    animation: none !important;
+  }
+
+  .scratch-reveal__canvas--gone {
+    transition: none;
+  }
+
+  .scratch-message__extra {
+    transition: none;
+  }
+}
