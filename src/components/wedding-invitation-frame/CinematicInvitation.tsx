@@ -14,8 +14,6 @@ export type CinematicInvitationProps = {
   urls: readonly [string, string, string];
   /** After final hold — e.g. reveal full invitation below. */
   onComplete?: () => void;
-  /** Replay intro from the beginning (e.g. hide invitation + remount). */
-  onReplay?: () => void;
 };
 
 const COPY = [
@@ -109,7 +107,7 @@ function scheduleZoomAndFirstLine(
   return ids;
 }
 
-export function CinematicInvitation({ urls, onComplete, onReplay }: CinematicInvitationProps) {
+export function CinematicInvitation({ urls, onComplete }: CinematicInvitationProps) {
   const [rootVisible, setRootVisible] = useState(false);
   const [stage, setStage] = useState<CinematicStage>("idle");
   const [zoomLevel, setZoomLevel] = useState<"idle" | "frame">("idle");
@@ -171,10 +169,6 @@ export function CinematicInvitation({ urls, onComplete, onReplay }: CinematicInv
     if (stage !== "idle") return;
     runSequence();
   }, [stage, runSequence]);
-
-  const handleReplay = useCallback(() => {
-    onReplay?.();
-  }, [onReplay]);
 
   const heroSrc = urls[0];
 
@@ -252,12 +246,6 @@ export function CinematicInvitation({ urls, onComplete, onReplay }: CinematicInv
       >
         Buka Jemputan
       </button>
-
-      {stage === "done" && (
-        <button type="button" className="ci-replay" onClick={handleReplay}>
-          Main Semula
-        </button>
-      )}
 
       {started && <span className="ci-sr-only">Animasi jemputan sedang dimainkan.</span>}
     </div>

@@ -319,44 +319,6 @@
   pointer-events: none;
 }
 
-.ci-replay {
-  position: fixed;
-  z-index: 30;
-  left: 50%;
-  bottom: max(1.5rem, env(safe-area-inset-bottom));
-  transform: translateX(-50%);
-  margin: 0;
-  padding: 0.7rem 1.5rem;
-  border: 1px solid rgba(212, 184, 150, 0.4);
-  border-radius: 999px;
-  background: rgba(18, 14, 12, 0.72);
-  color: rgba(255, 250, 244, 0.92);
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  cursor: pointer;
-  backdrop-filter: blur(12px);
-  box-shadow: 0 10px 36px rgba(0, 0, 0, 0.45);
-  transition:
-    background 0.25s ease,
-    transform 0.2s ease;
-}
-
-.ci-replay:hover {
-  background: rgba(32, 26, 22, 0.88);
-}
-
-.ci-replay:focus-visible {
-  outline: 2px solid #d4b896;
-  outline-offset: 3px;
-}
-
-.ci-replay:active {
-  transform: translateX(-50%) scale(0.98);
-}
-
 .ci-sr-only {
   position: absolute;
   width: 1px;

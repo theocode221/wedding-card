@@ -94,7 +94,6 @@ export function WeddingInvitationFramePage() {
           key={cinematicKey}
           urls={urls}
           onComplete={handleCinematicComplete}
-          onReplay={handleReplay}
         />
       )}
 
