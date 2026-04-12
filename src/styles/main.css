@@ -514,27 +514,128 @@ button {
   color: #c9a962;
 }
 
-/* Home selector */
+/* Home selector — dark canvas + gold accents + glitter (see GoldGlitterRain) */
 .home-selector {
+  position: relative;
+  overflow: hidden;
   min-height: 100vh;
   min-height: 100dvh;
   display: grid;
   place-items: center;
   padding: clamp(1rem, 3vw, 2rem);
   background:
-    radial-gradient(ellipse 70% 45% at 50% -10%, rgba(47, 79, 63, 0.08), transparent 65%),
-    linear-gradient(180deg, #f7f3ec 0%, #ece4d8 100%);
+    radial-gradient(ellipse 78% 48% at 50% -8%, rgba(201, 169, 98, 0.16) 0%, transparent 58%),
+    radial-gradient(ellipse 55% 40% at 85% 92%, rgba(120, 90, 40, 0.12) 0%, transparent 55%),
+    #0a0908;
+}
+
+.home-selector__gold-decor {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.home-selector__gold-corner {
+  position: absolute;
+  width: min(3.35rem, 10vw);
+  height: min(3.35rem, 10vw);
+  opacity: 0.72;
+}
+
+.home-selector__gold-corner--tl {
+  top: clamp(0.75rem, 3vw, 1.35rem);
+  left: clamp(0.75rem, 3vw, 1.35rem);
+  border-top: 2px solid rgba(212, 175, 96, 0.58);
+  border-left: 2px solid rgba(212, 175, 96, 0.58);
+  border-radius: 2px 0 0 0;
+  box-shadow: -1px -1px 0 rgba(0, 0, 0, 0.35);
+}
+
+.home-selector__gold-corner--tr {
+  top: clamp(0.75rem, 3vw, 1.35rem);
+  right: clamp(0.75rem, 3vw, 1.35rem);
+  border-top: 2px solid rgba(212, 175, 96, 0.58);
+  border-right: 2px solid rgba(212, 175, 96, 0.58);
+  border-radius: 0 2px 0 0;
+  box-shadow: 1px -1px 0 rgba(0, 0, 0, 0.35);
+}
+
+.home-selector__gold-corner--bl {
+  bottom: clamp(0.75rem, 3vw, 1.35rem);
+  left: clamp(0.75rem, 3vw, 1.35rem);
+  border-bottom: 2px solid rgba(212, 175, 96, 0.52);
+  border-left: 2px solid rgba(212, 175, 96, 0.52);
+  border-radius: 0 0 0 2px;
+  box-shadow: -1px 1px 0 rgba(0, 0, 0, 0.35);
+}
+
+.home-selector__gold-corner--br {
+  bottom: clamp(0.75rem, 3vw, 1.35rem);
+  right: clamp(0.75rem, 3vw, 1.35rem);
+  border-bottom: 2px solid rgba(212, 175, 96, 0.52);
+  border-right: 2px solid rgba(212, 175, 96, 0.52);
+  border-radius: 0 0 2px 0;
+  box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.35);
+}
+
+.home-selector__gold-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at 40% 38%,
+    rgba(255, 232, 190, 0.22) 0%,
+    rgba(180, 140, 70, 0.08) 45%,
+    transparent 68%
+  );
+  filter: blur(0.5px);
+}
+
+.home-selector__gold-orb--a {
+  width: min(11rem, 42vw);
+  height: min(11rem, 42vw);
+  top: 8%;
+  left: -4%;
+}
+
+.home-selector__gold-orb--b {
+  width: min(9rem, 36vw);
+  height: min(9rem, 36vw);
+  bottom: 6%;
+  right: -3%;
+}
+
+.home-selector__gold-line {
+  position: absolute;
+  top: clamp(1.1rem, 4vw, 1.85rem);
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(12rem, 42vw);
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(212, 175, 96, 0.45) 22%,
+    rgba(255, 224, 160, 0.65) 50%,
+    rgba(212, 175, 96, 0.45) 78%,
+    transparent 100%
+  );
+  opacity: 0.85;
 }
 
 .home-selector__panel {
+  position: relative;
+  z-index: 2;
   width: min(44rem, 100%);
-  background: rgba(255, 252, 247, 0.84);
-  border: 1px solid rgba(107, 79, 58, 0.16);
+  background: rgba(255, 252, 247, 0.92);
+  border: 1px solid rgba(201, 169, 98, 0.28);
   border-radius: 10px;
   padding: clamp(1.2rem, 3vw, 2rem);
   box-shadow:
-    0 18px 44px rgba(32, 26, 20, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    0 18px 44px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(255, 252, 248, 0.06) inset,
+    inset 0 1px 0 rgba(255, 255, 255, 0.75);
 }
 
 .home-selector__eyebrow {

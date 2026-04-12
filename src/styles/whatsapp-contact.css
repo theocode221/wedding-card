@@ -1,0 +1,39 @@
+/* Shared “Hubungi Kami” WhatsApp link */
+
+.wa-contact {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 0.65rem 1.2rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  color: #fffef8;
+  background: linear-gradient(160deg, #2bb826, #1fa31a 55%, #168a14);
+  border-radius: 999px;
+  box-shadow: 0 4px 18px rgba(34, 160, 52, 0.35);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
+}
+
+.wa-contact:hover {
+  filter: brightness(1.05);
+  box-shadow: 0 6px 22px rgba(34, 160, 52, 0.42);
+}
+
+.wa-contact:active {
+  transform: scale(0.98);
+}
+
+.wa-contact:focus-visible {
+  outline: 2px solid #1fa31a;
+  outline-offset: 3px;
+}
+
+.wa-contact__icon {
+  flex-shrink: 0;
+}

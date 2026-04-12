@@ -1,0 +1,381 @@
+/* —— Cinematic vertical wedding gallery (single-column story, no grid) —— */
+
+.gallery-page {
+  min-height: 100dvh;
+  background: linear-gradient(180deg, #fdfbf7 0%, #f9f4ec 40%, #f4ebe0 100%);
+  color: #2a221c;
+  opacity: 0;
+  transform: translate3d(0, 10px, 0);
+  transition:
+    opacity 1s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.gallery-page--in {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.gallery-page__back {
+  position: sticky;
+  top: max(0.65rem, env(safe-area-inset-top));
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  margin: max(0.65rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) 0
+    max(1rem, env(safe-area-inset-left));
+  padding: 0.45rem 0.95rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  color: #4a3d34;
+  background: rgba(255, 253, 249, 0.94);
+  border: 1px solid rgba(107, 83, 68, 0.1);
+  border-radius: 999px;
+  box-shadow: 0 4px 20px rgba(42, 34, 28, 0.05);
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.gallery-page__back:hover {
+  background: #fffefb;
+  border-color: rgba(184, 149, 106, 0.28);
+}
+
+.gallery-page__back:focus-visible {
+  outline: 2px solid #b8956a;
+  outline-offset: 3px;
+}
+
+.gallery-page__header {
+  text-align: center;
+  padding: clamp(1.75rem, 6vw, 3.5rem) clamp(1.25rem, 5vw, 2rem) clamp(2.5rem, 9vw, 4.5rem);
+  max-width: 36rem;
+  margin: 0 auto;
+}
+
+.gallery-page__title {
+  margin: 0;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(2.1rem, 7vw, 3rem);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: #1a1512;
+  line-height: 1.12;
+}
+
+.gallery-page__subtitle {
+  margin: 1rem 0 0;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(1.12rem, 3.2vw, 1.4rem);
+  font-weight: 400;
+  line-height: 1.65;
+  color: #5c4d42;
+}
+
+/* —— Vertical story stack —— */
+.gallery-cinematic__story {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(3.25rem, 14vw, 7rem);
+  width: 100%;
+  max-width: min(42rem, 100%);
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 4vw, 1.5rem) clamp(3rem, 12vw, 6rem);
+}
+
+/* Scroll reveal (Intersection Observer toggles --visible) */
+.gallery-cinematic__moment {
+  opacity: 0;
+  transform: translate3d(0, 1.75rem, 0) scale(0.96);
+  transition:
+    opacity 0.95s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.95s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.gallery-cinematic__moment--visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+.gallery-cinematic__frame {
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  border: none;
+  border-radius: 0.22rem;
+  overflow: hidden;
+  cursor: pointer;
+  background: rgba(232, 224, 214, 0.45);
+  -webkit-tap-highlight-color: transparent;
+  transition: box-shadow 0.4s ease;
+}
+
+.gallery-cinematic__frame:focus-visible {
+  outline: 2px solid #b8956a;
+  outline-offset: 4px;
+}
+
+.gallery-cinematic__img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center;
+  transform: scale(1.001);
+  transition:
+    filter 0.6s ease,
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.gallery-cinematic__img:not(.gallery-cinematic__img--loaded) {
+  filter: blur(14px);
+  transform: scale(1.04);
+}
+
+.gallery-cinematic__img.gallery-cinematic__img--loaded {
+  filter: none;
+  transform: scale(1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .gallery-cinematic__frame:hover .gallery-cinematic__img--loaded {
+    transform: scale(1.025);
+  }
+}
+
+/* Quote dividers */
+.gallery-cinematic__quote {
+  margin: 0 auto;
+  padding: clamp(2rem, 7vw, 3.5rem) clamp(1rem, 4vw, 2rem);
+  max-width: 30rem;
+  border: none;
+  text-align: center;
+}
+
+.gallery-cinematic__quote-text {
+  margin: 0;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(1.2rem, 3.8vw, 1.55rem);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.85;
+  color: #5a4a3e;
+  white-space: pre-line;
+}
+
+.gallery-page__footer {
+  padding: clamp(2.5rem, 9vw, 4rem) clamp(1.25rem, 4vw, 2rem) clamp(3.5rem, 12vw, 6rem);
+  text-align: center;
+  border-top: 1px solid rgba(107, 83, 68, 0.08);
+}
+
+.gallery-page__footer-text {
+  margin: 0 auto;
+  max-width: 26rem;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(1rem, 2.6vw, 1.12rem);
+  font-style: italic;
+  line-height: 1.75;
+  color: #6b5a4c;
+}
+
+.gallery-page__contact {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.75rem;
+}
+
+/* —— Lightbox —— */
+.glb {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  animation: glb-enter 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes glb-enter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.glb__backdrop {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: rgba(10, 8, 7, 0.9);
+  cursor: pointer;
+}
+
+.glb__chrome {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding: max(0.5rem, env(safe-area-inset-top)) max(0.65rem, env(safe-area-inset-right)) 0.35rem
+    max(0.65rem, env(safe-area-inset-left));
+  pointer-events: none;
+}
+
+.glb__chrome > * {
+  pointer-events: auto;
+}
+
+.glb__close {
+  width: 2.85rem;
+  height: 2.85rem;
+  min-width: 44px;
+  min-height: 44px;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255, 253, 249, 0.95);
+  color: #2a221c;
+  font-size: 1.65rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.22);
+  transition: transform 0.2s ease;
+}
+
+.glb__close:hover {
+  transform: scale(1.05);
+}
+
+.glb__close:focus-visible {
+  outline: 2px solid #d4b896;
+  outline-offset: 2px;
+}
+
+.glb__counter {
+  margin: 0 auto 0 0;
+  order: -1;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 0.95rem;
+  letter-spacing: 0.14em;
+  color: rgba(255, 250, 244, 0.92);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35);
+}
+
+.glb__counter-sep {
+  opacity: 0.5;
+  padding: 0 0.15em;
+}
+
+.glb__stage {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0 max(0.35rem, env(safe-area-inset-right)) max(0.85rem, env(safe-area-inset-bottom))
+    max(0.35rem, env(safe-area-inset-left));
+  min-height: 0;
+}
+
+.glb__figure {
+  margin: 0;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  max-height: 100%;
+  animation: glb-img-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes glb-img-in {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.glb__img {
+  max-width: 100%;
+  max-height: min(88vh, 100%);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 0.15rem;
+}
+
+.glb__nav {
+  flex-shrink: 0;
+  width: min(3.1rem, 12vw);
+  height: min(3.4rem, 14vw);
+  min-width: 44px;
+  min-height: 44px;
+  border: none;
+  border-radius: 0.35rem;
+  background: rgba(255, 253, 249, 0.2);
+  color: rgba(255, 252, 248, 0.96);
+  font-size: 1.85rem;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.glb__nav:hover {
+  background: rgba(255, 253, 249, 0.32);
+}
+
+.glb__nav:focus-visible {
+  outline: 2px solid #d4b896;
+  outline-offset: 2px;
+}
+
+@media (max-width: 520px) {
+  .glb__nav {
+    width: 2.65rem;
+    font-size: 1.55rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery-page {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .gallery-cinematic__moment {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .gallery-cinematic__img:not(.gallery-cinematic__img--loaded) {
+    filter: none;
+    transform: none;
+  }
+
+  .glb {
+    animation: none;
+  }
+
+  .glb__figure {
+    animation: none;
+  }
+}

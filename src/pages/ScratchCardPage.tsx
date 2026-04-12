@@ -4,7 +4,7 @@ import { DoaDoaButton, RevealActions } from "../components/scratch/RevealActions
 import { ScratchRevealCard } from "../components/scratch/ScratchRevealCard";
 import "../styles/scratch-card.css";
 
-const MAIN_LINES = `Ikhlas daripada Haniff, Hafizi, Din dan Nabil!!`;
+const MAIN_LINES = `Ikhlas daripada NABIL, Hafizi, Din dan Nabil!!`;
 
 const EXTRA_LINES = `Tahniah menjadi Xtrobois pertama berkahwin `;
 

@@ -1,0 +1,102 @@
+/* Gold glitter rain — home/cinematic (legacy) + App-wide global overlay */
+
+.gold-glitter {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/**
+ * App-wide overlay: above route paint, below sticky back links (z~10) and lightbox (z~1000).
+ * pointer-events: none so taps/clicks reach UI underneath.
+ */
+.gold-glitter--global {
+  position: fixed;
+  inset: 0;
+  z-index: 6;
+  overflow: hidden;
+  opacity: 0.26;
+}
+
+.gold-glitter--cinematic {
+  z-index: 4;
+  opacity: 0.74;
+}
+
+.gold-glitter__flake {
+  position: absolute;
+  top: -8%;
+  width: 3px;
+  height: 3px;
+  margin-left: -1.5px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 32% 32%,
+    #fff9ee 0%,
+    #f0d070 38%,
+    #b8892a 72%,
+    #4a3a12 100%
+  );
+  box-shadow:
+    0 0 5px rgba(255, 230, 170, 1),
+    0 0 12px rgba(212, 175, 96, 0.65),
+    0 0 22px rgba(200, 155, 70, 0.35),
+    0 0 34px rgba(180, 130, 50, 0.12);
+  animation-name: gold-glitter-fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform, opacity;
+}
+
+.gold-glitter__flake--fine {
+  margin-left: -0.5px;
+  box-shadow:
+    0 0 3px rgba(255, 228, 160, 0.95),
+    0 0 8px rgba(212, 175, 96, 0.5),
+    0 0 14px rgba(190, 150, 65, 0.22);
+  opacity: 0.92;
+}
+
+.gold-glitter__flake--spark {
+  box-shadow:
+    0 0 6px rgba(255, 248, 220, 1),
+    0 0 14px rgba(255, 215, 120, 0.95),
+    0 0 26px rgba(212, 175, 96, 0.55),
+    0 0 40px rgba(190, 145, 60, 0.22);
+}
+
+@keyframes gold-glitter-fall {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 0.92;
+  }
+  100% {
+    transform: translate3d(var(--gg-drift, 0px), 122vh, 0) rotate(620deg);
+    opacity: 0.12;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gold-glitter__flake {
+    animation: none;
+    top: 12%;
+    opacity: 0.12;
+    transform: translate3d(0, 0, 0);
+  }
+
+  .gold-glitter--cinematic .gold-glitter__flake {
+    opacity: 0.08;
+  }
+
+  .gold-glitter--global {
+    opacity: 0.1;
+  }
+}
