@@ -23,8 +23,6 @@
 }
 
 .wif-page--cinematic {
-  position: relative;
-  z-index: 8;
   min-height: 100dvh;
   padding: 0;
   padding-bottom: 2rem;
@@ -408,6 +406,10 @@
 .wif-invitation__calendar {
   width: 100%;
   max-width: 22rem;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }
 
 .wif-invitation__details .wif-invitation__calendar {
@@ -415,11 +417,13 @@
 }
 
 .wif-invitation__btn--calendar {
+  position: relative;
   display: flex;
   width: 100%;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  padding-left: 2.25rem;
+  padding-right: 2.25rem;
   background: linear-gradient(160deg, #d4b896, var(--wif-gold) 50%, #9a7650);
   color: #1f1814;
   border: 1px solid rgba(74, 58, 48, 0.2);
@@ -432,9 +436,14 @@
 
 .wif-invitation__calendar-label {
   letter-spacing: 0.06em;
+  text-align: center;
 }
 
 .wif-invitation__calendar-chevron {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
   font-size: 0.65rem;
   opacity: 0.75;
 }

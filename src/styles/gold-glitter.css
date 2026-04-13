@@ -11,6 +11,7 @@
 /**
  * App-wide overlay: above route paint, below sticky back links (z~10) and lightbox (z~1000).
  * pointer-events: none so taps/clicks reach UI underneath.
+ * Do not set a higher z-index on `<main>` than this — an opaque main would paint over the glitter.
  */
 .gold-glitter--global {
   position: fixed;
