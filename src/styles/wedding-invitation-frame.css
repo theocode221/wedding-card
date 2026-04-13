@@ -448,10 +448,12 @@
 }
 
 .wif-invitation__btn--calendar-opt {
-  min-height: 44px;
-  padding: 0.5rem 0.65rem;
-  font-size: 0.72rem;
-  letter-spacing: 0.04em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-height: 52px;
+  padding: 0.5rem 0.55rem;
   text-transform: none;
   background: var(--wif-paper);
   color: var(--wif-ink);
@@ -464,13 +466,20 @@
   border-color: rgba(184, 149, 106, 0.4);
 }
 
-.wif-invitation__calendar-hint {
-  margin: 0.5rem 0 0;
-  font-size: 0.65rem;
-  line-height: 1.45;
+.wif-invitation__calendar-brand {
+  display: block;
+  flex-shrink: 0;
+}
+
+.wif-invitation__calendar-opt-label {
+  font-size: 0.72rem;
+  font-weight: 600;
   letter-spacing: 0.02em;
-  color: var(--wif-ink-soft);
-  text-align: center;
+  line-height: 1.1;
+}
+
+.wif-invitation__btn--calendar-opt-apple {
+  color: #1d1d1f;
 }
 
 .wif-invitation__contact {

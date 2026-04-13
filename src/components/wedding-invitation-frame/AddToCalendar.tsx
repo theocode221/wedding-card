@@ -1,5 +1,6 @@
 import { useCallback, useId, useState } from "react";
 import { downloadWeddingIcs, getGoogleCalendarUrl } from "../../lib/weddingCalendar";
+import { AppleBrandIcon, GoogleBrandIcon } from "./CalendarBrandIcons";
 
 export function AddToCalendar() {
   const [open, setOpen] = useState(false);
@@ -35,17 +36,26 @@ export function AddToCalendar() {
       </button>
       {open && (
         <div id={panelId} className="wif-invitation__calendar-panel" role="group" aria-label="Pilih kalendar">
-          <button type="button" className="wif-invitation__btn wif-invitation__btn--calendar-opt" onClick={onGoogle}>
-            Google Calendar
+          <button
+            type="button"
+            className="wif-invitation__btn wif-invitation__btn--calendar-opt"
+            onClick={onGoogle}
+            aria-label="Google Calendar"
+          >
+            <GoogleBrandIcon className="wif-invitation__calendar-brand" />
+            <span className="wif-invitation__calendar-opt-label">Calendar</span>
           </button>
-          <button type="button" className="wif-invitation__btn wif-invitation__calendar-opt" onClick={onApple}>
-            Apple Calendar
+          <button
+            type="button"
+            className="wif-invitation__btn wif-invitation__btn--calendar-opt wif-invitation__btn--calendar-opt-apple"
+            onClick={onApple}
+            aria-label="Apple Calendar"
+          >
+            <AppleBrandIcon className="wif-invitation__calendar-brand" />
+            <span className="wif-invitation__calendar-opt-label">Calendar</span>
           </button>
         </div>
       )}
-      <p className="wif-invitation__calendar-hint">
-        Apple: muat turun fail .ics — buka pada iPhone untuk tambah ke Kalendar.
-      </p>
     </div>
   );
 }
