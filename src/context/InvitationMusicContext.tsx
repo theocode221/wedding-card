@@ -7,9 +7,11 @@ import {
   type ReactNode,
 } from "react";
 import { useLocation } from "react-router-dom";
+import { publicUrl } from "../lib/publicAsset";
 import "../styles/wedding-invitation-frame.css";
 
-const INVITATION_MUSIC_URL = "/wedding-invitation/song.mp3";
+/** Must respect Vite `base` (e.g. GitHub Pages `/repo-name/`). */
+const INVITATION_MUSIC_URL = publicUrl("wedding-invitation/song.mp3");
 const INVITATION_MUSIC_VOLUME = 0.42;
 
 /** Routes where invitation BGM may continue (same “card” flow as jemputan). */

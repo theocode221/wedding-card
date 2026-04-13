@@ -1,20 +1,19 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
+import { WEDDING_EVENT_START_ISO } from "../../lib/weddingCalendar";
 import { WhatsAppContactLink } from "../shared/WhatsAppContactLink";
 import { getRemaining, pad } from "../shared/countdownUtils";
+import { AddToCalendar } from "./AddToCalendar";
 
 export type InvitationContentProps = {
   onReplay: () => void;
 };
 
-/** ISO datetime for countdown (wedding day). */
-const WEDDING_ISO = "2026-12-25T11:00:00";
-
 const MAPS_URL =
   "https://www.google.com/maps/search/?api=1&query=Dewan+Perdana+Felda+Kuala+Lumpur";
 
 export function InvitationContent({ onReplay }: InvitationContentProps) {
-  const target = useMemo(() => new Date(WEDDING_ISO), []);
+  const target = useMemo(() => new Date(WEDDING_EVENT_START_ISO), []);
   const [tick, setTick] = useState(() => getRemaining(target, new Date()));
 
   useEffect(() => {
@@ -71,6 +70,7 @@ export function InvitationContent({ onReplay }: InvitationContentProps) {
         >
           Lihat lokasi
         </a>
+        <AddToCalendar />
       </section>
 
       <section className="wif-invitation__note" aria-labelledby="wif-note-heading">
@@ -112,7 +112,7 @@ export function InvitationContent({ onReplay }: InvitationContentProps) {
       </section>
 
       <div className="wif-invitation__actions">
-        <div className="wif-invitation__actions-primary">
+        <div className="wif-invitation__actions-row wif-invitation__actions-row--primary">
           <Link to="/rsvp" className="wif-invitation__btn wif-invitation__btn--gold">
             RSVP
           </Link>
@@ -120,7 +120,7 @@ export function InvitationContent({ onReplay }: InvitationContentProps) {
             Galeri
           </Link>
         </div>
-        <div className="wif-invitation__actions-replay">
+        <div className="wif-invitation__actions-row wif-invitation__actions-row--replay">
           <button type="button" className="wif-invitation__btn wif-invitation__btn--ghost" onClick={onReplay}>
             Main semula
           </button>
