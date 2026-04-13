@@ -29,20 +29,24 @@ export function InvitationContent({ onReplay }: InvitationContentProps) {
       <header className="wif-invitation__hero">
         <p className="wif-invitation__hero-eyebrow">Jemputan perkahwinan</p>
         <h1 className="wif-invitation__names">NABIL &amp; ANIS</h1>
-        <p className="wif-invitation__hero-date">25 Disember 2026</p>
+        <p className="wif-invitation__hero-date">20 Disember 2026</p>
         <p className="wif-invitation__hero-line">
           Dengan penuh kesyukuran, kami menjemput anda ke majlis kami
         </p>
       </header>
 
-      <section className="wif-invitation__details" aria-labelledby="wif-details-heading">
+      <section
+        id="wif-invitation-details"
+        className="wif-invitation__details"
+        aria-labelledby="wif-details-heading"
+      >
         <h2 id="wif-details-heading" className="wif-invitation__section-title">
           Butiran majlis
         </h2>
         <ul className="wif-invitation__detail-list">
           <li>
             <span className="wif-invitation__detail-label">Tarikh</span>
-            <span className="wif-invitation__detail-value">Jumaat, 25 Disember 2026</span>
+            <span className="wif-invitation__detail-value">Jumaat, 20 Disember 2026</span>
           </li>
           <li>
             <span className="wif-invitation__detail-label">Masa</span>

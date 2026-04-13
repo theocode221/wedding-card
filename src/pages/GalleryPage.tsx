@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useCallback, useEffect, useLayoutEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { GalleryImage } from "../components/gallery/GalleryImage";
 import { Lightbox } from "../components/gallery/Lightbox";
 import { WhatsAppContactLink } from "../components/shared/WhatsAppContactLink";
@@ -11,8 +11,13 @@ import {
 import "../styles/gallery.css";
 
 export function GalleryPage() {
+  const navigate = useNavigate();
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [pageReady, setPageReady] = useState(false);
+
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     const id = requestAnimationFrame(() => {
@@ -32,11 +37,17 @@ export function GalleryPage() {
     setLightboxIndex(index);
   }, []);
 
+  const handleBack = useCallback(() => {
+    navigate("/jemputan-frame", {
+      state: { skipCinematic: true, scrollTo: "details" as const },
+    });
+  }, [navigate]);
+
   return (
     <div className={["gallery-page", pageReady ? "gallery-page--in" : ""].filter(Boolean).join(" ")}>
-      <Link to="/jemputan-frame" className="gallery-page__back">
+      <button type="button" className="gallery-page__back" onClick={handleBack}>
         ← Kembali
-      </Link>
+      </button>
 
       <header className="gallery-page__header">
         <h1 className="gallery-page__title">Galeri Kenangan</h1>

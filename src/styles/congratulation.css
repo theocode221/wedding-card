@@ -511,6 +511,8 @@ textarea.congrats-sender__field {
   align-items: center;
   max-width: 100%;
   margin-bottom: var(--cg-space-block);
+  padding: 0;
+  font: inherit;
   font-size: var(--cg-font-caption);
   line-height: var(--cg-leading-snug);
   font-weight: 600;
@@ -518,6 +520,9 @@ textarea.congrats-sender__field {
   text-transform: uppercase;
   color: var(--cg-brown-mid);
   text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
   transition: color 0.2s ease;
   overflow-wrap: break-word;
 }

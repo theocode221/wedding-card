@@ -1,5 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { GoldGlitterRain } from "./components/effects/GoldGlitterRain";
+import { InvitationMusicProvider } from "./context/InvitationMusicContext";
 import { UcapanCopyProvider } from "./context/UcapanCopyContext";
 import { CongratulationCardPage } from "./pages/CongratulationCardPage";
 import { CongratulationPartyPage } from "./pages/CongratulationPartyPage";
@@ -20,8 +21,9 @@ export default function App() {
   return (
     <>
       <BrowserRouter basename={routerBasename}>
-        <UcapanCopyProvider>
-          <Routes>
+        <InvitationMusicProvider>
+          <UcapanCopyProvider>
+            <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/invite" element={<InvitePage />} />
             <Route path="/rsvp" element={<RsvpPage />} />
@@ -34,8 +36,9 @@ export default function App() {
             <Route path="/galeri" element={<GalleryPage />} />
             <Route path="/kad-ucapan/sunting" element={<UcapanCardCopyFormPage />} />
             <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </UcapanCopyProvider>
+            </Routes>
+          </UcapanCopyProvider>
+        </InvitationMusicProvider>
       </BrowserRouter>
       <GoldGlitterRain variant="global" />
     </>

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useId, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { CongratulationCard } from "../components/CongratulationCard";
 import { InteractiveButtons } from "../components/InteractiveButtons";
 import { SenderForm } from "../components/SenderForm";
@@ -34,6 +34,7 @@ type FxParticle = {
 };
 
 export function CongratulationCardPage() {
+  const navigate = useNavigate();
   const toastId = useId();
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -121,6 +122,10 @@ export function CongratulationCardPage() {
 
   const toggleReadMore = () => setReadMoreOpen((v) => !v);
 
+  const handleBack = useCallback(() => {
+    navigate(-1);
+  }, [navigate]);
+
   return (
     <div className="congrats-page">
       <div className="congrats-page__wash" aria-hidden />
@@ -163,9 +168,9 @@ export function CongratulationCardPage() {
       </div>
 
       <div className="congrats-page__inner">
-        <Link to="/" className="congrats-back">
+        <button type="button" className="congrats-back" onClick={handleBack}>
           ← Kembali ke jemputan
-        </Link>
+        </button>
 
         <CongratulationCard
           title="Ucapan Istimewa Buat Pengantin"

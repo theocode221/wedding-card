@@ -14,6 +14,8 @@ export type CinematicInvitationProps = {
   urls: readonly [string, string, string];
   /** After final hold — e.g. reveal full invitation below. */
   onComplete?: () => void;
+  /** When user taps "Buka Jemputan" — e.g. start music on user gesture. */
+  onOpenCinematic?: () => void;
 };
 
 const COPY = [
@@ -107,7 +109,7 @@ function scheduleZoomAndFirstLine(
   return ids;
 }
 
-export function CinematicInvitation({ urls, onComplete }: CinematicInvitationProps) {
+export function CinematicInvitation({ urls, onComplete, onOpenCinematic }: CinematicInvitationProps) {
   const [rootVisible, setRootVisible] = useState(false);
   const [stage, setStage] = useState<CinematicStage>("idle");
   const [zoomLevel, setZoomLevel] = useState<"idle" | "frame">("idle");
@@ -167,8 +169,9 @@ export function CinematicInvitation({ urls, onComplete }: CinematicInvitationPro
 
   const handleStart = useCallback(() => {
     if (stage !== "idle") return;
+    onOpenCinematic?.();
     runSequence();
-  }, [stage, runSequence]);
+  }, [stage, runSequence, onOpenCinematic]);
 
   const heroSrc = urls[0];
 
