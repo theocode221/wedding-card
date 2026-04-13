@@ -4,12 +4,14 @@ import { CinematicInvitation } from "../components/wedding-invitation-frame/Cine
 import { InvitationContent } from "../components/wedding-invitation-frame/InvitationContent";
 import { useInvitationMusic } from "../context/InvitationMusicContext";
 import {
+  preloadWeddingInvitationHero,
   preloadWeddingInvitationFrames,
   WEDDING_INVITATION_CINEMATIC_URLS,
 } from "../data/weddingInvitationFrames";
 import "../styles/wedding-invitation-frame.css";
 
-const MIN_LOADING_MS = 400;
+/** Short spinner only — hero PNG is the gate; was 400ms + all 3 images. */
+const MIN_LOADING_MS = 120;
 
 type InvitationFrameLocationState = {
   skipCinematic?: boolean;
@@ -35,7 +37,7 @@ export function WeddingInvitationFramePage() {
     let cancel = false;
     const start = performance.now();
 
-    preloadWeddingInvitationFrames(urls)
+    preloadWeddingInvitationHero(urls)
       .catch(() => undefined)
       .finally(() => {
         if (cancel) return;
@@ -49,6 +51,12 @@ export function WeddingInvitationFramePage() {
     return () => {
       cancel = true;
     };
+  }, [urls]);
+
+  /** Warm cache for 2.png / 3.png without blocking the loading overlay. */
+  useEffect(() => {
+    if (urls.length < 3) return;
+    preloadWeddingInvitationFrames([urls[1], urls[2]]).catch(() => undefined);
   }, [urls]);
 
   /** From gallery (etc.): skip intro animation and go straight to invitation content. */

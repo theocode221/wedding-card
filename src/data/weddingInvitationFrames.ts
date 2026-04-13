@@ -26,16 +26,24 @@ export const WEDDING_INVITATION_CINEMATIC_URLS: readonly [string, string, string
 /** @deprecated Kept for compatibility; only first three frames are used in-app. */
 export const WEDDING_INVITATION_FRAME_URLS: readonly string[] = WEDDING_INVITATION_CINEMATIC_URLS;
 
+function loadImage(src: string): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => resolve();
+    img.onerror = () => reject(new Error(`Failed to load ${src}`));
+    img.src = src;
+  });
+}
+
+/** All frames — used when every asset must be ready. */
 export function preloadWeddingInvitationFrames(urls: readonly string[]): Promise<void> {
-  return Promise.all(
-    urls.map(
-      (src) =>
-        new Promise<void>((resolve, reject) => {
-          const img = new Image();
-          img.onload = () => resolve();
-          img.onerror = () => reject(new Error(`Failed to load ${src}`));
-          img.src = src;
-        }),
-    ),
-  ).then(() => undefined);
+  return Promise.all(urls.map((src) => loadImage(src))).then(() => undefined);
+}
+
+/**
+ * First cinematic still only (`urls[0]`) — fastest first paint; intro only shows 1.png.
+ * Call `preloadWeddingInvitationFrames` in the background for the rest if needed.
+ */
+export function preloadWeddingInvitationHero(urls: readonly [string, string, string]): Promise<void> {
+  return loadImage(urls[0]);
 }
