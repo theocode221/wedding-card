@@ -1,5 +1,4 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { GoldGlitterRain } from "./components/effects/GoldGlitterRain";
 import { InvitationMusicProvider } from "./context/InvitationMusicContext";
 import { UcapanCopyProvider } from "./context/UcapanCopyContext";
 import { CongratulationCardPage } from "./pages/CongratulationCardPage";
@@ -13,6 +12,7 @@ import { ScratchCardPage } from "./pages/ScratchCardPage";
 import { UcapanCardPage } from "./pages/UcapanCardPage";
 import { WeddingInvitationFramePage } from "./pages/WeddingInvitationFramePage";
 import { GalleryPage } from "./pages/GalleryPage";
+import { EggRevealCardPage } from "./pages/EggRevealCardPage";
 
 const routerBasename =
   import.meta.env.BASE_URL === "/" ? undefined : import.meta.env.BASE_URL.replace(/\/$/, "");
@@ -34,13 +34,14 @@ export default function App() {
             <Route path="/roda-doa" element={<BlessingWheelPage />} />
             <Route path="/jemputan-frame" element={<WeddingInvitationFramePage />} />
             <Route path="/galeri" element={<GalleryPage />} />
+            <Route path="/kad-wedding-badar" element={<EggRevealCardPage />} />
+            <Route path="/kad-telur-tahniah" element={<Navigate to="/kad-wedding-badar" replace />} />
             <Route path="/kad-ucapan/sunting" element={<UcapanCardCopyFormPage />} />
             <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </UcapanCopyProvider>
         </InvitationMusicProvider>
       </BrowserRouter>
-      <GoldGlitterRain variant="global" />
     </>
   );
 }
