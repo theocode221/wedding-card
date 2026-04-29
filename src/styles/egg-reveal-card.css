@@ -112,6 +112,39 @@
   gap: clamp(0.75rem, 3vw, 1.5rem);
 }
 
+.egg-reveal-sfx-toggle {
+  position: fixed;
+  right: clamp(0.65rem, 3vw, 1rem);
+  top: clamp(0.65rem, 2.8vw, 1rem);
+  z-index: 50;
+  min-height: 2.1rem;
+  padding: 0.3rem 0.7rem;
+  border: 3px solid #0a0a12;
+  border-radius: 6px;
+  background: linear-gradient(180deg, var(--egg-hud-lime) 0%, #7ed713 45%, #5eb40b 100%);
+  color: #0a0a12;
+  font-family: "Rajdhani", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  box-shadow:
+    4px 4px 0 rgba(0, 0, 0, 0.45),
+    0 2px 0 rgba(255, 255, 255, 0.32) inset;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.egg-reveal-sfx-toggle--muted {
+  background: linear-gradient(180deg, rgba(38, 24, 56, 0.95) 0%, rgba(18, 10, 32, 0.98) 100%);
+  color: var(--egg-hud-cyan);
+  border-color: rgba(61, 255, 236, 0.7);
+}
+
+.egg-reveal-sfx-toggle:active {
+  transform: translateY(1px) scale(0.98);
+}
+
 /* --- Intro copy — comic title + HUD subtitle --- */
 .egg-reveal-page__intro {
   text-align: center;

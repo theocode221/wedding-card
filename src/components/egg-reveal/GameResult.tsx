@@ -1,8 +1,9 @@
-import { useCallback, useLayoutEffect, useState } from "react";
+import { useCallback, useLayoutEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { getCatchTheLoveResultTitle } from "./catchTheLoveUtils";
 import { shareEggRevealHappiness } from "./eggRevealShare";
 import { revealUiTapHaptic } from "./eggRevealHaptics";
+import { gameResultSfx } from "./eggRevealSfx";
 
 type GameResultProps = {
   score: number;
@@ -12,6 +13,7 @@ type GameResultProps = {
 
 export function GameResult({ score, onPlayAgain, onBackToCard }: GameResultProps) {
   const [shareNote, setShareNote] = useState<string | null>(null);
+  const safeScore = useMemo(() => Math.max(0, Math.round(score)), [score]);
 
   useLayoutEffect(() => {
     const body = document.body;
@@ -23,7 +25,11 @@ export function GameResult({ score, onPlayAgain, onBackToCard }: GameResultProps
     };
   }, []);
 
-  const title = getCatchTheLoveResultTitle(score);
+  useLayoutEffect(() => {
+    gameResultSfx(safeScore);
+  }, [safeScore]);
+
+  const title = getCatchTheLoveResultTitle(safeScore);
 
   const handleShare = useCallback(async () => {
     revealUiTapHaptic();
@@ -51,7 +57,7 @@ export function GameResult({ score, onPlayAgain, onBackToCard }: GameResultProps
       <div className="ctl-result__panel">
         <p className="ctl-result__eyebrow">GAME SET</p>
         <h2 id="ctl-result-title" className="ctl-result__scoreline">
-          Skor: <span className="ctl-result__scorenum">{score}</span>
+          Skor: <span className="ctl-result__scorenum">{safeScore}</span>
         </h2>
         <p className="ctl-result__flair">{title}</p>
         <p className="ctl-result__wish">Selamat Pengantin Baru!</p>

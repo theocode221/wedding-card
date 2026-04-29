@@ -5,6 +5,11 @@ import { getCartoonNewlywedFrameSrcs } from "../components/egg-reveal/eggRevealC
 import { EggRevealPageDecor } from "../components/egg-reveal/EggRevealPageDecor";
 import { GameResult } from "../components/egg-reveal/GameResult";
 import { eggCrackHapticTap } from "../components/egg-reveal/eggRevealHaptics";
+import {
+  getEggRevealSfxMuted,
+  primeEggRevealSfx,
+  toggleEggRevealSfxMuted,
+} from "../components/egg-reveal/eggRevealSfx";
 import { RevealCard } from "../components/egg-reveal/RevealCard";
 import "../styles/egg-reveal-card.css";
 
@@ -26,6 +31,7 @@ export function EggRevealCardPage() {
   const [postRevealPanel, setPostRevealPanel] = useState<PostRevealPanel>("card");
   const [catchScore, setCatchScore] = useState(0);
   const [catchSession, setCatchSession] = useState(0);
+  const [sfxMuted, setSfxMuted] = useState(getEggRevealSfxMuted);
   const timersRef = useRef<number[]>([]);
   const burstRevealScheduledRef = useRef(false);
 
@@ -43,6 +49,16 @@ export function EggRevealCardPage() {
   useEffect(() => {
     if (!revealed) setPostRevealPanel("card");
   }, [revealed]);
+
+  useEffect(() => {
+    const wake = () => primeEggRevealSfx();
+    window.addEventListener("pointerdown", wake, { passive: true, once: true });
+    window.addEventListener("keydown", wake, { once: true });
+    return () => {
+      window.removeEventListener("pointerdown", wake);
+      window.removeEventListener("keydown", wake);
+    };
+  }, []);
 
   const preloadImage = useCallback(() => {
     for (const src of getCartoonNewlywedFrameSrcs()) {
@@ -185,6 +201,16 @@ export function EggRevealCardPage() {
           onBackToCard={() => setPostRevealPanel("card")}
         />
       ) : null}
+
+      <button
+        type="button"
+        className={`egg-reveal-sfx-toggle ${sfxMuted ? "egg-reveal-sfx-toggle--muted" : ""}`}
+        onClick={() => setSfxMuted(toggleEggRevealSfxMuted())}
+        aria-label={sfxMuted ? "Buka bunyi kesan" : "Tutup bunyi kesan"}
+        title={sfxMuted ? "Bunyi: Off" : "Bunyi: On"}
+      >
+        {sfxMuted ? "SFX: OFF" : "SFX: ON"}
+      </button>
 
       <EggRevealPageDecor />
     </main>
