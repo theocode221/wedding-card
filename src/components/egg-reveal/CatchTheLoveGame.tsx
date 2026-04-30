@@ -16,6 +16,7 @@ import {
   pickCatchLabel,
 } from "./catchTheLoveUtils";
 import { gameBombHaptic, gameCatchGoodHaptic } from "./eggRevealHaptics";
+import type { EggRevealTheme } from "./eggRevealTheme";
 
 const ITEM_EMOJI: Record<FallingItemType, string> = {
   heart: "❤️",
@@ -26,9 +27,10 @@ const ITEM_EMOJI: Record<FallingItemType, string> = {
 
 type CatchTheLoveGameProps = {
   onComplete: (finalScore: number) => void;
+  theme?: EggRevealTheme;
 };
 
-export function CatchTheLoveGame({ onComplete }: CatchTheLoveGameProps) {
+export function CatchTheLoveGame({ onComplete, theme = "default" }: CatchTheLoveGameProps) {
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(CATCH_LOVE_DURATION_SEC);
   const [items, setItems] = useState<FallingItem[]>([]);
@@ -202,7 +204,9 @@ export function CatchTheLoveGame({ onComplete }: CatchTheLoveGameProps) {
   );
 
   const ui = (
-    <div className={`ctl-overlay${shake ? " ctl-overlay--shake" : ""}`}>
+    <div
+      className={`ctl-overlay${shake ? " ctl-overlay--shake" : ""}${theme === "pastel" ? " ctl-theme-pastel" : ""}`}
+    >
       <div className="ctl-root" role="application" aria-label="Catch the Love — permainan mini">
         <div className="ctl-bg-burst" aria-hidden />
         <div className="ctl-bg-halftone" aria-hidden />

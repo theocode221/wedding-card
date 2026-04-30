@@ -2,41 +2,32 @@ type WebAudioWindow = Window & {
   webkitAudioContext?: typeof AudioContext;
 };
 
-const MUTE_KEY = "egg_reveal_sfx_muted_v1";
+/** Legacy mute flag — removed UI; clear so SFX stays on by default. */
+const LEGACY_MUTE_KEY = "egg_reveal_sfx_muted_v1";
 
 let audioCtx: AudioContext | null = null;
 let masterGain: GainNode | null = null;
-let isMuted = false;
-let loadedMute = false;
+let clearedLegacyMute = false;
 
-function loadMuted() {
-  if (loadedMute) return;
-  loadedMute = true;
+function clearLegacyMutePreference() {
+  if (clearedLegacyMute) return;
+  clearedLegacyMute = true;
   try {
-    const v = window.localStorage.getItem(MUTE_KEY);
-    isMuted = v === "1";
+    window.localStorage.removeItem(LEGACY_MUTE_KEY);
   } catch {
-    isMuted = false;
-  }
-}
-
-function saveMuted() {
-  try {
-    window.localStorage.setItem(MUTE_KEY, isMuted ? "1" : "0");
-  } catch {
-    /* ignore storage failure */
+    /* ignore */
   }
 }
 
 function ensureContext(): AudioContext | null {
   if (typeof window === "undefined") return null;
-  loadMuted();
+  clearLegacyMutePreference();
   if (audioCtx) return audioCtx;
   const Ctx = window.AudioContext ?? (window as WebAudioWindow).webkitAudioContext;
   if (!Ctx) return null;
   audioCtx = new Ctx();
   masterGain = audioCtx.createGain();
-  masterGain.gain.value = isMuted ? 0 : 0.9;
+  masterGain.gain.value = 0.82;
   masterGain.connect(audioCtx.destination);
   return audioCtx;
 }
@@ -62,13 +53,13 @@ function playTone(opts: {
     const osc = ctx.createOscillator();
     const amp = ctx.createGain();
 
-    osc.type = opts.type ?? "triangle";
+    osc.type = opts.type ?? "square";
     osc.frequency.setValueAtTime(opts.fromHz, now);
     if (opts.toHz) osc.frequency.exponentialRampToValueAtTime(opts.toHz, now + opts.durMs / 1000);
 
-    const max = opts.gain ?? 0.12;
-    const a = (opts.attackMs ?? 8) / 1000;
-    const r = (opts.releaseMs ?? 110) / 1000;
+    const max = opts.gain ?? 0.1;
+    const a = (opts.attackMs ?? 2) / 1000;
+    const r = (opts.releaseMs ?? 70) / 1000;
     const end = now + opts.durMs / 1000;
 
     amp.gain.setValueAtTime(0.0001, now);
@@ -98,11 +89,11 @@ function playNoise(opts: { durMs: number; gain?: number; highpassHz?: number }) 
 
     const hp = ctx.createBiquadFilter();
     hp.type = "highpass";
-    hp.frequency.value = opts.highpassHz ?? 280;
+    hp.frequency.value = opts.highpassHz ?? 320;
 
     const amp = ctx.createGain();
-    amp.gain.setValueAtTime(opts.gain ?? 0.16, now);
-    amp.gain.exponentialRampToValueAtTime(0.0001, now + dur + 0.04);
+    amp.gain.setValueAtTime(opts.gain ?? 0.14, now);
+    amp.gain.exponentialRampToValueAtTime(0.0001, now + dur + 0.03);
 
     src.connect(hp);
     hp.connect(amp);
@@ -118,76 +109,85 @@ export function primeEggRevealSfx() {
   if (ctx.state === "suspended") void ctx.resume();
 }
 
-export function getEggRevealSfxMuted(): boolean {
-  if (typeof window !== "undefined") loadMuted();
-  return isMuted;
-}
-
-export function setEggRevealSfxMuted(next: boolean) {
-  isMuted = next;
-  const ctx = ensureContext();
-  if (ctx && masterGain) masterGain.gain.value = isMuted ? 0 : 0.9;
-  saveMuted();
-}
-
-export function toggleEggRevealSfxMuted(): boolean {
-  const next = !getEggRevealSfxMuted();
-  setEggRevealSfxMuted(next);
-  return next;
-}
-
 export function eggCrackSfxTap(which: 1 | 2 | 3) {
   primeEggRevealSfx();
-  if (which === 1) playTone({ fromHz: 280, toHz: 230, durMs: 80, gain: 0.08 });
-  else if (which === 2) {
-    playTone({ fromHz: 240, toHz: 190, durMs: 90, gain: 0.09 });
-    window.setTimeout(() => playTone({ fromHz: 330, toHz: 260, durMs: 70, gain: 0.06 }), 36);
+  if (which === 1) {
+    playTone({ fromHz: 340, toHz: 210, durMs: 58, gain: 0.07, type: "square", attackMs: 1, releaseMs: 45 });
+  } else if (which === 2) {
+    playTone({ fromHz: 300, toHz: 200, durMs: 62, gain: 0.075, type: "triangle", attackMs: 1, releaseMs: 48 });
+    window.setTimeout(
+      () => playTone({ fromHz: 420, toHz: 280, durMs: 52, gain: 0.055, type: "square", attackMs: 1, releaseMs: 40 }),
+      28,
+    );
   } else {
-    playTone({ fromHz: 210, toHz: 130, durMs: 130, gain: 0.1 });
-    window.setTimeout(() => playNoise({ durMs: 80, gain: 0.12, highpassHz: 420 }), 42);
+    playTone({ fromHz: 200, toHz: 95, durMs: 120, gain: 0.095, type: "sawtooth", attackMs: 2, releaseMs: 85 });
+    window.setTimeout(() => playNoise({ durMs: 65, gain: 0.11, highpassHz: 480 }), 35);
   }
 }
 
 export function revealCelebrationSfx() {
   primeEggRevealSfx();
-  playTone({ fromHz: 360, toHz: 510, durMs: 130, gain: 0.08, type: "sine" });
-  window.setTimeout(() => playTone({ fromHz: 510, toHz: 710, durMs: 140, gain: 0.08, type: "sine" }), 110);
-  window.setTimeout(() => playTone({ fromHz: 710, toHz: 920, durMs: 160, gain: 0.08, type: "sine" }), 220);
+  playTone({ fromHz: 440, toHz: 660, durMs: 95, gain: 0.075, type: "square", attackMs: 1, releaseMs: 55 });
+  window.setTimeout(
+    () => playTone({ fromHz: 660, toHz: 880, durMs: 100, gain: 0.078, type: "square", attackMs: 1, releaseMs: 58 }),
+    85,
+  );
+  window.setTimeout(
+    () => playTone({ fromHz: 880, toHz: 1180, durMs: 120, gain: 0.072, type: "triangle", attackMs: 1, releaseMs: 70 }),
+    175,
+  );
 }
 
 export function revealCheerSfx() {
   primeEggRevealSfx();
-  playTone({ fromHz: 520, toHz: 760, durMs: 90, gain: 0.08 });
-  window.setTimeout(() => playTone({ fromHz: 760, toHz: 980, durMs: 110, gain: 0.08 }), 70);
+  playTone({ fromHz: 620, toHz: 920, durMs: 72, gain: 0.07, type: "square", attackMs: 1, releaseMs: 48 });
+  window.setTimeout(
+    () => playTone({ fromHz: 780, toHz: 1100, durMs: 88, gain: 0.065, type: "triangle", attackMs: 1, releaseMs: 52 }),
+    55,
+  );
 }
 
 export function revealUiTapSfx() {
   primeEggRevealSfx();
-  playTone({ fromHz: 460, toHz: 380, durMs: 70, gain: 0.055, type: "square" });
+  playTone({ fromHz: 720, toHz: 420, durMs: 42, gain: 0.045, type: "square", attackMs: 1, releaseMs: 32 });
 }
 
 export function gameCatchGoodSfx() {
   primeEggRevealSfx();
-  playTone({ fromHz: 610, toHz: 820, durMs: 95, gain: 0.07, type: "triangle" });
+  playTone({ fromHz: 720, toHz: 980, durMs: 55, gain: 0.065, type: "square", attackMs: 1, releaseMs: 38 });
+  window.setTimeout(
+    () => playTone({ fromHz: 1180, toHz: 1560, durMs: 70, gain: 0.05, type: "triangle", attackMs: 1, releaseMs: 45 }),
+    22,
+  );
 }
 
 export function gameBombSfx() {
   primeEggRevealSfx();
-  playTone({ fromHz: 180, toHz: 85, durMs: 150, gain: 0.12, type: "sawtooth" });
-  window.setTimeout(() => playNoise({ durMs: 120, gain: 0.18, highpassHz: 180 }), 40);
+  playTone({ fromHz: 160, toHz: 55, durMs: 140, gain: 0.11, type: "sawtooth", attackMs: 2, releaseMs: 90 });
+  window.setTimeout(() => playNoise({ durMs: 95, gain: 0.15, highpassHz: 200 }), 28);
 }
 
 export function gameResultSfx(score: number) {
   primeEggRevealSfx();
   if (score >= 13) {
-    playTone({ fromHz: 520, toHz: 780, durMs: 130, gain: 0.09, type: "sine" });
-    window.setTimeout(() => playTone({ fromHz: 780, toHz: 1040, durMs: 160, gain: 0.095, type: "sine" }), 120);
+    playTone({ fromHz: 520, toHz: 780, durMs: 95, gain: 0.08, type: "square", attackMs: 1, releaseMs: 52 });
+    window.setTimeout(
+      () => playTone({ fromHz: 780, toHz: 1040, durMs: 110, gain: 0.082, type: "square", attackMs: 1, releaseMs: 58 }),
+      95,
+    );
+    window.setTimeout(
+      () => playTone({ fromHz: 1040, toHz: 1400, durMs: 130, gain: 0.075, type: "triangle", attackMs: 1, releaseMs: 65 }),
+      195,
+    );
     return;
   }
   if (score >= 6) {
-    playTone({ fromHz: 430, toHz: 590, durMs: 130, gain: 0.08 });
-    window.setTimeout(() => playTone({ fromHz: 590, toHz: 700, durMs: 130, gain: 0.075 }), 110);
+    playTone({ fromHz: 400, toHz: 560, durMs: 100, gain: 0.072, type: "triangle", attackMs: 1, releaseMs: 52 });
+    window.setTimeout(
+      () => playTone({ fromHz: 560, toHz: 760, durMs: 110, gain: 0.07, type: "square", attackMs: 1, releaseMs: 55 }),
+      95,
+    );
     return;
   }
-  playTone({ fromHz: 300, toHz: 220, durMs: 180, gain: 0.07, type: "triangle" });
+  playTone({ fromHz: 280, toHz: 180, durMs: 150, gain: 0.065, type: "triangle", attackMs: 2, releaseMs: 75 });
 }

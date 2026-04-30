@@ -4,14 +4,21 @@ import { getCatchTheLoveResultTitle } from "./catchTheLoveUtils";
 import { shareEggRevealHappiness } from "./eggRevealShare";
 import { revealUiTapHaptic } from "./eggRevealHaptics";
 import { gameResultSfx } from "./eggRevealSfx";
+import type { EggRevealTheme } from "./eggRevealTheme";
 
 type GameResultProps = {
   score: number;
   onPlayAgain: () => void;
   onBackToCard: () => void;
+  theme?: EggRevealTheme;
 };
 
-export function GameResult({ score, onPlayAgain, onBackToCard }: GameResultProps) {
+export function GameResult({
+  score,
+  onPlayAgain,
+  onBackToCard,
+  theme = "default",
+}: GameResultProps) {
   const [shareNote, setShareNote] = useState<string | null>(null);
   const safeScore = useMemo(() => Math.max(0, Math.round(score)), [score]);
 
@@ -50,7 +57,12 @@ export function GameResult({ score, onPlayAgain, onBackToCard }: GameResultProps
   }, [onBackToCard]);
 
   const ui = (
-    <div className="ctl-result" role="dialog" aria-modal="true" aria-labelledby="ctl-result-title">
+    <div
+      className={`ctl-result${theme === "pastel" ? " ctl-theme-pastel" : ""}`}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="ctl-result-title"
+    >
       <div className="ctl-result__burst" aria-hidden />
       <div className="ctl-result__halftone" aria-hidden />
 

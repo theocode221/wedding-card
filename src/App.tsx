@@ -13,6 +13,7 @@ import { UcapanCardPage } from "./pages/UcapanCardPage";
 import { WeddingInvitationFramePage } from "./pages/WeddingInvitationFramePage";
 import { GalleryPage } from "./pages/GalleryPage";
 import { EggRevealCardPage } from "./pages/EggRevealCardPage";
+import { EggRevealCardPastelPage } from "./pages/EggRevealCardPastelPage";
 
 const routerBasename =
   import.meta.env.BASE_URL === "/" ? undefined : import.meta.env.BASE_URL.replace(/\/$/, "");
@@ -35,6 +36,7 @@ export default function App() {
             <Route path="/jemputan-frame" element={<WeddingInvitationFramePage />} />
             <Route path="/galeri" element={<GalleryPage />} />
             <Route path="/kad-wedding-badar" element={<EggRevealCardPage />} />
+            <Route path="/kad-wedding-badar-pastel" element={<EggRevealCardPastelPage />} />
             <Route path="/kad-telur-tahniah" element={<Navigate to="/kad-wedding-badar" replace />} />
             <Route path="/kad-ucapan/sunting" element={<UcapanCardCopyFormPage />} />
             <Route path="*" element={<Navigate to="/" replace />} />

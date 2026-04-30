@@ -1,5 +1,9 @@
 import { useEffect, useId, useRef } from "react";
-import { EGG_REVEAL_KAD_UCAPAN_PARAS, EGG_REVEAL_KAD_UCAPAN_TITLE } from "./eggRevealUcapanCopy";
+import {
+  EGG_REVEAL_FROM_LINE,
+  EGG_REVEAL_KAD_UCAPAN_PARAS,
+  EGG_REVEAL_KAD_UCAPAN_TITLE,
+} from "./eggRevealUcapanCopy";
 
 type EggRevealKadUcapanProps = {
   open: boolean;
@@ -65,6 +69,7 @@ export function EggRevealKadUcapan({ open, onClose }: EggRevealKadUcapanProps) {
             ))}
           </div>
         </div>
+        <p className="egg-reveal-kad__signoff">{EGG_REVEAL_FROM_LINE}</p>
         <button type="button" className="egg-reveal-kad__close" onClick={onClose}>
           Tutup
         </button>

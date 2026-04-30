@@ -5,13 +5,15 @@ import { getCartoonNewlywedFrameSrcs } from "../components/egg-reveal/eggRevealC
 import { EggRevealPageDecor } from "../components/egg-reveal/EggRevealPageDecor";
 import { GameResult } from "../components/egg-reveal/GameResult";
 import { eggCrackHapticTap } from "../components/egg-reveal/eggRevealHaptics";
-import {
-  getEggRevealSfxMuted,
-  primeEggRevealSfx,
-  toggleEggRevealSfxMuted,
-} from "../components/egg-reveal/eggRevealSfx";
+import { primeEggRevealSfx } from "../components/egg-reveal/eggRevealSfx";
+import type { EggRevealTheme } from "../components/egg-reveal/eggRevealTheme";
 import { RevealCard } from "../components/egg-reveal/RevealCard";
 import "../styles/egg-reveal-card.css";
+
+type EggRevealCardPageProps = {
+  /** `pastel` adds `egg-reveal-page--pastel`; load `egg-reveal-pastel.css` from the route wrapper. */
+  variant?: EggRevealTheme;
+};
 
 type PostRevealPanel = "card" | "game" | "result";
 
@@ -25,13 +27,12 @@ function eggCrackFill(stage: EggCrackStage): 0 | 1 | 2 | 3 {
   return 3;
 }
 
-export function EggRevealCardPage() {
+export function EggRevealCardPage({ variant = "default" }: EggRevealCardPageProps) {
   const [revealed, setRevealed] = useState(false);
   const [eggStage, setEggStage] = useState<EggCrackStage>("idle");
   const [postRevealPanel, setPostRevealPanel] = useState<PostRevealPanel>("card");
   const [catchScore, setCatchScore] = useState(0);
   const [catchSession, setCatchSession] = useState(0);
-  const [sfxMuted, setSfxMuted] = useState(getEggRevealSfxMuted);
   const timersRef = useRef<number[]>([]);
   const burstRevealScheduledRef = useRef(false);
 
@@ -119,8 +120,11 @@ export function EggRevealCardPage() {
 
   const showEggUi = !revealed;
 
+  const pageClass =
+    variant === "pastel" ? "egg-reveal-page egg-reveal-page--pastel" : "egg-reveal-page";
+
   return (
-    <main className="egg-reveal-page">
+    <main className={pageClass}>
       <div className="egg-reveal-page__bg" aria-hidden />
       <div className="egg-reveal-page__grain" aria-hidden />
 
@@ -191,26 +195,21 @@ export function EggRevealCardPage() {
       </div>
 
       {revealed && postRevealPanel === "game" ? (
-        <CatchTheLoveGame key={catchSession} onComplete={handleCatchGameComplete} />
+        <CatchTheLoveGame
+          key={catchSession}
+          theme={variant}
+          onComplete={handleCatchGameComplete}
+        />
       ) : null}
 
       {revealed && postRevealPanel === "result" ? (
         <GameResult
+          theme={variant}
           score={catchScore}
           onPlayAgain={handleCatchPlayAgain}
           onBackToCard={() => setPostRevealPanel("card")}
         />
       ) : null}
-
-      <button
-        type="button"
-        className={`egg-reveal-sfx-toggle ${sfxMuted ? "egg-reveal-sfx-toggle--muted" : ""}`}
-        onClick={() => setSfxMuted(toggleEggRevealSfxMuted())}
-        aria-label={sfxMuted ? "Buka bunyi kesan" : "Tutup bunyi kesan"}
-        title={sfxMuted ? "Bunyi: Off" : "Bunyi: On"}
-      >
-        {sfxMuted ? "SFX: OFF" : "SFX: ON"}
-      </button>
 
       <EggRevealPageDecor />
     </main>

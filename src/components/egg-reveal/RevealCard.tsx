@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { EggRevealKadUcapan } from "./EggRevealKadUcapan";
 import { getCartoonNewlywedFrameSrcs } from "./eggRevealConstants";
+import { EGG_REVEAL_FROM_LINE } from "./eggRevealUcapanCopy";
 import {
   revealCelebrationHaptic,
   revealCheerHaptic,
@@ -137,30 +138,22 @@ export function RevealCard({
       </div>
 
       <div
-        className="egg-reveal-panel__reaction-meter"
-        role="status"
-        aria-live="polite"
-        aria-label="Telur pecah — combo tiga"
+        // className="egg-reveal-panel__reaction-meter"
+        // role="status"
+        // aria-live="polite"
+        // aria-label="Telur pecah — combo tiga"
       >
-        <div className="egg-reveal-panel__reaction-meter__hud">
-          <span className="egg-reveal-panel__reaction-meter__tag">TEPAS</span>
-          <span className="egg-reveal-panel__reaction-meter__tag egg-reveal-panel__reaction-meter__tag--dim">
-            ×3
-          </span>
-        </div>
-        <div className="egg-reveal-panel__reaction-meter__track" aria-hidden>
-          <span className="egg-reveal-panel__reaction-meter__star" />
-          <span className="egg-reveal-panel__reaction-meter__star" />
-          <span className="egg-reveal-panel__reaction-meter__star" />
-        </div>
+      
+       
       </div>
 
       <div className="egg-reveal-panel__copy">
         <h1 className="egg-reveal-panel__title egg-reveal-panel__title--pop">Finally Married!</h1>
         <p className="egg-reveal-panel__tag egg-reveal-panel__tag--delay">#HaziqLaila</p>
         <p className="egg-reveal-panel__wish egg-reveal-panel__wish--delay">
-          Selamat Pengantin Baru Badar dan Isteri!.
+          Selamat Pengantin Baru Badar dan Isteri!
         </p>
+        <p className="egg-reveal-panel__from egg-reveal-panel__from--delay">{EGG_REVEAL_FROM_LINE}</p>
       </div>
 
       <div className="egg-reveal-panel__actions">
@@ -177,7 +170,7 @@ export function RevealCard({
             className="egg-reveal-btn egg-reveal-btn--catch"
             onClick={startCatch}
           >
-            Main Catch the Love 💕
+            Jom Main Game💕
           </button>
         ) : null}
         <button type="button" className="egg-reveal-btn egg-reveal-btn--ghost" onClick={reset}>
