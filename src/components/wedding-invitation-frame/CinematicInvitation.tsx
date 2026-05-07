@@ -7,13 +7,7 @@ import {
   type CSSProperties,
   type ReactNode,
 } from "react";
-import {
-  getCopyForScript,
-  persistScript,
-  readScriptFromSearch,
-  resolveInitialScript,
-  type CinematicScript,
-} from "../../data/cinematicInvitationCopy";
+import { CINEMATIC_COPY } from "../../data/cinematicInvitationCopy";
 import "../../styles/cinematic-invitation.css";
 
 export type CinematicStage =
@@ -43,12 +37,10 @@ const ZOOM_IN_MS = 6200;
 const SETTLE_AFTER_ZOOM_MS = 450;
 /** Pause after a line finishes typing before the next line starts */
 const PAUSE_BETWEEN_LINES_MS = 720;
-/** Typewriter (Majlis / tarikh) — higher = slower “pen” cadence */
+/** Typewriter — higher = slower “pen” cadence */
 const MS_PER_CHAR = 108;
-/** Handwriting lead — Latin char mode; keep near ink animation length for stroke feel */
+/** Handwriting — Latin char mode; keep near ink animation length for stroke feel */
 const MS_PER_CHAR_HAND = 118;
-/** Jawi lead — interval between strokes (clip animation runs concurrently; overlaps feel natural). */
-const MS_PER_WORD_HAND = 820;
 const HOLD_AFTER_LAST_LINE_MS = 800;
 
 function prefersReducedMotion(): boolean {
@@ -58,24 +50,9 @@ function prefersReducedMotion(): boolean {
 
 const TEXT_STAGES: CinematicStage[] = ["textOne", "textTwo", "textThree", "textFour"];
 
-/** Jawi / Arabic block (avoids `\p{Script=Arabic}` for older tooling). */
-const JAWI_CHARS_RE = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF]/;
-
-/** Polyfill-free grapheme count for stroke duration (≈ letters in Jawi). */
-function jawiGraphemeCount(s: string): number {
-  return Array.from(s).length;
-}
-
-function jawiStrokeDurationMs(word: string): number {
-  const len = jawiGraphemeCount(word);
-  return Math.min(2400, 580 + len * 170);
-}
-
 type TypewriterLineProps = {
   text: string;
-  /** Currently typing this line */
   typing: boolean;
-  /** Line already finished — show full string */
   complete: boolean;
   onTyped?: () => void;
 };
@@ -132,10 +109,8 @@ type HandwritingLineProps = {
   onTyped?: () => void;
 };
 
-/** Per-character (Latin) or per-word (Jawi) ink-in — avoids breaking Arabic shaping. */
+/** Per-character ink-in for Latin script masthead */
 function HandwritingLine({ text, typing, complete, onTyped }: HandwritingLineProps) {
-  const jawiMode = useMemo(() => JAWI_CHARS_RE.test(text), [text]);
-
   const [len, setLen] = useState(0);
   const onTypedRef = useRef(onTyped);
   onTypedRef.current = onTyped;
@@ -156,22 +131,10 @@ function HandwritingLine({ text, typing, complete, onTyped }: HandwritingLinePro
     });
   }, [latinRows]);
 
-  const jawiRows = useMemo(() => text.split("\n").map((line) => line.trim().split(/\s+/).filter(Boolean)), [text]);
-  const jawiWordCount = useMemo(() => jawiRows.reduce((n, row) => n + row.length, 0), [jawiRows]);
-  const jawiRowsKeyed = useMemo(() => {
-    let ti = 0;
-    return jawiRows.map((words, ri) =>
-      words.map((word, wi) => ({ word, ti: ti++, ri, wi })),
-    );
-  }, [jawiRows]);
-
-  const flatCount = jawiMode ? jawiWordCount : latinFlatCount;
-  const intervalMs = jawiMode ? MS_PER_WORD_HAND : MS_PER_CHAR_HAND;
-
   useEffect(() => {
     firedRef.current = false;
     if (complete) {
-      setLen(flatCount);
+      setLen(latinFlatCount);
       return;
     }
     if (!typing) {
@@ -179,7 +142,7 @@ function HandwritingLine({ text, typing, complete, onTyped }: HandwritingLinePro
       return;
     }
     if (reduced) {
-      setLen(flatCount);
+      setLen(latinFlatCount);
       if (!firedRef.current) {
         firedRef.current = true;
         onTypedRef.current?.();
@@ -191,51 +154,16 @@ function HandwritingLine({ text, typing, complete, onTyped }: HandwritingLinePro
     const id = window.setInterval(() => {
       i += 1;
       setLen(i);
-      if (i >= flatCount) {
+      if (i >= latinFlatCount) {
         clearInterval(id);
         if (!firedRef.current) {
           firedRef.current = true;
           onTypedRef.current?.();
         }
       }
-    }, intervalMs);
+    }, MS_PER_CHAR_HAND);
     return () => clearInterval(id);
-  }, [text, typing, complete, reduced, flatCount, intervalMs]);
-
-  if (jawiMode) {
-    return (
-      <span className="ci-hand-stack ci-hand-stack--jawi">
-        {jawiRowsKeyed.map((cells, ri) => (
-          <span key={ri} className="ci-hand-row ci-hand-row--jawi">
-            {cells.map(({ word, ti, wi }) => {
-              const on = complete || ti < len;
-              const ms = jawiStrokeDurationMs(word);
-              return (
-                <span key={`${ri}-${wi}-${ti}`} className="ci-hand-jawi-word">
-                  <span
-                    className={[
-                      "ci-hand-jawi-stroke",
-                      "ci-hand-char",
-                      on ? "ci-hand-char--on" : "ci-hand-char--off",
-                    ].join(" ")}
-                    style={
-                      {
-                        ["--ci-jawi-write-ms" as string]: `${ms}ms`,
-                        ["--ci-hand-tilt" as string]: `${((ti % 7) - 3) * 0.35}deg`,
-                      } satisfies CSSProperties
-                    }
-                  >
-                    {word}
-                  </span>
-                  {wi < cells.length - 1 ? "\u00a0" : null}
-                </span>
-              );
-            })}
-          </span>
-        ))}
-      </span>
-    );
-  }
+  }, [text, typing, complete, reduced, latinFlatCount]);
 
   return (
     <span className="ci-hand-stack">
@@ -279,9 +207,6 @@ export function CinematicInvitation({
   const [rootVisible, setRootVisible] = useState(false);
   const [stage, setStage] = useState<CinematicStage>("idle");
   const [zoomLevel, setZoomLevel] = useState<"idle" | "frame">("idle");
-  const [writingScript, setWritingScript] = useState<CinematicScript>(() =>
-    resolveInitialScript(typeof window !== "undefined" ? window.location.search : ""),
-  );
 
   const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
   const completedRef = useRef(false);
@@ -332,25 +257,8 @@ export function CinematicInvitation({
   }, []);
 
   useEffect(() => {
-    const fromUrl = readScriptFromSearch(window.location.search);
-    if (fromUrl) {
-      setWritingScript(fromUrl);
-      persistScript(fromUrl);
-    }
-  }, []);
-
-  useEffect(() => {
     return () => clearTimers();
   }, [clearTimers]);
-
-  const copy = useMemo(() => getCopyForScript(writingScript), [writingScript]);
-  const isJawi = writingScript === "jawi";
-
-  const chooseScript = useCallback((next: CinematicScript) => {
-    if (stage !== "idle") return;
-    setWritingScript(next);
-    persistScript(next);
-  }, [stage]);
 
   const handleStart = useCallback(() => {
     if (stage !== "idle") return;
@@ -382,7 +290,6 @@ export function CinematicInvitation({
         .filter(Boolean)
         .join(" ")}
       data-stage={stage}
-      data-script={writingScript}
       role="presentation"
       style={{ "--ci-zoom-step-ms": `${ZOOM_IN_MS}ms` } as CSSProperties}
     >
@@ -403,40 +310,14 @@ export function CinematicInvitation({
 
       {decorMidLayer}
 
-      {!started && (
-        <div className="ci-script-toggle" role="group" aria-label="Pilih tulisan jemputan">
-          <button
-            type="button"
-            className={["ci-script-toggle__btn", writingScript === "jawi" ? "ci-script-toggle__btn--active" : ""]
-              .filter(Boolean)
-              .join(" ")}
-            onClick={() => chooseScript("jawi")}
-            aria-pressed={writingScript === "jawi"}
-          >
-            Jawi
-          </button>
-          <button
-            type="button"
-            className={["ci-script-toggle__btn", writingScript === "rumi" ? "ci-script-toggle__btn--active" : ""]
-              .filter(Boolean)
-              .join(" ")}
-            onClick={() => chooseScript("rumi")}
-            aria-pressed={writingScript === "rumi"}
-          >
-            Rumi
-          </button>
-        </div>
-      )}
-
       <div className="ci-copy" aria-live="polite">
         <div className="ci-copy-masthead">
           <p
-            dir={isJawi ? "rtl" : "ltr"}
-            lang={isJawi ? "ms-Arab" : "ms"}
+            dir="ltr"
+            lang="ms"
             className={[
               "ci-line",
               "ci-line--masthead-tagline",
-              isJawi ? "ci-line--jawi" : "",
               taglineVisible ? "ci-line--in" : "",
               taglineTyping ? "ci-line--typing" : "",
             ]
@@ -445,20 +326,19 @@ export function CinematicInvitation({
             aria-hidden={!taglineVisible}
           >
             <TypewriterLine
-              text={copy[0]}
+              text={CINEMATIC_COPY[0]}
               typing={taglineTyping}
               complete={taglineComplete}
               onTyped={taglineTyping ? () => handleLineTyped(0) : undefined}
             />
           </p>
           <p
-            dir={isJawi ? "rtl" : "ltr"}
-            lang={isJawi ? "ms-Arab" : "ms"}
+            dir="ltr"
+            lang="ms"
             className={[
               "ci-line",
               "ci-line--lead",
               "ci-line--hand",
-              isJawi ? "ci-line--jawi" : "",
               namesVisible ? "ci-line--in" : "",
               namesTyping ? "ci-line--typing" : "",
             ]
@@ -467,7 +347,7 @@ export function CinematicInvitation({
             aria-hidden={!namesVisible}
           >
             <HandwritingLine
-              text={copy[1]}
+              text={CINEMATIC_COPY[1]}
               typing={namesTyping}
               complete={namesComplete}
               onTyped={namesTyping ? () => handleLineTyped(1) : undefined}
@@ -476,23 +356,21 @@ export function CinematicInvitation({
           <div
             className={["ci-copy-sub", subVisible ? "ci-copy-sub--visible" : ""].filter(Boolean).join(" ")}
           >
-            {copy.slice(2).map((text, j) => {
+            {CINEMATIC_COPY.slice(2).map((text, j) => {
               const i = j + 2;
               const visible = lineVisible(i);
               const typing = lineTyping(i);
               const complete = lineComplete(i);
               return (
                 <p
-                  key={`${writingScript}-${i}`}
-                  dir={isJawi ? (i === 3 ? "ltr" : "rtl") : "ltr"}
-                  lang={isJawi ? (i === 3 ? "ms" : "ms-Arab") : "ms"}
+                  key={`line-${i}`}
+                  dir="ltr"
+                  lang="ms"
                   className={[
                     "ci-line",
                     "ci-line--on-scrim",
                     i === 2 ? "ci-line--body" : "",
                     i === 3 ? "ci-line--date" : "",
-                    isJawi && (i === 2 || i === 3) ? "ci-line--jawi" : "",
-                    isJawi && i === 3 ? "ci-line--date-ltr-nums" : "",
                     visible ? "ci-line--in" : "",
                     typing ? "ci-line--typing" : "",
                   ]

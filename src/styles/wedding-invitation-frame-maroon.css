@@ -432,25 +432,6 @@
   --ci-ink: #120208;
 }
 
-.wif-page--maroon-gold .ci-root {
-  --ci-jawi-gold: #b78727;
-  --ci-jawi-gold-mid: rgba(183, 135, 39, 0.58);
-  --ci-jawi-gold-soft: rgba(230, 200, 140, 0.32);
-}
-
-.wif-page--maroon-gold .ci-script-toggle {
-  background: rgba(42, 10, 20, 0.72);
-  border-color: rgba(236, 210, 160, 0.38);
-}
-
-.wif-page--maroon-gold .ci-script-toggle__btn--active {
-  background: rgba(212, 180, 115, 0.18);
-}
-
-.wif-page--maroon-gold .ci-script-toggle__btn:focus-visible {
-  outline-color: var(--wif-gold-soft);
-}
-
 /* Gold glow on tray-less subcopy would fight white “petikan” — exclude scrim + small tagline */
 .wif-page--maroon-gold .ci-line--in:not(.ci-line--hand):not(.ci-line--on-scrim):not(.ci-line--masthead-tagline) {
   animation: wif-mg-line-gold-pulse 4.2s ease-in-out infinite;
