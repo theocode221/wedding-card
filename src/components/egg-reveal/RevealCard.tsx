@@ -14,6 +14,21 @@ type RevealCardProps = {
   onStartCatchTheLove?: () => void;
   /** When true (e.g. mini-game open), close kad so it does not stack above overlays. */
   interactionSuspended?: boolean;
+  marketingMode?: boolean;
+};
+
+const MARKETING_COPY = {
+  title: "Finally Married!",
+  tag: "#DemoWeddingMoments",
+  wish: "Selamat pengantin baru! Semoga hari bahagia ini penuh kasih dan kenangan manis.",
+  fromLine: "Daripada Team Demo",
+  kadTitle: "Kad Ucapan Demo",
+  kadParas: [
+    "Tahniah atas hari bahagia anda berdua.",
+    "Semoga perjalanan rumah tangga sentiasa dipenuhi kasih sayang, sabar, dan keberkatan.",
+    "Semoga segala urusan dipermudahkan dan rezeki dilimpahkan.",
+    "Terima kasih kerana mencuba demo kad interaktif ini.",
+  ] as const,
 };
 
 export function RevealCard({
@@ -21,6 +36,7 @@ export function RevealCard({
   onReset,
   onStartCatchTheLove,
   interactionSuspended = false,
+  marketingMode = false,
 }: RevealCardProps) {
   const [kadOpen, setKadOpen] = useState(false);
   const [cheerToken, setCheerToken] = useState<number | null>(null);
@@ -73,10 +89,26 @@ export function RevealCard({
   if (!visible) return null;
 
   const [src1, src2] = getCartoonNewlywedFrameSrcs();
+  const copy = marketingMode
+    ? MARKETING_COPY
+    : {
+        title: "Finally Married!",
+        tag: "#HaziqLaila",
+        wish: "Selamat Pengantin Baru Badar dan Isteri!",
+        fromLine: EGG_REVEAL_FROM_LINE,
+        kadTitle: undefined,
+        kadParas: undefined,
+      };
 
   return (
     <div className="egg-reveal-panel">
-      <EggRevealKadUcapan open={kadOpen} onClose={() => setKadOpen(false)} />
+      <EggRevealKadUcapan
+        open={kadOpen}
+        onClose={() => setKadOpen(false)}
+        title={copy.kadTitle}
+        paras={copy.kadParas}
+        fromLine={copy.fromLine}
+      />
 
       <div className="egg-reveal-panel__corners" aria-hidden>
         <span className="egg-reveal-panel__bolt egg-reveal-panel__bolt--tl" />
@@ -110,6 +142,12 @@ export function RevealCard({
             draggable={false}
           />
         </div>
+        {marketingMode ? (
+          <div className="egg-reveal-panel__face-blur-mask" aria-hidden>
+            <span className="egg-reveal-panel__face-blur egg-reveal-panel__face-blur--left" />
+            <span className="egg-reveal-panel__face-blur egg-reveal-panel__face-blur--right" />
+          </div>
+        ) : null}
         {cheerToken != null ? (
           <div key={cheerToken} className="egg-reveal-panel__gif-cheer-overlay" aria-hidden />
         ) : null}
@@ -148,12 +186,12 @@ export function RevealCard({
       </div>
 
       <div className="egg-reveal-panel__copy">
-        <h1 className="egg-reveal-panel__title egg-reveal-panel__title--pop">Finally Married!</h1>
-        <p className="egg-reveal-panel__tag egg-reveal-panel__tag--delay">#HaziqLaila</p>
+        <h1 className="egg-reveal-panel__title egg-reveal-panel__title--pop">{copy.title}</h1>
+        <p className="egg-reveal-panel__tag egg-reveal-panel__tag--delay">{copy.tag}</p>
         <p className="egg-reveal-panel__wish egg-reveal-panel__wish--delay">
-          Selamat Pengantin Baru Badar dan Isteri!
+          {copy.wish}
         </p>
-        <p className="egg-reveal-panel__from egg-reveal-panel__from--delay">{EGG_REVEAL_FROM_LINE}</p>
+        <p className="egg-reveal-panel__from egg-reveal-panel__from--delay">{copy.fromLine}</p>
       </div>
 
       <div className="egg-reveal-panel__actions">

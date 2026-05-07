@@ -879,6 +879,35 @@
   animation: egg-reveal-gif-cheer-flash 0.5s ease-out both;
 }
 
+.egg-reveal-panel__face-blur-mask {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.egg-reveal-panel__face-blur {
+  position: absolute;
+  width: 22%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  backdrop-filter: blur(10px) saturate(0.7);
+  -webkit-backdrop-filter: blur(10px) saturate(0.7);
+  background: rgba(240, 240, 240, 0.12);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.16);
+}
+
+.egg-reveal-panel__face-blur--left {
+  left: 26%;
+  top: 28%;
+}
+
+.egg-reveal-panel__face-blur--right {
+  right: 19%;
+  top: 45%;
+  width: 19%;
+}
+
 @keyframes egg-reveal-gif-cheer-flash {
   0% {
     opacity: 0;

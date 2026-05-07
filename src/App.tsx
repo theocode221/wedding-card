@@ -15,6 +15,7 @@ import { WeddingInvitationFrameMaroonPage } from "./pages/WeddingInvitationFrame
 import { GalleryPage } from "./pages/GalleryPage";
 import { EggRevealCardPage } from "./pages/EggRevealCardPage";
 import { EggRevealCardPastelPage } from "./pages/EggRevealCardPastelPage";
+import { EggRevealCardMarketingPage } from "./pages/EggRevealCardMarketingPage";
 import { RoyalMaroonInvitationPage } from "./pages/royalMaroonInvitation/RoyalMaroonInvitationPage";
 
 const routerBasename =
@@ -41,6 +42,7 @@ export default function App() {
             <Route path="/galeri" element={<GalleryPage />} />
             <Route path="/kad-wedding-badar" element={<EggRevealCardPage />} />
             <Route path="/kad-wedding-badar-pastel" element={<EggRevealCardPastelPage />} />
+            <Route path="/kad-wedding-badar-marketing" element={<EggRevealCardMarketingPage />} />
             <Route path="/kad-telur-tahniah" element={<Navigate to="/kad-wedding-badar" replace />} />
             <Route path="/kad-ucapan/sunting" element={<UcapanCardCopyFormPage />} />
             <Route path="*" element={<Navigate to="/" replace />} />

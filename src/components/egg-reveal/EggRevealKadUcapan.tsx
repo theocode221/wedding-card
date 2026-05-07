@@ -8,9 +8,18 @@ import {
 type EggRevealKadUcapanProps = {
   open: boolean;
   onClose: () => void;
+  title?: string;
+  paras?: readonly string[];
+  fromLine?: string;
 };
 
-export function EggRevealKadUcapan({ open, onClose }: EggRevealKadUcapanProps) {
+export function EggRevealKadUcapan({
+  open,
+  onClose,
+  title = EGG_REVEAL_KAD_UCAPAN_TITLE,
+  paras = EGG_REVEAL_KAD_UCAPAN_PARAS,
+  fromLine = EGG_REVEAL_FROM_LINE,
+}: EggRevealKadUcapanProps) {
   const titleId = useId();
   const panelRef = useRef<HTMLDivElement>(null);
 
@@ -58,18 +67,18 @@ export function EggRevealKadUcapan({ open, onClose }: EggRevealKadUcapanProps) {
           <span>SPECIAL</span>
         </div>
         <p id={titleId} className="egg-reveal-kad__title">
-          {EGG_REVEAL_KAD_UCAPAN_TITLE}
+          {title}
         </p>
         <div className="egg-reveal-kad__bubble">
           <div className="egg-reveal-kad__bubble-inner">
-            {EGG_REVEAL_KAD_UCAPAN_PARAS.map((para, i) => (
+            {paras.map((para, i) => (
               <p key={i} className="egg-reveal-kad__speech">
                 {para}
               </p>
             ))}
           </div>
         </div>
-        <p className="egg-reveal-kad__signoff">{EGG_REVEAL_FROM_LINE}</p>
+        <p className="egg-reveal-kad__signoff">{fromLine}</p>
         <button type="button" className="egg-reveal-kad__close" onClick={onClose}>
           Tutup
         </button>

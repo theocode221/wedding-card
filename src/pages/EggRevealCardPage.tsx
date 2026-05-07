@@ -13,6 +13,7 @@ import "../styles/egg-reveal-card.css";
 type EggRevealCardPageProps = {
   /** `pastel` adds `egg-reveal-page--pastel`; load `egg-reveal-pastel.css` from the route wrapper. */
   variant?: EggRevealTheme;
+  marketingMode?: boolean;
 };
 
 type PostRevealPanel = "card" | "game" | "result";
@@ -27,7 +28,7 @@ function eggCrackFill(stage: EggCrackStage): 0 | 1 | 2 | 3 {
   return 3;
 }
 
-export function EggRevealCardPage({ variant = "default" }: EggRevealCardPageProps) {
+export function EggRevealCardPage({ variant = "default", marketingMode = false }: EggRevealCardPageProps) {
   const [revealed, setRevealed] = useState(false);
   const [eggStage, setEggStage] = useState<EggCrackStage>("idle");
   const [postRevealPanel, setPostRevealPanel] = useState<PostRevealPanel>("card");
@@ -186,6 +187,7 @@ export function EggRevealCardPage({ variant = "default" }: EggRevealCardPageProp
           >
             <RevealCard
               visible
+              marketingMode={marketingMode}
               interactionSuspended={postRevealPanel !== "card"}
               onReset={handleReset}
               onStartCatchTheLove={() => setPostRevealPanel("game")}
