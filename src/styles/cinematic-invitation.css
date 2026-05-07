@@ -234,16 +234,19 @@
   transform: translate3d(0, 0, 0);
 }
 
-/* Per-character handwriting ink — row nowrap avoids mid-word splits between letters */
+/* Per-character handwriting — rows are shrink-to-fit so each line centers (block rows were full-width + start-aligned) */
 .ci-hand-stack {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 }
 
 .ci-hand-row {
-  display: block;
+  display: inline-block;
   white-space: nowrap;
+  text-align: center;
+  max-width: 100%;
 }
 
 .ci-hand-char {
@@ -294,6 +297,10 @@
 
 .ci-copy-masthead > .ci-line--lead.ci-line--hand {
   max-width: min(92vw, 22rem);
+  margin-inline: auto;
+  display: flex;
+  justify-content: center;
+  text-align: center;
 }
 
 .ci-line--lead.ci-line--hand.ci-line--in {
@@ -325,8 +332,8 @@
   font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
   font-style: italic;
   font-weight: 500;
-  font-size: clamp(1.05rem, 3.35vw, 1.3rem);
-  line-height: 1.78;
+  font-size: clamp(0.93rem, 2.85vw, 1.14rem);
+  line-height: 1.72;
   letter-spacing: 0.04em;
   color: rgba(255, 255, 255, 0.96);
   -webkit-text-stroke: 0;
@@ -467,9 +474,9 @@
 }
 
 .ci-copy-sub .ci-line--body.ci-line--in {
-  font-size: clamp(0.98rem, 3.1vw, 1.16rem);
+  font-size: clamp(0.88rem, 2.72vw, 1.06rem);
   font-weight: 500;
-  line-height: 1.52;
+  line-height: 1.5;
 }
 
 .ci-copy-sub .ci-line--date.ci-line--in {

@@ -218,6 +218,23 @@
   outline-color: #fff0e0;
 }
 
+.wif-page--maroon-gold .wif-invitation__details .wif-invitation__location-chevron {
+  color: inherit;
+  opacity: 0.88;
+}
+
+.wif-page--maroon-gold .wif-invitation__details .wif-invitation__btn--location-opt {
+  background: rgba(12, 2, 6, 0.55);
+  color: #fff9f6;
+  border-color: rgba(201, 162, 77, 0.4);
+  box-shadow: inset 0 1px 0 rgba(255, 248, 242, 0.06);
+}
+
+.wif-page--maroon-gold .wif-invitation__details .wif-invitation__btn--location-opt:hover {
+  background: rgba(20, 6, 12, 0.72);
+  border-color: rgba(232, 212, 154, 0.55);
+}
+
 /* Secondary calendar trigger — outlined on maroon */
 .wif-page--maroon-gold .wif-invitation__details .wif-invitation__btn--calendar {
   background: linear-gradient(180deg, rgba(255, 250, 248, 0.16) 0%, rgba(42, 10, 22, 0.55) 100%);

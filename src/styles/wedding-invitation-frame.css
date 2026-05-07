@@ -296,6 +296,48 @@
   box-shadow: 0 6px 28px rgba(74, 58, 48, 0.32);
 }
 
+.wif-invitation__location {
+  width: 100%;
+}
+
+.wif-invitation__btn--location {
+  position: relative;
+  display: flex;
+  width: 100%;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.wif-invitation__location-chevron {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.65rem;
+  opacity: 0.8;
+}
+
+.wif-invitation__location-panel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin-top: 0.55rem;
+}
+
+.wif-invitation__btn--location-opt {
+  min-height: 52px;
+  text-transform: none;
+  background: var(--wif-paper);
+  color: var(--wif-ink);
+  border: 1px solid rgba(107, 83, 68, 0.2);
+  box-shadow: 0 1px 0 rgba(255, 253, 249, 0.9) inset;
+}
+
+.wif-invitation__btn--location-opt:hover {
+  background: rgba(255, 253, 249, 0.98);
+  border-color: rgba(184, 149, 106, 0.4);
+}
+
 .wif-invitation__btn--gold {
   flex: 1;
   min-width: 0;

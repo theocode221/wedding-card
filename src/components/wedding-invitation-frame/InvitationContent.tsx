@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   INVITATION_PATH_DEFAULT,
@@ -17,8 +17,9 @@ export type InvitationContentProps = {
   invitationFlowBase?: typeof INVITATION_PATH_DEFAULT | typeof INVITATION_PATH_MAROON;
 };
 
-const MAPS_URL =
-  "https://www.google.com/maps/search/?api=1&query=Dewan+Perdana+Felda+Kuala+Lumpur";
+const LOCATION_QUERY = encodeURIComponent("Hotel Pintar Parit Raja");
+const GOOGLE_MAPS_URL = `https://www.google.com/maps/search/?api=1&query=${LOCATION_QUERY}`;
+const WAZE_URL = `https://www.waze.com/ul?q=${LOCATION_QUERY}&navigate=yes`;
 
 export function InvitationContent({
   onReplay,
@@ -33,6 +34,8 @@ export function InvitationContent({
     [invitationFlowBase],
   );
   const [tick, setTick] = useState(() => getRemaining(target, new Date()));
+  const [isLocationMenuOpen, setIsLocationMenuOpen] = useState(false);
+  const locationMenuRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const id = window.setInterval(() => {
@@ -41,11 +44,36 @@ export function InvitationContent({
     return () => window.clearInterval(id);
   }, [target]);
 
+  useEffect(() => {
+    if (!isLocationMenuOpen) return;
+
+    const handlePointerDown = (event: PointerEvent) => {
+      const targetNode = event.target;
+      if (!(targetNode instanceof Node)) return;
+      if (!locationMenuRef.current?.contains(targetNode)) {
+        setIsLocationMenuOpen(false);
+      }
+    };
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsLocationMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("pointerdown", handlePointerDown);
+    window.addEventListener("keydown", handleEscape);
+    return () => {
+      window.removeEventListener("pointerdown", handlePointerDown);
+      window.removeEventListener("keydown", handleEscape);
+    };
+  }, [isLocationMenuOpen]);
+
   return (
     <div className="wif-invitation">
       <header className="wif-invitation__hero">
         <NnMonogramLogo className="wif-invitation__monogram" />
-        <p className="wif-invitation__hero-eyebrow">Jemputan perkahwinan</p>
+        <p className="wif-invitation__hero-eyebrow">Jemputan Majlis Akad Nikah</p>
         <h1 className="wif-invitation__names"> NAIM &amp; NADHIRAH</h1>
         <p className="wif-invitation__hero-date">20 Disember 2026</p>
         <p className="wif-invitation__hero-line">
@@ -72,23 +100,51 @@ export function InvitationContent({
           </li>
           <li>
             <span className="wif-invitation__detail-label">Tempat</span>
-            <span className="wif-invitation__detail-value">Dewan Perdana Felda</span>
+            <span className="wif-invitation__detail-value">Hotel Pintar Parit Raja</span>
           </li>
           <li>
             <span className="wif-invitation__detail-label">Alamat</span>
             <span className="wif-invitation__detail-value">
-              Jalan Perdana, 50480 Kuala Lumpur, Malaysia
+              JParit, 50480 Kuala Lumpur, Malaysia
             </span>
           </li>
         </ul>
-        <a
-          className="wif-invitation__btn wif-invitation__btn--primary"
-          href={MAPS_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Lihat lokasi
-        </a>
+        <div className="wif-invitation__location" ref={locationMenuRef}>
+          <button
+            type="button"
+            className="wif-invitation__btn wif-invitation__btn--primary wif-invitation__btn--location"
+            aria-expanded={isLocationMenuOpen}
+            aria-controls="wif-location-panel"
+            onClick={() => setIsLocationMenuOpen((open) => !open)}
+          >
+            <span>Lihat lokasi</span>
+            <span className="wif-invitation__location-chevron" aria-hidden="true">
+              {isLocationMenuOpen ? "▲" : "▼"}
+            </span>
+          </button>
+          {isLocationMenuOpen ? (
+            <div id="wif-location-panel" className="wif-invitation__location-panel">
+              <a
+                className="wif-invitation__btn wif-invitation__btn--location-opt"
+                href={WAZE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setIsLocationMenuOpen(false)}
+              >
+                Waze
+              </a>
+              <a
+                className="wif-invitation__btn wif-invitation__btn--location-opt"
+                href={GOOGLE_MAPS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setIsLocationMenuOpen(false)}
+              >
+                Google Maps
+              </a>
+            </div>
+          ) : null}
+        </div>
         <AddToCalendar />
       </section>
 
