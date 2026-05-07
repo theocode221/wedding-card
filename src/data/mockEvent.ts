@@ -10,7 +10,7 @@ const gallery = [
 ] as const;
 
 const base: Omit<WeddingEventData, "theme"> = {
-  brideName: "ANIS",
+  brideName: "NADHIRAH",
   groomName: "NABIL",
   date: "Saturday, 20 December 2026",
   venue: "The Garden Pavilion",

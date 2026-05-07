@@ -15,7 +15,7 @@ const INVITATION_MUSIC_URL = publicUrl("wedding-invitation/song.mp3");
 const INVITATION_MUSIC_VOLUME = 0.42;
 
 /** Routes where invitation BGM may continue (same “card” flow as jemputan). */
-const ROUTES_ALLOW_INVITATION_BGM = new Set(["/jemputan-frame", "/galeri", "/rsvp"]);
+const ROUTES_ALLOW_INVITATION_BGM = new Set(["/jemputan-frame", "/jemputan-frame-maroon", "/galeri", "/rsvp"]);
 
 type InvitationMusicContextValue = {
   /** Start or restart from the beginning (e.g. “Buka Jemputan”). */

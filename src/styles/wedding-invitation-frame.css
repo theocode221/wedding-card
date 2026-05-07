@@ -161,6 +161,14 @@
   margin-bottom: 1.75rem;
 }
 
+.wif-invitation__monogram {
+  display: block;
+  width: min(10.5rem, 58vw);
+  height: auto;
+  margin: 0 auto 1rem;
+  filter: drop-shadow(0 3px 14px rgba(62, 44, 22, 0.14));
+}
+
 .wif-invitation__hero-eyebrow {
   margin: 0 0 0.65rem;
   font-size: 0.68rem;

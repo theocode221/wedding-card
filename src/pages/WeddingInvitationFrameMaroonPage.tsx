@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { CinematicInvitation } from "../components/wedding-invitation-frame/CinematicInvitation";
+import { MaroonBokehDrift } from "../components/wedding-invitation-frame/MaroonBokehDrift";
 import { InvitationContent } from "../components/wedding-invitation-frame/InvitationContent";
 import { useInvitationMusic } from "../context/InvitationMusicContext";
 import {
@@ -9,8 +10,9 @@ import {
   WEDDING_INVITATION_CINEMATIC_URLS,
 } from "../data/weddingInvitationFrames";
 import "../styles/wedding-invitation-frame.css";
+import "../styles/wedding-invitation-frame-maroon.css";
 
-/** Short spinner only — hero PNG is the gate; was 400ms + all 3 images. */
+/** Same flow as `WeddingInvitationFramePage` — maroon & gold skin only. */
 const MIN_LOADING_MS = 120;
 
 type InvitationFrameLocationState = {
@@ -18,7 +20,7 @@ type InvitationFrameLocationState = {
   scrollTo?: "details" | "top";
 };
 
-export function WeddingInvitationFramePage() {
+export function WeddingInvitationFrameMaroonPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const { skipCinematic: skipFromState = false, scrollTo } =
@@ -53,19 +55,16 @@ export function WeddingInvitationFramePage() {
     };
   }, [urls]);
 
-  /** Warm cache for 2.png / 3.png without blocking the loading overlay. */
   useEffect(() => {
     if (urls.length < 3) return;
     preloadWeddingInvitationFrames([urls[1], urls[2]]).catch(() => undefined);
   }, [urls]);
 
-  /** From gallery (etc.): skip intro animation and go straight to invitation content. */
   useLayoutEffect(() => {
     if (!assetsReady || !skipFromState) return;
     setShowInvitation(true);
   }, [assetsReady, skipFromState]);
 
-  /** Skip-cinematic entry (e.g. from galeri): start only if still paused (music may already be playing). */
   useEffect(() => {
     if (!assetsReady || !skipFromState || !showInvitation) return;
     resumeIfPaused();
@@ -95,7 +94,6 @@ export function WeddingInvitationFramePage() {
     invitationRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   }, [inviteShellIn]);
 
-  /** After shell is visible, scroll to Butiran majlis when returning from gallery. */
   useEffect(() => {
     if (!inviteShellIn || scrollTo !== "details") return;
     const id = window.setTimeout(() => {
@@ -126,6 +124,7 @@ export function WeddingInvitationFramePage() {
     <main
       className={[
         "wif-page",
+        "wif-page--maroon-gold",
         "wif-page--cinematic",
         skipCinematic ? "wif-page--invitation-only" : "",
       ]
@@ -147,6 +146,7 @@ export function WeddingInvitationFramePage() {
           urls={urls}
           onComplete={handleCinematicComplete}
           onOpenCinematic={playFromStart}
+          decorMidLayer={<MaroonBokehDrift />}
         />
       )}
 

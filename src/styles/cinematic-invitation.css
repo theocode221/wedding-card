@@ -3,6 +3,12 @@
 .ci-root {
   --ci-ease: cubic-bezier(0.33, 0.02, 0.18, 1);
   --ci-ease-out: cubic-bezier(0.28, 0.1, 0.2, 1);
+  /* Jawi / gold masthead + tray copy */
+  --ci-jawi-gold: #b78727;
+  --ci-jawi-gold-mid: rgba(183, 135, 39, 0.55);
+  --ci-jawi-gold-soft: rgba(220, 188, 130, 0.35);
+  --ci-jawi-outline: rgba(10, 7, 5, 0.92);
+  --ci-jawi-outline-core: rgba(0, 0, 0, 0.88);
   /* Overridden inline to stay in sync with ZOOM_IN_MS */
   --ci-zoom-step-ms: 6200ms;
   --ci-scale-frame: 2.5;
@@ -127,56 +133,407 @@
   opacity: 0.62;
 }
 
-/* Typography — vertically centered, aligned to portrait column width */
+/* Typography — upper masthead: gold script + subtext tray (readable on busy art) */
 .ci-copy {
   position: absolute;
   inset: 0;
   z-index: 5;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: max(1rem, env(safe-area-inset-top)) max(1.25rem, env(safe-area-inset-right))
-    max(1rem, env(safe-area-inset-bottom)) max(1.25rem, env(safe-area-inset-left));
   pointer-events: none;
-  text-align: center;
-  transform: translateY(-5.5vh);
 }
 
-.ci-copy-panel {
-  width: min(var(--ci-portrait-w-max), 92vw);
-  max-width: 100%;
+.ci-copy-masthead {
+  /* Hero band: anchored below notch, shifted into upper third so type clears the portrait art */
+  --ci-masthead-top: clamp(
+    1.65rem,
+    calc(env(safe-area-inset-top) + clamp(14px, 5.95dvh, 52px)),
+    5.35rem
+  );
+  --ci-masthead-shift: clamp(14px, 3.45dvh, 34px);
+
+  position: absolute;
+  top: var(--ci-masthead-top);
+  left: 0;
+  right: 0;
+  z-index: 1;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(0.72rem, 2.8vw, 1.2rem);
-  padding: clamp(1.05rem, 3.4vw, 1.55rem) clamp(1.15rem, 3.6vw, 1.75rem);
-  border-radius: 1.05rem;
-  background:
-    linear-gradient(
-      168deg,
-      rgba(255, 250, 242, 0.38) 0%,
-      rgba(252, 238, 218, 0.42) 38%,
-      rgba(246, 228, 205, 0.4) 72%,
-      rgba(240, 218, 192, 0.36) 100%
-    );
-  border: 1px solid rgba(212, 175, 96, 0.22);
-  box-shadow:
-    0 12px 36px rgba(32, 22, 14, 0.08),
-    0 1px 0 rgba(255, 255, 255, 0.28) inset,
-    inset 0 -1px 0 rgba(180, 140, 80, 0.05);
-  backdrop-filter: blur(14px) saturate(1.15);
-  -webkit-backdrop-filter: blur(14px) saturate(1.15);
-  opacity: 0;
-  transition: opacity 0.85s var(--ci-ease-out);
+  justify-content: flex-start;
+  gap: clamp(0.2rem, 1.2vw, 0.38rem);
+  width: min(100%, calc(var(--ci-portrait-w-max) + 1.75rem));
+  max-width: 100vw;
+  margin-inline: auto;
+  transform: translate3d(0, var(--ci-masthead-shift), 0);
+  padding: 0 max(1.2rem, env(safe-area-inset-right)) 0 max(1.2rem, env(safe-area-inset-left));
+  text-align: center;
 }
 
-.ci-root[data-stage="textOne"] .ci-copy-panel,
-.ci-root[data-stage="textTwo"] .ci-copy-panel,
-.ci-root[data-stage="textThree"] .ci-copy-panel,
-.ci-root[data-stage="textFour"] .ci-copy-panel,
-.ci-root[data-stage="done"] .ci-copy-panel {
+/* Small initial line above the handwritten hero names */
+.ci-copy-masthead .ci-line--masthead-tagline {
+  margin: 0 0 clamp(0.45rem, 2.4vw, 1rem) 0;
+  max-width: min(var(--ci-portrait-w-max), 92vw);
+  font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  font-size: clamp(0.58rem, 2vw, 0.72rem);
+  font-weight: 600;
+  font-style: normal;
+  line-height: 1.2;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  color: rgba(232, 212, 154, 0.82);
+}
+
+.ci-copy-masthead .ci-line--masthead-tagline.ci-line--jawi {
+  font-family: "Amiri", "Scheherazade New", serif;
+  font-size: clamp(0.78rem, 2.6vw, 0.95rem);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: none;
+}
+
+.ci-copy-masthead .ci-line--masthead-tagline.ci-line--in {
+  color: rgba(250, 244, 230, 0.9);
+  -webkit-text-stroke: 0;
+  paint-order: normal;
+  text-shadow:
+    0 0 10px rgba(0, 0, 0, 0.65),
+    0 1px 4px rgba(0, 0, 0, 0.55);
+  animation: none;
+}
+
+.ci-copy-masthead .ci-line--masthead-tagline.ci-line--typing.ci-line--in {
+  animation: none;
+}
+
+/* Subtext stack — no tray (type sits directly on the art like a quoted couplet) */
+.ci-copy-sub {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: min(var(--ci-portrait-w-max), 92vw);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: clamp(0.45rem, 2vw, 0.75rem);
+  border-radius: 0;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+
+  margin-top: 0;
+  max-height: 0;
+  padding: 0 0.35rem;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate3d(0, 12px, 0);
+  pointer-events: none;
+  transition:
+    max-height 0.75s var(--ci-ease-out),
+    padding 0.75s var(--ci-ease-out),
+    opacity 0.75s var(--ci-ease-out),
+    transform 0.75s var(--ci-ease-out),
+    visibility 0.75s var(--ci-ease-out),
+    margin-top 0.45s var(--ci-ease-out);
+}
+
+.ci-copy-sub--visible {
+  margin-top: clamp(0.55rem, 2.2vw, 0.95rem);
+  max-height: 14rem;
+  padding-top: clamp(0.35rem, 2vw, 0.65rem);
+  padding-bottom: clamp(0.35rem, 2vw, 0.65rem);
   opacity: 1;
+  visibility: visible;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Per-character handwriting ink — row nowrap avoids mid-word splits between letters */
+.ci-hand-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ci-hand-row {
+  display: block;
+  white-space: nowrap;
+}
+
+.ci-hand-row--jawi {
+  unicode-bidi: isolate;
+}
+
+.ci-hand-jawi-word {
+  display: inline;
+}
+
+.ci-hand-jawi-stroke {
+  display: inline-block;
+  vertical-align: baseline;
+  unicode-bidi: isolate;
+}
+
+.ci-hand-char {
+  display: inline-block;
+  vertical-align: baseline;
+}
+
+.ci-hand-char--off {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Reserve layout while hidden — clip masks ink until stroke runs (RTL sweep = pen enters from inline-end). */
+.ci-hand-jawi-stroke.ci-hand-char--off {
+  opacity: 1;
+  visibility: visible;
+  clip-path: polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%);
+  -webkit-clip-path: polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%);
+  filter: none;
+  animation: none;
+  pointer-events: none;
+}
+
+.ci-hand-char--on:not(.ci-hand-jawi-stroke) {
+  animation: ci-hand-ink-in 0.72s cubic-bezier(0.28, 1, 0.32, 1) forwards;
+}
+
+/* Jawi masthead — “ditulis” sebagai sapuan pen daripada kanan→kiri mengikut giliran kata */
+.ci-hand-stack--jawi .ci-hand-jawi-stroke.ci-hand-char--on {
+  animation: ci-jawi-handwrite-sweep var(--ci-jawi-write-ms, 1050ms) cubic-bezier(0.54, 0.02, 0.06, 1)
+    forwards;
+}
+
+@keyframes ci-hand-ink-in {
+  0% {
+    opacity: 0;
+    transform: translate3d(6px, 20px, 0) rotate(calc(var(--ci-hand-tilt, 0deg) + 12deg))
+      scale3d(0.82, 0.92, 1);
+    filter: blur(2px);
+  }
+  40% {
+    opacity: 0.65;
+  }
+  62% {
+    opacity: 1;
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotate(var(--ci-hand-tilt, 0deg)) scale3d(1, 1, 1);
+    filter: blur(0);
+  }
+}
+
+@keyframes ci-jawi-handwrite-sweep {
+  0% {
+    clip-path: polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%);
+    -webkit-clip-path: polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%);
+    opacity: 0.82;
+    filter: blur(2.4px) brightness(0.9);
+    transform: skewX(-0.012turn);
+    text-shadow:
+      0 1px 0 rgba(30, 14, 8, 0.45),
+      0 0 1px var(--ci-jawi-outline-core),
+      0 0 4px rgba(0, 0, 0, 0.55),
+      0 0 10px rgba(220, 190, 120, 0.2);
+  }
+  32% {
+    opacity: 0.97;
+    filter: blur(1px) brightness(0.98);
+  }
+  100% {
+    clip-path: polygon(0 0%, 100% 0%, 100% 100%, 0 100%);
+    -webkit-clip-path: polygon(0 0%, 100% 0%, 100% 100%, 0 100%);
+    opacity: 1;
+    filter: blur(0) brightness(1);
+    transform: skewX(0deg) rotate(var(--ci-hand-tilt, 0deg));
+    text-shadow:
+      0 0 1px var(--ci-jawi-outline-core),
+      0 0 5px rgba(0, 0, 0, 0.65),
+      0 0 10px rgba(0, 0, 0, 0.38),
+      0 0 18px var(--ci-jawi-gold-mid),
+      0 0 30px var(--ci-jawi-gold-soft),
+      0 2px 14px rgba(0, 0, 0, 0.55);
+  }
+}
+
+@keyframes ci-jawi-rim-masthead {
+  0%,
+  100% {
+    text-shadow:
+      0 0 1px var(--ci-jawi-outline-core),
+      0 0 6px rgba(0, 0, 0, 0.58),
+      0 0 12px rgba(0, 0, 0, 0.32),
+      0 0 18px var(--ci-jawi-gold-mid),
+      0 0 34px var(--ci-jawi-gold-soft),
+      0 2px 12px rgba(0, 0, 0, 0.58);
+  }
+  50% {
+    text-shadow:
+      0 0 2px rgba(0, 0, 0, 0.95),
+      0 0 9px rgba(0, 0, 0, 0.72),
+      0 0 16px rgba(0, 0, 0, 0.42),
+      0 0 22px var(--ci-jawi-gold-mid),
+      0 0 42px var(--ci-jawi-gold-soft),
+      0 2px 14px rgba(0, 0, 0, 0.62);
+  }
+}
+
+@keyframes ci-jawi-rim-tray {
+  0%,
+  100% {
+    text-shadow:
+      0 0 1px var(--ci-jawi-outline-core),
+      0 0 5px rgba(0, 0, 0, 0.52),
+      0 0 8px rgba(0, 0, 0, 0.35),
+      0 2px 8px rgba(0, 0, 0, 0.78),
+      0 0 18px var(--ci-jawi-gold-mid);
+  }
+  50% {
+    text-shadow:
+      0 0 2px rgba(0, 0, 0, 0.92),
+      0 0 8px rgba(0, 0, 0, 0.68),
+      0 0 12px rgba(0, 0, 0, 0.4),
+      0 2px 10px rgba(0, 0, 0, 0.82),
+      0 0 22px var(--ci-jawi-gold-mid);
+  }
+}
+
+/* Gold script lead — pen-style script (Caveat), ornamental fallback (Great Vibes) */
+.ci-line--lead.ci-line--hand {
+  font-family: "Caveat", "Brush Script MT", "Segoe Script", cursive;
+  font-weight: 600;
+  font-size: clamp(1.88rem, 6.85vw, 2.82rem);
+  line-height: 1.42;
+  text-transform: none;
+  letter-spacing: 0.02em;
+  color: #e8cf8f;
+}
+
+/* Jawi — classical Arabic book faces (Amiri / Scheherazade) + Noto fallback */
+.ci-line--jawi {
+  font-family: "Amiri", "Scheherazade New", "Noto Naskh Arabic", serif;
+  unicode-bidi: isolate;
+  font-feature-settings: "liga" 1, "calt" 1;
+  font-variant-ligatures: common-ligatures contextual;
+  color: var(--ci-jawi-gold);
+}
+
+.ci-line--jawi.ci-line--in {
+  paint-order: stroke fill;
+  -webkit-text-stroke: 0.48px var(--ci-jawi-outline);
+}
+
+.ci-line--lead.ci-line--hand.ci-line--jawi {
+  font-family: "Amiri", "Scheherazade New", "Noto Naskh Arabic", serif;
+  font-weight: 700;
+  font-size: clamp(1.74rem, 6.25vw, 2.62rem);
+  line-height: 1.85;
+  letter-spacing: 0;
+}
+
+.ci-copy-sub .ci-line--body.ci-line--jawi {
+  font-family: "Amiri", "Scheherazade New", "Noto Naskh Arabic", serif;
+  letter-spacing: 0;
+  font-weight: 500;
+  line-height: 1.68;
+}
+
+.ci-copy-sub .ci-line--date.ci-line--date-ltr-nums {
+  direction: ltr;
+  unicode-bidi: isolate;
+  text-align: center;
+  font-family: "Amiri", "Scheherazade New", "Noto Naskh Arabic", serif;
+}
+
+.ci-copy-masthead > .ci-line--lead.ci-line--hand {
+  max-width: min(92vw, 22rem);
+}
+
+.ci-line--lead.ci-line--hand.ci-line--in {
+  opacity: 1;
+  letter-spacing: 0.04em;
+  -webkit-text-stroke: 0;
+  paint-order: normal;
+  color: #f2e6b8;
+  text-shadow:
+    0 0 12px rgba(220, 190, 120, 0.55),
+    0 0 28px rgba(180, 140, 60, 0.35),
+    0 2px 14px rgba(0, 0, 0, 0.45);
+}
+
+.ci-line--lead.ci-line--hand.ci-line--jawi.ci-line--in {
+  color: var(--ci-jawi-gold);
+  -webkit-text-stroke: 0.58px var(--ci-jawi-outline);
+  text-shadow:
+    0 0 1px var(--ci-jawi-outline-core),
+    0 0 6px rgba(0, 0, 0, 0.58),
+    0 0 12px rgba(0, 0, 0, 0.32),
+    0 0 18px var(--ci-jawi-gold-mid),
+    0 0 34px var(--ci-jawi-gold-soft),
+    0 2px 12px rgba(0, 0, 0, 0.58);
+  animation: ci-jawi-rim-masthead 3.05s ease-in-out infinite;
+}
+
+.ci-line--lead.ci-line--hand.ci-line--jawi.ci-line--typing.ci-line--in {
+  animation:
+    ci-hand-writing-breathe 3.4s ease-in-out infinite,
+    ci-jawi-rim-masthead 3.05s ease-in-out infinite;
+}
+
+/* Rumi — Latin calligraphy (`data-script` on `.ci-root`) */
+.ci-root[data-script="rumi"] .ci-line--lead.ci-line--hand:not(.ci-line--jawi) {
+  font-family: "Great Vibes", "Brush Script MT", cursive;
+  font-weight: 400;
+  font-size: clamp(2.12rem, 7.65vw, 3.12rem);
+  line-height: 1.36;
+  letter-spacing: 0.03em;
+}
+
+.ci-root[data-script="rumi"] .ci-line--lead.ci-line--hand:not(.ci-line--jawi).ci-line--in {
+  letter-spacing: 0.05em;
+}
+
+/* Rumi subtext — white “petikan” (serif italic), not gold script on scrim */
+.ci-root[data-script="rumi"] .ci-copy-sub .ci-line--body.ci-line--on-scrim.ci-line--in:not(.ci-line--jawi) {
+  font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(1.05rem, 3.35vw, 1.3rem);
+  line-height: 1.78;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.96);
+  -webkit-text-stroke: 0;
+  paint-order: normal;
+  text-shadow:
+    0 0 14px rgba(0, 0, 0, 0.75),
+    0 2px 10px rgba(0, 0, 0, 0.65);
+}
+
+.ci-root[data-script="rumi"] .ci-copy-sub .ci-line--date.ci-line--in:not(.ci-line--jawi) {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-weight: 600;
+  font-size: clamp(1.12rem, 3.65vw, 1.42rem);
+  letter-spacing: 0.08em;
+  color: rgba(255, 253, 248, 0.94);
+  -webkit-text-stroke: 0;
+  paint-order: normal;
+  text-shadow:
+    0 0 12px rgba(0, 0, 0, 0.72),
+    0 2px 8px rgba(0, 0, 0, 0.58);
+}
+
+@keyframes ci-hand-writing-breathe {
+  0%,
+  100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.045);
+  }
 }
 
 .ci-line {
@@ -209,7 +566,7 @@
 }
 
 .ci-line--typing.ci-line--in {
-  animation: ci-line-breathe 2.2s ease-in-out infinite;
+  animation: ci-line-breathe 3.1s ease-in-out infinite;
 }
 
 @keyframes ci-line-breathe {
@@ -277,6 +634,106 @@
   letter-spacing: 0.12em;
 }
 
+.ci-copy-sub .ci-line--on-scrim.ci-line--in:not(.ci-line--jawi) {
+  color: rgba(255, 255, 255, 0.96);
+  -webkit-text-stroke: 0;
+  text-shadow:
+    0 0 12px rgba(0, 0, 0, 0.72),
+    0 2px 8px rgba(0, 0, 0, 0.58);
+}
+
+.ci-copy-sub .ci-line--on-scrim.ci-line--jawi.ci-line--in {
+  color: var(--ci-jawi-gold);
+  -webkit-text-stroke: 0.52px var(--ci-jawi-outline);
+  text-shadow:
+    0 0 1px var(--ci-jawi-outline-core),
+    0 0 5px rgba(0, 0, 0, 0.52),
+    0 0 8px rgba(0, 0, 0, 0.35),
+    0 2px 8px rgba(0, 0, 0, 0.78),
+    0 0 18px var(--ci-jawi-gold-mid);
+  animation: ci-jawi-rim-tray 3.45s ease-in-out infinite;
+}
+
+.ci-copy-sub .ci-line--on-scrim.ci-line--jawi.ci-line--typing.ci-line--in {
+  animation:
+    ci-line-breathe 3.1s ease-in-out infinite,
+    ci-jawi-rim-tray 3.45s ease-in-out infinite;
+}
+
+.ci-copy-sub .ci-line--body.ci-line--in {
+  font-size: clamp(0.98rem, 3.1vw, 1.16rem);
+  font-weight: 500;
+  line-height: 1.52;
+}
+
+.ci-copy-sub .ci-line--date.ci-line--in {
+  font-size: clamp(1.08rem, 3.65vw, 1.42rem);
+  font-weight: 700;
+  color: #faefd1;
+}
+
+.ci-copy-sub .ci-line--date.ci-line--date-ltr-nums.ci-line--in {
+  color: var(--ci-jawi-gold);
+  -webkit-text-stroke: 0.52px var(--ci-jawi-outline);
+  animation: ci-jawi-rim-tray 3.45s ease-in-out infinite;
+}
+
+.ci-copy-sub .ci-line--date.ci-line--date-ltr-nums.ci-line--typing.ci-line--in {
+  animation:
+    ci-line-breathe 3.1s ease-in-out infinite,
+    ci-jawi-rim-tray 3.45s ease-in-out infinite;
+}
+
+/* Jawi / Rumi switch — before “Buka Jemputan”; hidden during playback */
+.ci-script-toggle {
+  position: absolute;
+  z-index: 10;
+  top: max(0.55rem, calc(env(safe-area-inset-top) + 0.35rem));
+  right: max(0.55rem, calc(env(safe-area-inset-right) + 0.35rem));
+  display: flex;
+  gap: 0;
+  padding: 3px;
+  border-radius: 999px;
+  background: rgba(14, 11, 9, 0.58);
+  border: 1px solid rgba(215, 188, 130, 0.35);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.35);
+  pointer-events: auto;
+}
+
+.ci-script-toggle__btn {
+  margin: 0;
+  padding: 0.38rem 0.72rem;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: rgba(255, 252, 248, 0.72);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    background 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ci-script-toggle__btn:hover {
+  color: rgba(255, 252, 248, 0.95);
+}
+
+.ci-script-toggle__btn:focus-visible {
+  outline: 2px solid rgba(215, 188, 130, 0.65);
+  outline-offset: 2px;
+}
+
+.ci-script-toggle__btn--active {
+  background: rgba(255, 252, 248, 0.14);
+  color: rgba(255, 253, 248, 0.98);
+}
+
 .ci-open {
   position: absolute;
   z-index: 8;
@@ -289,11 +746,11 @@
   border-radius: 999px;
   background: rgba(22, 18, 15, 0.55);
   color: rgba(255, 252, 248, 0.95);
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  font-size: 0.78rem;
+  font-family: "Cormorant Garamond", Garamond, Georgia, serif;
+  font-size: clamp(0.95rem, 2.6vw, 1.12rem);
   font-weight: 600;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  text-transform: none;
   cursor: pointer;
   backdrop-filter: blur(10px);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
@@ -317,6 +774,72 @@
   opacity: 0;
   transform: translateX(-50%) translateY(14px);
   pointer-events: none;
+}
+
+/* After typography — user opts in to invitation / butiran (not auto-advanced) */
+.ci-details-cta {
+  position: absolute;
+  z-index: 9;
+  left: 50%;
+  bottom: max(2.25rem, env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  margin: 0;
+  padding: 0.85rem 1.75rem;
+  border: 1px solid rgba(220, 190, 118, 0.5);
+  border-radius: 999px;
+  background: linear-gradient(
+    165deg,
+    rgba(255, 244, 218, 0.22) 0%,
+    rgba(30, 22, 18, 0.78) 45%,
+    rgba(16, 12, 10, 0.9) 100%
+  );
+  color: rgba(255, 252, 246, 0.98);
+  font-family: "Cormorant Garamond", Garamond, Georgia, serif;
+  font-size: clamp(0.94rem, 2.55vw, 1.1rem);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: none;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  -webkit-tap-highlight-color: transparent;
+  box-shadow:
+    0 10px 34px rgba(0, 0, 0, 0.42),
+    0 0 28px rgba(210, 178, 105, 0.12);
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease,
+    border-color 0.25s ease;
+  animation: ci-details-cta-in 0.75s var(--ci-ease-out) both;
+}
+
+.ci-details-cta:hover {
+  border-color: rgba(240, 218, 165, 0.65);
+  background: linear-gradient(
+    165deg,
+    rgba(255, 248, 228, 0.28) 0%,
+    rgba(38, 28, 22, 0.82) 46%,
+    rgba(20, 14, 11, 0.92) 100%
+  );
+}
+
+.ci-details-cta:focus-visible {
+  outline: 2px solid #e0c48a;
+  outline-offset: 3px;
+}
+
+.ci-details-cta:active {
+  transform: translateX(-50%) scale(0.98);
+}
+
+@keyframes ci-details-cta-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
 }
 
 .ci-sr-only {
@@ -358,6 +881,58 @@
 
   .ci-line--typing.ci-line--in {
     animation: none;
+  }
+
+  .ci-line--lead.ci-line--hand.ci-line--typing.ci-line--in {
+    animation: none;
+  }
+
+  .ci-line--lead.ci-line--hand.ci-line--jawi.ci-line--in {
+    animation: none !important;
+    text-shadow:
+      0 0 1px var(--ci-jawi-outline-core),
+      0 0 6px rgba(0, 0, 0, 0.58),
+      0 0 12px rgba(0, 0, 0, 0.32),
+      0 0 18px var(--ci-jawi-gold-mid),
+      0 0 32px var(--ci-jawi-gold-soft),
+      0 2px 12px rgba(0, 0, 0, 0.58) !important;
+  }
+
+  .ci-copy-sub .ci-line--on-scrim.ci-line--jawi.ci-line--in,
+  .ci-copy-sub .ci-line--on-scrim.ci-line--jawi.ci-line--typing.ci-line--in,
+  .ci-copy-sub .ci-line--date.ci-line--date-ltr-nums.ci-line--in,
+  .ci-copy-sub .ci-line--date.ci-line--date-ltr-nums.ci-line--typing.ci-line--in {
+    animation: none !important;
+    text-shadow:
+      0 0 1px var(--ci-jawi-outline-core),
+      0 0 5px rgba(0, 0, 0, 0.52),
+      0 0 8px rgba(0, 0, 0, 0.35),
+      0 2px 8px rgba(0, 0, 0, 0.78),
+      0 0 18px var(--ci-jawi-gold-mid) !important;
+  }
+
+  .ci-hand-char--on {
+    animation: none !important;
+    filter: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  .ci-hand-stack--jawi .ci-hand-jawi-stroke.ci-hand-char--off,
+  .ci-hand-stack--jawi .ci-hand-jawi-stroke.ci-hand-char--on {
+    clip-path: none !important;
+    -webkit-clip-path: none !important;
+    animation: none !important;
+    filter: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  .ci-details-cta {
+    animation: none !important;
+    transform: translateX(-50%) !important;
   }
 
   .ci-open--hide {

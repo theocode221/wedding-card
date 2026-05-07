@@ -1,0 +1,673 @@
+/**
+ * Maroon & gold skin — stronger maroon presence (readable ivory text areas).
+ */
+
+.wif-page.wif-page--maroon-gold {
+  --wif-cream: #ebe0e4;
+  --wif-cream-deep: #dccad4;
+  --wif-paper: #f3eaee;
+  --wif-ink: #24050c;
+  --wif-ink-soft: #5a2836;
+  --wif-brown: #5a0f1b;
+  --wif-gold: #c9a24d;
+  --wif-gold-soft: #e8d49a;
+  --wif-gold-deep: #8a5a28;
+  --wif-sage: #6b2a38;
+  --wif-wine: #4a0e1c;
+  --wif-wine-soft: rgba(58, 12, 28, 0.78);
+  --wif-font-display: "Playfair Display", Palatino, Georgia, serif;
+  --wif-font-body: "Cormorant Garamond", Georgia, serif;
+}
+
+/* Cinematic “home” — subtle maroon atmosphere + champagne gold hints */
+.wif-page--maroon-gold.wif-page--cinematic {
+  background-color: #0e0a0c;
+  background-image:
+    radial-gradient(ellipse 95% 45% at 50% 0%, rgba(236, 215, 175, 0.11) 0%, transparent 52%),
+    radial-gradient(ellipse 55% 40% at 6% 92%, rgba(212, 180, 120, 0.07) 0%, transparent 55%),
+    radial-gradient(ellipse 55% 40% at 94% 92%, rgba(212, 180, 120, 0.08) 0%, transparent 55%),
+    radial-gradient(ellipse 100% 85% at 50% 100%, rgba(62, 14, 26, 0.28) 0%, transparent 58%),
+    linear-gradient(168deg, rgba(42, 10, 20, 0.45) 0%, rgba(16, 11, 14, 0.82) 45%, #0a0708 100%);
+  background-repeat: no-repeat;
+}
+
+/* Skip-cinematic / deep link: same maroon “room” as post-cinematic — no cream page */
+.wif-page--maroon-gold.wif-page--cinematic.wif-page--invitation-only {
+  background-color: #0a0608;
+  background-image:
+    radial-gradient(ellipse 95% 45% at 50% 0%, rgba(120, 36, 56, 0.28) 0%, transparent 52%),
+    radial-gradient(ellipse 100% 70% at 50% 100%, rgba(36, 8, 16, 0.75) 0%, #12060a 100%);
+  background-repeat: no-repeat;
+  color: rgba(255, 250, 246, 0.94);
+}
+
+/* After full cinematic: room behind kad (skip-cinematic uses invitation-only rose instead) */
+.wif-page--maroon-gold.wif-page--cinematic:not(.wif-page--invitation-only):has(.wif-invitation-shell) {
+  background-color: #0a0608;
+  background-image:
+    radial-gradient(ellipse 95% 45% at 50% 0%, rgba(120, 36, 56, 0.28) 0%, transparent 52%),
+    radial-gradient(ellipse 100% 70% at 50% 100%, rgba(36, 8, 16, 0.75) 0%, #12060a 100%);
+  background-repeat: no-repeat;
+}
+
+.wif-page--maroon-gold .wif-loading-overlay {
+  background-color: #100c0e;
+  background-image:
+    radial-gradient(ellipse 90% 40% at 50% 8%, rgba(236, 215, 175, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse 100% 75% at 50% 100%, rgba(58, 14, 24, 0.22) 0%, transparent 55%),
+    linear-gradient(180deg, rgba(36, 14, 22, 0.6) 0%, #0c080a 100%);
+  background-repeat: no-repeat;
+}
+
+.wif-page--maroon-gold .wif-loading__ornament {
+  border-color: rgba(232, 212, 154, 0.22);
+  border-top-color: var(--wif-gold-soft);
+  animation: wif-spin 0.9s linear infinite, wif-mg-loader-gold-ring 2.2s ease-in-out infinite;
+}
+
+@keyframes wif-mg-loader-gold-ring {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 0 rgba(232, 200, 130, 0),
+      inset 0 0 12px rgba(212, 180, 115, 0);
+  }
+  50% {
+    box-shadow:
+      0 0 22px rgba(236, 210, 155, 0.28),
+      inset 0 0 14px rgba(212, 180, 115, 0.12);
+  }
+}
+
+.wif-page--maroon-gold .wif-loading__text {
+  color: rgba(255, 248, 242, 0.82);
+}
+
+/*
+ * Full maroon kad (no parchment / white).
+ * Top gap fix: base `.wif-invitation-shell--over-scene` uses margin-top: min(22dvh, 10rem)
+ * to clear the cinematic portrait — removed here so the card sits flush under the chrome.
+ */
+.wif-page--maroon-gold .wif-invitation-shell--over-scene {
+  margin-top: 0;
+  padding: max(1rem, env(safe-area-inset-top, 0px)) 1.25rem 2rem;
+  border-radius: 1.35rem;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  color: rgba(255, 250, 246, 0.94);
+  background: linear-gradient(185deg, #4f1528 0%, #321018 36%, #1c060c 100%);
+  box-shadow:
+    0 18px 48px rgba(4, 0, 2, 0.55),
+    0 0 0 1px rgba(201, 162, 77, 0.45) inset,
+    0 0 0 2px rgba(20, 4, 10, 0.55) inset,
+    0 1px 0 rgba(255, 248, 242, 0.06) inset;
+}
+
+.wif-page--maroon-gold .wif-invitation-shell--over-scene.wif-invitation-shell--direct {
+  box-shadow:
+    0 18px 48px rgba(4, 0, 2, 0.45),
+    0 0 0 1px rgba(201, 162, 77, 0.42) inset,
+    0 0 0 2px rgba(20, 4, 10, 0.5) inset,
+    0 1px 0 rgba(255, 248, 242, 0.06) inset;
+}
+
+.wif-page--maroon-gold .wif-invitation {
+  background: transparent;
+  border-radius: 0 0 0.35rem 0.35rem;
+}
+
+.wif-page--maroon-gold .wif-invitation__hero {
+  position: relative;
+  border-bottom: none;
+  padding-bottom: 1.65rem;
+  margin-bottom: 1.65rem;
+  background: transparent;
+  margin-left: -0.25rem;
+  margin-right: -0.25rem;
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+  border-radius: 0.35rem 0.35rem 0 0;
+}
+
+.wif-page--maroon-gold .wif-invitation__hero::after {
+  content: "";
+  position: absolute;
+  left: 6%;
+  right: 6%;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(201, 162, 77, 0.25) 12%,
+    rgba(232, 212, 154, 0.85) 50%,
+    rgba(201, 162, 77, 0.25) 88%,
+    transparent 100%
+  );
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+}
+
+.wif-page--maroon-gold .wif-invitation__hero-eyebrow {
+  color: #e8d49a;
+  letter-spacing: 0.28em;
+}
+
+.wif-page--maroon-gold .wif-invitation__names {
+  color: #fdf4f0;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.45),
+    0 0 24px rgba(201, 162, 77, 0.18);
+}
+
+.wif-page--maroon-gold .wif-invitation__hero-date {
+  color: #d4b56d;
+  font-weight: 500;
+}
+
+.wif-page--maroon-gold .wif-invitation__hero-line {
+  color: rgba(255, 248, 242, 0.86);
+  font-weight: 500;
+}
+
+.wif-page--maroon-gold .wif-invitation__monogram {
+  filter: drop-shadow(0 4px 18px rgba(24, 4, 10, 0.42));
+}
+
+/* Details — same plane as hero (no inner cream/pink box) */
+.wif-page--maroon-gold .wif-invitation__details {
+  padding: 1.1rem 0 0.35rem;
+  margin-left: 0;
+  margin-right: 0;
+  border-radius: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.wif-page--maroon-gold .wif-invitation__details .wif-invitation__section-title {
+  color: #fdf4f0;
+}
+
+.wif-page--maroon-gold .wif-invitation__details .wif-invitation__detail-label {
+  color: #e8d49a;
+}
+
+.wif-page--maroon-gold .wif-invitation__details .wif-invitation__detail-value {
+  color: #fff9f6;
+}
+
+.wif-page--maroon-gold .wif-invitation__details .wif-invitation__detail-list li {
+  border-bottom-color: rgba(255, 248, 242, 0.14);
+}
+
+/* Gold primary on dark panel — reads clearly vs maroon fill */
+.wif-page--maroon-gold .wif-invitation__details .wif-invitation__btn--primary {
+  background: linear-gradient(160deg, #f4ead4 0%, #d8b456 40%, #a67a2e 100%);
+  color: #140308;
+  border: 1px solid rgba(255, 252, 248, 0.5);
+  box-shadow: 0 4px 22px rgba(0, 0, 0, 0.42);
+}
+
+.wif-page--maroon-gold .wif-invitation__details .wif-invitation__btn--primary:hover {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.48);
+}
+
+.wif-page--maroon-gold .wif-invitation__details .wif-invitation__btn--primary:focus-visible {
+  outline-color: #fff0e0;
+}
+
+/* Secondary calendar trigger — outlined on maroon */
+.wif-page--maroon-gold .wif-invitation__details .wif-invitation__btn--calendar {
+  background: linear-gradient(180deg, rgba(255, 250, 248, 0.16) 0%, rgba(42, 10, 22, 0.55) 100%);
+  color: #fff9f4;
+  border: 1px solid rgba(201, 162, 77, 0.55);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.32);
+}
+
+.wif-page--maroon-gold .wif-invitation__details .wif-invitation__btn--calendar:hover {
+  background: linear-gradient(180deg, rgba(255, 252, 248, 0.22) 0%, rgba(52, 14, 28, 0.62) 100%);
+  border-color: rgba(232, 212, 154, 0.72);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.38);
+}
+
+.wif-page--maroon-gold .wif-invitation__details .wif-invitation__btn--calendar:focus-visible {
+  outline-color: #e8d49a;
+}
+
+.wif-page--maroon-gold .wif-invitation__details .wif-invitation__calendar-chevron {
+  color: inherit;
+  opacity: 0.88;
+}
+
+.wif-page--maroon-gold .wif-invitation__details .wif-invitation__btn--calendar-opt {
+  background: rgba(12, 2, 6, 0.55);
+  color: #fff9f6;
+  border-color: rgba(201, 162, 77, 0.4);
+  box-shadow: inset 0 1px 0 rgba(255, 248, 242, 0.06);
+}
+
+.wif-page--maroon-gold .wif-invitation__details .wif-invitation__btn--calendar-opt:hover {
+  background: rgba(20, 6, 12, 0.72);
+  border-color: rgba(232, 212, 154, 0.55);
+}
+
+.wif-page--maroon-gold .wif-invitation__details .wif-invitation__btn--calendar-opt-apple {
+  color: #fff9f6;
+}
+
+.wif-page--maroon-gold .wif-invitation__btn--primary {
+  background: linear-gradient(145deg, #6a1220, #3a0710 55%, #24050c);
+  color: #fff9f4;
+  box-shadow: 0 4px 22px rgba(10, 2, 5, 0.45);
+}
+
+.wif-page--maroon-gold .wif-invitation__btn--primary:hover {
+  box-shadow: 0 8px 30px rgba(10, 2, 5, 0.5);
+}
+
+.wif-page--maroon-gold .wif-invitation__btn--gold {
+  background: linear-gradient(160deg, #f2e4c4, var(--wif-gold) 48%, #8a5a28);
+  color: #140308;
+  box-shadow: 0 4px 18px rgba(42, 6, 14, 0.28);
+}
+
+.wif-page--maroon-gold .wif-invitation__btn--gold:hover {
+  box-shadow: 0 6px 26px rgba(42, 6, 14, 0.34);
+}
+
+.wif-page--maroon-gold .wif-invitation__btn--ghost {
+  color: rgba(255, 252, 248, 0.92);
+  border-color: rgba(232, 212, 154, 0.42);
+}
+
+.wif-page--maroon-gold .wif-invitation__btn--ghost:hover {
+  background: rgba(255, 252, 248, 0.08);
+  border-color: rgba(232, 212, 154, 0.58);
+}
+
+.wif-page--maroon-gold .wif-invitation__section-title {
+  color: #e8d49a;
+  font-weight: 600;
+}
+
+.wif-page--maroon-gold .wif-invitation__section-title--subtle {
+  color: rgba(232, 212, 154, 0.78);
+}
+
+.wif-page--maroon-gold .wif-invitation__note {
+  background: rgba(0, 0, 0, 0.22);
+  border: 1px solid rgba(201, 162, 77, 0.35);
+  box-shadow: inset 0 1px 0 rgba(255, 248, 242, 0.05);
+}
+
+.wif-page--maroon-gold .wif-invitation__note-text {
+  color: rgba(255, 248, 242, 0.9);
+  font-weight: 500;
+}
+
+.wif-page--maroon-gold .wif-invitation__countdown {
+  margin-left: 0;
+  margin-right: 0;
+  padding: 1.25rem 0 0.25rem;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.wif-page--maroon-gold .wif-invitation__countdown-unit {
+  background: rgba(0, 0, 0, 0.28);
+  box-shadow:
+    0 0 0 1px rgba(201, 162, 77, 0.32),
+    inset 0 1px 0 rgba(255, 248, 242, 0.04);
+}
+
+.wif-page--maroon-gold .wif-invitation__countdown-value {
+  color: #fdf4f0;
+}
+
+.wif-page--maroon-gold .wif-invitation__countdown-label {
+  color: rgba(232, 212, 154, 0.88);
+}
+
+.wif-page--maroon-gold .wif-invitation__countdown-done {
+  color: #e8d49a;
+}
+
+.wif-page--maroon-gold .wif-invitation__btn--calendar {
+  background: linear-gradient(160deg, #f2e4c4, var(--wif-gold) 48%, #8a5a28);
+  color: #140308;
+  border-color: rgba(58, 7, 16, 0.3);
+}
+
+.wif-page--maroon-gold .wif-invitation__btn--calendar-opt {
+  background: linear-gradient(180deg, #fffafc 0%, #f5eaee 100%);
+  border-color: rgba(90, 15, 27, 0.22);
+}
+
+.wif-page--maroon-gold .wif-invitation__btn--calendar-opt:hover {
+  background: #fff5f8;
+  border-color: rgba(201, 162, 77, 0.45);
+}
+
+.wif-page--maroon-gold .wif-invitation__footer {
+  border-top: 1px solid rgba(201, 162, 77, 0.35);
+  padding-top: 1rem;
+  margin-top: 0.25rem;
+  background: transparent;
+}
+
+.wif-page--maroon-gold .wif-invitation__footer p {
+  color: rgba(255, 248, 242, 0.82);
+}
+
+.wif-page--maroon-gold .wif-invitation__footer-sign {
+  color: #e8d49a;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+}
+
+/* —— Cinematic layer (matches page: soft maroon + gold glints) —— */
+.wif-page--maroon-gold .ci-root {
+  background-color: #0e0a0c;
+  background-image:
+    radial-gradient(ellipse 90% 42% at 50% 0%, rgba(240, 220, 185, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 38% at 8% 88%, rgba(200, 170, 110, 0.06) 0%, transparent 52%),
+    radial-gradient(ellipse 50% 38% at 92% 88%, rgba(200, 170, 110, 0.07) 0%, transparent 52%),
+    radial-gradient(ellipse 100% 90% at 50% 100%, rgba(58, 12, 24, 0.26) 0%, transparent 60%),
+    linear-gradient(170deg, rgba(38, 12, 20, 0.5) 0%, rgba(14, 10, 13, 0.95) 55%, #080608 100%);
+  background-repeat: no-repeat;
+}
+
+/* Portrait container — soft breathing gold halo (premium, not noisy) */
+.wif-page--maroon-gold .ci-stack {
+  border: none;
+  animation: wif-mg-stack-gold-glow 5s ease-in-out infinite;
+}
+
+@keyframes wif-mg-stack-gold-glow {
+  0%,
+  100% {
+    box-shadow:
+      0 22px 50px rgba(0, 0, 0, 0.38),
+      0 0 28px rgba(212, 180, 115, 0);
+  }
+  50% {
+    box-shadow:
+      0 24px 54px rgba(0, 0, 0, 0.4),
+      0 0 42px rgba(232, 200, 130, 0.14);
+  }
+}
+
+.wif-page--maroon-gold .ci-vignette {
+  background: radial-gradient(ellipse 78% 65% at 50% 48%, transparent 0%, rgba(42, 8, 18, 0.38) 58%, rgba(12, 4, 8, 0.78) 100%);
+}
+
+.wif-page--maroon-gold .ci-warm {
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 22%, rgba(255, 230, 200, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse 88% 72% at 50% 36%, rgba(255, 215, 205, 0.06) 0%, transparent 50%),
+    linear-gradient(188deg, rgba(72, 18, 30, 0.22) 0%, transparent 42%, rgba(20, 6, 12, 0.32) 100%);
+  mix-blend-mode: soft-light;
+  opacity: 0.85;
+}
+
+.wif-page--maroon-gold .ci-root--hold .ci-warm {
+  opacity: 0.72;
+}
+
+/* Subtext sits on art — same transparent stack as default cinematic */
+.wif-page--maroon-gold .ci-copy-sub {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.wif-page--maroon-gold .ci-line {
+  --ci-gold-edge: #d4b56d;
+  --ci-gold-edge-soft: rgba(248, 220, 170, 0.95);
+  --ci-ink: #120208;
+}
+
+.wif-page--maroon-gold .ci-root {
+  --ci-jawi-gold: #b78727;
+  --ci-jawi-gold-mid: rgba(183, 135, 39, 0.58);
+  --ci-jawi-gold-soft: rgba(230, 200, 140, 0.32);
+}
+
+.wif-page--maroon-gold .ci-script-toggle {
+  background: rgba(42, 10, 20, 0.72);
+  border-color: rgba(236, 210, 160, 0.38);
+}
+
+.wif-page--maroon-gold .ci-script-toggle__btn--active {
+  background: rgba(212, 180, 115, 0.18);
+}
+
+.wif-page--maroon-gold .ci-script-toggle__btn:focus-visible {
+  outline-color: var(--wif-gold-soft);
+}
+
+/* Gold glow on tray-less subcopy would fight white “petikan” — exclude scrim + small tagline */
+.wif-page--maroon-gold .ci-line--in:not(.ci-line--hand):not(.ci-line--on-scrim):not(.ci-line--masthead-tagline) {
+  animation: wif-mg-line-gold-pulse 4.2s ease-in-out infinite;
+}
+
+.wif-page--maroon-gold .ci-line--typing.ci-line--in:not(.ci-line--hand):not(.ci-line--on-scrim):not(
+    .ci-line--masthead-tagline
+  ) {
+  animation:
+    ci-line-breathe 3.1s ease-in-out infinite,
+    wif-mg-line-gold-pulse 4.2s ease-in-out infinite;
+}
+
+@keyframes wif-mg-line-gold-pulse {
+  0%,
+  100% {
+    text-shadow:
+      0 0 3px rgba(6, 3, 5, 0.9),
+      0 2px 14px rgba(0, 0, 0, 0.55),
+      0 0 1px rgba(255, 252, 248, 0.5),
+      0 1px 6px rgba(255, 245, 240, 0.35),
+      0 0 14px rgba(212, 180, 115, 0.12);
+  }
+  50% {
+    text-shadow:
+      0 0 3px rgba(6, 3, 5, 0.9),
+      0 2px 14px rgba(0, 0, 0, 0.55),
+      0 0 1px rgba(255, 252, 248, 0.55),
+      0 1px 6px rgba(255, 245, 240, 0.42),
+      0 0 28px rgba(236, 210, 160, 0.38),
+      0 0 48px rgba(212, 180, 115, 0.14);
+  }
+}
+
+.wif-page--maroon-gold .ci-open {
+  overflow: hidden;
+  border-color: rgba(236, 215, 175, 0.45);
+  background: rgba(42, 10, 20, 0.58);
+  color: rgba(255, 252, 248, 0.98);
+  box-shadow:
+    0 8px 32px rgba(10, 2, 5, 0.45),
+    0 0 24px rgba(212, 180, 115, 0.12);
+}
+
+/* ::before renders under button label — Champagne sweep */
+.wif-page--maroon-gold .ci-open::before {
+  content: "";
+  position: absolute;
+  inset: -30% -40%;
+  background: linear-gradient(
+    98deg,
+    transparent 37%,
+    rgba(255, 248, 228, 0.18) 50%,
+    transparent 63%
+  );
+  transform: translateX(-60%) skewX(-10deg);
+  animation: wif-mg-open-gold-sweep 4.2s cubic-bezier(0.38, 0, 0.2, 1) infinite;
+  pointer-events: none;
+}
+
+.wif-page--maroon-gold .ci-open:hover {
+  background: rgba(58, 14, 26, 0.72);
+  border-color: rgba(248, 220, 170, 0.65);
+  box-shadow:
+    0 10px 36px rgba(10, 2, 5, 0.5),
+    0 0 32px rgba(220, 190, 130, 0.2);
+}
+
+@keyframes wif-mg-open-gold-sweep {
+  0% {
+    transform: translateX(-75%) skewX(-10deg);
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  42% {
+    transform: translateX(75%) skewX(-10deg);
+    opacity: 1;
+  }
+  55% {
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(75%) skewX(-10deg);
+    opacity: 0;
+  }
+}
+
+.wif-page--maroon-gold .ci-open:focus-visible {
+  outline-color: var(--wif-gold-soft);
+}
+
+.wif-page--maroon-gold .ci-details-cta {
+  border-color: rgba(248, 220, 170, 0.5);
+  background: linear-gradient(
+    165deg,
+    rgba(255, 248, 228, 0.2) 0%,
+    rgba(52, 14, 26, 0.85) 42%,
+    rgba(30, 6, 14, 0.92) 100%
+  );
+  color: rgba(255, 252, 248, 0.99);
+  box-shadow:
+    0 12px 38px rgba(8, 0, 4, 0.52),
+    0 0 32px rgba(212, 180, 115, 0.14);
+}
+
+.wif-page--maroon-gold .ci-details-cta:hover {
+  border-color: rgba(255, 236, 200, 0.65);
+  background: linear-gradient(
+    165deg,
+    rgba(255, 252, 238, 0.26) 0%,
+    rgba(68, 18, 32, 0.88) 42%,
+    rgba(36, 8, 18, 0.95) 100%
+  );
+}
+
+.wif-page--maroon-gold .ci-details-cta:focus-visible {
+  outline-color: var(--wif-gold-soft);
+}
+
+/* —— Gold bokeh drift (cinematic mid-layer, z between warm & copy) —— */
+.wif-mg-bokeh {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0.72;
+}
+
+.wif-mg-bokeh__slot {
+  position: absolute;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.wif-mg-bokeh__orb {
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 50%;
+  /* Subtle gold wash — stays behind typography & frame */
+  background: radial-gradient(
+    circle at 34% 30%,
+    rgba(255, 248, 228, 0.38) 0%,
+    rgba(232, 200, 130, 0.22) 38%,
+    rgba(175, 125, 55, 0.1) 58%,
+    transparent 78%
+  );
+  box-shadow:
+    0 0 20px rgba(220, 185, 110, 0.14),
+    0 0 44px rgba(160, 105, 45, 0.06);
+  animation-name: wif-mg-bokeh-drift;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes wif-mg-bokeh-drift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(var(--wif-mg-bokeh-s1, 1));
+    opacity: var(--wif-mg-bokeh-op1, 0.12);
+  }
+  28% {
+    opacity: var(--wif-mg-bokeh-op2, 0.22);
+  }
+  72% {
+    opacity: var(--wif-mg-bokeh-op2, 0.22);
+  }
+  100% {
+    transform: translate3d(
+        var(--wif-mg-bokeh-tx, 0px),
+        calc(-118vh + var(--wif-mg-bokeh-ty, 0px)),
+        0
+      )
+      scale(var(--wif-mg-bokeh-s2, 1.06));
+    opacity: var(--wif-mg-bokeh-op1, 0.12);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wif-mg-bokeh {
+    display: none !important;
+  }
+
+  .wif-page--maroon-gold .ci-stack {
+    animation: none !important;
+    box-shadow: 0 22px 50px rgba(0, 0, 0, 0.38);
+  }
+
+  .wif-page--maroon-gold .ci-line--in:not(.ci-line--hand):not(.ci-line--on-scrim):not(.ci-line--masthead-tagline) {
+    animation: none !important;
+    text-shadow:
+      0 0 3px rgba(6, 3, 5, 0.9),
+      0 2px 14px rgba(0, 0, 0, 0.55),
+      0 0 1px rgba(255, 252, 248, 0.52),
+      0 1px 6px rgba(255, 245, 240, 0.38),
+      0 0 20px rgba(220, 188, 125, 0.2);
+  }
+
+  .wif-page--maroon-gold .ci-line--typing.ci-line--in:not(.ci-line--hand):not(.ci-line--on-scrim):not(
+      .ci-line--masthead-tagline
+    ) {
+    animation: none !important;
+  }
+
+  .wif-page--maroon-gold .ci-line--lead.ci-line--hand.ci-line--typing.ci-line--in {
+    animation: none !important;
+  }
+
+  .wif-page--maroon-gold .ci-open::before {
+    display: none !important;
+  }
+
+  .wif-page--maroon-gold .wif-loading__ornament {
+    animation: wif-spin 0.9s linear infinite !important;
+  }
+}

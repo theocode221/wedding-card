@@ -3,10 +3,10 @@
 /** ISO local — for countdown (same day as Butiran majlis). */
 export const WEDDING_EVENT_START_ISO = "2026-12-20T11:00:00";
 
-export const WEDDING_EVENT_TITLE = "Walimatul Urus — Nabil & Anis";
+export const WEDDING_EVENT_TITLE = "Walimatul Urus —  NAIM & NADHIRAH";
 
 export const WEDDING_EVENT_DESCRIPTION =
-  "Jemputan perkahwinan Nabil & Anis. Kehadiran dan doa anda amat dialu-alukan.";
+  "Jemputan perkahwinan  NAIM & NADHIRAH. Kehadiran dan doa anda amat dialu-alukan.";
 
 export const WEDDING_EVENT_LOCATION =
   "Dewan Perdana Felda, Jalan Perdana, 50480 Kuala Lumpur, Malaysia";
@@ -38,7 +38,7 @@ export function buildWeddingIcs(): string {
     "CALSCALE:GREGORIAN",
     "METHOD:PUBLISH",
     "BEGIN:VEVENT",
-    `UID:wedding-nabil-anis-20261220@wedding-card`,
+    `UID:wedding-nabil-NADHIRAH-20261220@wedding-card`,
     `DTSTAMP:${formatIcsUtcStamp(new Date())}`,
     `DTSTART:${START_UTC}`,
     `DTEND:${END_UTC}`,
@@ -67,7 +67,7 @@ export function downloadWeddingIcs(): void {
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = "jemputan-nabil-anis.ics";
+  a.download = "jemputan-nabil-NADHIRAH.ics";
   a.rel = "noopener";
   document.body.appendChild(a);
   a.click();

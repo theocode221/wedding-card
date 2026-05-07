@@ -11,9 +11,11 @@ import { BlessingWheelPage } from "./pages/BlessingWheelPage";
 import { ScratchCardPage } from "./pages/ScratchCardPage";
 import { UcapanCardPage } from "./pages/UcapanCardPage";
 import { WeddingInvitationFramePage } from "./pages/WeddingInvitationFramePage";
+import { WeddingInvitationFrameMaroonPage } from "./pages/WeddingInvitationFrameMaroonPage";
 import { GalleryPage } from "./pages/GalleryPage";
 import { EggRevealCardPage } from "./pages/EggRevealCardPage";
 import { EggRevealCardPastelPage } from "./pages/EggRevealCardPastelPage";
+import { RoyalMaroonInvitationPage } from "./pages/royalMaroonInvitation/RoyalMaroonInvitationPage";
 
 const routerBasename =
   import.meta.env.BASE_URL === "/" ? undefined : import.meta.env.BASE_URL.replace(/\/$/, "");
@@ -27,6 +29,7 @@ export default function App() {
             <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/invite" element={<InvitePage />} />
+            <Route path="/jemputan-maroon-diraja" element={<RoyalMaroonInvitationPage />} />
             <Route path="/rsvp" element={<RsvpPage />} />
             <Route path="/ucapan" element={<CongratulationCardPage />} />
             <Route path="/ucapan-party" element={<CongratulationPartyPage />} />
@@ -34,6 +37,7 @@ export default function App() {
             <Route path="/kad-gosok" element={<ScratchCardPage />} />
             <Route path="/roda-doa" element={<BlessingWheelPage />} />
             <Route path="/jemputan-frame" element={<WeddingInvitationFramePage />} />
+            <Route path="/jemputan-frame-maroon" element={<WeddingInvitationFrameMaroonPage />} />
             <Route path="/galeri" element={<GalleryPage />} />
             <Route path="/kad-wedding-badar" element={<EggRevealCardPage />} />
             <Route path="/kad-wedding-badar-pastel" element={<EggRevealCardPastelPage />} />

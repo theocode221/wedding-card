@@ -4,6 +4,7 @@ import { WEDDING_EVENT_START_ISO } from "../../lib/weddingCalendar";
 import { WhatsAppContactLink } from "../shared/WhatsAppContactLink";
 import { getRemaining, pad } from "../shared/countdownUtils";
 import { AddToCalendar } from "./AddToCalendar";
+import { NnMonogramLogo } from "../branding/NnMonogramLogo";
 
 export type InvitationContentProps = {
   onReplay: () => void;
@@ -26,8 +27,9 @@ export function InvitationContent({ onReplay }: InvitationContentProps) {
   return (
     <div className="wif-invitation">
       <header className="wif-invitation__hero">
+        <NnMonogramLogo className="wif-invitation__monogram" />
         <p className="wif-invitation__hero-eyebrow">Jemputan perkahwinan</p>
-        <h1 className="wif-invitation__names">NABIL &amp; ANIS</h1>
+        <h1 className="wif-invitation__names"> NAIM &amp; NADHIRAH</h1>
         <p className="wif-invitation__hero-date">20 Disember 2026</p>
         <p className="wif-invitation__hero-line">
           Dengan penuh kesyukuran, kami menjemput anda ke majlis kami
@@ -132,7 +134,7 @@ export function InvitationContent({ onReplay }: InvitationContentProps) {
 
       <footer className="wif-invitation__footer">
         <p>Dengan penuh kasih sayang, kami yang menantikan hari bahagia.</p>
-        <p className="wif-invitation__footer-sign">NABIL &amp; ANIS</p>
+        <p className="wif-invitation__footer-sign"> NAIM &amp; NADHIRAH</p>
       </footer>
     </div>
   );

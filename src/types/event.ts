@@ -21,6 +21,8 @@ export type WeddingEventData = Event & {
   dateTimeLabel: string;
   /** Optional hero subtitle (e.g. formal Malay invitation line) */
   tagline?: string;
+  /** Optional WhatsApp deep link for CTA buttons (e.g. `https://wa.me/60123456789`) */
+  whatsappUrl?: string;
 };
 
 export type TemplateProps = {
