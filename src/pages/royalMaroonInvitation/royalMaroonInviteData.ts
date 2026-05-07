@@ -12,8 +12,8 @@ const gallery = [
  * `theme` satisfies the shared `Event` type but is not read by this layout.
  */
 export const ROYAL_MAROON_INVITE: WeddingEventData = {
-  brideName: "NADHIRAH",
-  groomName: "Nabil",
+  brideName: "Nadhirah",
+  groomName: "Naim",
   theme: "elegant",
   date: "20 Disember 2026",
   venue: "Dewan Seri Cinta",

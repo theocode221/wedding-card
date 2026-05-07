@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { CinematicInvitation } from "../components/wedding-invitation-frame/CinematicInvitation";
 import { MaroonBokehDrift } from "../components/wedding-invitation-frame/MaroonBokehDrift";
 import { InvitationContent } from "../components/wedding-invitation-frame/InvitationContent";
+import { INVITATION_PATH_MAROON } from "../lib/invitationFlow";
 import { useInvitationMusic } from "../context/InvitationMusicContext";
 import {
   preloadWeddingInvitationHero,
@@ -162,7 +163,7 @@ export function WeddingInvitationFrameMaroonPage() {
             .filter(Boolean)
             .join(" ")}
         >
-          <InvitationContent onReplay={handleReplay} />
+          <InvitationContent onReplay={handleReplay} invitationFlowBase={INVITATION_PATH_MAROON} />
         </div>
       )}
     </main>

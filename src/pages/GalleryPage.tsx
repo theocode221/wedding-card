@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useLayoutEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { resolveInvitationReturnPath, resolveInvitationSatelliteSkin } from "../lib/invitationFlow";
 import { GalleryImage } from "../components/gallery/GalleryImage";
 import { Lightbox } from "../components/gallery/Lightbox";
 import { WhatsAppContactLink } from "../components/shared/WhatsAppContactLink";
@@ -12,6 +13,12 @@ import "../styles/gallery.css";
 
 export function GalleryPage() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const invitationReturnPath = useMemo(() => resolveInvitationReturnPath(location.state), [location.state]);
+  const maroonSatellite = useMemo(
+    () => resolveInvitationSatelliteSkin(location.state) === "maroon",
+    [location.state],
+  );
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [pageReady, setPageReady] = useState(false);
 
@@ -38,13 +45,17 @@ export function GalleryPage() {
   }, []);
 
   const handleBack = useCallback(() => {
-    navigate("/jemputan-frame", {
+    navigate(invitationReturnPath, {
       state: { skipCinematic: true, scrollTo: "details" as const },
     });
-  }, [navigate]);
+  }, [navigate, invitationReturnPath]);
 
   return (
-    <div className={["gallery-page", pageReady ? "gallery-page--in" : ""].filter(Boolean).join(" ")}>
+    <div
+      className={["gallery-page", pageReady ? "gallery-page--in" : "", maroonSatellite ? "gallery-page--maroon" : ""]
+        .filter(Boolean)
+        .join(" ")}
+    >
       <button type="button" className="gallery-page__back" onClick={handleBack}>
         ← Kembali
       </button>

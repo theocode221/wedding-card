@@ -1,0 +1,100 @@
+/**
+ * Galeri + RSVP when opened from `/jemputan-frame-maroon`
+ * (imported after main.css so these modifiers win)
+ */
+
+/* —— Galeri —— */
+.gallery-page.gallery-page--maroon {
+  background:
+    radial-gradient(ellipse 90% 45% at 50% 0%, rgba(120, 36, 56, 0.22) 0%, transparent 52%),
+    linear-gradient(185deg, #2a0c14 0%, #18060c 48%, #0f0408 100%);
+  color: rgba(255, 250, 246, 0.94);
+}
+
+.gallery-page.gallery-page--maroon .gallery-page__back {
+  color: rgba(255, 252, 248, 0.94);
+  background: rgba(42, 10, 22, 0.62);
+  border: 1px solid rgba(201, 162, 77, 0.38);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.35);
+}
+
+.gallery-page.gallery-page--maroon .gallery-page__back:hover {
+  background: rgba(58, 14, 28, 0.72);
+  border-color: rgba(232, 212, 154, 0.52);
+}
+
+.gallery-page.gallery-page--maroon .gallery-page__back:focus-visible {
+  outline-color: #e8d49a;
+}
+
+.gallery-page.gallery-page--maroon .gallery-page__title {
+  color: #fdf4f0;
+}
+
+.gallery-page.gallery-page--maroon .gallery-page__subtitle {
+  color: rgba(232, 212, 154, 0.88);
+}
+
+.gallery-page.gallery-page--maroon .gallery-cinematic__quote-text {
+  color: rgba(255, 248, 242, 0.88);
+}
+
+.gallery-page.gallery-page--maroon .gallery-cinematic__frame {
+  background: rgba(0, 0, 0, 0.28);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.42);
+}
+
+.gallery-page.gallery-page--maroon .gallery-cinematic__frame:focus-visible {
+  outline-color: rgba(232, 212, 154, 0.65);
+}
+
+.gallery-page.gallery-page--maroon .gallery-page__footer {
+  border-top-color: rgba(201, 162, 77, 0.28);
+}
+
+.gallery-page.gallery-page--maroon .gallery-page__footer-text {
+  color: rgba(255, 248, 242, 0.8);
+}
+
+/* —— RSVP —— */
+.rsvp-page.rsvp-page--maroon {
+  background:
+    radial-gradient(ellipse 85% 50% at 50% 100%, rgba(62, 14, 28, 0.35) 0%, transparent 55%),
+    linear-gradient(185deg, #2a0c14 0%, #120408 100%);
+  font-family: "Cormorant Garamond", Georgia, serif;
+}
+
+.rsvp-page.rsvp-page--maroon .rsvp-page__card {
+  background: linear-gradient(185deg, #4f1528 0%, #321018 42%, #1c060c 100%);
+  border: 1px solid rgba(201, 162, 77, 0.38);
+  box-shadow:
+    0 22px 52px rgba(0, 0, 0, 0.48),
+    inset 0 1px 0 rgba(255, 248, 242, 0.06);
+}
+
+.rsvp-page.rsvp-page--maroon .rsvp-page__eyebrow {
+  color: #e8d49a;
+}
+
+.rsvp-page.rsvp-page--maroon .rsvp-page__title {
+  color: #fdf4f0;
+}
+
+.rsvp-page.rsvp-page--maroon .rsvp-page__text {
+  color: rgba(255, 248, 242, 0.86);
+}
+
+.rsvp-page.rsvp-page--maroon .rsvp-page__back {
+  color: rgba(255, 252, 248, 0.94);
+  border-color: rgba(232, 212, 154, 0.42);
+}
+
+.rsvp-page.rsvp-page--maroon .rsvp-page__back:hover {
+  border-color: #e8d49a;
+  color: #fff;
+}
+
+.rsvp-page.rsvp-page--maroon .rsvp-page__back:focus-visible {
+  outline: 2px solid #e8d49a;
+  outline-offset: 3px;
+}

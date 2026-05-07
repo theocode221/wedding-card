@@ -11,7 +11,7 @@ const gallery = [
 
 const base: Omit<WeddingEventData, "theme"> = {
   brideName: "NADHIRAH",
-  groomName: "NABIL",
+  groomName: "NAIM",
   date: "Saturday, 20 December 2026",
   venue: "The Garden Pavilion",
   address: "Jalan Damai 12, 50480 Kuala Lumpur, Malaysia",

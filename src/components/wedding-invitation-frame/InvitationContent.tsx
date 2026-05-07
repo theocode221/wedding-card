@@ -1,5 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
+import {
+  INVITATION_PATH_DEFAULT,
+  INVITATION_PATH_MAROON,
+  type InvitationFlowState,
+} from "../../lib/invitationFlow";
 import { WEDDING_EVENT_START_ISO } from "../../lib/weddingCalendar";
 import { WhatsAppContactLink } from "../shared/WhatsAppContactLink";
 import { getRemaining, pad } from "../shared/countdownUtils";
@@ -8,13 +13,25 @@ import { NnMonogramLogo } from "../branding/NnMonogramLogo";
 
 export type InvitationContentProps = {
   onReplay: () => void;
+  /** Which framed invitation this card belongs to — drives Galeri / RSVP theme + back target */
+  invitationFlowBase?: typeof INVITATION_PATH_DEFAULT | typeof INVITATION_PATH_MAROON;
 };
 
 const MAPS_URL =
   "https://www.google.com/maps/search/?api=1&query=Dewan+Perdana+Felda+Kuala+Lumpur";
 
-export function InvitationContent({ onReplay }: InvitationContentProps) {
+export function InvitationContent({
+  onReplay,
+  invitationFlowBase = INVITATION_PATH_DEFAULT,
+}: InvitationContentProps) {
   const target = useMemo(() => new Date(WEDDING_EVENT_START_ISO), []);
+  const satelliteState = useMemo<InvitationFlowState>(
+    () => ({
+      invitationReturnPath: invitationFlowBase,
+      invitationSkin: invitationFlowBase === INVITATION_PATH_MAROON ? "maroon" : "default",
+    }),
+    [invitationFlowBase],
+  );
   const [tick, setTick] = useState(() => getRemaining(target, new Date()));
 
   useEffect(() => {
@@ -115,10 +132,10 @@ export function InvitationContent({ onReplay }: InvitationContentProps) {
 
       <div className="wif-invitation__actions">
         <div className="wif-invitation__actions-row wif-invitation__actions-row--primary">
-          <Link to="/rsvp" className="wif-invitation__btn wif-invitation__btn--gold">
+          <Link to="/rsvp" state={satelliteState} className="wif-invitation__btn wif-invitation__btn--gold">
             RSVP
           </Link>
-          <Link to="/galeri" className="wif-invitation__btn wif-invitation__btn--gold">
+          <Link to="/galeri" state={satelliteState} className="wif-invitation__btn wif-invitation__btn--gold">
             Galeri
           </Link>
         </div>
