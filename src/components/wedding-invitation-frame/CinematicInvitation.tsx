@@ -266,6 +266,14 @@ export function CinematicInvitation({
     runSequence();
   }, [stage, runSequence, onOpenCinematic]);
 
+  const handleSkipToDetails = useCallback(() => {
+    if (completedRef.current) return;
+    clearTimers();
+    onOpenCinematic?.();
+    completedRef.current = true;
+    onCompleteRef.current?.();
+  }, [clearTimers, onOpenCinematic]);
+
   const heroSrc = urls[0];
 
   const textStageIndex = stage === "done" ? TEXT_STAGES.length : TEXT_STAGES.indexOf(stage);
@@ -399,6 +407,17 @@ export function CinematicInvitation({
       >
         Buka Jemputan
       </button>
+
+      {started && stage !== "done" && (
+        <button
+          type="button"
+          className="ci-skip"
+          onClick={handleSkipToDetails}
+          aria-label="Langkau ke butiran majlis"
+        >
+          <span aria-hidden="true">&gt;&gt;</span>
+        </button>
+      )}
 
       {started && stage === "done" && (
         <button

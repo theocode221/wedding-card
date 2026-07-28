@@ -420,6 +420,23 @@
   outline-color: var(--wif-gold);
 }
 
+.wif-page--white-gold .ci-skip {
+  border-color: rgba(201, 162, 77, 0.18);
+  background: rgba(255, 252, 246, 0.22);
+  color: rgba(90, 58, 28, 0.42);
+}
+
+.wif-page--white-gold .ci-skip:hover,
+.wif-page--white-gold .ci-skip:focus-visible {
+  background: rgba(255, 255, 255, 0.45);
+  border-color: rgba(201, 162, 77, 0.38);
+  color: rgba(28, 22, 16, 0.72);
+}
+
+.wif-page--white-gold .ci-skip:focus-visible {
+  outline-color: var(--wif-gold);
+}
+
 @keyframes wif-wg-open-pulse {
   0%,
   100% {

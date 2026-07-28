@@ -83,6 +83,13 @@ export function RsvpPage() {
           <p className="rsvp-page__success-text">
             RSVP anda telah dihantar. Kami tidak sabar menanti hari bahagia ini bersama anda.
           </p>
+          <Link
+            to={invitationReturnPath}
+            state={{ skipCinematic: true, scrollTo: "details" as const }}
+            className="rsvp-page__back rsvp-page__back--thanks"
+          >
+            Kembali ke kad
+          </Link>
         </div>
       </div>
     );

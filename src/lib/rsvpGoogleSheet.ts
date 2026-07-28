@@ -10,6 +10,9 @@ export type RsvpSheetPayload = {
 const DEFAULT_RSVP_SCRIPT_URL =
   "https://script.google.com/macros/s/AKfycbz8MmtjgPjGLoQkYVFHOFa3KhS8fTO96O3LJkyuyBoEuAtkl-EvQcdUoLc7Pn-pIXln/exec";
 
+/** Cap how long the UI waits — Apps Script cold starts can take many seconds. */
+const UI_WAIT_MS = 400;
+
 export function getRsvpGoogleScriptUrl(): string {
   const fromEnv = import.meta.env.VITE_RSVP_GOOGLE_SCRIPT_URL;
   return typeof fromEnv === "string" && fromEnv.trim() ? fromEnv.trim() : DEFAULT_RSVP_SCRIPT_URL;
@@ -17,9 +20,11 @@ export function getRsvpGoogleScriptUrl(): string {
 
 /**
  * Posts RSVP JSON to Google Apps Script.
- * Uses `text/plain` + `no-cors` so browsers can reach the script without a CORS preflight
- * (Apps Script web apps often redirect in a way that blocks normal CORS responses).
- * Success is optimistic: if the request leaves the browser without a network error, treat as sent.
+ * Uses `text/plain` + `no-cors` so browsers can reach the script without a CORS preflight.
+ *
+ * The UI does not wait for the full Apps Script round-trip (often slow / cold-start).
+ * We dispatch the request and resolve after a short cap so guests don't feel stuck;
+ * the browser continues the POST in the background (`keepalive`).
  */
 export async function submitRsvpToGoogleSheet(payload: RsvpSheetPayload): Promise<void> {
   const url = getRsvpGoogleScriptUrl();
@@ -31,10 +36,23 @@ export async function submitRsvpToGoogleSheet(payload: RsvpSheetPayload): Promis
     theme: payload.theme,
   });
 
-  await fetch(url, {
+  const request = fetch(url, {
     method: "POST",
     mode: "no-cors",
+    keepalive: true,
     headers: { "Content-Type": "text/plain;charset=utf-8" },
     body,
   });
+
+  const outcome = await Promise.race([
+    request.then(() => "done" as const),
+    new Promise<"timeout">((resolve) => {
+      window.setTimeout(() => resolve("timeout"), UI_WAIT_MS);
+    }),
+  ]);
+
+  if (outcome === "timeout") {
+    // Keep the request alive in the background; ignore late network errors for UX.
+    void request.catch(() => undefined);
+  }
 }
