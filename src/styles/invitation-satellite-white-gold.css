@@ -1,0 +1,137 @@
+/**
+ * Galeri + RSVP when opened from `/jemputan-frame-white-gold`
+ * (imported after main.css so these modifiers win)
+ */
+
+/* —— Galeri —— */
+.gallery-page.gallery-page--white-gold {
+  background:
+    radial-gradient(ellipse 90% 45% at 50% 0%, rgba(232, 212, 154, 0.32) 0%, transparent 52%),
+    linear-gradient(185deg, #fbf8f2 0%, #f0e6d4 48%, #e8dcc8 100%);
+  color: #1c1610;
+}
+
+.gallery-page.gallery-page--white-gold .gallery-page__back {
+  color: #1c1610;
+  background: rgba(255, 253, 249, 0.92);
+  border: 1px solid rgba(201, 162, 77, 0.42);
+  box-shadow: 0 6px 22px rgba(40, 28, 12, 0.12);
+}
+
+.gallery-page.gallery-page--white-gold .gallery-page__back:hover {
+  background: #fff9f0;
+  border-color: rgba(201, 162, 77, 0.62);
+}
+
+.gallery-page.gallery-page--white-gold .gallery-page__back:focus-visible {
+  outline-color: #c9a24d;
+}
+
+.gallery-page.gallery-page--white-gold .gallery-page__title {
+  color: #1c1610;
+}
+
+.gallery-page.gallery-page--white-gold .gallery-page__subtitle {
+  color: #8a5a28;
+}
+
+.gallery-page.gallery-page--white-gold .gallery-cinematic__quote-text {
+  color: rgba(28, 22, 16, 0.78);
+}
+
+.gallery-page.gallery-page--white-gold .gallery-cinematic__frame {
+  background: rgba(255, 253, 249, 0.85);
+  box-shadow:
+    0 12px 40px rgba(40, 28, 12, 0.14),
+    0 0 0 1px rgba(201, 162, 77, 0.28);
+}
+
+.gallery-page.gallery-page--white-gold .gallery-cinematic__frame:focus-visible {
+  outline-color: rgba(201, 162, 77, 0.7);
+}
+
+.gallery-page.gallery-page--white-gold .gallery-page__footer {
+  border-top-color: rgba(201, 162, 77, 0.28);
+}
+
+.gallery-page.gallery-page--white-gold .gallery-page__footer-text {
+  color: rgba(28, 22, 16, 0.72);
+}
+
+/* —— RSVP —— */
+.rsvp-page.rsvp-page--white-gold {
+  background:
+    radial-gradient(ellipse 85% 50% at 50% 100%, rgba(232, 212, 154, 0.28) 0%, transparent 55%),
+    linear-gradient(185deg, #fbf8f2 0%, #efe4d0 100%);
+  font-family: "Cormorant Garamond", Georgia, serif;
+}
+
+.rsvp-page.rsvp-page--white-gold .rsvp-page__card {
+  background: linear-gradient(185deg, #ffffff 0%, #fbf8f2 42%, #f5efe4 100%);
+  border: 1px solid rgba(201, 162, 77, 0.45);
+  box-shadow:
+    0 22px 52px rgba(40, 28, 12, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+.rsvp-page.rsvp-page--white-gold .rsvp-page__eyebrow {
+  color: #8a5a28;
+}
+
+.rsvp-page.rsvp-page--white-gold .rsvp-page__title {
+  color: #1c1610;
+}
+
+.rsvp-page.rsvp-page--white-gold .rsvp-page__text {
+  color: rgba(28, 22, 16, 0.78);
+}
+
+.rsvp-page.rsvp-page--white-gold .rsvp-page__back {
+  color: #8a5a28;
+  border-color: rgba(201, 162, 77, 0.48);
+}
+
+.rsvp-page.rsvp-page--white-gold .rsvp-page__back:hover {
+  border-color: #c9a24d;
+  color: #1c1610;
+}
+
+.rsvp-page.rsvp-page--white-gold .rsvp-page__back:focus-visible {
+  outline: 2px solid #c9a24d;
+  outline-offset: 3px;
+}
+
+.rsvp-page.rsvp-page--white-gold .rsvp-page__label {
+  color: #8a5a28;
+}
+
+.rsvp-page.rsvp-page--white-gold .rsvp-page__input,
+.rsvp-page.rsvp-page--white-gold .rsvp-page__textarea,
+.rsvp-page.rsvp-page--white-gold .rsvp-page__choice {
+  background: #fffdf9;
+  border-color: rgba(201, 162, 77, 0.35);
+  color: #1c1610;
+}
+
+.rsvp-page.rsvp-page--white-gold .rsvp-page__choice:has(input:checked) {
+  background: rgba(201, 162, 77, 0.14);
+  border-color: rgba(201, 162, 77, 0.65);
+}
+
+.rsvp-page.rsvp-page--white-gold .rsvp-page__submit {
+  background: linear-gradient(160deg, #f4ead4 0%, #d8b456 40%, #a67a2e 100%);
+  color: #1a1208;
+}
+
+.rsvp-page.rsvp-page--white-gold .rsvp-page__success {
+  background: rgba(201, 162, 77, 0.12);
+  border-color: rgba(201, 162, 77, 0.4);
+}
+
+.rsvp-page.rsvp-page--white-gold .rsvp-page__success-title {
+  color: #1c1610;
+}
+
+.rsvp-page.rsvp-page--white-gold .rsvp-page__success-text {
+  color: rgba(28, 22, 16, 0.78);
+}

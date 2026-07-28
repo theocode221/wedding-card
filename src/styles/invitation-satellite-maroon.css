@@ -98,3 +98,47 @@
   outline: 2px solid #e8d49a;
   outline-offset: 3px;
 }
+
+.rsvp-page.rsvp-page--maroon .rsvp-page__label {
+  color: rgba(232, 212, 154, 0.82);
+}
+
+.rsvp-page.rsvp-page--maroon .rsvp-page__input,
+.rsvp-page.rsvp-page--maroon .rsvp-page__textarea,
+.rsvp-page.rsvp-page--maroon .rsvp-page__choice {
+  background: rgba(12, 2, 6, 0.45);
+  color: #fff9f6;
+  border-color: rgba(201, 162, 77, 0.35);
+}
+
+.rsvp-page.rsvp-page--maroon .rsvp-page__input::placeholder,
+.rsvp-page.rsvp-page--maroon .rsvp-page__textarea::placeholder {
+  color: rgba(255, 248, 242, 0.45);
+}
+
+.rsvp-page.rsvp-page--maroon .rsvp-page__choice:has(input:checked) {
+  background: rgba(201, 162, 77, 0.22);
+  border-color: rgba(232, 212, 154, 0.65);
+}
+
+.rsvp-page.rsvp-page--maroon .rsvp-page__submit {
+  background: linear-gradient(160deg, #f2e4c4, #c9a24d 48%, #8a5a28);
+  color: #140308;
+}
+
+.rsvp-page.rsvp-page--maroon .rsvp-page__success {
+  background: rgba(0, 0, 0, 0.28);
+  border-color: rgba(201, 162, 77, 0.4);
+}
+
+.rsvp-page.rsvp-page--maroon .rsvp-page__success-title {
+  color: #fdf4f0;
+}
+
+.rsvp-page.rsvp-page--maroon .rsvp-page__success-text {
+  color: rgba(255, 248, 242, 0.86);
+}
+
+.rsvp-page.rsvp-page--maroon .rsvp-page__error {
+  color: #ffb4b4;
+}

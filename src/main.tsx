@@ -4,6 +4,7 @@ import App from "./App.tsx";
 import { setupPublicAssets } from "./setupPublicAssets";
 import "./styles/main.css";
 import "./styles/invitation-satellite-maroon.css";
+import "./styles/invitation-satellite-white-gold.css";
 
 setupPublicAssets();
 

@@ -12,6 +12,7 @@ import { ScratchCardPage } from "./pages/ScratchCardPage";
 import { UcapanCardPage } from "./pages/UcapanCardPage";
 import { WeddingInvitationFramePage } from "./pages/WeddingInvitationFramePage";
 import { WeddingInvitationFrameMaroonPage } from "./pages/WeddingInvitationFrameMaroonPage";
+import { WeddingInvitationFrameWhiteGoldPage } from "./pages/WeddingInvitationFrameWhiteGoldPage";
 import { GalleryPage } from "./pages/GalleryPage";
 import { EggRevealCardPage } from "./pages/EggRevealCardPage";
 import { EggRevealCardPastelPage } from "./pages/EggRevealCardPastelPage";
@@ -39,6 +40,7 @@ export default function App() {
             <Route path="/roda-doa" element={<BlessingWheelPage />} />
             <Route path="/jemputan-frame" element={<WeddingInvitationFramePage />} />
             <Route path="/jemputan-frame-maroon" element={<WeddingInvitationFrameMaroonPage />} />
+            <Route path="/jemputan-frame-white-gold" element={<WeddingInvitationFrameWhiteGoldPage />} />
             <Route path="/galeri" element={<GalleryPage />} />
             <Route path="/kad-wedding-badar" element={<EggRevealCardPage />} />
             <Route path="/kad-wedding-badar-pastel" element={<EggRevealCardPastelPage />} />

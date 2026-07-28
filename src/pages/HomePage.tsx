@@ -47,6 +47,16 @@ export function HomePage() {
             <span className="home-selector__cardTitle">Jemputan (bingkai)</span>
             <span className="home-selector__cardDesc">Animasi pembuka berbingkai, kemudian kandungan jemputan</span>
           </Link>
+
+          <Link to="/jemputan-frame-maroon" className="home-selector__card">
+            <span className="home-selector__cardTitle">Jemputan Maroon &amp; Gold</span>
+            <span className="home-selector__cardDesc">Tema maroon diraja dengan aksen emas</span>
+          </Link>
+
+          <Link to="/jemputan-frame-white-gold" className="home-selector__card">
+            <span className="home-selector__cardTitle">Jemputan White &amp; Gold</span>
+            <span className="home-selector__cardDesc">Tema ivory putih dengan aksen emas champagne</span>
+          </Link>
         </div>
 
         <p className="home-selector__footnote">

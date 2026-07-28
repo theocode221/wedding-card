@@ -1,6 +1,10 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { resolveInvitationReturnPath, resolveInvitationSatelliteSkin } from "../lib/invitationFlow";
+import {
+  invitationSatellitePageModifier,
+  resolveInvitationReturnPath,
+  resolveInvitationSatelliteSkin,
+} from "../lib/invitationFlow";
 import { GalleryImage } from "../components/gallery/GalleryImage";
 import { Lightbox } from "../components/gallery/Lightbox";
 import { WhatsAppContactLink } from "../components/shared/WhatsAppContactLink";
@@ -15,10 +19,11 @@ export function GalleryPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const invitationReturnPath = useMemo(() => resolveInvitationReturnPath(location.state), [location.state]);
-  const maroonSatellite = useMemo(
-    () => resolveInvitationSatelliteSkin(location.state) === "maroon",
+  const satelliteSkin = useMemo(
+    () => resolveInvitationSatelliteSkin(location.state),
     [location.state],
   );
+  const satelliteClass = invitationSatellitePageModifier(satelliteSkin, "gallery-page");
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [pageReady, setPageReady] = useState(false);
 
@@ -52,7 +57,7 @@ export function GalleryPage() {
 
   return (
     <div
-      className={["gallery-page", pageReady ? "gallery-page--in" : "", maroonSatellite ? "gallery-page--maroon" : ""]
+      className={["gallery-page", pageReady ? "gallery-page--in" : "", satelliteClass]
         .filter(Boolean)
         .join(" ")}
     >

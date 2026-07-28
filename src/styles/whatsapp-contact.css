@@ -1,14 +1,41 @@
-/* Shared “Hubungi Kami” WhatsApp link */
+/* Shared “Hubungi Kami” WhatsApp links */
+
+.wa-contact-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+  width: 100%;
+}
+
+.wa-contact-group__label {
+  margin: 0;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: inherit;
+  opacity: 0.72;
+}
+
+.wa-contact-group__links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.55rem;
+  width: 100%;
+}
 
 .wa-contact {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.55rem;
-  padding: 0.65rem 1.2rem;
+  min-width: min(100%, 11.5rem);
+  padding: 0.65rem 1.05rem;
   font-size: 0.88rem;
   font-weight: 600;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
   text-decoration: none;
   color: #fffef8;
   background: linear-gradient(160deg, #2bb826, #1fa31a 55%, #168a14);
@@ -36,4 +63,24 @@
 
 .wa-contact__icon {
   flex-shrink: 0;
+}
+
+.wa-contact__text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.15;
+  gap: 0.12rem;
+}
+
+.wa-contact__name {
+  font-size: 0.86rem;
+  letter-spacing: 0.06em;
+}
+
+.wa-contact__number {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  opacity: 0.92;
 }

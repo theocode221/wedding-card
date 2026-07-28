@@ -1,7 +1,7 @@
 /** Single source for calendar export — matches invitation copy (Malaysia time). */
 
 /** ISO local — for countdown (same day as Butiran majlis). */
-export const WEDDING_EVENT_START_ISO = "2026-12-20T11:00:00";
+export const WEDDING_EVENT_START_ISO = "2026-09-27T11:00:00";
 
 export const WEDDING_EVENT_TITLE = "Walimatul Urus —  NAIM & NADHIRAH";
 
@@ -9,11 +9,11 @@ export const WEDDING_EVENT_DESCRIPTION =
   "Jemputan perkahwinan  NAIM & NADHIRAH. Kehadiran dan doa anda amat dialu-alukan.";
 
 export const WEDDING_EVENT_LOCATION =
-  "Dewan Perdana Felda, Jalan Perdana, 50480 Kuala Lumpur, Malaysia";
+  "Hotel Pintar Parit Raja, Parit Raja, Malaysia";
 
-/** 20 Dec 2026, 11:00–16:00 Malaysia (UTC+8) → Zulu for Google / ICS */
-const START_UTC = "20261220T030000Z";
-const END_UTC = "20261220T080000Z";
+/** 27 Sep 2026, 11:00–16:00 Malaysia (UTC+8) → Zulu for Google / ICS */
+const START_UTC = "20260927T030000Z";
+const END_UTC = "20260927T080000Z";
 
 function escapeIcsText(s: string): string {
   return s.replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\n/g, "\\n");
@@ -38,7 +38,7 @@ export function buildWeddingIcs(): string {
     "CALSCALE:GREGORIAN",
     "METHOD:PUBLISH",
     "BEGIN:VEVENT",
-    `UID:wedding-nabil-NADHIRAH-20261220@wedding-card`,
+    `UID:wedding-naim-nadhirah-20260927@wedding-card`,
     `DTSTAMP:${formatIcsUtcStamp(new Date())}`,
     `DTSTART:${START_UTC}`,
     `DTEND:${END_UTC}`,
@@ -67,7 +67,7 @@ export function downloadWeddingIcs(): void {
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = "jemputan-nabil-NADHIRAH.ics";
+  a.download = "jemputan-naim-nadhirah.ics";
   a.rel = "noopener";
   document.body.appendChild(a);
   a.click();

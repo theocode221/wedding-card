@@ -11,6 +11,20 @@ const frameUrl = (n: number): string => {
   return `${trimmed}/wedding-invitation/${n}.png`;
 };
 
+/** Named file under `/public/wedding-invitation/` (spaces encoded). */
+const weddingInvitationAssetUrl = (filename: string): string => {
+  const encoded = filename
+    .split("/")
+    .map((part) => encodeURIComponent(part))
+    .join("/");
+  const base = import.meta.env.BASE_URL;
+  if (!base || base === "/") {
+    return `/wedding-invitation/${encoded}`;
+  }
+  const trimmed = base.endsWith("/") ? base.slice(0, -1) : base;
+  return `${trimmed}/wedding-invitation/${encoded}`;
+};
+
 /** Public still URLs under `/wedding-invitation/{n}.png` (for gallery, etc.). */
 export function getWeddingInvitationFrameUrl(n: number): string {
   return frameUrl(n);
@@ -21,6 +35,13 @@ export const WEDDING_INVITATION_CINEMATIC_URLS: readonly [string, string, string
   frameUrl(1),
   frameUrl(2),
   frameUrl(3),
+];
+
+/** White & gold opening — uses `1 gold.png` as the hero still. */
+export const WEDDING_INVITATION_WHITE_GOLD_CINEMATIC_URLS: readonly [string, string, string] = [
+  weddingInvitationAssetUrl("1 gold.png"),
+  weddingInvitationAssetUrl("1 gold.png"),
+  weddingInvitationAssetUrl("1 gold.png"),
 ];
 
 /** @deprecated Kept for compatibility; only first three frames are used in-app. */

@@ -1,4 +1,4 @@
-import { WHATSAPP_CONTACT_URL } from "../../data/contact";
+import { WHATSAPP_CONTACTS } from "../../data/contact";
 import "../../styles/whatsapp-contact.css";
 
 type WhatsAppContactLinkProps = {
@@ -25,14 +25,26 @@ function WhatsAppIcon({ className }: { className?: string }) {
 
 export function WhatsAppContactLink({ className = "" }: WhatsAppContactLinkProps) {
   return (
-    <a
-      className={["wa-contact", className].filter(Boolean).join(" ")}
-      href={WHATSAPP_CONTACT_URL}
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      <WhatsAppIcon className="wa-contact__icon" />
-      <span>Hubungi Kami</span>
-    </a>
+    <div className={["wa-contact-group", className].filter(Boolean).join(" ")}>
+      <p className="wa-contact-group__label">Hubungi Kami</p>
+      <div className="wa-contact-group__links">
+        {WHATSAPP_CONTACTS.map((contact) => (
+          <a
+            key={contact.name}
+            className="wa-contact"
+            href={contact.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`WhatsApp ${contact.name} ${contact.displayNumber}`}
+          >
+            <WhatsAppIcon className="wa-contact__icon" />
+            <span className="wa-contact__text">
+              <span className="wa-contact__name">{contact.name}</span>
+              <span className="wa-contact__number">{contact.displayNumber}</span>
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
   );
 }

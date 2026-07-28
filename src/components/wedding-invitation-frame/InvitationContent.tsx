@@ -2,8 +2,9 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   INVITATION_PATH_DEFAULT,
-  INVITATION_PATH_MAROON,
+  skinFromInvitationPath,
   type InvitationFlowState,
+  type InvitationFramePath,
 } from "../../lib/invitationFlow";
 import { WEDDING_EVENT_START_ISO } from "../../lib/weddingCalendar";
 import { WhatsAppContactLink } from "../shared/WhatsAppContactLink";
@@ -14,7 +15,7 @@ import { NnMonogramLogo } from "../branding/NnMonogramLogo";
 export type InvitationContentProps = {
   onReplay: () => void;
   /** Which framed invitation this card belongs to — drives Galeri / RSVP theme + back target */
-  invitationFlowBase?: typeof INVITATION_PATH_DEFAULT | typeof INVITATION_PATH_MAROON;
+  invitationFlowBase?: InvitationFramePath;
 };
 
 const LOCATION_QUERY = encodeURIComponent("Hotel Pintar Parit Raja");
@@ -29,7 +30,7 @@ export function InvitationContent({
   const satelliteState = useMemo<InvitationFlowState>(
     () => ({
       invitationReturnPath: invitationFlowBase,
-      invitationSkin: invitationFlowBase === INVITATION_PATH_MAROON ? "maroon" : "default",
+      invitationSkin: skinFromInvitationPath(invitationFlowBase),
     }),
     [invitationFlowBase],
   );
@@ -75,7 +76,7 @@ export function InvitationContent({
         <NnMonogramLogo className="wif-invitation__monogram" />
         <p className="wif-invitation__hero-eyebrow">Jemputan Majlis Akad Nikah</p>
         <h1 className="wif-invitation__names"> NAIM &amp; NADHIRAH</h1>
-        <p className="wif-invitation__hero-date">20 Disember 2026</p>
+        <p className="wif-invitation__hero-date">27 September 2026</p>
         <p className="wif-invitation__hero-line">
           Dengan penuh kesyukuran, kami menjemput anda ke majlis kami
         </p>
@@ -92,11 +93,11 @@ export function InvitationContent({
         <ul className="wif-invitation__detail-list">
           <li>
             <span className="wif-invitation__detail-label">Tarikh</span>
-            <span className="wif-invitation__detail-value">Jumaat, 20 Disember 2026</span>
+            <span className="wif-invitation__detail-value">Ahad, 27 September 2026</span>
           </li>
           <li>
             <span className="wif-invitation__detail-label">Masa</span>
-            <span className="wif-invitation__detail-value">11:00 pagi – 4:00 petang</span>
+            <span className="wif-invitation__detail-value">10:00 pagi – 4:00 petang</span>
           </li>
           <li>
             <span className="wif-invitation__detail-label">Tempat</span>
@@ -105,8 +106,7 @@ export function InvitationContent({
           <li>
             <span className="wif-invitation__detail-label">Alamat</span>
             <span className="wif-invitation__detail-value">
-              JParit, 50480 Kuala Lumpur, Malaysia
-            </span>
+              Parit Raja, 86400, Johor, Malaysia</span>
           </li>
         </ul>
         <div className="wif-invitation__location" ref={locationMenuRef}>
@@ -190,9 +190,6 @@ export function InvitationContent({
         <div className="wif-invitation__actions-row wif-invitation__actions-row--primary">
           <Link to="/rsvp" state={satelliteState} className="wif-invitation__btn wif-invitation__btn--gold">
             RSVP
-          </Link>
-          <Link to="/galeri" state={satelliteState} className="wif-invitation__btn wif-invitation__btn--gold">
-            Galeri
           </Link>
         </div>
         <div className="wif-invitation__actions-row wif-invitation__actions-row--replay">
