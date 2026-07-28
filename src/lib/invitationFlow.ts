@@ -2,7 +2,7 @@
 
 export const INVITATION_PATH_DEFAULT = "/jemputan-frame" as const;
 export const INVITATION_PATH_MAROON = "/jemputan-frame-maroon" as const;
-export const INVITATION_PATH_WHITE_GOLD = "/jemputan-frame-white-gold" as const;
+export const INVITATION_PATH_WHITE_GOLD = "/naim-nadhirah-nikah" as const;
 
 export type InvitationFramePath =
   | typeof INVITATION_PATH_DEFAULT

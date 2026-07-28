@@ -75,6 +75,19 @@ export function RsvpPage() {
     }
   };
 
+  if (status === "success") {
+    return (
+      <div className={["rsvp-page", "rsvp-page--done", satelliteClass].filter(Boolean).join(" ")}>
+        <div className="rsvp-page__card rsvp-page__card--thanks" role="status">
+          <p className="rsvp-page__success-title">Terima kasih!</p>
+          <p className="rsvp-page__success-text">
+            RSVP anda telah dihantar. Kami tidak sabar menanti hari bahagia ini bersama anda.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={["rsvp-page", satelliteClass].filter(Boolean).join(" ")}>
       <div className="rsvp-page__card">
@@ -84,109 +97,95 @@ export function RsvpPage() {
           Maklumkan kehadiran anda untuk majlis {names}. Jawapan anda akan direkodkan terus.
         </p>
 
-        {status === "success" ? (
-          <div className="rsvp-page__success" role="status">
-            <p className="rsvp-page__success-title">Terima kasih!</p>
-            <p className="rsvp-page__success-text">
-              RSVP anda telah dihantar. Kami tidak sabar menanti hari bahagia ini bersama anda.
+        <form className="rsvp-page__form" onSubmit={onSubmit} noValidate>
+          <label className="rsvp-page__field">
+            <span className="rsvp-page__label">Nama</span>
+            <input
+              className="rsvp-page__input"
+              type="text"
+              name="name"
+              autoComplete="name"
+              required
+              maxLength={80}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Nama penuh anda"
+            />
+          </label>
+
+          <fieldset className="rsvp-page__fieldset">
+            <legend className="rsvp-page__label">Kehadiran</legend>
+            <div className="rsvp-page__choices" role="radiogroup" aria-label="Kehadiran">
+              {(
+                [
+                  ["yes", "Hadir"],
+                  ["no", "Tidak hadir"],
+                  ["maybe", "Belum pasti"],
+                ] as const
+              ).map(([value, label]) => (
+                <label key={value} className="rsvp-page__choice">
+                  <input
+                    type="radio"
+                    name="attending"
+                    value={value}
+                    checked={attending === value}
+                    onChange={() => setAttending(value)}
+                  />
+                  <span>{label}</span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
+
+          {attending !== "no" ? (
+            <label className="rsvp-page__field">
+              <span className="rsvp-page__label">Bilangan tetamu</span>
+              <input
+                className="rsvp-page__input rsvp-page__input--narrow"
+                type="number"
+                name="guests"
+                min={1}
+                max={20}
+                value={guests}
+                onChange={(e) => setGuests(Number(e.target.value) || 1)}
+              />
+            </label>
+          ) : null}
+
+          <label className="rsvp-page__field">
+            <span className="rsvp-page__label">Ucapan (pilihan)</span>
+            <textarea
+              className="rsvp-page__textarea"
+              name="message"
+              rows={3}
+              maxLength={400}
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              placeholder="Doa atau ucapan ringkas…"
+            />
+          </label>
+
+          <label className="rsvp-page__hp" aria-hidden="true">
+            <span>Website</span>
+            <input
+              type="text"
+              tabIndex={-1}
+              autoComplete="off"
+              value={honeypot}
+              onChange={(e) => setHoneypot(e.target.value)}
+            />
+          </label>
+
+          {status === "error" && errorText ? (
+            <p className="rsvp-page__error" role="alert">
+              {errorText}
             </p>
-          </div>
-        ) : (
-          <form className="rsvp-page__form" onSubmit={onSubmit} noValidate>
-            <label className="rsvp-page__field">
-              <span className="rsvp-page__label">Nama</span>
-              <input
-                className="rsvp-page__input"
-                type="text"
-                name="name"
-                autoComplete="name"
-                required
-                maxLength={80}
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Nama penuh anda"
-              />
-            </label>
+          ) : null}
 
-            <fieldset className="rsvp-page__fieldset">
-              <legend className="rsvp-page__label">Kehadiran</legend>
-              <div className="rsvp-page__choices" role="radiogroup" aria-label="Kehadiran">
-                {(
-                  [
-                    ["yes", "Hadir"],
-                    ["no", "Tidak hadir"],
-                    ["maybe", "Belum pasti"],
-                  ] as const
-                ).map(([value, label]) => (
-                  <label key={value} className="rsvp-page__choice">
-                    <input
-                      type="radio"
-                      name="attending"
-                      value={value}
-                      checked={attending === value}
-                      onChange={() => setAttending(value)}
-                    />
-                    <span>{label}</span>
-                  </label>
-                ))}
-              </div>
-            </fieldset>
-
-            {attending !== "no" ? (
-              <label className="rsvp-page__field">
-                <span className="rsvp-page__label">Bilangan tetamu</span>
-                <input
-                  className="rsvp-page__input rsvp-page__input--narrow"
-                  type="number"
-                  name="guests"
-                  min={1}
-                  max={20}
-                  value={guests}
-                  onChange={(e) => setGuests(Number(e.target.value) || 1)}
-                />
-              </label>
-            ) : null}
-
-            <label className="rsvp-page__field">
-              <span className="rsvp-page__label">Ucapan (pilihan)</span>
-              <textarea
-                className="rsvp-page__textarea"
-                name="message"
-                rows={3}
-                maxLength={400}
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                placeholder="Doa atau ucapan ringkas…"
-              />
-            </label>
-
-            {/* Honeypot — hidden from users */}
-            <label className="rsvp-page__hp" aria-hidden="true">
-              <span>Website</span>
-              <input
-                type="text"
-                tabIndex={-1}
-                autoComplete="off"
-                value={honeypot}
-                onChange={(e) => setHoneypot(e.target.value)}
-              />
-            </label>
-
-            {status === "error" && errorText ? (
-              <p className="rsvp-page__error" role="alert">
-                {errorText}
-              </p>
-            ) : null}
-
-            <button
-              type="submit"
-              className="rsvp-page__submit"
-              disabled={status === "sending"}
-            >
-              {status === "sending" ? "Menghantar…" : "Hantar RSVP"}
-            </button>
-          </form>
-        )}
+          <button type="submit" className="rsvp-page__submit" disabled={status === "sending"}>
+            {status === "sending" ? "Menghantar…" : "Hantar RSVP"}
+          </button>
+        </form>
 
         <Link
           to={invitationReturnPath}

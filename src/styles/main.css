@@ -633,6 +633,21 @@ button {
   text-align: center;
 }
 
+.rsvp-page__card--thanks {
+  text-align: center;
+  padding: 2.75rem 1.75rem;
+}
+
+.rsvp-page__card--thanks .rsvp-page__success-title {
+  margin: 0 0 0.65rem;
+}
+
+.rsvp-page__card--thanks .rsvp-page__success-text {
+  margin: 0;
+  max-width: 20rem;
+  margin-inline: auto;
+}
+
 .rsvp-page__success-title {
   margin: 0 0 0.4rem;
   font-family: "Cormorant Garamond", Georgia, serif;
@@ -641,11 +656,21 @@ button {
   color: #2c2824;
 }
 
+.rsvp-page--done .rsvp-page__success-title {
+  font-size: clamp(1.75rem, 5vw, 2.15rem);
+  letter-spacing: 0.04em;
+}
+
 .rsvp-page__success-text {
   margin: 0;
   color: #6b645c;
   font-size: 0.95rem;
   line-height: 1.55;
+}
+
+.rsvp-page--done .rsvp-page__success-text {
+  font-size: 1.02rem;
+  line-height: 1.65;
 }
 
 .rsvp-page__back {

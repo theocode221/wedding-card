@@ -142,3 +142,15 @@
 .rsvp-page.rsvp-page--maroon .rsvp-page__error {
   color: #ffb4b4;
 }
+
+.rsvp-page.rsvp-page--maroon.rsvp-page--done .rsvp-page__card--thanks {
+  background: linear-gradient(185deg, #4f1528 0%, #321018 42%, #1c060c 100%);
+}
+
+.rsvp-page.rsvp-page--maroon.rsvp-page--done .rsvp-page__success-title {
+  color: #fdf4f0;
+}
+
+.rsvp-page.rsvp-page--maroon.rsvp-page--done .rsvp-page__success-text {
+  color: rgba(255, 248, 242, 0.86);
+}

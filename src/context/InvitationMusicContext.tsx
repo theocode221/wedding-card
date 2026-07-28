@@ -18,7 +18,7 @@ const INVITATION_MUSIC_VOLUME = 0.42;
 const ROUTES_ALLOW_INVITATION_BGM = new Set([
   "/jemputan-frame",
   "/jemputan-frame-maroon",
-  "/jemputan-frame-white-gold",
+  "/naim-nadhirah-nikah",
   "/galeri",
   "/rsvp",
 ]);

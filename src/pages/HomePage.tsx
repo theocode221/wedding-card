@@ -53,7 +53,7 @@ export function HomePage() {
             <span className="home-selector__cardDesc">Tema maroon diraja dengan aksen emas</span>
           </Link>
 
-          <Link to="/jemputan-frame-white-gold" className="home-selector__card">
+          <Link to="/naim-nadhirah-nikah" className="home-selector__card">
             <span className="home-selector__cardTitle">Jemputan White &amp; Gold</span>
             <span className="home-selector__cardDesc">Tema ivory putih dengan aksen emas champagne</span>
           </Link>

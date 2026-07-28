@@ -430,6 +430,66 @@
   margin-bottom: 2.25rem;
 }
 
+.wif-invitation__rsvp-cta {
+  text-align: center;
+  margin: 0 0 1.75rem;
+  padding: 1.35rem 1.1rem 1.45rem;
+  border-radius: 1rem;
+  background: linear-gradient(165deg, rgba(255, 253, 249, 0.98), rgba(240, 232, 220, 0.55));
+  box-shadow:
+    0 0 0 1px rgba(184, 149, 106, 0.28),
+    0 10px 28px rgba(74, 58, 48, 0.08);
+}
+
+.wif-invitation__rsvp-cta .wif-invitation__section-title {
+  margin-bottom: 0.55rem;
+  color: var(--wif-gold);
+}
+
+.wif-invitation__rsvp-cta-text {
+  margin: 0 auto 1.15rem;
+  max-width: 22rem;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--wif-ink-soft);
+}
+
+.wif-invitation__btn--rsvp {
+  width: 100%;
+  max-width: 18rem;
+  margin-inline: auto;
+  min-height: 52px;
+  font-size: 0.92rem;
+  letter-spacing: 0.06em;
+  animation: wif-rsvp-pulse 2.8s ease-in-out infinite;
+}
+
+.wif-invitation__rsvp-cta-note {
+  margin: 0.75rem 0 0;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: var(--wif-brown);
+  opacity: 0.85;
+}
+
+@keyframes wif-rsvp-pulse {
+  0%,
+  100% {
+    box-shadow: 0 4px 18px rgba(184, 149, 106, 0.35);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 8px 28px rgba(184, 149, 106, 0.55);
+    transform: scale(1.015);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wif-invitation__btn--rsvp {
+    animation: none;
+  }
+}
+
 .wif-invitation__actions-row {
   display: flex;
   flex-wrap: wrap;

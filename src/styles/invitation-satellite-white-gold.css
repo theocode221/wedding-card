@@ -1,5 +1,5 @@
 /**
- * Galeri + RSVP when opened from `/jemputan-frame-white-gold`
+ * Galeri + RSVP when opened from `/naim-nadhirah-nikah`
  * (imported after main.css so these modifiers win)
  */
 
@@ -133,5 +133,13 @@
 }
 
 .rsvp-page.rsvp-page--white-gold .rsvp-page__success-text {
+  color: rgba(28, 22, 16, 0.78);
+}
+
+.rsvp-page.rsvp-page--white-gold.rsvp-page--done .rsvp-page__success-title {
+  color: #1c1610;
+}
+
+.rsvp-page.rsvp-page--white-gold.rsvp-page--done .rsvp-page__success-text {
   color: rgba(28, 22, 16, 0.78);
 }

@@ -40,7 +40,8 @@ export default function App() {
             <Route path="/roda-doa" element={<BlessingWheelPage />} />
             <Route path="/jemputan-frame" element={<WeddingInvitationFramePage />} />
             <Route path="/jemputan-frame-maroon" element={<WeddingInvitationFrameMaroonPage />} />
-            <Route path="/jemputan-frame-white-gold" element={<WeddingInvitationFrameWhiteGoldPage />} />
+            <Route path="/naim-nadhirah-nikah" element={<WeddingInvitationFrameWhiteGoldPage />} />
+            <Route path="/jemputan-frame-white-gold" element={<Navigate to="/naim-nadhirah-nikah" replace />} />
             <Route path="/galeri" element={<GalleryPage />} />
             <Route path="/kad-wedding-badar" element={<EggRevealCardPage />} />
             <Route path="/kad-wedding-badar-pastel" element={<EggRevealCardPastelPage />} />

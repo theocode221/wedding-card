@@ -160,7 +160,7 @@ export function InvitationContent({
 
       <section className="wif-invitation__countdown" aria-labelledby="wif-count-heading">
         <h2 id="wif-count-heading" className="wif-invitation__section-title">
-          Kira detik
+          Menuju detik bahagia:
         </h2>
         {tick.done ? (
           <p className="wif-invitation__countdown-done">Hari ini — jumpa di majlis.</p>
@@ -186,12 +186,24 @@ export function InvitationContent({
         )}
       </section>
 
+      <section className="wif-invitation__rsvp-cta" aria-labelledby="wif-rsvp-cta-heading">
+        <h2 id="wif-rsvp-cta-heading" className="wif-invitation__section-title">
+          Kehadiran anda bermakna
+        </h2>
+        <p className="wif-invitation__rsvp-cta-text">
+          Sila sahkan kehadiran anda. Jawapan anda membantu kami merancang majlis dengan lebih baik
+        </p>
+        <Link
+          to="/rsvp"
+          state={satelliteState}
+          className="wif-invitation__btn wif-invitation__btn--gold wif-invitation__btn--rsvp"
+        >
+          Sahkan kehadiran (RSVP)
+        </Link>
+        <p className="wif-invitation__rsvp-cta-note">Terima kasih. Maklum balas anda sangat bermakna.</p>
+      </section>
+
       <div className="wif-invitation__actions">
-        <div className="wif-invitation__actions-row wif-invitation__actions-row--primary">
-          <Link to="/rsvp" state={satelliteState} className="wif-invitation__btn wif-invitation__btn--gold">
-            RSVP
-          </Link>
-        </div>
         <div className="wif-invitation__actions-row wif-invitation__actions-row--replay">
           <button type="button" className="wif-invitation__btn wif-invitation__btn--ghost" onClick={onReplay}>
             Main semula
