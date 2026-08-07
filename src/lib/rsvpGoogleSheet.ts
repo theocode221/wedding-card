@@ -31,7 +31,7 @@ export async function submitRsvpToGoogleSheet(payload: RsvpSheetPayload): Promis
   const body = JSON.stringify({
     name: payload.name.trim(),
     attending: payload.attending,
-    guests: Math.max(1, Math.min(20, Math.floor(payload.guests) || 1)),
+    guests: Math.max(1, Math.min(10, Math.floor(payload.guests) || 1)),
     message: payload.message.trim(),
     theme: payload.theme,
   });

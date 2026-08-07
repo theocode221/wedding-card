@@ -141,15 +141,18 @@ export function RsvpPage() {
           {attending !== "no" ? (
             <label className="rsvp-page__field">
               <span className="rsvp-page__label">Bilangan tetamu</span>
-              <input
-                className="rsvp-page__input rsvp-page__input--narrow"
-                type="number"
+              <select
+                className="rsvp-page__input rsvp-page__input--narrow rsvp-page__select"
                 name="guests"
-                min={1}
-                max={20}
                 value={guests}
                 onChange={(e) => setGuests(Number(e.target.value) || 1)}
-              />
+              >
+                {Array.from({ length: 10 }, (_, i) => i + 1).map((n) => (
+                  <option key={n} value={n}>
+                    {n}
+                  </option>
+                ))}
+              </select>
             </label>
           ) : null}
 
