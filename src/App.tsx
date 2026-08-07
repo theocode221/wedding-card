@@ -41,6 +41,10 @@ export default function App() {
             <Route path="/jemputan-frame" element={<WeddingInvitationFramePage />} />
             <Route path="/jemputan-frame-maroon" element={<WeddingInvitationFrameMaroonPage />} />
             <Route path="/naim-nadhirah-nikah" element={<WeddingInvitationFrameWhiteGoldPage />} />
+            <Route
+              path="/demo-gold"
+              element={<WeddingInvitationFrameWhiteGoldPage variant="demo" />}
+            />
             <Route path="/jemputan-frame-white-gold" element={<Navigate to="/naim-nadhirah-nikah" replace />} />
             <Route path="/galeri" element={<GalleryPage />} />
             <Route path="/kad-wedding-badar" element={<EggRevealCardPage />} />

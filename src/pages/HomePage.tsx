@@ -57,6 +57,11 @@ export function HomePage() {
             <span className="home-selector__cardTitle">Jemputan White &amp; Gold</span>
             <span className="home-selector__cardDesc">Tema ivory putih dengan aksen emas champagne</span>
           </Link>
+
+          <Link to="/demo-gold" className="home-selector__card">
+            <span className="home-selector__cardTitle">Demo Gold</span>
+            <span className="home-selector__cardDesc">Preview tema gold dengan nama contoh (Adam &amp; Sofea)</span>
+          </Link>
         </div>
 
         <p className="home-selector__footnote">

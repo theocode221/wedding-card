@@ -3,11 +3,13 @@
 export const INVITATION_PATH_DEFAULT = "/jemputan-frame" as const;
 export const INVITATION_PATH_MAROON = "/jemputan-frame-maroon" as const;
 export const INVITATION_PATH_WHITE_GOLD = "/naim-nadhirah-nikah" as const;
+export const INVITATION_PATH_DEMO_GOLD = "/demo-gold" as const;
 
 export type InvitationFramePath =
   | typeof INVITATION_PATH_DEFAULT
   | typeof INVITATION_PATH_MAROON
-  | typeof INVITATION_PATH_WHITE_GOLD;
+  | typeof INVITATION_PATH_WHITE_GOLD
+  | typeof INVITATION_PATH_DEMO_GOLD;
 
 export type InvitationSatelliteSkin = "default" | "maroon" | "whiteGold";
 
@@ -23,6 +25,7 @@ const FRAME_PATHS: readonly InvitationFramePath[] = [
   INVITATION_PATH_DEFAULT,
   INVITATION_PATH_MAROON,
   INVITATION_PATH_WHITE_GOLD,
+  INVITATION_PATH_DEMO_GOLD,
 ];
 
 function isAllowedReturnPath(p: string): p is InvitationFramePath {
@@ -31,7 +34,7 @@ function isAllowedReturnPath(p: string): p is InvitationFramePath {
 
 export function skinFromInvitationPath(path: InvitationFramePath): InvitationSatelliteSkin {
   if (path === INVITATION_PATH_MAROON) return "maroon";
-  if (path === INVITATION_PATH_WHITE_GOLD) return "whiteGold";
+  if (path === INVITATION_PATH_WHITE_GOLD || path === INVITATION_PATH_DEMO_GOLD) return "whiteGold";
   return "default";
 }
 

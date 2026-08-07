@@ -19,6 +19,7 @@ const ROUTES_ALLOW_INVITATION_BGM = new Set([
   "/jemputan-frame",
   "/jemputan-frame-maroon",
   "/naim-nadhirah-nikah",
+  "/demo-gold",
   "/galeri",
   "/rsvp",
 ]);

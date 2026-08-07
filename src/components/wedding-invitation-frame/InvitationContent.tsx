@@ -16,6 +16,8 @@ export type InvitationContentProps = {
   onReplay: () => void;
   /** Which framed invitation this card belongs to — drives Galeri / RSVP theme + back target */
   invitationFlowBase?: InvitationFramePath;
+  /** Override couple names in hero + footer (e.g. demo). */
+  coupleDisplayName?: string;
 };
 
 const LOCATION_QUERY = encodeURIComponent("Hotel Pintar Parit Raja");
@@ -25,6 +27,7 @@ const WAZE_URL = `https://www.waze.com/ul?q=${LOCATION_QUERY}&navigate=yes`;
 export function InvitationContent({
   onReplay,
   invitationFlowBase = INVITATION_PATH_DEFAULT,
+  coupleDisplayName = "NAIM & NADHIRAH",
 }: InvitationContentProps) {
   const target = useMemo(() => new Date(WEDDING_EVENT_START_ISO), []);
   const satelliteState = useMemo<InvitationFlowState>(
@@ -75,7 +78,7 @@ export function InvitationContent({
       <header className="wif-invitation__hero">
         <NnMonogramLogo className="wif-invitation__monogram" />
         <p className="wif-invitation__hero-eyebrow">Jemputan Majlis Akad Nikah</p>
-        <h1 className="wif-invitation__names"> NAIM &amp; NADHIRAH</h1>
+        <h1 className="wif-invitation__names">{coupleDisplayName}</h1>
         <p className="wif-invitation__hero-date">27 September 2026</p>
         <p className="wif-invitation__hero-line">
           Dengan penuh kesyukuran, kami menjemput anda ke majlis kami
@@ -216,7 +219,7 @@ export function InvitationContent({
 
       <footer className="wif-invitation__footer">
         <p>Dengan penuh kasih sayang, kami yang menantikan hari bahagia.</p>
-        <p className="wif-invitation__footer-sign"> NAIM &amp; NADHIRAH</p>
+        <p className="wif-invitation__footer-sign">{coupleDisplayName}</p>
       </footer>
     </div>
   );

@@ -3,13 +3,17 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { CinematicInvitation } from "../components/wedding-invitation-frame/CinematicInvitation";
 import { WhiteGoldCinematicDecor } from "../components/wedding-invitation-frame/WhiteGoldCinematicDecor";
 import { InvitationContent } from "../components/wedding-invitation-frame/InvitationContent";
-import { INVITATION_PATH_WHITE_GOLD } from "../lib/invitationFlow";
+import { INVITATION_PATH_DEMO_GOLD, INVITATION_PATH_WHITE_GOLD } from "../lib/invitationFlow";
 import { useInvitationMusic } from "../context/InvitationMusicContext";
 import {
   preloadWeddingInvitationHero,
   preloadWeddingInvitationFrames,
   WEDDING_INVITATION_WHITE_GOLD_CINEMATIC_URLS,
 } from "../data/weddingInvitationFrames";
+import {
+  DEMO_GOLD_CINEMATIC_COPY,
+  DEMO_GOLD_COUPLE_DISPLAY,
+} from "../data/demoGoldInviteCopy";
 import "../styles/wedding-invitation-frame.css";
 import "../styles/wedding-invitation-frame-white-gold.css";
 
@@ -21,7 +25,16 @@ type InvitationFrameLocationState = {
   scrollTo?: "details" | "top";
 };
 
-export function WeddingInvitationFrameWhiteGoldPage() {
+type WeddingInvitationFrameWhiteGoldPageProps = {
+  /** `demo` = sample couple names for client preview */
+  variant?: "live" | "demo";
+};
+
+export function WeddingInvitationFrameWhiteGoldPage({
+  variant = "live",
+}: WeddingInvitationFrameWhiteGoldPageProps) {
+  const isDemo = variant === "demo";
+  const invitationFlowBase = isDemo ? INVITATION_PATH_DEMO_GOLD : INVITATION_PATH_WHITE_GOLD;
   const location = useLocation();
   const navigate = useNavigate();
   const { skipCinematic: skipFromState = false, scrollTo } =
@@ -145,6 +158,7 @@ export function WeddingInvitationFrameWhiteGoldPage() {
         <CinematicInvitation
           key={cinematicKey}
           urls={urls}
+          copy={isDemo ? DEMO_GOLD_CINEMATIC_COPY : undefined}
           onComplete={handleCinematicComplete}
           onOpenCinematic={playFromStart}
           decorMidLayer={<WhiteGoldCinematicDecor />}
@@ -163,7 +177,11 @@ export function WeddingInvitationFrameWhiteGoldPage() {
             .filter(Boolean)
             .join(" ")}
         >
-          <InvitationContent onReplay={handleReplay} invitationFlowBase={INVITATION_PATH_WHITE_GOLD} />
+          <InvitationContent
+            onReplay={handleReplay}
+            invitationFlowBase={invitationFlowBase}
+            coupleDisplayName={isDemo ? DEMO_GOLD_COUPLE_DISPLAY : undefined}
+          />
         </div>
       )}
     </main>

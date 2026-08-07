@@ -7,7 +7,7 @@ import {
   type CSSProperties,
   type ReactNode,
 } from "react";
-import { CINEMATIC_COPY } from "../../data/cinematicInvitationCopy";
+import { CINEMATIC_COPY, type CinematicCopyTuple } from "../../data/cinematicInvitationCopy";
 import "../../styles/cinematic-invitation.css";
 
 export type CinematicStage =
@@ -21,6 +21,8 @@ export type CinematicStage =
 
 export type CinematicInvitationProps = {
   urls: readonly [string, string, string];
+  /** Override default cinematic copy (e.g. demo names). */
+  copy?: CinematicCopyTuple | readonly [string, string, string, string];
   /** User taps through after typography (e.g. reveal invitation below). */
   onComplete?: () => void;
   /** When user taps "Buka Jemputan" — e.g. start music on user gesture. */
@@ -200,6 +202,7 @@ function scheduleZoomAndFirstLine(
 
 export function CinematicInvitation({
   urls,
+  copy = CINEMATIC_COPY,
   onComplete,
   onOpenCinematic,
   decorMidLayer,
@@ -334,7 +337,7 @@ export function CinematicInvitation({
             aria-hidden={!taglineVisible}
           >
             <TypewriterLine
-              text={CINEMATIC_COPY[0]}
+              text={copy[0]}
               typing={taglineTyping}
               complete={taglineComplete}
               onTyped={taglineTyping ? () => handleLineTyped(0) : undefined}
@@ -355,7 +358,7 @@ export function CinematicInvitation({
             aria-hidden={!namesVisible}
           >
             <HandwritingLine
-              text={CINEMATIC_COPY[1]}
+              text={copy[1]}
               typing={namesTyping}
               complete={namesComplete}
               onTyped={namesTyping ? () => handleLineTyped(1) : undefined}
@@ -364,7 +367,7 @@ export function CinematicInvitation({
           <div
             className={["ci-copy-sub", subVisible ? "ci-copy-sub--visible" : ""].filter(Boolean).join(" ")}
           >
-            {CINEMATIC_COPY.slice(2).map((text, j) => {
+            {copy.slice(2).map((text, j) => {
               const i = j + 2;
               const visible = lineVisible(i);
               const typing = lineTyping(i);
