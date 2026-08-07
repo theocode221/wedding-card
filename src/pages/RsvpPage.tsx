@@ -1,6 +1,5 @@
 import { useLayoutEffect, useMemo, useState, type FormEvent } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { MOCK_WEDDING_EVENT, coupleLabel } from "../data/mockEvent";
 import {
   invitationSatellitePageModifier,
   resolveInvitationReturnPath,
@@ -9,7 +8,7 @@ import {
 } from "../lib/invitationFlow";
 import { submitRsvpToGoogleSheet } from "../lib/rsvpGoogleSheet";
 
-type Attending = "yes" | "no" | "maybe";
+type Attending = "yes" | "no";
 type SubmitStatus = "idle" | "sending" | "success" | "error";
 
 function themeLabel(skin: InvitationSatelliteSkin): string {
@@ -19,7 +18,6 @@ function themeLabel(skin: InvitationSatelliteSkin): string {
 }
 
 export function RsvpPage() {
-  const names = coupleLabel(MOCK_WEDDING_EVENT);
   const location = useLocation();
   const invitationReturnPath = useMemo(() => resolveInvitationReturnPath(location.state), [location.state]);
   const satelliteSkin = useMemo(
@@ -100,9 +98,6 @@ export function RsvpPage() {
       <div className="rsvp-page__card">
         <p className="rsvp-page__eyebrow">RSVP</p>
         <h1 className="rsvp-page__title">Sahkan kehadiran anda</h1>
-        <p className="rsvp-page__text">
-          Maklumkan kehadiran anda untuk majlis {names}. Jawapan anda akan direkodkan terus.
-        </p>
 
         <form className="rsvp-page__form" onSubmit={onSubmit} noValidate>
           <label className="rsvp-page__field">
@@ -127,7 +122,6 @@ export function RsvpPage() {
                 [
                   ["yes", "Hadir"],
                   ["no", "Tidak hadir"],
-                  ["maybe", "Belum pasti"],
                 ] as const
               ).map(([value, label]) => (
                 <label key={value} className="rsvp-page__choice">

@@ -1,7 +1,7 @@
 /** Single source for calendar export — matches invitation copy (Malaysia time). */
 
 /** ISO local — for countdown (same day as Butiran majlis). */
-export const WEDDING_EVENT_START_ISO = "2026-09-27T11:00:00";
+export const WEDDING_EVENT_START_ISO = "2026-09-27T10:00:00";
 
 export const WEDDING_EVENT_TITLE = "Walimatul Urus —  NAIM & NADHIRAH";
 
@@ -11,9 +11,9 @@ export const WEDDING_EVENT_DESCRIPTION =
 export const WEDDING_EVENT_LOCATION =
   "Hotel Pintar Parit Raja, Parit Raja, Malaysia";
 
-/** 27 Sep 2026, 11:00–16:00 Malaysia (UTC+8) → Zulu for Google / ICS */
-const START_UTC = "20260927T030000Z";
-const END_UTC = "20260927T080000Z";
+/** 27 Sep 2026, 10:00–14:00 Malaysia (UTC+8) → Zulu for Google / ICS */
+const START_UTC = "20260927T020000Z";
+const END_UTC = "20260927T060000Z";
 
 function escapeIcsText(s: string): string {
   return s.replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\n/g, "\\n");

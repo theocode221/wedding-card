@@ -18,8 +18,8 @@ export const ROYAL_MAROON_INVITE: WeddingEventData = {
   date: "27 September 2026",
   venue: "Dewan Seri Cinta",
   address: "Kuala Lumpur, Malaysia",
-  weddingDateTime: "2026-09-27T11:00:00",
-  dateTimeLabel: "27 September 2026 · 11:00 pagi",
+  weddingDateTime: "2026-09-27T10:00:00",
+  dateTimeLabel: "27 September 2026 · 10:00 pagi",
   invitation:
     "Dengan penuh kesyukuran, kami menjemput anda hadir ke majlis walimatul urus kami.",
   footer: "Terima kasih atas doa dan kehadiran anda.",

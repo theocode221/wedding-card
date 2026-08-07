@@ -1,7 +1,7 @@
 /** Payload written as a row in the RSVP Google Sheet via Apps Script. */
 export type RsvpSheetPayload = {
   name: string;
-  attending: "yes" | "no" | "maybe";
+  attending: "yes" | "no";
   guests: number;
   message: string;
   theme: string;

@@ -16,13 +16,13 @@ const base: Omit<WeddingEventData, "theme"> = {
   venue: "The Garden Pavilion",
   address: "Jalan Damai 12, 50480 Kuala Lumpur, Malaysia",
   gallery: [...gallery],
-  weddingDateTime: "2026-09-27T11:00:00",
+  weddingDateTime: "2026-09-27T10:00:00",
   invitation:
     "Together with their families, we invite you to celebrate our wedding and share in our joy as we begin this new chapter together.",
   heroImage: "https://images.unsplash.com/photo-1522673606160-de4fd0a292db?w=1920&q=85",
   footer: "We look forward to celebrating with you",
   mapsUrl: "https://www.google.com/maps/search/?api=1&query=The+Garden+Pavilion+Kuala+Lumpur",
-  dateTimeLabel: "Sunday, 27 September 2026 · 11:00 AM",
+  dateTimeLabel: "Sunday, 27 September 2026 · 10:00 AM",
   whatsappUrl: "https://wa.me/601126745787",
 };
 

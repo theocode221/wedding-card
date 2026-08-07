@@ -97,7 +97,7 @@ export function InvitationContent({
           </li>
           <li>
             <span className="wif-invitation__detail-label">Masa</span>
-            <span className="wif-invitation__detail-value">10:00 pagi – 4:00 petang</span>
+            <span className="wif-invitation__detail-value">10:00 pagi – 2:00 petang</span>
           </li>
           <li>
             <span className="wif-invitation__detail-label">Tempat</span>
