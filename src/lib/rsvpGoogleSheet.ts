@@ -26,8 +26,11 @@ export function getRsvpGoogleScriptUrl(): string {
  * We dispatch the request and resolve after a short cap so guests don't feel stuck;
  * the browser continues the POST in the background (`keepalive`).
  */
-export async function submitRsvpToGoogleSheet(payload: RsvpSheetPayload): Promise<void> {
-  const url = getRsvpGoogleScriptUrl();
+export async function submitRsvpToGoogleSheet(
+  payload: RsvpSheetPayload,
+  scriptUrl?: string,
+): Promise<void> {
+  const url = scriptUrl?.trim() || getRsvpGoogleScriptUrl();
   const body = JSON.stringify({
     name: payload.name.trim(),
     attending: payload.attending,

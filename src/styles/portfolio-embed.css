@@ -1,0 +1,15 @@
+/* Embedded portfolio iframes — hide chrome, lock scroll, mute interactions at page level */
+
+html.portfolio-embed {
+  overflow: hidden;
+}
+
+html.portfolio-embed .studio-credit {
+  display: none;
+}
+
+html.portfolio-embed .home-selector__footnote,
+html.portfolio-embed .ucapan-home-link,
+html.portfolio-embed .laila-back-cover {
+  display: none !important;
+}

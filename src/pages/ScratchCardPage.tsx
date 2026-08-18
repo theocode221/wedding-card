@@ -2,9 +2,13 @@ import { useCallback, useId, useState } from "react";
 import { Link } from "react-router-dom";
 import { DoaDoaButton, RevealActions } from "../components/scratch/RevealActions";
 import { ScratchRevealCard } from "../components/scratch/ScratchRevealCard";
+import { usePortfolioPreviewMode } from "../hooks/usePortfolioPreviewMode";
+import { PORTFOLIO_DEMO_COUPLE_LABEL } from "../data/portfolioDemoNames";
 import "../styles/scratch-card.css";
 
 const MAIN_LINES = `Ikhlas daripada NABIL, Hafizi, Din dan Nabil!!`;
+
+const PORTFOLIO_MAIN_LINES = `Tahniah ${PORTFOLIO_DEMO_COUPLE_LABEL}!\n\nGosok kad ini untuk membaca ucapan.`;
 
 const EXTRA_LINES = `Tahniah menjadi Xtrobois pertama berkahwin `;
 
@@ -21,6 +25,8 @@ type BlessingParticle = {
 let blessingId = 0;
 
 export function ScratchCardPage() {
+  const { isPreview } = usePortfolioPreviewMode();
+  const mainLines = isPreview ? PORTFOLIO_MAIN_LINES : MAIN_LINES;
   const mainId = useId();
   const [isRevealed, setIsRevealed] = useState(false);
   const [showExtraMessage, setShowExtraMessage] = useState(false);
@@ -105,7 +111,7 @@ export function ScratchCardPage() {
                   <br />
                   TENUK DAN ISTERI!
                 </h2>
-                <p className="scratch-message__body">{MAIN_LINES}</p>
+                <p className="scratch-message__body">{mainLines}</p>
                 <div className={["scratch-message__extra", showExtraMessage ? "scratch-message__extra--open" : ""].filter(Boolean).join(" ")}>
                   <p className="scratch-message__extraInner">{EXTRA_LINES}</p>
                 </div>

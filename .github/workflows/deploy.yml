@@ -31,6 +31,8 @@ jobs:
         env:
           # Project site URL: https://<user>.github.io/<repo>/
           VITE_BASE_PATH: /${{ github.event.repository.name }}/
+          # Laila RSVP Apps Script web app URL (Settings → Secrets → Actions)
+          VITE_LAILA_RSVP_GOOGLE_SCRIPT_URL: ${{ secrets.VITE_LAILA_RSVP_GOOGLE_SCRIPT_URL }}
 
       - uses: actions/upload-pages-artifact@v3
         with:

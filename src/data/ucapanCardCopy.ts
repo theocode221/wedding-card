@@ -2,6 +2,8 @@
  * All user-visible strings for `/kad-ucapan`.
  * Edit defaults here or use the form at `/kad-ucapan/sunting` (saved to localStorage).
  */
+import { PORTFOLIO_DEMO_COUPLE_LABEL } from "./portfolioDemoNames";
+
 export type UcapanCardCopy = {
   /** Skrin 1 — teks taip di atas sampul (chip) */
   introLine: string;
@@ -69,6 +71,17 @@ export const defaultUcapanCardCopy: UcapanCardCopy = {
   viewerVideoAriaLabel: "Video penuh",
   viewerBackdropAriaLabel: "Tutup",
   viewerCloseButton: "Tutup",
+};
+
+export const portfolioUcapanCardCopy: UcapanCardCopy = {
+  ...defaultUcapanCardCopy,
+  introLine: `Hai ${PORTFOLIO_DEMO_COUPLE_LABEL}`,
+  mainUcapanText: `Kepada ${PORTFOLIO_DEMO_COUPLE_LABEL},
+
+Tahniah atas majlis walimatul urus. Semoga rumah tangga baharu dipenuhi kasih sayang, sabar, dan keberkatan.
+
+Semoga segala urusan dipermudahkan dan rezeki dilimpahkan.`,
+  surpriseTitle: "Kejutan untuk pengantin",
 };
 
 type StoredCopy = Partial<UcapanCardCopy> & { surpriseStageAriaLabel?: string };

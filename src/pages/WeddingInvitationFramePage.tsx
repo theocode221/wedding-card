@@ -3,6 +3,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { CinematicInvitation } from "../components/wedding-invitation-frame/CinematicInvitation";
 import { InvitationContent } from "../components/wedding-invitation-frame/InvitationContent";
 import { useInvitationMusic } from "../context/InvitationMusicContext";
+import { usePortfolioPreviewMode } from "../hooks/usePortfolioPreviewMode";
+import { PORTFOLIO_DEMO_CINEMATIC_COPY, PORTFOLIO_DEMO_COUPLE_DISPLAY } from "../data/portfolioDemoNames";
 import {
   preloadWeddingInvitationHero,
   preloadWeddingInvitationFrames,
@@ -21,6 +23,7 @@ type InvitationFrameLocationState = {
 export function WeddingInvitationFramePage() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { isPreview, skipCinematic: skipFromQuery } = usePortfolioPreviewMode();
   const { skipCinematic: skipFromState = false, scrollTo } =
     (location.state as InvitationFrameLocationState | null) ?? {};
 
@@ -120,7 +123,7 @@ export function WeddingInvitationFramePage() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [navigate, location.pathname, stopInvitationMusic]);
 
-  const skipCinematic = skipFromState;
+  const skipCinematic = skipFromState || skipFromQuery;
 
   return (
     <main
@@ -145,6 +148,7 @@ export function WeddingInvitationFramePage() {
         <CinematicInvitation
           key={cinematicKey}
           urls={urls}
+          copy={isPreview ? PORTFOLIO_DEMO_CINEMATIC_COPY : undefined}
           onComplete={handleCinematicComplete}
           onOpenCinematic={playFromStart}
         />
@@ -162,7 +166,10 @@ export function WeddingInvitationFramePage() {
             .filter(Boolean)
             .join(" ")}
         >
-          <InvitationContent onReplay={handleReplay} />
+          <InvitationContent
+            onReplay={handleReplay}
+            coupleDisplayName={isPreview ? PORTFOLIO_DEMO_COUPLE_DISPLAY : undefined}
+          />
         </div>
       )}
     </main>

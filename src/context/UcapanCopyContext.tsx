@@ -2,13 +2,18 @@ import { createContext, useCallback, useContext, useMemo, useState, type ReactNo
 import {
   defaultUcapanCardCopy,
   mergeUcapanCardCopy,
+  portfolioUcapanCardCopy,
   type UcapanCardCopy,
 } from "../data/ucapanCardCopy";
+import { readPortfolioPreviewSearch } from "../lib/portfolioPreview";
 
 const STORAGE_KEY = "wedding-kad-ucapan-copy";
 
 function loadFromStorage(): UcapanCardCopy {
   if (typeof window === "undefined") return { ...defaultUcapanCardCopy };
+  if (readPortfolioPreviewSearch(window.location.search).isPreview) {
+    return { ...portfolioUcapanCardCopy };
+  }
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY);
     if (!raw) return { ...defaultUcapanCardCopy };

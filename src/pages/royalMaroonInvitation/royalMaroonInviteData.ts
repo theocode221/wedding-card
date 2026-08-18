@@ -1,4 +1,8 @@
 import type { WeddingEventData } from "../../types/event";
+import {
+  PORTFOLIO_DEMO_BRIDE,
+  PORTFOLIO_DEMO_GROOM,
+} from "../../data/portfolioDemoNames";
 
 const gallery = [
   "https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80",
@@ -30,6 +34,19 @@ export const ROYAL_MAROON_INVITE: WeddingEventData = {
     "https://images.unsplash.com/photo-1519741497674-611481863552?w=1920&q=85",
   tagline: "Walimatul Urus",
 };
+
+export function royalMaroonInviteForPreview(isPreview: boolean): WeddingEventData {
+  if (!isPreview) return ROYAL_MAROON_INVITE;
+  return {
+    ...ROYAL_MAROON_INVITE,
+    groomName: PORTFOLIO_DEMO_GROOM,
+    brideName: PORTFOLIO_DEMO_BRIDE,
+  };
+}
+
+export function royalMaroonPageTitle(event: Pick<WeddingEventData, "groomName" | "brideName">): string {
+  return `Walimatul Urus — ${event.groomName.toUpperCase()} & ${event.brideName.toUpperCase()}`;
+}
 
 export function royalMaroonRsvpWhatsappUrl(event: Pick<WeddingEventData, "groomName" | "brideName" | "whatsappUrl">): string {
   const base = event.whatsappUrl ?? "https://wa.me/";

@@ -5,6 +5,8 @@ import { MaroonBokehDrift } from "../components/wedding-invitation-frame/MaroonB
 import { InvitationContent } from "../components/wedding-invitation-frame/InvitationContent";
 import { INVITATION_PATH_MAROON } from "../lib/invitationFlow";
 import { useInvitationMusic } from "../context/InvitationMusicContext";
+import { usePortfolioPreviewMode } from "../hooks/usePortfolioPreviewMode";
+import { PORTFOLIO_DEMO_CINEMATIC_COPY, PORTFOLIO_DEMO_COUPLE_DISPLAY } from "../data/portfolioDemoNames";
 import {
   preloadWeddingInvitationHero,
   preloadWeddingInvitationFrames,
@@ -24,6 +26,7 @@ type InvitationFrameLocationState = {
 export function WeddingInvitationFrameMaroonPage() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { isPreview, skipCinematic: skipFromQuery } = usePortfolioPreviewMode();
   const { skipCinematic: skipFromState = false, scrollTo } =
     (location.state as InvitationFrameLocationState | null) ?? {};
 
@@ -119,7 +122,7 @@ export function WeddingInvitationFrameMaroonPage() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [navigate, location.pathname, stopInvitationMusic]);
 
-  const skipCinematic = skipFromState;
+  const skipCinematic = skipFromState || skipFromQuery;
 
   return (
     <main
@@ -145,6 +148,7 @@ export function WeddingInvitationFrameMaroonPage() {
         <CinematicInvitation
           key={cinematicKey}
           urls={urls}
+          copy={isPreview ? PORTFOLIO_DEMO_CINEMATIC_COPY : undefined}
           onComplete={handleCinematicComplete}
           onOpenCinematic={playFromStart}
           decorMidLayer={<MaroonBokehDrift />}
@@ -163,7 +167,11 @@ export function WeddingInvitationFrameMaroonPage() {
             .filter(Boolean)
             .join(" ")}
         >
-          <InvitationContent onReplay={handleReplay} invitationFlowBase={INVITATION_PATH_MAROON} />
+          <InvitationContent
+            onReplay={handleReplay}
+            invitationFlowBase={INVITATION_PATH_MAROON}
+            coupleDisplayName={isPreview ? PORTFOLIO_DEMO_COUPLE_DISPLAY : undefined}
+          />
         </div>
       )}
     </main>

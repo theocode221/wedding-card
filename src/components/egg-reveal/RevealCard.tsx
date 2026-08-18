@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { EggRevealKadUcapan } from "./EggRevealKadUcapan";
 import { getCartoonNewlywedFrameSrcs } from "./eggRevealConstants";
+import { PORTFOLIO_DEMO_COUPLE_LABEL } from "../../data/portfolioDemoNames";
 import { EGG_REVEAL_FROM_LINE } from "./eggRevealUcapanCopy";
 import {
   revealCelebrationHaptic,
@@ -20,11 +21,11 @@ type RevealCardProps = {
 const MARKETING_COPY = {
   title: "Finally Married!",
   tag: "#DemoWeddingMoments",
-  wish: "Selamat pengantin baru! Semoga hari bahagia ini penuh kasih dan kenangan manis.",
+  wish: `Selamat pengantin baru, ${PORTFOLIO_DEMO_COUPLE_LABEL}! Semoga hari bahagia ini penuh kasih dan kenangan manis.`,
   fromLine: "Daripada Team Demo",
   kadTitle: "Kad Ucapan Demo",
   kadParas: [
-    "Tahniah atas hari bahagia anda berdua.",
+    `Tahniah ${PORTFOLIO_DEMO_COUPLE_LABEL} atas hari bahagia anda berdua.`,
     "Semoga perjalanan rumah tangga sentiasa dipenuhi kasih sayang, sabar, dan keberkatan.",
     "Semoga segala urusan dipermudahkan dan rezeki dilimpahkan.",
     "Terima kasih kerana mencuba demo kad interaktif ini.",

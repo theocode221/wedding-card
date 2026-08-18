@@ -5,6 +5,7 @@ import { WhiteGoldCinematicDecor } from "../components/wedding-invitation-frame/
 import { InvitationContent } from "../components/wedding-invitation-frame/InvitationContent";
 import { INVITATION_PATH_DEMO_GOLD, INVITATION_PATH_WHITE_GOLD } from "../lib/invitationFlow";
 import { useInvitationMusic } from "../context/InvitationMusicContext";
+import { usePortfolioPreviewMode } from "../hooks/usePortfolioPreviewMode";
 import {
   preloadWeddingInvitationHero,
   preloadWeddingInvitationFrames,
@@ -33,7 +34,8 @@ type WeddingInvitationFrameWhiteGoldPageProps = {
 export function WeddingInvitationFrameWhiteGoldPage({
   variant = "live",
 }: WeddingInvitationFrameWhiteGoldPageProps) {
-  const isDemo = variant === "demo";
+  const preview = usePortfolioPreviewMode();
+  const isDemo = variant === "demo" || preview.isPreview;
   const invitationFlowBase = isDemo ? INVITATION_PATH_DEMO_GOLD : INVITATION_PATH_WHITE_GOLD;
   const location = useLocation();
   const navigate = useNavigate();
@@ -132,7 +134,7 @@ export function WeddingInvitationFrameWhiteGoldPage({
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [navigate, location.pathname, stopInvitationMusic]);
 
-  const skipCinematic = skipFromState;
+  const skipCinematic = skipFromState || preview.skipCinematic;
 
   return (
     <main

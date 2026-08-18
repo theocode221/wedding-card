@@ -6,6 +6,7 @@ import { EggRevealPageDecor } from "../components/egg-reveal/EggRevealPageDecor"
 import { GameResult } from "../components/egg-reveal/GameResult";
 import { eggCrackHapticTap } from "../components/egg-reveal/eggRevealHaptics";
 import { primeEggRevealSfx } from "../components/egg-reveal/eggRevealSfx";
+import { usePortfolioPreviewMode } from "../hooks/usePortfolioPreviewMode";
 import type { EggRevealTheme } from "../components/egg-reveal/eggRevealTheme";
 import { RevealCard } from "../components/egg-reveal/RevealCard";
 import "../styles/egg-reveal-card.css";
@@ -29,6 +30,8 @@ function eggCrackFill(stage: EggCrackStage): 0 | 1 | 2 | 3 {
 }
 
 export function EggRevealCardPage({ variant = "default", marketingMode = false }: EggRevealCardPageProps) {
+  const { isPreview } = usePortfolioPreviewMode();
+  const useMarketingCopy = marketingMode || isPreview;
   const [revealed, setRevealed] = useState(false);
   const [eggStage, setEggStage] = useState<EggCrackStage>("idle");
   const [postRevealPanel, setPostRevealPanel] = useState<PostRevealPanel>("card");
@@ -187,7 +190,7 @@ export function EggRevealCardPage({ variant = "default", marketingMode = false }
           >
             <RevealCard
               visible
-              marketingMode={marketingMode}
+              marketingMode={useMarketingCopy}
               interactionSuspended={postRevealPanel !== "card"}
               onReset={handleReset}
               onStartCatchTheLove={() => setPostRevealPanel("game")}

@@ -13,6 +13,7 @@ import { SurpriseStage } from "./SurpriseStage";
 import { SURPRISE_PHOTOS } from "./surprisePhotos";
 import { TypingText } from "./TypingText";
 import { useUcapanCopy } from "../../context/UcapanCopyContext";
+import { readPortfolioPreviewSearch } from "../../lib/portfolioPreview";
 import { publicUrl } from "../../lib/publicAsset";
 
 const CLOSE_SRC = publicUrl("assets/close-envelope.png");
@@ -118,6 +119,7 @@ export function UcapanCardExperience({ variant = "traditional", showHomeLink = f
     }
     const el = audioRef.current;
     if (!el) return;
+    if (readPortfolioPreviewSearch(window.location.search).isEmbed) return;
     el.volume = 0.35;
     void el.play().catch(() => {
       /* Autoplay blocked or missing file */

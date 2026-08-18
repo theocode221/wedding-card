@@ -7,6 +7,7 @@ import {
   type ReactNode,
 } from "react";
 import { useLocation } from "react-router-dom";
+import { readPortfolioPreviewSearch } from "../lib/portfolioPreview";
 import { publicUrl } from "../lib/publicAsset";
 import "../styles/wedding-invitation-frame.css";
 
@@ -42,10 +43,11 @@ export function InvitationMusicProvider({ children }: { children: ReactNode }) {
   const playFromStart = useCallback(() => {
     const el = audioRef.current;
     if (!el) return;
+    if (readPortfolioPreviewSearch(location.search).isEmbed) return;
     el.volume = INVITATION_MUSIC_VOLUME;
     el.currentTime = 0;
     void el.play().catch(() => undefined);
-  }, []);
+  }, [location.search]);
 
   const stop = useCallback(() => {
     const el = audioRef.current;
@@ -57,9 +59,10 @@ export function InvitationMusicProvider({ children }: { children: ReactNode }) {
   const resumeIfPaused = useCallback(() => {
     const el = audioRef.current;
     if (!el || !el.paused) return;
+    if (readPortfolioPreviewSearch(location.search).isEmbed) return;
     el.volume = INVITATION_MUSIC_VOLUME;
     void el.play().catch(() => undefined);
-  }, []);
+  }, [location.search]);
 
   useEffect(() => {
     if (ROUTES_ALLOW_INVITATION_BGM.has(location.pathname)) return;

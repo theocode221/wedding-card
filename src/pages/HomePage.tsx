@@ -53,6 +53,11 @@ export function HomePage() {
             <span className="home-selector__cardDesc">Tema maroon diraja dengan aksen emas</span>
           </Link>
 
+          <Link to="/laila" className="home-selector__card">
+            <span className="home-selector__cardTitle">Jemputan Laila</span>
+            <span className="home-selector__cardDesc">Tema maroon tradisional Melayu — latar oval, nama pada background</span>
+          </Link>
+
           <Link to="/naim-nadhirah-nikah" className="home-selector__card">
             <span className="home-selector__cardTitle">Jemputan White &amp; Gold</span>
             <span className="home-selector__cardDesc">Tema ivory putih dengan aksen emas champagne</span>
@@ -65,8 +70,12 @@ export function HomePage() {
         </div>
 
         <p className="home-selector__footnote">
+          <Link to="/theocodewedding" className="home-selector__footnoteLink">
+            —theocodewedding
+          </Link>
+          {" · "}
           <Link to="/kad-ucapan/sunting" className="home-selector__footnoteLink">
-            Sunting teks kad ucapan (sampul, ucapan, butang, kejutan)
+            Sunting teks kad ucapan
           </Link>
         </p>
       </section>

@@ -1,0 +1,1690 @@
+/* Laila — maroon Malay traditional. Cover is the oval PNG; names sit on that field. */
+
+.laila-page {
+  --laila-paper: #f6efe4;
+  --laila-paper-2: #efe3d2;
+  --laila-maroon: #5c101c;
+  --laila-maroon-deep: #3a0c14;
+  --laila-wine: #7a1828;
+  --laila-gold: #b0893a;
+  --laila-gold-bright: #e4c98a;
+  --laila-gold-soft: #f3e4c4;
+  --laila-cream: #f7efe2;
+  --laila-ink: #3a0c14;
+  --laila-font-script: "Great Vibes", "Pinyon Script", "Segoe Script", cursive;
+  --laila-font-display: "Playfair Display", Georgia, serif;
+  --laila-font-khat: "Aref Ruqaa", "Amiri", "Noto Naskh Arabic", "Traditional Arabic", serif;
+  --laila-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  color: var(--laila-maroon-deep);
+  background: var(--laila-paper);
+  font-family: var(--laila-font-body);
+  font-size: clamp(0.95rem, 0.2vw + 0.92rem, 1.02rem);
+  line-height: 1.55;
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+}
+
+.laila-page--cover {
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.laila-page--details {
+  animation: laila-page-in 0.48s var(--laila-ease) both;
+}
+
+@keyframes laila-page-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.laila-page *,
+.laila-page *::before,
+.laila-page *::after {
+  box-sizing: border-box;
+}
+
+/* ——— Cover: oval artwork is the page ——— */
+.laila-cover {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--laila-paper);
+  overflow: hidden;
+  scroll-margin-top: 0;
+}
+
+.laila-cover__frame {
+  position: relative;
+  width: min(100vw, calc(100dvh * 1080 / 1920));
+  height: min(100dvh, calc(100vw * 1920 / 1080));
+  container-type: inline-size;
+  container-name: laila-cover;
+}
+
+.laila-cover__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  user-select: none;
+  pointer-events: none;
+}
+
+.laila-cover__writing {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 18% 15% 20%;
+  text-align: center;
+  z-index: 3;
+  transform: translateY(-3%);
+}
+
+.laila-cover__kicker {
+  margin: 0 0 0.35rem;
+  font-family: var(--laila-font-display);
+  font-size: clamp(0.58rem, 3.1cqi, 0.74rem);
+  font-weight: 500;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--laila-gold-bright);
+  opacity: 0;
+  animation: laila-cover-in 1.1s var(--laila-ease) 0.4s both;
+}
+
+.laila-cover__rule {
+  width: min(4.2rem, 26%);
+  height: 1px;
+  margin: 0 auto 0.45rem;
+  background: linear-gradient(90deg, transparent, var(--laila-gold-bright), transparent);
+  opacity: 0;
+  animation: laila-cover-in 1.1s var(--laila-ease) 0.55s both;
+}
+
+.laila-cover__names {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  overflow: visible;
+}
+
+.laila-cover__name {
+  display: block;
+  font-family: var(--laila-font-script);
+  font-size: clamp(2.05rem, 13.5cqi, 3.35rem);
+  font-weight: 400;
+  line-height: 1.18;
+  color: var(--laila-gold-soft);
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.45);
+  overflow: visible;
+}
+
+.laila-hand-char {
+  display: inline-block;
+  padding: 0.12em 0.03em 0.14em;
+  overflow: visible;
+  opacity: 0;
+  animation: laila-hand-ink 0.42s cubic-bezier(0.22, 0.78, 0.28, 1) both;
+}
+
+@keyframes laila-hand-ink {
+  0% {
+    opacity: 0;
+    transform: translate3d(-0.05em, 0.12em, 0) rotate(-9deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+}
+
+.laila-cover__amp {
+  font-family: var(--laila-font-body);
+  font-style: italic;
+  font-size: clamp(0.85rem, 4cqi, 1.05rem);
+  color: var(--laila-gold-bright);
+  letter-spacing: 0.08em;
+  line-height: 1;
+  margin: 0.05em 0;
+  opacity: 0;
+  animation: laila-cover-in 0.7s var(--laila-ease) both;
+}
+
+.laila-cover__open {
+  margin-top: 0.55rem;
+  appearance: none;
+  border: 1px solid rgba(228, 201, 138, 0.7);
+  border-radius: 999px;
+  background: rgba(42, 7, 14, 0.28);
+  color: var(--laila-gold-soft);
+  font-family: var(--laila-font-display);
+  font-size: clamp(0.48rem, 2.45cqi, 0.58rem);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 0.56em 1.2em;
+  cursor: pointer;
+  opacity: 0;
+  animation: laila-cover-in 0.9s var(--laila-ease) both;
+}
+
+.laila-cover__chrono {
+  width: min(100%, 13.5rem);
+  margin: 0.4rem auto 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.24rem;
+  opacity: 0;
+  animation: laila-cover-in 0.85s var(--laila-ease) both;
+}
+
+.laila-cover__chrono-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.12rem;
+  padding: 0.34rem 0.12rem;
+  border: 1px solid rgba(228, 201, 138, 0.32);
+  border-radius: 0.35rem;
+  background: rgba(42, 7, 14, 0.22);
+}
+
+.laila-cover__chrono .laila-chrono__num {
+  font-size: clamp(0.78rem, 3.8cqi, 0.95rem);
+  color: var(--laila-gold-bright);
+  line-height: 1;
+}
+
+.laila-cover__chrono .laila-chrono__unit {
+  font-size: clamp(0.38rem, 1.8cqi, 0.46rem);
+  letter-spacing: 0.12em;
+  color: var(--laila-gold-soft);
+  opacity: 0.85;
+}
+
+.laila-cover__open:hover,
+.laila-cover__open:focus-visible {
+  background: rgba(122, 24, 40, 0.45);
+  border-color: var(--laila-gold-bright);
+}
+
+.laila-cover__open:focus-visible {
+  outline: 2px solid var(--laila-gold-bright);
+  outline-offset: 3px;
+}
+
+@keyframes laila-cover-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Full-bleed watercolor borders — bunga-2 top, bunga-1 bottom */
+.laila-cover__garlands {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.laila-garland {
+  position: absolute;
+  left: -2%;
+  width: 118%;
+  height: 100%;
+  object-fit: cover;
+  user-select: none;
+}
+
+.laila-garland--top {
+  top: 0;
+  object-position: 30% top;
+  opacity: 0;
+  animation: laila-garland-from-top 2.7s var(--laila-ease) 0.12s forwards;
+}
+
+.laila-garland--bottom {
+  bottom: 0;
+  object-position: 30% bottom;
+  opacity: 0;
+  animation: laila-garland-from-bottom 2.7s var(--laila-ease) 0.32s forwards;
+}
+
+@keyframes laila-garland-from-top {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -28%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes laila-garland-from-bottom {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 28%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@media (max-width: 720px) {
+  .laila-garland {
+    width: 124%;
+    left: -1%;
+  }
+
+  .laila-garland--top {
+    object-position: 28% top;
+  }
+
+  .laila-garland--bottom {
+    object-position: 28% bottom;
+  }
+}
+
+/* Butterflies — fly inside top/bottom flower bands; left/top % is vs the band */
+.laila-butterflies {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 4;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.laila-butterflies--top {
+  top: 0;
+  height: 28%;
+}
+
+.laila-butterflies--bottom {
+  bottom: 0;
+  height: 30%;
+}
+
+.laila-butterfly {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0.7rem;
+  height: auto;
+  will-change: left, top, transform;
+  filter: drop-shadow(0 2px 4px rgba(61, 21, 28, 0.18));
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.laila-butterfly--path1 {
+  animation-name: laila-bf-path-1;
+}
+
+.laila-butterfly--path2 {
+  animation-name: laila-bf-path-2;
+}
+
+.laila-butterfly--path3 {
+  animation-name: laila-bf-path-3;
+}
+
+.laila-butterfly--path4 {
+  animation-name: laila-bf-path-4;
+}
+
+.laila-butterfly--path5 {
+  animation-name: laila-bf-path-5;
+}
+
+.laila-butterfly--path6 {
+  animation-name: laila-bf-path-6;
+}
+
+.laila-bf-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.laila-bf-wing--l,
+.laila-bf-wing--r {
+  transform-box: fill-box;
+  animation: laila-bf-flap 0.24s ease-in-out infinite alternate;
+}
+
+.laila-bf-wing--l {
+  transform-origin: right center;
+}
+
+.laila-bf-wing--r {
+  transform-origin: left center;
+}
+
+@keyframes laila-bf-flap {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0.28);
+  }
+}
+
+@keyframes laila-bf-path-1 {
+  0% {
+    left: 6%;
+    top: 48%;
+    transform: rotate(-18deg);
+  }
+  18% {
+    left: 24%;
+    top: 14%;
+    transform: rotate(12deg);
+  }
+  36% {
+    left: 48%;
+    top: 58%;
+    transform: rotate(28deg);
+  }
+  55% {
+    left: 78%;
+    top: 22%;
+    transform: rotate(-8deg);
+  }
+  74% {
+    left: 58%;
+    top: 70%;
+    transform: rotate(-26deg);
+  }
+  100% {
+    left: 6%;
+    top: 48%;
+    transform: rotate(-18deg);
+  }
+}
+
+@keyframes laila-bf-path-2 {
+  0% {
+    left: 84%;
+    top: 18%;
+    transform: rotate(22deg);
+  }
+  20% {
+    left: 62%;
+    top: 62%;
+    transform: rotate(-16deg);
+  }
+  42% {
+    left: 30%;
+    top: 28%;
+    transform: rotate(8deg);
+  }
+  64% {
+    left: 12%;
+    top: 66%;
+    transform: rotate(-24deg);
+  }
+  82% {
+    left: 50%;
+    top: 10%;
+    transform: rotate(18deg);
+  }
+  100% {
+    left: 84%;
+    top: 18%;
+    transform: rotate(22deg);
+  }
+}
+
+@keyframes laila-bf-path-3 {
+  0% {
+    left: 18%;
+    top: 72%;
+    transform: rotate(10deg);
+  }
+  22% {
+    left: 42%;
+    top: 20%;
+    transform: rotate(-14deg);
+  }
+  44% {
+    left: 72%;
+    top: 54%;
+    transform: rotate(20deg);
+  }
+  66% {
+    left: 88%;
+    top: 12%;
+    transform: rotate(-6deg);
+  }
+  84% {
+    left: 40%;
+    top: 44%;
+    transform: rotate(16deg);
+  }
+  100% {
+    left: 18%;
+    top: 72%;
+    transform: rotate(10deg);
+  }
+}
+
+@keyframes laila-bf-path-4 {
+  0% {
+    left: 52%;
+    top: 8%;
+    transform: rotate(-10deg);
+  }
+  25% {
+    left: 16%;
+    top: 40%;
+    transform: rotate(24deg);
+  }
+  48% {
+    left: 38%;
+    top: 68%;
+    transform: rotate(-18deg);
+  }
+  70% {
+    left: 80%;
+    top: 36%;
+    transform: rotate(14deg);
+  }
+  88% {
+    left: 70%;
+    top: 14%;
+    transform: rotate(-22deg);
+  }
+  100% {
+    left: 52%;
+    top: 8%;
+    transform: rotate(-10deg);
+  }
+}
+
+@keyframes laila-bf-path-5 {
+  0% {
+    left: 34%;
+    top: 36%;
+    transform: rotate(8deg);
+  }
+  16% {
+    left: 8%;
+    top: 12%;
+    transform: rotate(-20deg);
+  }
+  38% {
+    left: 46%;
+    top: 8%;
+    transform: rotate(16deg);
+  }
+  58% {
+    left: 86%;
+    top: 48%;
+    transform: rotate(6deg);
+  }
+  78% {
+    left: 60%;
+    top: 72%;
+    transform: rotate(-14deg);
+  }
+  100% {
+    left: 34%;
+    top: 36%;
+    transform: rotate(8deg);
+  }
+}
+
+@keyframes laila-bf-path-6 {
+  0% {
+    left: 70%;
+    top: 58%;
+    transform: rotate(-12deg);
+  }
+  20% {
+    left: 88%;
+    top: 24%;
+    transform: rotate(20deg);
+  }
+  40% {
+    left: 54%;
+    top: 16%;
+    transform: rotate(-8deg);
+  }
+  60% {
+    left: 20%;
+    top: 52%;
+    transform: rotate(18deg);
+  }
+  80% {
+    left: 28%;
+    top: 8%;
+    transform: rotate(-22deg);
+  }
+  100% {
+    left: 70%;
+    top: 58%;
+    transform: rotate(-12deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .laila-garland--top,
+  .laila-garland--bottom,
+  .laila-cover__kicker,
+  .laila-cover__rule,
+  .laila-cover__amp,
+  .laila-cover__open,
+  .laila-cover__chrono,
+  .laila-hand-char,
+  .laila-khat,
+  .laila-invite__rule,
+  .laila-page--details,
+  .laila-page--details .laila-page-decor__flower--top,
+  .laila-page--details .laila-page-decor__flower--bottom,
+  .laila-page--details .laila-back-cover,
+  .laila-page--details .reveal .laila-kicker,
+  .laila-page--details .reveal .laila-title,
+  .laila-page--details .reveal .laila-prose,
+  .laila-page--details .reveal .laila-spec__row,
+  .laila-page--details .reveal .laila-actions,
+  .laila-page--details .reveal .laila-cta > .laila-btn,
+  .laila-page--details .reveal .laila-footer__text,
+  .laila-page--details .reveal .laila-footer__names,
+  .laila-page--details .reveal .laila-chrono__grid,
+  .laila-page--details .reveal .laila-chrono__done {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    clip-path: none;
+    filter: none;
+  }
+
+  .laila-page--details .laila-page-decor__flower--top,
+  .laila-page--details .laila-page-decor__flower--bottom {
+    opacity: 0.55;
+  }
+
+  .laila-invite__rule {
+    opacity: 0.55;
+    transform: none;
+  }
+
+  .laila-butterflies {
+    display: none;
+  }
+}
+
+/* ——— Majlis body ——— */
+.laila-main {
+  position: relative;
+  isolation: isolate;
+  background: var(--laila-paper);
+  padding: clamp(3.4rem, 8vw, 4.75rem) clamp(1.25rem, 5vw, 2rem) 4.5rem;
+  overflow: hidden;
+}
+
+.laila-page-decor {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.laila-page-decor__flower {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  object-fit: cover;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.laila-page-decor__flower--top {
+  top: 0;
+  height: 11rem;
+  object-position: top center;
+}
+
+.laila-page-decor__flower--bottom {
+  bottom: 0;
+  height: 12rem;
+  object-position: bottom center;
+}
+
+.laila-page-decor .laila-butterflies--top {
+  height: 11rem;
+}
+
+.laila-page-decor .laila-butterflies--bottom {
+  height: 12rem;
+}
+
+.laila-stack {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 24.5rem);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.6rem, 6vw, 3.35rem);
+}
+
+.laila-kicker {
+  margin: 0 0 0.3rem;
+  font-family: var(--laila-font-display);
+  font-size: 0.58rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--laila-maroon);
+}
+
+.laila-title {
+  margin: 0 0 0.55rem;
+  font-family: var(--laila-font-display);
+  font-size: clamp(1.05rem, 2.6vw, 1.22rem);
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--laila-maroon);
+}
+
+.laila-prose {
+  margin: 0;
+  font-size: 0.95em;
+  line-height: 1.72;
+  color: var(--laila-maroon-deep);
+  text-align: center;
+}
+
+.laila-khat {
+  margin: 0 0 1.15rem;
+  font-family: var(--laila-font-khat);
+  font-size: clamp(1.45rem, 5.5vw, 1.95rem);
+  font-weight: 700;
+  line-height: 1.7;
+  color: var(--laila-maroon);
+  clip-path: inset(-0.35em -0.45em -0.35em 100%);
+}
+
+.reveal--visible .laila-khat {
+  animation: laila-khat-write 1.35s cubic-bezier(0.22, 0.78, 0.28, 1) 0.12s both;
+}
+
+@keyframes laila-khat-write {
+  from {
+    clip-path: inset(-0.35em -0.45em -0.35em 100%);
+    opacity: 0.35;
+  }
+  to {
+    clip-path: inset(-0.35em -0.45em -0.35em -0.45em);
+    opacity: 1;
+  }
+}
+
+.laila-invite__rule {
+  width: 3.1rem;
+  height: 1px;
+  margin: -0.35rem auto 0.95rem;
+  background: linear-gradient(90deg, transparent, var(--laila-maroon), transparent);
+  opacity: 0;
+  transform: scaleX(0.25);
+}
+
+.reveal--visible .laila-invite__rule {
+  animation: laila-rule-draw 0.8s var(--laila-ease) 1.05s both;
+}
+
+@keyframes laila-rule-draw {
+  from {
+    opacity: 0;
+    transform: scaleX(0.25);
+  }
+  to {
+    opacity: 0.55;
+    transform: scaleX(1);
+  }
+}
+
+@keyframes laila-detail-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes laila-detail-name {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+.laila-page--details .laila-page-decor__flower--top {
+  opacity: 0;
+  animation: laila-details-flower-top 2.35s var(--laila-ease) 0.06s forwards;
+}
+
+.laila-page--details .laila-page-decor__flower--bottom {
+  opacity: 0;
+  animation: laila-details-flower-bottom 2.35s var(--laila-ease) 0.22s forwards;
+}
+
+@keyframes laila-details-flower-top {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -26%, 0);
+  }
+  to {
+    opacity: 0.55;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes laila-details-flower-bottom {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 26%, 0);
+  }
+  to {
+    opacity: 0.55;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.laila-page--details .laila-back-cover {
+  animation: laila-detail-in 0.7s var(--laila-ease) 0.2s both;
+}
+
+.laila-page--details .reveal .laila-kicker,
+.laila-page--details .reveal .laila-title,
+.laila-page--details .reveal .laila-prose,
+.laila-page--details .reveal .laila-spec__row,
+.laila-page--details .reveal .laila-actions,
+.laila-page--details .reveal .laila-cta > .laila-btn,
+.laila-page--details .reveal .laila-footer__text,
+.laila-page--details .reveal .laila-footer__names,
+.laila-page--details .reveal .laila-chrono__grid,
+.laila-page--details .reveal .laila-chrono__done {
+  opacity: 0;
+}
+
+.laila-page--details .reveal--visible .laila-kicker {
+  animation: laila-detail-in 0.7s var(--laila-ease) 0.06s both;
+}
+
+.laila-page--details .reveal--visible .laila-title {
+  animation: laila-detail-in 0.75s var(--laila-ease) 0.16s both;
+}
+
+.laila-page--details .reveal--visible .laila-prose {
+  animation: laila-detail-in 0.8s var(--laila-ease) 0.28s both;
+}
+
+.laila-page--details .reveal--visible.laila-invite .laila-kicker {
+  animation-delay: 1.18s;
+}
+
+.laila-page--details .reveal--visible.laila-invite .laila-title {
+  animation-delay: 1.34s;
+}
+
+.laila-page--details .reveal--visible.laila-invite .laila-prose {
+  animation-delay: 1.52s;
+}
+
+.laila-page--details .reveal--visible .laila-spec__row {
+  animation: laila-detail-in 0.65s var(--laila-ease) both;
+}
+
+.laila-page--details .reveal--visible .laila-spec__row:nth-child(1) {
+  animation-delay: 0.3s;
+}
+
+.laila-page--details .reveal--visible .laila-spec__row:nth-child(2) {
+  animation-delay: 0.4s;
+}
+
+.laila-page--details .reveal--visible .laila-spec__row:nth-child(3) {
+  animation-delay: 0.5s;
+}
+
+.laila-page--details .reveal--visible .laila-spec__row:nth-child(4) {
+  animation-delay: 0.6s;
+}
+
+.laila-page--details .reveal--visible .laila-actions {
+  animation: laila-detail-in 0.7s var(--laila-ease) 0.72s both;
+}
+
+.laila-page--details .reveal--visible .laila-cta > .laila-btn {
+  animation: laila-detail-in 0.7s var(--laila-ease) 0.42s both;
+}
+
+.laila-page--details .reveal--visible .laila-chrono__grid,
+.laila-page--details .reveal--visible .laila-chrono__done {
+  animation: laila-detail-in 0.75s var(--laila-ease) 0.28s both;
+}
+
+.laila-page--details .reveal--visible .laila-footer__text {
+  animation: laila-detail-in 0.7s var(--laila-ease) 0.08s both;
+}
+
+.laila-page--details .reveal--visible .laila-footer__names {
+  animation: laila-detail-name 0.95s var(--laila-ease) 0.22s both;
+}
+
+#laila-jemputan {
+  scroll-margin-top: 1.25rem;
+}
+
+.laila-back-cover {
+  position: fixed;
+  top: max(0.7rem, env(safe-area-inset-top));
+  left: max(0.7rem, env(safe-area-inset-left));
+  z-index: 40;
+  appearance: none;
+  border: 1px solid rgba(92, 16, 28, 0.28);
+  border-radius: 999px;
+  background: rgba(246, 239, 228, 0.92);
+  color: var(--laila-maroon);
+  font-family: var(--laila-font-display);
+  font-size: 0.58rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.62em 0.95em;
+  cursor: pointer;
+  box-shadow: 0 8px 22px rgba(58, 12, 20, 0.12);
+  backdrop-filter: blur(8px);
+}
+
+.laila-back-cover:hover,
+.laila-back-cover:focus-visible {
+  border-color: var(--laila-maroon);
+  background: var(--laila-paper);
+}
+
+.laila-back-cover:focus-visible {
+  outline: 2px solid var(--laila-gold);
+  outline-offset: 3px;
+}
+
+.laila-invite,
+.laila-details,
+.laila-cta,
+.laila-chrono,
+.laila-footer {
+  text-align: center;
+}
+
+.laila-spec {
+  margin: 0.85rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.laila-spec__row {
+  display: grid;
+  gap: 0.12rem;
+  text-align: center;
+}
+
+.laila-spec__k {
+  font-family: var(--laila-font-display);
+  font-size: 0.56rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--laila-maroon);
+  opacity: 0.72;
+}
+
+.laila-spec__v {
+  margin: 0;
+  font-size: 0.98em;
+  line-height: 1.45;
+  color: var(--laila-maroon-deep);
+}
+
+.laila-actions {
+  margin-top: 1.45rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.laila-location,
+.laila-calendar {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.laila-location__panel,
+.laila-calendar__panel {
+  margin-top: 0.55rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.laila-calendar__opt {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1px solid rgba(92, 16, 28, 0.28);
+  background: rgba(255, 252, 247, 0.7);
+  color: var(--laila-maroon);
+  font-family: var(--laila-font-display);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  padding: 0.45em 0.85em;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.laila-calendar__brand {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.laila-btn {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(92, 16, 28, 0.38);
+  background: rgba(255, 252, 247, 0.55);
+  color: var(--laila-maroon);
+  font-family: var(--laila-font-display);
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.72em 1.25em;
+  cursor: pointer;
+}
+
+.laila-btn--pill {
+  border-radius: 999px;
+}
+
+.laila-btn--maroon {
+  background: var(--laila-maroon);
+  border-color: var(--laila-maroon);
+  color: var(--laila-cream);
+}
+
+.laila-btn:hover,
+.laila-btn:focus-visible {
+  border-color: var(--laila-maroon);
+}
+
+.laila-btn:focus-visible,
+.laila-calendar__opt:focus-visible {
+  outline: 2px solid var(--laila-gold);
+  outline-offset: 3px;
+}
+
+.laila-cta .laila-prose {
+  margin-bottom: 1.05rem;
+}
+
+.laila-chrono__grid {
+  margin-top: 1.1rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.45rem;
+}
+
+.laila-chrono__cell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.7rem 0.2rem;
+  border: 1px solid rgba(92, 16, 28, 0.16);
+  background: rgba(255, 252, 247, 0.55);
+}
+
+.laila-chrono__num {
+  font-family: var(--laila-font-display);
+  font-size: clamp(1.25rem, 4vw, 1.55rem);
+  color: var(--laila-maroon);
+  line-height: 1;
+}
+
+.laila-chrono__unit {
+  font-size: 0.64rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--laila-maroon);
+  opacity: 0.7;
+}
+
+.laila-chrono__done {
+  margin: 0.85rem 0 0;
+  color: var(--laila-maroon-deep);
+}
+
+.laila-footer {
+  padding-top: 0.35rem;
+}
+
+.laila-footer__text {
+  margin: 0 0 0.4rem;
+  font-style: italic;
+  color: var(--laila-maroon-deep);
+}
+
+.laila-footer__names {
+  margin: 0;
+  font-family: var(--laila-font-script);
+  font-size: 1.85rem;
+  color: var(--laila-maroon);
+}
+
+.laila-footer__studio {
+  margin-top: 0.85rem;
+  color: var(--laila-maroon-deep);
+}
+
+/* RSVP + gallery satellite pages */
+.laila-satellite {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow: hidden;
+}
+
+.laila-satellite__card,
+.laila-satellite__inner {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 24.5rem);
+  margin: 0 auto;
+  padding: clamp(2.4rem, 7vw, 3.6rem) clamp(1.2rem, 5vw, 1.8rem) 3.5rem;
+  text-align: center;
+}
+
+.laila-satellite__lead {
+  margin: -0.35rem 0 1.4rem;
+  color: var(--laila-maroon-deep);
+}
+
+.laila-satellite__back {
+  display: inline-block;
+  margin-top: 1.4rem;
+  color: var(--laila-maroon);
+  text-decoration: none;
+  font-size: 0.92em;
+  letter-spacing: 0.04em;
+}
+
+.laila-satellite__back--top {
+  margin: 0 0 1.5rem;
+}
+
+.laila-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.05rem;
+  text-align: left;
+}
+
+.laila-form__field {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+.laila-form__label {
+  font-family: var(--laila-font-display);
+  font-size: 0.64rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--laila-maroon);
+}
+
+.laila-form__input,
+.laila-form__textarea {
+  width: 100%;
+  border: 1px solid rgba(92, 16, 28, 0.28);
+  background: rgba(255, 252, 247, 0.78);
+  color: var(--laila-maroon-deep);
+  font: inherit;
+  padding: 0.65em 0.75em;
+  border-radius: 0.65rem;
+}
+
+.laila-form__input--narrow {
+  width: auto;
+  min-width: 4.5rem;
+}
+
+.laila-form__textarea {
+  resize: vertical;
+  min-height: 5.5rem;
+}
+
+.laila-form__choices {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.laila-form__choice {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.55em 0.4em;
+  border: 1px solid rgba(92, 16, 28, 0.28);
+  border-radius: 999px;
+  color: var(--laila-maroon);
+  cursor: pointer;
+}
+
+.laila-form__choice:has(input:checked) {
+  background: var(--laila-maroon);
+  border-color: var(--laila-maroon);
+  color: var(--laila-cream);
+}
+
+.laila-form__choice input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.laila-form__hp {
+  position: absolute;
+  left: -9999px;
+  height: 0;
+  overflow: hidden;
+}
+
+.laila-form__error {
+  margin: 0;
+  color: #8a1a28;
+  font-size: 0.95em;
+}
+
+.laila-form__submit {
+  width: 100%;
+}
+
+.laila-form__submit:disabled {
+  opacity: 0.65;
+}
+
+.laila-gallery__head {
+  margin-bottom: 1.6rem;
+}
+
+.laila-gallery__empty {
+  margin: 0;
+  padding: 1.4rem 1rem;
+  border: 1px dashed rgba(92, 16, 28, 0.28);
+  color: var(--laila-maroon-deep);
+  line-height: 1.65;
+}
+
+.laila-gallery__grid {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.laila-gallery__item {
+  appearance: none;
+  padding: 0;
+  border: 0;
+  background: rgba(255, 252, 247, 0.4);
+  cursor: pointer;
+}
+
+.laila-gallery__item img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Rotating ucapan spotlight — one at a time, swipeable */
+.laila-ucapan-spot {
+  margin: -0.25rem 0 0;
+  text-align: center;
+}
+
+.laila-ucapan-spot__frame {
+  padding: 0.85rem 0.75rem 0.7rem;
+  border: 1px solid rgba(92, 16, 28, 0.16);
+  background: rgba(255, 252, 247, 0.55);
+}
+
+.laila-ucapan-spot__kicker {
+  margin: 0 0 0.45rem;
+  font-family: var(--laila-font-display);
+  font-size: 0.52rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--laila-maroon);
+  opacity: 0.75;
+}
+
+.laila-ucapan-spot__stage {
+  min-height: 4.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.laila-ucapan-spot__quote {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  width: 100%;
+}
+
+.laila-ucapan-spot__quote--next {
+  animation: laila-ucapan-spot-next 0.52s var(--laila-ease) both;
+}
+
+.laila-ucapan-spot__quote--prev {
+  animation: laila-ucapan-spot-prev 0.52s var(--laila-ease) both;
+}
+
+.laila-ucapan-spot__text {
+  margin: 0;
+  font-size: 0.82em;
+  font-style: italic;
+  line-height: 1.55;
+  color: var(--laila-maroon-deep);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+.laila-ucapan-spot__from {
+  margin: 0.35rem 0 0;
+  font-family: var(--laila-font-script);
+  font-size: 1.05rem;
+  color: var(--laila-maroon);
+  line-height: 1.2;
+}
+
+.laila-ucapan-spot__dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.28rem;
+  margin-top: 0.45rem;
+}
+
+.laila-ucapan-spot__dots span {
+  width: 0.28rem;
+  height: 0.28rem;
+  border-radius: 50%;
+  background: rgba(92, 16, 28, 0.2);
+  transition: transform 0.25s var(--laila-ease), background 0.25s var(--laila-ease);
+}
+
+.laila-ucapan-spot__dots span.is-active {
+  background: var(--laila-maroon);
+  transform: scale(1.15);
+}
+
+@keyframes laila-ucapan-spot-next {
+  from {
+    opacity: 0;
+    transform: translate3d(18px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes laila-ucapan-spot-prev {
+  from {
+    opacity: 0;
+    transform: translate3d(-18px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .laila-ucapan-spot__quote--next,
+  .laila-ucapan-spot__quote--prev {
+    animation: none;
+  }
+}
+
+/* Client dashboard — not linked from the public invitation */
+.laila-dashboard {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.laila-dashboard__inner {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 28.5rem);
+  margin: 0 auto;
+  padding: clamp(2.4rem, 7vw, 3.4rem) clamp(1.15rem, 5vw, 1.7rem) 4rem;
+  text-align: center;
+}
+
+.laila-dashboard__lead {
+  margin: -0.2rem 0 0.2rem;
+  color: var(--laila-maroon-deep);
+}
+
+.laila-dashboard__meta,
+.laila-dashboard__hint,
+.laila-dashboard__total,
+.laila-dashboard__status {
+  margin: 0;
+  color: var(--laila-maroon-deep);
+  opacity: 0.82;
+  font-size: 0.92em;
+}
+
+.laila-dashboard__error {
+  margin: 1rem 0 0;
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(138, 26, 40, 0.35);
+  background: rgba(255, 252, 247, 0.7);
+  color: #8a1a28;
+  font-size: 0.92em;
+  line-height: 1.55;
+}
+
+.laila-dashboard__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  justify-content: center;
+  margin: 1.15rem 0 0.45rem;
+}
+
+.laila-dashboard__hint {
+  margin-bottom: 1.4rem;
+}
+
+.laila-dash-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.7rem;
+  margin: 1.5rem 0 0.7rem;
+}
+
+.laila-dash-stat {
+  padding: 1.05rem 0.7rem 0.9rem;
+  border: 1px solid rgba(92, 16, 28, 0.22);
+  background: rgba(255, 252, 247, 0.62);
+}
+
+.laila-dash-stat--yes {
+  background: var(--laila-maroon);
+  border-color: var(--laila-maroon);
+  color: var(--laila-cream);
+}
+
+.laila-dash-stat--no {
+  color: var(--laila-maroon-deep);
+}
+
+.laila-dash-stat__kicker {
+  margin: 0;
+  font-family: var(--laila-font-display);
+  font-size: 0.56rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+.laila-dash-stat--yes .laila-dash-stat__kicker {
+  color: var(--laila-gold-soft);
+}
+
+.laila-dash-stat--no .laila-dash-stat__kicker {
+  color: var(--laila-maroon);
+}
+
+.laila-dash-stat__num {
+  margin: 0.2rem 0 0.15rem;
+  font-family: var(--laila-font-display);
+  font-size: clamp(2.1rem, 8vw, 2.7rem);
+  line-height: 1;
+}
+
+.laila-dash-stat__sub {
+  margin: 0;
+  font-size: 0.78em;
+  opacity: 0.85;
+}
+
+.laila-dash-bar {
+  display: flex;
+  height: 0.38rem;
+  margin: 0.35rem 0 0.55rem;
+  background: rgba(92, 16, 28, 0.12);
+  overflow: hidden;
+}
+
+.laila-dash-bar__yes {
+  display: block;
+  height: 100%;
+  background: var(--laila-maroon);
+}
+
+.laila-dash-list {
+  margin-top: 1.55rem;
+  text-align: left;
+}
+
+.laila-dash-list__title {
+  margin: 0 0 0.55rem;
+  font-family: var(--laila-font-display);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--laila-maroon);
+  text-align: center;
+}
+
+.laila-dash-list__empty {
+  margin: 0;
+  text-align: center;
+  color: var(--laila-maroon-deep);
+  opacity: 0.7;
+  font-size: 0.92em;
+}
+
+.laila-dash-list__items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.laila-dash-list__items li {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.8rem;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid rgba(92, 16, 28, 0.14);
+  background: rgba(255, 252, 247, 0.55);
+}
+
+.laila-dash-list__name {
+  color: var(--laila-maroon-deep);
+}
+
+.laila-dash-list__meta {
+  font-size: 0.82em;
+  color: var(--laila-maroon);
+  opacity: 0.75;
+  white-space: nowrap;
+}
+
+.laila-dash-ucapan {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.laila-dash-ucapan li {
+  padding: 0.85rem 0.9rem;
+  border: 1px solid rgba(92, 16, 28, 0.16);
+  background: rgba(255, 252, 247, 0.62);
+}
+
+.laila-dash-ucapan__text {
+  margin: 0;
+  font-style: italic;
+  line-height: 1.65;
+  color: var(--laila-maroon-deep);
+}
+
+.laila-dash-ucapan__from {
+  margin: 0.45rem 0 0;
+  font-family: var(--laila-font-script);
+  font-size: 1.35rem;
+  color: var(--laila-maroon);
+}
+
+.laila-ucapan-book {
+  display: none;
+}
+
+@media print {
+  body.laila-print-ucapan {
+    background: #f6efe4;
+  }
+
+  body.laila-print-ucapan .laila-dashboard__inner,
+  body.laila-print-ucapan .laila-page-decor {
+    display: none !important;
+  }
+
+  body.laila-print-ucapan .laila-ucapan-book {
+    display: block;
+    width: min(100%, 38rem);
+    margin: 0 auto;
+    padding: 0 0.5rem;
+    color: #3a0c14;
+  }
+
+  .laila-ucapan-book__cover {
+    text-align: center;
+    padding: 1.25rem 1rem 1rem;
+    margin-bottom: 1.25rem;
+    border-bottom: 1px solid rgba(92, 16, 28, 0.18);
+  }
+
+  .laila-ucapan-book__khat {
+    clip-path: none;
+    animation: none;
+    opacity: 1;
+    font-size: 1.55rem;
+    margin-bottom: 0.65rem;
+  }
+
+  .laila-ucapan-book__names {
+    margin: 0.25rem 0 0.35rem;
+    font-family: "Great Vibes", "Pinyon Script", cursive;
+    font-size: 2.15rem;
+    font-weight: 400;
+    color: #5c101c;
+  }
+
+  .laila-ucapan-book__date,
+  .laila-ucapan-book__count {
+    margin: 0.2rem 0 0;
+    font-size: 0.95rem;
+  }
+
+  .laila-ucapan-book__card {
+    padding: 1.1rem 1rem 1rem;
+    margin: 0 0 0.85rem;
+    border: 1px solid rgba(92, 16, 28, 0.22);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .laila-ucapan-book__message {
+    margin: 0;
+    font-style: italic;
+    line-height: 1.75;
+    font-size: 1.02rem;
+  }
+
+  .laila-ucapan-book__sign {
+    margin: 0.7rem 0 0;
+    font-family: "Great Vibes", "Pinyon Script", cursive;
+    font-size: 1.55rem;
+    color: #5c101c;
+  }
+}
+
+@media (max-width: 380px) {
+  .laila-cover__writing {
+    padding: 16% 13% 18%;
+  }
+
+  .laila-cover__name {
+    font-size: clamp(1.85rem, 13cqi, 2.7rem);
+  }
+}

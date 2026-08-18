@@ -1,26 +1,32 @@
 import { useCallback, useEffect } from "react";
 import { RoyalMaroonTheme } from "../../templates/RoyalMaroonTheme/RoyalMaroonTheme";
-import { ROYAL_MAROON_INVITE, royalMaroonRsvpWhatsappUrl } from "./royalMaroonInviteData";
-
-const PAGE_TITLE = "Walimatul Urus —  NAIM & NADHIRAH";
+import { usePortfolioPreviewMode } from "../../hooks/usePortfolioPreviewMode";
+import {
+  royalMaroonInviteForPreview,
+  royalMaroonPageTitle,
+  royalMaroonRsvpWhatsappUrl,
+} from "./royalMaroonInviteData";
 
 /**
  * Standalone luxury invitation — its own URL, copy, and RSVP flow (WhatsApp).
  * Not wired to `/invite` or the multi-theme preview bar.
  */
 export function RoyalMaroonInvitationPage() {
+  const { isPreview } = usePortfolioPreviewMode();
+  const invite = royalMaroonInviteForPreview(isPreview);
+
   useEffect(() => {
     const prev = document.title;
-    document.title = PAGE_TITLE;
+    document.title = royalMaroonPageTitle(invite);
     return () => {
       document.title = prev;
     };
-  }, []);
+  }, [invite]);
 
   const onRsvp = useCallback(() => {
-    const href = royalMaroonRsvpWhatsappUrl(ROYAL_MAROON_INVITE);
+    const href = royalMaroonRsvpWhatsappUrl(invite);
     window.open(href, "_blank", "noopener,noreferrer");
-  }, []);
+  }, [invite]);
 
-  return <RoyalMaroonTheme event={ROYAL_MAROON_INVITE} onRsvp={onRsvp} />;
+  return <RoyalMaroonTheme event={invite} onRsvp={onRsvp} />;
 }

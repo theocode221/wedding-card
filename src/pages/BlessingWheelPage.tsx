@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { BlessingResultCard } from "../components/blessing-wheel/BlessingResultCard";
 import { BlessingWheel } from "../components/blessing-wheel/BlessingWheel";
 import { WheelActions } from "../components/blessing-wheel/WheelActions";
+import { usePortfolioPreviewMode } from "../hooks/usePortfolioPreviewMode";
+import { PORTFOLIO_DEMO_COUPLE_LABEL } from "../data/portfolioDemoNames";
 import {
   availableSegmentIndices,
   BLESSING_SEGMENTS,
@@ -21,6 +23,7 @@ const SPIN_READY_MS = 3000;
 const SPIN_READY_MS_REDUCED = 450;
 
 const FLOAT_WORDS = ["Bahagia", "Berkat", "Kasih", "Tenang", "ANEP", "DIN", "HAFIZI", "NABIL"];
+const PORTFOLIO_FLOAT_WORDS = ["Bahagia", "Berkat", "Kasih", "Tenang", "Doa", "Restu", "Kasih", "Sayang"];
 
 type FloatParticle = {
   id: number;
@@ -33,6 +36,8 @@ type FloatParticle = {
 let floatId = 0;
 
 export function BlessingWheelPage() {
+  const { isPreview } = usePortfolioPreviewMode();
+  const floatWords = isPreview ? PORTFOLIO_FLOAT_WORDS : FLOAT_WORDS;
   const [rotation, setRotation] = useState(0);
   const [isSpinning, setIsSpinning] = useState(false);
   const [selectedBlessing, setSelectedBlessing] = useState<BlessingSegment | null>(null);
@@ -141,7 +146,7 @@ export function BlessingWheelPage() {
       floatId += 1;
       batch.push({
         id: floatId,
-        word: FLOAT_WORDS[i % FLOAT_WORDS.length],
+        word: floatWords[i % floatWords.length],
         left: `${5 + Math.random() * 90}%`,
         delay: Math.random() * 0.35,
         duration: 4 + Math.random() * 2.2,
@@ -216,7 +221,9 @@ export function BlessingWheelPage() {
 
         <header className="blessing-page__header">
           <h1 className="blessing-page__title">Pusing roda doa</h1>
-          <p className="blessing-page__subtitle">Satu putaran, satu keberkatan</p>
+          <p className="blessing-page__subtitle">
+            {isPreview ? `Doa untuk ${PORTFOLIO_DEMO_COUPLE_LABEL}` : "Satu putaran, satu keberkatan"}
+          </p>
         </header>
 
         <div

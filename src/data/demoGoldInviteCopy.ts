@@ -1,10 +1,10 @@
-/** Demo cinematic copy — same structure as live, placeholder couple names. */
-export const DEMO_GOLD_CINEMATIC_COPY = [
-  "Raikan Cinta",
-  "Adam\n&\nSofea",
-  "“dan Kami ciptakan kamu berpasang-pasangan”",
-  "An Naba' (78:8)",
-] as const;
+import {
+  PORTFOLIO_DEMO_CINEMATIC_COPY,
+  PORTFOLIO_DEMO_COUPLE_DISPLAY,
+} from "./portfolioDemoNames";
 
-export const DEMO_GOLD_COUPLE_DISPLAY = "ADAM & SOFEA";
-export const DEMO_GOLD_COUPLE_FOOTER = "ADAM & SOFEA";
+/** Demo cinematic copy — same structure as live, placeholder couple names. */
+export const DEMO_GOLD_CINEMATIC_COPY = PORTFOLIO_DEMO_CINEMATIC_COPY;
+
+export const DEMO_GOLD_COUPLE_DISPLAY = PORTFOLIO_DEMO_COUPLE_DISPLAY;
+export const DEMO_GOLD_COUPLE_FOOTER = PORTFOLIO_DEMO_COUPLE_DISPLAY;
