@@ -154,7 +154,7 @@ export function lailaHasEventDate(invite: Pick<LailaInvite, "weddingDateTime"> =
   return Boolean(invite.weddingDateTime.trim());
 }
 
-export function getLailaGoogleCalendarUrl(invite = LAILA_INVITE): string | null {
+export function getLailaGoogleCalendarUrl(invite: LailaInvite = LAILA_INVITE): string | null {
   if (!lailaHasEventDate(invite)) return null;
   const start = new Date(invite.weddingDateTime);
   const end = new Date(start.getTime() + invite.durationHours * 60 * 60 * 1000);
@@ -168,7 +168,7 @@ export function getLailaGoogleCalendarUrl(invite = LAILA_INVITE): string | null 
   return `https://calendar.google.com/calendar/render?${params.toString()}`;
 }
 
-export function downloadLailaIcs(invite = LAILA_INVITE): void {
+export function downloadLailaIcs(invite: LailaInvite = LAILA_INVITE): void {
   if (!lailaHasEventDate(invite)) return;
   const start = new Date(invite.weddingDateTime);
   const end = new Date(start.getTime() + invite.durationHours * 60 * 60 * 1000);

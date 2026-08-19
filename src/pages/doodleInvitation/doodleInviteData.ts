@@ -74,7 +74,7 @@ export function doodleHasEventDate(invite: Pick<DoodleInvite, "weddingDateTime">
   return Boolean(invite.weddingDateTime.trim());
 }
 
-export function getDoodleGoogleCalendarUrl(invite = DOODLE_INVITE): string | null {
+export function getDoodleGoogleCalendarUrl(invite: DoodleInvite = DOODLE_INVITE): string | null {
   if (!doodleHasEventDate(invite)) return null;
   const start = new Date(invite.weddingDateTime);
   const end = new Date(start.getTime() + invite.durationHours * 60 * 60 * 1000);
@@ -88,7 +88,7 @@ export function getDoodleGoogleCalendarUrl(invite = DOODLE_INVITE): string | nul
   return `https://calendar.google.com/calendar/render?${params.toString()}`;
 }
 
-export function downloadDoodleIcs(invite = DOODLE_INVITE): void {
+export function downloadDoodleIcs(invite: DoodleInvite = DOODLE_INVITE): void {
   if (!doodleHasEventDate(invite)) return;
   const start = new Date(invite.weddingDateTime);
   const end = new Date(start.getTime() + invite.durationHours * 60 * 60 * 1000);
