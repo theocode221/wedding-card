@@ -31,5 +31,7 @@ export function buildPortfolioDemoPath(path: string): string {
 
 /** Embedded thumbnail — muted, no footer credit, for portfolio grid iframes. */
 export function buildPortfolioEmbedPath(path: string): string {
-  return withPreviewParams(path, { embed: "1" });
+  const withParams = withPreviewParams(path, { embed: "1" });
+  const base = import.meta.env.BASE_URL;
+  return `${base}${withParams.replace(/^\//, "")}`;
 }

@@ -10,6 +10,11 @@ html.portfolio-embed .studio-credit {
 
 html.portfolio-embed .home-selector__footnote,
 html.portfolio-embed .ucapan-home-link,
-html.portfolio-embed .laila-back-cover {
+html.portfolio-embed .laila-back-cover,
+html.portfolio-embed .doodle-back-cover,
+html.portfolio-embed .doodle-cover__open,
+html.portfolio-embed .ci-open,
+html.portfolio-embed .ci-skip,
+html.portfolio-embed .ci-details-cta {
   display: none !important;
 }

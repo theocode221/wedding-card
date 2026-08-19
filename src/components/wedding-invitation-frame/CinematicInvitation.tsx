@@ -29,6 +29,8 @@ export type CinematicInvitationProps = {
   onOpenCinematic?: () => void;
   /** Fixed-position decor between scene wash and copy (e.g. maroon glitter). */
   decorMidLayer?: ReactNode;
+  /** Start the zoom sequence without waiting for “Buka Jemputan” (portfolio hover preview). */
+  autoStart?: boolean;
 };
 
 /**
@@ -206,6 +208,7 @@ export function CinematicInvitation({
   onComplete,
   onOpenCinematic,
   decorMidLayer,
+  autoStart = false,
 }: CinematicInvitationProps) {
   const [rootVisible, setRootVisible] = useState(false);
   const [stage, setStage] = useState<CinematicStage>("idle");
@@ -268,6 +271,15 @@ export function CinematicInvitation({
     onOpenCinematic?.();
     runSequence();
   }, [stage, runSequence, onOpenCinematic]);
+
+  useEffect(() => {
+    if (!autoStart || !rootVisible || stage !== "idle") return;
+    const id = window.setTimeout(() => {
+      onOpenCinematic?.();
+      runSequence();
+    }, 420);
+    return () => window.clearTimeout(id);
+  }, [autoStart, rootVisible, stage, onOpenCinematic, runSequence]);
 
   const handleSkipToDetails = useCallback(() => {
     if (completedRef.current) return;

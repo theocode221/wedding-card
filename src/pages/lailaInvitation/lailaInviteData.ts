@@ -21,30 +21,65 @@ export const LAILA_DASHBOARD_PATH = "/laila/papan";
 export const LAILA_DETAILS_HASH = "jemputan";
 export const LAILA_DETAILS_TO = { pathname: LAILA_PATH, hash: LAILA_DETAILS_HASH } as const;
 
+/** Cover-only Jawi for “Walimatul Urus”. Other pages keep the Rumi tagline. */
+export const LAILA_TAGLINE_JAWI = "وليمة العرس";
+
 export const LAILA_INVITE = {
-  brideName: "Laila",
+  brideName: "Suhailah",
   groomName: "Hazziq",
   tagline: "Walimatul Urus",
   invitation:
     "Dengan penuh kesyukuran ke hadrat Ilahi, kami menjemput Dato’ / Datin / Tuan / Puan / Encik / Cik meriahkan majlis walimatul urus kami.",
-  date: "Sabtu, 22 November 2026",
-  timeLabel: "11:00 pagi - 3:00 petang",
-  venue: "Akan dimaklumkan",
-  address: "Kota Bharu, Kelantan",
-  mapsUrl: "https://www.google.com/maps/search/?api=1&query=Kota+Bharu+Kelantan",
-  wazeUrl: "https://www.waze.com/ul?q=Kota%20Bharu%20Kelantan&navigate=yes",
-  /** ISO local (Asia/Kuala_Lumpur). Update when the client confirms the tarikh. */
-  weddingDateTime: "2026-11-22T11:00:00",
+  groomFullName: "Muhammad Hazziq bin Ibrahim",
+  brideFullName: "Lailatul Suhailah binti Junid",
+  dayLabel: "Sabtu",
+  date: "12.12.2026",
+  timeLabel: "11:00 pagi – 4:00 petang",
+  venue: "Rinching Terrace Wedding & Event",
+  address: "",
+  mapsUrl:
+    "https://www.google.com/maps/search/?api=1&query=Rinching+Terrace+Wedding+%26+Event",
+  wazeUrl: "https://www.waze.com/ul?q=Rinching%20Terrace%20Wedding%20%26%20Event&navigate=yes",
+  /** ISO local (Asia/Kuala_Lumpur). */
+  weddingDateTime: "2026-12-12T11:00:00",
   /** Hours the majlis runs — used for calendar end time once a date is set. */
-  durationHours: 4,
+  durationHours: 5,
   footer: "Kehadiran dan doa restu anda amat dialu-alukan.",
 } as const;
+
+export type LailaWhatsappContact = {
+  name: string;
+  displayNumber: string;
+  whatsappUrl: string;
+};
+
+function lailaWaMeUrl(localMalaysiaMobile: string): string {
+  const digits = localMalaysiaMobile.replace(/\D/g, "");
+  const international = digits.startsWith("0") ? `60${digits.slice(1)}` : digits;
+  return `https://wa.me/${international}`;
+}
+
+export const LAILA_WHATSAPP_CONTACTS: readonly LailaWhatsappContact[] = [
+  {
+    name: "Shuhada",
+    displayNumber: "013-778 8695",
+    whatsappUrl: lailaWaMeUrl("0137788695"),
+  },
+  {
+    name: "Sahira",
+    displayNumber: "018-281 4341",
+    whatsappUrl: lailaWaMeUrl("0182814341"),
+  },
+] as const;
 
 export type LailaInvite = {
   brideName: string;
   groomName: string;
   tagline: string;
   invitation: string;
+  groomFullName: string;
+  brideFullName: string;
+  dayLabel: string;
   date: string;
   timeLabel: string;
   venue: string;
@@ -57,7 +92,7 @@ export type LailaInvite = {
 };
 
 export function lailaCoupleLabel(invite: Pick<LailaInvite, "groomName" | "brideName"> = LAILA_INVITE): string {
-  return `${invite.groomName} & ${invite.brideName}`;
+  return `${invite.brideName} & ${invite.groomName}`;
 }
 
 export function lailaInviteForPreview(isPreview: boolean): LailaInvite {
@@ -66,6 +101,8 @@ export function lailaInviteForPreview(isPreview: boolean): LailaInvite {
     ...LAILA_INVITE,
     groomName: PORTFOLIO_DEMO_GROOM,
     brideName: PORTFOLIO_DEMO_BRIDE,
+    groomFullName: PORTFOLIO_DEMO_GROOM,
+    brideFullName: PORTFOLIO_DEMO_BRIDE,
   };
 }
 
@@ -83,17 +120,21 @@ export function getLailaRsvpScriptUrl(): string {
 }
 
 /**
- * Google Drive file IDs for the gallery.
- * Paste IDs from share links (`.../file/d/FILE_ID/view`) when the client sends photos.
+ * Photos in `public/lela kb/gallery/` (png, jpg, webp, gif).
+ * Drop files in that folder — they are picked up automatically, sorted by filename.
  */
-export const LAILA_GALLERY_DRIVE_IDS: readonly string[] = [];
+const LAILA_GALLERY_MODULES = import.meta.glob(
+  "../../../public/lela kb/gallery/*.{png,jpg,jpeg,webp,gif,PNG,JPG,JPEG,WEBP,GIF}",
+  { eager: true, query: "?url", import: "default" },
+) as Record<string, string>;
 
-export function driveFileViewUrl(fileId: string): string {
-  return `https://drive.google.com/uc?export=view&id=${encodeURIComponent(fileId)}`;
+export const LAILA_GALLERY_IMAGE_URLS: readonly string[] = Object.entries(LAILA_GALLERY_MODULES)
+  .sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" }))
+  .map(([, url]) => url);
+
+function lailaEventLocation(invite: Pick<LailaInvite, "venue" | "address">): string {
+  return invite.address ? `${invite.venue}, ${invite.address}` : invite.venue;
 }
-
-export const LAILA_GALLERY_IMAGE_URLS: readonly string[] =
-  LAILA_GALLERY_DRIVE_IDS.map(driveFileViewUrl);
 
 function escapeIcsText(s: string): string {
   return s.replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\n/g, "\\n");
@@ -122,7 +163,7 @@ export function getLailaGoogleCalendarUrl(invite = LAILA_INVITE): string | null 
     text: `Walimatul Urus — ${lailaCoupleLabel(invite)}`,
     dates: `${toUtcStamp(start)}/${toUtcStamp(end)}`,
     details: invite.invitation,
-    location: `${invite.venue}, ${invite.address}`,
+    location: lailaEventLocation(invite),
   });
   return `https://calendar.google.com/calendar/render?${params.toString()}`;
 }
@@ -145,7 +186,7 @@ export function downloadLailaIcs(invite = LAILA_INVITE): void {
     `DTEND:${toUtcStamp(end)}`,
     `SUMMARY:${escapeIcsText(title)}`,
     `DESCRIPTION:${escapeIcsText(invite.invitation)}`,
-    `LOCATION:${escapeIcsText(`${invite.venue}, ${invite.address}`)}`,
+    `LOCATION:${escapeIcsText(lailaEventLocation(invite))}`,
     "END:VEVENT",
     "END:VCALENDAR",
   ];

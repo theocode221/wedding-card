@@ -50,6 +50,10 @@ button {
 }
 
 /* Scroll variants — each section reads differently as you move down the page */
+.reveal.reveal--from-top {
+  transform: translate3d(0, -28px, 0);
+}
+
 .reveal.reveal--from-left {
   transform: translate3d(-40px, 28px, 0);
 }

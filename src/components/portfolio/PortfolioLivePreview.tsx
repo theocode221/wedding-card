@@ -29,10 +29,12 @@ function PortfolioPoster({ item }: { item: PortfolioItem }) {
           aria-hidden
         />
       )}
-      <div className="portfolio-poster__names">
-        <p className="portfolio-poster__kicker">Demo</p>
-        <p className="portfolio-poster__couple">{PORTFOLIO_DEMO_COUPLE_LABEL}</p>
-      </div>
+      {item.posterHasCopy ? null : (
+        <div className="portfolio-poster__names">
+          <p className="portfolio-poster__kicker">Demo</p>
+          <p className="portfolio-poster__couple">{PORTFOLIO_DEMO_COUPLE_LABEL}</p>
+        </div>
+      )}
     </div>
   );
 }
@@ -40,6 +42,8 @@ function PortfolioPoster({ item }: { item: PortfolioItem }) {
 export function PortfolioLivePreview({ item, src, playing }: PortfolioLivePreviewProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
+  const [frameReady, setFrameReady] = useState(false);
+  const [playToken, setPlayToken] = useState(0);
 
   useEffect(() => {
     const node = containerRef.current;
@@ -56,16 +60,36 @@ export function PortfolioLivePreview({ item, src, playing }: PortfolioLivePrevie
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    if (!playing) {
+      setFrameReady(false);
+      return;
+    }
+    setFrameReady(false);
+    setPlayToken((token) => token + 1);
+  }, [playing, src]);
+
   return (
-    <div ref={containerRef} className="portfolio-live-preview">
+    <div
+      ref={containerRef}
+      className={[
+        "portfolio-live-preview",
+        playing ? "portfolio-live-preview--playing" : "",
+        frameReady ? "portfolio-live-preview--ready" : "",
+      ]
+        .filter(Boolean)
+        .join(" ")}
+    >
       <PortfolioPoster item={item} />
       {playing ? (
         <iframe
+          key={`${src}-${playToken}`}
           className="portfolio-live-preview__frame"
           src={src}
           title={`Pratonton ${item.title}`}
           loading="eager"
           tabIndex={-1}
+          onLoad={() => setFrameReady(true)}
           style={{
             width: IFRAME_WIDTH,
             height: IFRAME_HEIGHT,

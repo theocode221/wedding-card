@@ -63,6 +63,16 @@ export function HomePage() {
             <span className="home-selector__cardDesc">Tema ivory putih dengan aksen emas champagne</span>
           </Link>
 
+          <Link to="/doodle" className="home-selector__card">
+            <span className="home-selector__cardTitle">Jemputan Doodle</span>
+            <span className="home-selector__cardDesc">Tema sketsa tangan — kertas bergaris dan tulisan playful</span>
+          </Link>
+
+          <Link to="/doodle-pastel" className="home-selector__card">
+            <span className="home-selector__cardTitle">Jemputan Doodle Pastel</span>
+            <span className="home-selector__cardDesc">Doodle lembut dengan blush, mint, dan handwritten names</span>
+          </Link>
+
           <Link to="/demo-gold" className="home-selector__card">
             <span className="home-selector__cardTitle">Demo Gold</span>
             <span className="home-selector__cardDesc">Preview tema gold dengan nama contoh (Adam &amp; Sofea)</span>

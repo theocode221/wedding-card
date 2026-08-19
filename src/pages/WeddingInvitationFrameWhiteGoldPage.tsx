@@ -164,6 +164,7 @@ export function WeddingInvitationFrameWhiteGoldPage({
           onComplete={handleCinematicComplete}
           onOpenCinematic={playFromStart}
           decorMidLayer={<WhiteGoldCinematicDecor />}
+          autoStart={preview.isEmbed}
         />
       )}
 

@@ -6,18 +6,18 @@ import {
   PORTFOLIO_ITEMS,
   type PortfolioCategory,
 } from "../../data/portfolioCatalog";
-import {
-  STUDIO_HANDLE,
-  STUDIO_NAME,
-  STUDIO_PACKAGES_COMING_SOON,
-  STUDIO_TAGLINE,
-} from "../../data/studioBrand";
+import { STUDIO_HANDLE, STUDIO_NAME, STUDIO_PACKAGES_COMING_SOON, STUDIO_TAGLINE } from "../../data/studioBrand";
+import { useHiddenPortfolioIds } from "../../hooks/useHiddenPortfolioIds";
+import { usePortfolioDescriptions } from "../../hooks/usePortfolioDescriptions";
+import { resolvedPortfolioDescription } from "../../lib/portfolioDescriptions";
 import { buildPortfolioDemoPath, buildPortfolioEmbedPath } from "../../lib/portfolioPreview";
 import "../../styles/portfolio.css";
 
 const PAGE_TITLE = `${STUDIO_NAME} — Portfolio`;
 
 export function PortfolioPage() {
+  const hiddenIds = useHiddenPortfolioIds();
+  const descriptions = usePortfolioDescriptions();
   const [activeCategory, setActiveCategory] = useState<PortfolioCategory | "all">("all");
   const [playingId, setPlayingId] = useState<string | null>(null);
 
@@ -30,9 +30,10 @@ export function PortfolioPage() {
   }, []);
 
   const filtered = useMemo(() => {
-    if (activeCategory === "all") return PORTFOLIO_ITEMS;
-    return PORTFOLIO_ITEMS.filter((item) => item.category === activeCategory);
-  }, [activeCategory]);
+    const visible = PORTFOLIO_ITEMS.filter((item) => !hiddenIds.includes(item.id));
+    if (activeCategory === "all") return visible;
+    return visible.filter((item) => item.category === activeCategory);
+  }, [activeCategory, hiddenIds]);
 
   return (
     <main className="portfolio-page" lang="ms">
@@ -49,7 +50,7 @@ export function PortfolioPage() {
           <h1 className="portfolio-hero__title">{STUDIO_NAME}</h1>
           <p className="portfolio-hero__lead">{STUDIO_TAGLINE}</p>
           <p className="portfolio-hero__note">
-            Hover atau ketik play untuk animasi · Nama demo: Nama &amp; Pengantin
+            Hover atau ketik play untuk animasi · Nama demo: Nama &amp; Nama
           </p>
         </header>
 
@@ -105,7 +106,9 @@ export function PortfolioPage() {
                   </div>
                   <div className="portfolio-card__body">
                     <h2 className="portfolio-card__title">{item.title}</h2>
-                    <p className="portfolio-card__desc">{item.description}</p>
+                    <p className="portfolio-card__desc">
+                      {resolvedPortfolioDescription(item.id, item.description, descriptions)}
+                    </p>
                     {item.tags?.length ? (
                       <ul className="portfolio-card__tags">
                         {item.tags.map((tag) => (
@@ -140,6 +143,9 @@ export function PortfolioPage() {
             ← Kembali
           </Link>
           <p className="portfolio-footer__credit">—{STUDIO_HANDLE}</p>
+          <Link to="/theocodewedding/admin" className="portfolio-footer__admin">
+            Admin
+          </Link>
         </footer>
       </div>
     </main>

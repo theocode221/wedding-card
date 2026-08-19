@@ -7,6 +7,8 @@ export type UseRevealOnScrollOptions = {
    */
   rootMargin?: string;
   threshold?: number | number[];
+  /** Wait before observing — keeps a later section from beating an earlier animation. */
+  delayMs?: number;
 };
 
 const DEFAULT_ROOT_MARGIN = "0px 0px 14% 0px";
@@ -20,24 +22,37 @@ export function useRevealOnScroll<T extends HTMLElement = HTMLElement>(
 
   const rootMargin = options?.rootMargin ?? DEFAULT_ROOT_MARGIN;
   const threshold = options?.threshold ?? DEFAULT_THRESHOLD;
+  const delayMs = options?.delayMs ?? 0;
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
 
-    const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          obs.disconnect();
-        }
-      },
-      { rootMargin, threshold },
-    );
+    let obs: IntersectionObserver | null = null;
+    const observe = () => {
+      obs = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setVisible(true);
+            obs?.disconnect();
+          }
+        },
+        { rootMargin, threshold },
+      );
+      obs.observe(el);
+    };
 
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, [rootMargin, threshold]);
+    if (delayMs <= 0) {
+      observe();
+      return () => obs?.disconnect();
+    }
+
+    const timer = window.setTimeout(observe, delayMs);
+    return () => {
+      window.clearTimeout(timer);
+      obs?.disconnect();
+    };
+  }, [rootMargin, threshold, delayMs]);
 
   return { ref, visible };
 }

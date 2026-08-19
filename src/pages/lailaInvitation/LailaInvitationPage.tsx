@@ -10,6 +10,8 @@ import {
   LAILA_GALLERY_PATH,
   LAILA_PATH,
   LAILA_RSVP_PATH,
+  LAILA_TAGLINE_JAWI,
+  LAILA_WHATSAPP_CONTACTS,
   lailaCoupleLabel,
   lailaHasEventDate,
   lailaInviteForPreview,
@@ -172,12 +174,11 @@ export function LailaInvitationPage() {
     navigate(LAILA_PATH);
   }, [navigate]);
 
-  const groomWriteStart = 1.15;
-  const ampDelay = groomWriteStart + invite.groomName.length * LETTER_STAGGER_S + 0.08;
-  const brideWriteStart = ampDelay + 0.18;
-  const chronoDelay = brideWriteStart + invite.brideName.length * LETTER_STAGGER_S + 0.16;
-  const showCoverCountdown = Boolean(countdownTarget && tick && !tick.done && countdownUnits.length);
-  const buttonDelay = chronoDelay + (showCoverCountdown ? 0.32 : 0.12);
+  const brideWriteStart = 1.15;
+  const ampDelay = brideWriteStart + invite.brideName.length * LETTER_STAGGER_S + 0.08;
+  const groomWriteStart = ampDelay + 0.18;
+  const dateDelay = groomWriteStart + invite.groomName.length * LETTER_STAGGER_S + 0.16;
+  const buttonDelay = dateDelay + 0.28;
 
   return (
     <div className={`laila-page${isOpen ? " laila-page--details" : " laila-page--cover"}`} lang="ms">
@@ -215,38 +216,40 @@ export function LailaInvitationPage() {
           />
 
           <div className="laila-cover__writing">
-            <p className="laila-cover__kicker">{invite.tagline}</p>
+            <p className="laila-cover__kicker" lang="ar" dir="rtl">
+              {LAILA_TAGLINE_JAWI}
+            </p>
             <div className="laila-cover__rule" aria-hidden />
             <h1 className="laila-cover__names" aria-label={names}>
-              <HandwrittenLine
-                text={invite.groomName}
-                className="laila-cover__name"
-                delayStart={groomWriteStart}
-              />
-              <span className="laila-cover__amp" style={{ animationDelay: `${ampDelay}s` }}>
-                &amp;
-              </span>
               <HandwrittenLine
                 text={invite.brideName}
                 className="laila-cover__name laila-cover__name--bride"
                 delayStart={brideWriteStart}
               />
-            </h1>
-            {showCoverCountdown ? (
-              <LailaCountdownGrid
-                units={countdownUnits}
-                gridClassName="laila-cover__chrono"
-                cellClassName="laila-cover__chrono-cell"
-                style={{ animationDelay: `${chronoDelay}s` }}
+              <span className="laila-cover__amp" style={{ animationDelay: `${ampDelay}s` }}>
+                &amp;
+              </span>
+              <HandwrittenLine
+                text={invite.groomName}
+                className="laila-cover__name"
+                delayStart={groomWriteStart}
               />
-            ) : null}
+            </h1>
+            <p className="laila-cover__date" style={{ animationDelay: `${dateDelay}s` }}>
+              <span className="laila-cover__day">{invite.dayLabel}</span>
+              <span className="laila-cover__when">{invite.date}</span>
+            </p>
             <button
               type="button"
               className="laila-cover__open"
               style={{ animationDelay: `${buttonDelay}s` }}
               onClick={openInvitation}
+              aria-label="Buka jemputan"
             >
-              Buka Jemputan
+              <svg className="laila-cover__open-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="10.25" fill="none" />
+                <path d="M8.2 10.4 12 14.2l3.8-3.8" fill="none" />
+              </svg>
             </button>
           </div>
         </div>
@@ -257,20 +260,27 @@ export function LailaInvitationPage() {
         <LailaPageDecor />
         <div className="laila-stack">
           <section id="laila-jemputan">
-            <ScrollReveal as="div" variant="up" className="laila-invite">
+            <ScrollReveal as="div" variant="from-top" className="laila-invite">
               <p className="laila-khat" lang="ar" dir="rtl">
                 السَّلَامُ عَلَيْكُمْ
               </p>
               <div className="laila-invite__rule" aria-hidden />
               <p className="laila-kicker">Jemputan</p>
-              <h2 className="laila-title">Meraih restu dan kehadiran</h2>
               <p className="laila-prose">{invite.invitation}</p>
             </ScrollReveal>
           </section>
 
-          <ScrollReveal as="section" variant="up" className="laila-details">
+          <ScrollReveal as="section" variant="from-top" className="laila-details" delayMs={1900}>
             <p className="laila-kicker">Majlis</p>
-            <h2 className="laila-title">Maklumat walimatul urus</h2>
+            <p className="laila-title">Walimatul Urus</p>
+            <h2
+              className="laila-couple"
+              aria-label={`${invite.groomFullName} & ${invite.brideFullName}`}
+            >
+              <span className="laila-couple__name">{invite.groomFullName}</span>
+              <span className="laila-couple__amp">&amp;</span>
+              <span className="laila-couple__name">{invite.brideFullName}</span>
+            </h2>
             <dl className="laila-spec">
               <div className="laila-spec__row">
                 <dt className="laila-spec__k">Tarikh</dt>
@@ -284,10 +294,12 @@ export function LailaInvitationPage() {
                 <dt className="laila-spec__k">Tempat</dt>
                 <dd className="laila-spec__v">{invite.venue}</dd>
               </div>
-              <div className="laila-spec__row">
-                <dt className="laila-spec__k">Alamat</dt>
-                <dd className="laila-spec__v">{invite.address}</dd>
-              </div>
+              {invite.address ? (
+                <div className="laila-spec__row">
+                  <dt className="laila-spec__k">Alamat</dt>
+                  <dd className="laila-spec__v">{invite.address}</dd>
+                </div>
+              ) : null}
             </dl>
 
             <div className="laila-actions">
@@ -326,10 +338,37 @@ export function LailaInvitationPage() {
               </div>
               <LailaCalendar />
             </div>
+
+            <div className="laila-contacts">
+              <p className="laila-contacts__label">Nombor dihubungi</p>
+              <div className="laila-contacts__list">
+                {LAILA_WHATSAPP_CONTACTS.map((contact) => (
+                  <a
+                    key={contact.name}
+                    className="laila-btn laila-btn--pill laila-btn--whatsapp"
+                    href={contact.whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`WhatsApp ${contact.name} ${contact.displayNumber}`}
+                  >
+                    <svg className="laila-contacts__icon" viewBox="0 0 24 24" aria-hidden>
+                      <path
+                        fill="currentColor"
+                        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.881 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
+                      />
+                    </svg>
+                    <span className="laila-contacts__text">
+                      <span className="laila-contacts__name">{contact.name}</span>
+                      <span className="laila-contacts__number">{contact.displayNumber}</span>
+                    </span>
+                  </a>
+                ))}
+              </div>
+            </div>
           </ScrollReveal>
 
           {countdownTarget ? (
-            <ScrollReveal as="section" variant="from-zoom" className="laila-chrono">
+            <ScrollReveal as="section" variant="from-top" className="laila-chrono" delayMs={2400}>
               <p className="laila-kicker">Menanti</p>
               <h2 className="laila-title">Kira detik bahagia</h2>
               {tick?.done ? (
@@ -340,7 +379,7 @@ export function LailaInvitationPage() {
             </ScrollReveal>
           ) : null}
 
-          <ScrollReveal as="section" variant="up" className="laila-cta">
+          <ScrollReveal as="section" variant="from-top" className="laila-cta" rootMargin="0px 0px -18% 0px">
             <p className="laila-kicker">Kenangan</p>
             <h2 className="laila-title">Galeri</h2>
             <p className="laila-prose">Detik indah yang dirakam untuk dikenang bersama.</p>
@@ -349,7 +388,7 @@ export function LailaInvitationPage() {
             </Link>
           </ScrollReveal>
 
-          <ScrollReveal as="section" variant="up" className="laila-cta">
+          <ScrollReveal as="section" variant="from-top" className="laila-cta" rootMargin="0px 0px -18% 0px">
             <p className="laila-kicker">Kehadiran</p>
             <h2 className="laila-title">Sahkan kehadiran</h2>
             <p className="laila-prose">
@@ -360,11 +399,11 @@ export function LailaInvitationPage() {
             </Link>
           </ScrollReveal>
 
-          <ScrollReveal as="div" variant="up">
+          <ScrollReveal as="div" variant="from-top">
             <LailaUcapanSpotlight />
           </ScrollReveal>
 
-          <ScrollReveal as="footer" variant="up" className="laila-footer">
+          <ScrollReveal as="footer" variant="from-top" className="laila-footer">
             <p className="laila-footer__text">{invite.footer}</p>
             <p className="laila-footer__names">{names}</p>
             <StudioCredit className="laila-footer__studio" />

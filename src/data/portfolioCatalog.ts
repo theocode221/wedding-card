@@ -10,6 +10,10 @@ export type PortfolioItem = {
   category: PortfolioCategory;
   previewImage?: string;
   previewGradient?: string;
+  /** Skip the Demo / couple-name overlay when the poster already includes names. */
+  posterHasCopy?: boolean;
+  /** When false, hidden on the public demo grid until admin unhides it. */
+  showOnDemo?: boolean;
   tags?: readonly string[];
 };
 
@@ -26,7 +30,9 @@ export const PORTFOLIO_ITEMS: readonly PortfolioItem[] = [
     description: "Latar oval maroon, nama tulisan tangan, RSVP, galeri & ucapan tetamu.",
     path: "/laila",
     category: "jemputan",
-    previewImage: encodeURI(publicUrl("lela kb/marron bg laila.png")),
+    previewImage: publicUrl("demo/laila.png"),
+    posterHasCopy: true,
+    showOnDemo: true,
     tags: ["RSVP", "Galeri", "Ucapan"],
   },
   {
@@ -36,7 +42,30 @@ export const PORTFOLIO_ITEMS: readonly PortfolioItem[] = [
     path: "/naim-nadhirah-nikah",
     category: "jemputan",
     previewImage: publicUrl("wedding-invitation/1 gold.png"),
+    showOnDemo: true,
     tags: ["Animasi", "RSVP"],
+  },
+  {
+    id: "doodle",
+    title: "Doodle — Sketchbook",
+    description: "Kad sketsa tangan, kertas bergaris, dan suasana playful.",
+    path: "/doodle",
+    category: "jemputan",
+    previewImage: publicUrl("demo/doodle.png"),
+    posterHasCopy: true,
+    showOnDemo: true,
+    tags: ["Doodle", "RSVP"],
+  },
+  {
+    id: "doodle-pastel",
+    title: "Doodle — Pastel",
+    description: "Tema doodle lembut dengan blush, mint, dan tulisan tangan.",
+    path: "/doodle-pastel",
+    category: "jemputan",
+    previewImage: publicUrl("demo/doodle.png"),
+    posterHasCopy: true,
+    showOnDemo: true,
+    tags: ["Doodle", "Pastel"],
   },
   {
     id: "maroon-gold",
@@ -66,7 +95,7 @@ export const PORTFOLIO_ITEMS: readonly PortfolioItem[] = [
   {
     id: "demo-gold",
     title: "Demo Gold",
-    description: "Preview tema gold dengan nama contoh (Nama & Pengantin).",
+    description: "Preview tema gold dengan nama contoh (Nama & Nama).",
     path: "/demo-gold",
     category: "jemputan",
     previewImage: publicUrl("wedding-invitation/1 gold.png"),
