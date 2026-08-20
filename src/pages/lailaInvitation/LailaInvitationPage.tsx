@@ -10,6 +10,8 @@ import {
   LAILA_GALLERY_PATH,
   LAILA_PATH,
   LAILA_RSVP_PATH,
+  LAILA_SALAM_KHAT,
+  LAILA_SALAM_LATIN,
   LAILA_TAGLINE_JAWI,
   LAILA_WHATSAPP_CONTACTS,
   lailaCoupleLabel,
@@ -17,6 +19,7 @@ import {
   lailaInviteForPreview,
   lailaPageTitleForInvite,
 } from "./lailaInviteData";
+import { LailaAturcara } from "./LailaAturcara";
 import { LailaButterflies } from "./LailaButterflies";
 import { LailaCalendar } from "./LailaCalendar";
 import { LailaPageDecor } from "./LailaPageDecor";
@@ -178,7 +181,8 @@ export function LailaInvitationPage() {
   const ampDelay = brideWriteStart + invite.brideName.length * LETTER_STAGGER_S + 0.08;
   const groomWriteStart = ampDelay + 0.18;
   const dateDelay = groomWriteStart + invite.groomName.length * LETTER_STAGGER_S + 0.16;
-  const buttonDelay = dateDelay + 0.28;
+  const venueDelay = dateDelay + 0.18;
+  const buttonDelay = venueDelay + 0.22;
 
   return (
     <div className={`laila-page${isOpen ? " laila-page--details" : " laila-page--cover"}`} lang="ms">
@@ -239,6 +243,9 @@ export function LailaInvitationPage() {
               <span className="laila-cover__day">{invite.dayLabel}</span>
               <span className="laila-cover__when">{invite.date}</span>
             </p>
+            <p className="laila-cover__venue" style={{ animationDelay: `${venueDelay}s` }}>
+              {invite.venue}, Kajang
+            </p>
             <button
               type="button"
               className="laila-cover__open"
@@ -261,30 +268,38 @@ export function LailaInvitationPage() {
         <div className="laila-stack">
           <section id="laila-jemputan">
             <ScrollReveal as="div" variant="from-top" className="laila-invite">
-              <p className="laila-khat" lang="ar" dir="rtl">
-                السَّلَامُ عَلَيْكُمْ
+              <p className="laila-khat laila-khat--salam" lang="ar" dir="rtl" aria-label={LAILA_SALAM_LATIN}>
+                {LAILA_SALAM_KHAT}
               </p>
               <div className="laila-invite__rule" aria-hidden />
               <p className="laila-kicker">Jemputan</p>
-              <p className="laila-prose">{invite.invitation}</p>
+              <p
+                className="laila-parents"
+                aria-label={`${invite.fatherName} & ${invite.motherName}`}
+              >
+                <span className="laila-parents__name">{invite.fatherName}</span>
+                <span className="laila-parents__amp">&amp;</span>
+                <span className="laila-parents__name">{invite.motherName}</span>
+              </p>
+              <p className="laila-prose laila-prose--invite">{invite.invitation}</p>
+              <p
+                className="laila-puteri"
+                aria-label={`${invite.brideFullName}, ${invite.coupleNote}, ${invite.groomFullName}`}
+              >
+                <span className="laila-puteri__name">{invite.brideFullName}</span>
+                <span className="laila-puteri__note">{invite.coupleNote}</span>
+                <span className="laila-puteri__name">{invite.groomFullName}</span>
+              </p>
             </ScrollReveal>
           </section>
 
           <ScrollReveal as="section" variant="from-top" className="laila-details" delayMs={1900}>
-            <p className="laila-kicker">Majlis</p>
-            <p className="laila-title">Walimatul Urus</p>
-            <h2
-              className="laila-couple"
-              aria-label={`${invite.groomFullName} & ${invite.brideFullName}`}
-            >
-              <span className="laila-couple__name">{invite.groomFullName}</span>
-              <span className="laila-couple__amp">&amp;</span>
-              <span className="laila-couple__name">{invite.brideFullName}</span>
-            </h2>
             <dl className="laila-spec">
               <div className="laila-spec__row">
                 <dt className="laila-spec__k">Tarikh</dt>
-                <dd className="laila-spec__v">{invite.date}</dd>
+                <dd className="laila-spec__v">
+                  {invite.date} ({invite.dayLabel})
+                </dd>
               </div>
               <div className="laila-spec__row">
                 <dt className="laila-spec__k">Masa</dt>
@@ -366,6 +381,8 @@ export function LailaInvitationPage() {
               </div>
             </div>
           </ScrollReveal>
+
+          <LailaAturcara />
 
           {countdownTarget ? (
             <ScrollReveal as="section" variant="from-top" className="laila-chrono" delayMs={2400}>

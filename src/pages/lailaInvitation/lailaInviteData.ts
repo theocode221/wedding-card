@@ -24,28 +24,51 @@ export const LAILA_DETAILS_TO = { pathname: LAILA_PATH, hash: LAILA_DETAILS_HASH
 /** Cover-only Jawi for “Walimatul Urus”. Other pages keep the Rumi tagline. */
 export const LAILA_TAGLINE_JAWI = "وليمة العرس";
 
+/** Full salam in Arabic calligraphy on the details page. */
+export const LAILA_SALAM_KHAT = "السَّلَامُ عَلَيْكُمْ وَرَحْمَةُ اللهِ وَبَرَكَاتُهُ";
+export const LAILA_SALAM_LATIN = "Assalamualaikum Warahmatullahi Wabarakatuh";
+
 export const LAILA_INVITE = {
   brideName: "Suhailah",
   groomName: "Hazziq",
   tagline: "Walimatul Urus",
+  fatherName: "Mohd Junid bin Masiran",
+  motherName: "Salina binti Shahar",
   invitation:
-    "Dengan penuh kesyukuran ke hadrat Ilahi, kami menjemput Dato’ / Datin / Tuan / Puan / Encik / Cik meriahkan majlis walimatul urus kami.",
-  groomFullName: "Muhammad Hazziq bin Ibrahim",
-  brideFullName: "Lailatul Suhailah binti Junid",
+    "Dengan penuh rasa syukur ke hadrat Allah S.W.T,\nkami dengan segala hormatnya menjemput\nDato’ / Datin / Tuan / Puan / Encik / Cik\nke majlis perkahwinan puteri kami",
+  coupleNote: "dengan pilihan hatinya",
+  groomFullName: "Muhammad Hazziq",
+  brideFullName: "Nur Lailatul Suhailah",
   dayLabel: "Sabtu",
   date: "12.12.2026",
-  timeLabel: "11:00 pagi – 4:00 petang",
+  timeLabel: "11:00 A.M. – 4:00 P.M.",
   venue: "Rinching Terrace Wedding & Event",
-  address: "",
+  address: "Kampung Rinching Hilir, Kajang",
   mapsUrl:
-    "https://www.google.com/maps/search/?api=1&query=Rinching+Terrace+Wedding+%26+Event",
-  wazeUrl: "https://www.waze.com/ul?q=Rinching%20Terrace%20Wedding%20%26%20Event&navigate=yes",
+    "https://www.google.com/maps/search/?api=1&query=Rinching+Terrace+Wedding+%26+Event+Kampung+Rinching+Hilir+Kajang",
+  wazeUrl:
+    "https://www.waze.com/ul?q=Rinching%20Terrace%20Wedding%20%26%20Event%20Kampung%20Rinching%20Hilir%20Kajang&navigate=yes",
   /** ISO local (Asia/Kuala_Lumpur). */
   weddingDateTime: "2026-12-12T11:00:00",
   /** Hours the majlis runs — used for calendar end time once a date is set. */
   durationHours: 5,
   footer: "Kehadiran dan doa restu anda amat dialu-alukan.",
 } as const;
+
+export type LailaAturcaraIcon = "rings" | "lantern" | "couple" | "moon";
+
+export type LailaAturcaraItem = {
+  time: string;
+  title: string;
+  icon: LailaAturcaraIcon;
+};
+
+export const LAILA_ATURCARA: readonly LailaAturcaraItem[] = [
+  { time: "8:00 AM", title: "Akad Nikah", icon: "rings" },
+  { time: "11:00 AM", title: "Majlis Bermula", icon: "lantern" },
+  { time: "12:00 PM", title: "Ketibaan Pengantin", icon: "couple" },
+  { time: "4:00 PM", title: "Majlis Berakhir", icon: "moon" },
+] as const;
 
 export type LailaWhatsappContact = {
   name: string;
@@ -76,7 +99,10 @@ export type LailaInvite = {
   brideName: string;
   groomName: string;
   tagline: string;
+  fatherName: string;
+  motherName: string;
   invitation: string;
+  coupleNote: string;
   groomFullName: string;
   brideFullName: string;
   dayLabel: string;
@@ -93,6 +119,12 @@ export type LailaInvite = {
 
 export function lailaCoupleLabel(invite: Pick<LailaInvite, "groomName" | "brideName"> = LAILA_INVITE): string {
   return `${invite.brideName} & ${invite.groomName}`;
+}
+
+export function lailaInvitationDetails(
+  invite: Pick<LailaInvite, "invitation" | "brideFullName" | "coupleNote" | "groomFullName"> = LAILA_INVITE,
+): string {
+  return `${invite.invitation}\n${invite.brideFullName}\n${invite.coupleNote}\n${invite.groomFullName}`;
 }
 
 export function lailaInviteForPreview(isPreview: boolean): LailaInvite {
@@ -162,7 +194,7 @@ export function getLailaGoogleCalendarUrl(invite: LailaInvite = LAILA_INVITE): s
     action: "TEMPLATE",
     text: `Walimatul Urus — ${lailaCoupleLabel(invite)}`,
     dates: `${toUtcStamp(start)}/${toUtcStamp(end)}`,
-    details: invite.invitation,
+    details: lailaInvitationDetails(invite),
     location: lailaEventLocation(invite),
   });
   return `https://calendar.google.com/calendar/render?${params.toString()}`;
@@ -185,7 +217,7 @@ export function downloadLailaIcs(invite: LailaInvite = LAILA_INVITE): void {
     `DTSTART:${toUtcStamp(start)}`,
     `DTEND:${toUtcStamp(end)}`,
     `SUMMARY:${escapeIcsText(title)}`,
-    `DESCRIPTION:${escapeIcsText(invite.invitation)}`,
+    `DESCRIPTION:${escapeIcsText(lailaInvitationDetails(invite))}`,
     `LOCATION:${escapeIcsText(lailaEventLocation(invite))}`,
     "END:VEVENT",
     "END:VCALENDAR",
