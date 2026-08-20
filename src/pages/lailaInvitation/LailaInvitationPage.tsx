@@ -100,7 +100,7 @@ export function LailaInvitationPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const { isPreview } = usePortfolioPreviewMode();
-  const { playFromStart } = useLailaMusic();
+  const { resume: resumeLailaMusic } = useLailaMusic();
   const isOpen = location.hash.replace(/^#/, "") === LAILA_DETAILS_HASH;
   const invite = lailaInviteForPreview(isPreview);
   const names = lailaCoupleLabel(invite);
@@ -172,9 +172,9 @@ export function LailaInvitationPage() {
   }, [isOpen]);
 
   const openInvitation = useCallback(() => {
-    playFromStart();
+    resumeLailaMusic();
     navigate({ pathname: location.pathname, hash: LAILA_DETAILS_HASH });
-  }, [location.pathname, navigate, playFromStart]);
+  }, [location.pathname, navigate, resumeLailaMusic]);
 
   const backToCover = useCallback(() => {
     navigate(LAILA_PATH);

@@ -23,7 +23,8 @@ function isLailaPublicPath(pathname: string): boolean {
 
 type LailaMusicContextValue = {
   playing: boolean;
-  playFromStart: () => void;
+  /** Play without seeking — use after navigation or on user gesture. */
+  resume: () => void;
   toggle: () => void;
 };
 
@@ -32,29 +33,50 @@ const LailaMusicContext = createContext<LailaMusicContextValue | null>(null);
 export function LailaMusicProvider({ children }: { children: ReactNode }) {
   const location = useLocation();
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const hasStartedRef = useRef(false);
+  const userPausedRef = useRef(false);
   const [playing, setPlaying] = useState(false);
   const isLaila = isLailaPublicPath(location.pathname);
   const isEmbed = readPortfolioPreviewSearch(location.search).isEmbed;
 
-  const playFromStart = useCallback(() => {
+  const resume = useCallback(() => {
     const el = audioRef.current;
-    if (!el || isEmbed) return;
+    if (!el || isEmbed || userPausedRef.current) return;
     el.volume = LAILA_MUSIC_VOLUME;
-    el.currentTime = 0;
-    void el.play().then(() => setPlaying(true)).catch(() => undefined);
+    if (el.paused) {
+      void el.play().then(() => setPlaying(true)).catch(() => undefined);
+    }
   }, [isEmbed]);
 
   const toggle = useCallback(() => {
     const el = audioRef.current;
     if (!el || isEmbed) return;
     if (el.paused) {
+      userPausedRef.current = false;
       el.volume = LAILA_MUSIC_VOLUME;
       void el.play().then(() => setPlaying(true)).catch(() => undefined);
       return;
     }
+    userPausedRef.current = true;
     el.pause();
     setPlaying(false);
   }, [isEmbed]);
+
+  useEffect(() => {
+    if (!isLaila || isEmbed) return;
+    const el = audioRef.current;
+    if (!el || userPausedRef.current) return;
+
+    el.volume = LAILA_MUSIC_VOLUME;
+    if (!hasStartedRef.current) {
+      hasStartedRef.current = true;
+      el.currentTime = 0;
+    }
+
+    if (el.paused) {
+      void el.play().then(() => setPlaying(true)).catch(() => undefined);
+    }
+  }, [isLaila, isEmbed, location.pathname]);
 
   useEffect(() => {
     if (isLaila) return;
@@ -62,11 +84,13 @@ export function LailaMusicProvider({ children }: { children: ReactNode }) {
     if (!el) return;
     el.pause();
     el.currentTime = 0;
+    hasStartedRef.current = false;
+    userPausedRef.current = false;
     setPlaying(false);
   }, [isLaila]);
 
   return (
-    <LailaMusicContext.Provider value={{ playing, playFromStart, toggle }}>
+    <LailaMusicContext.Provider value={{ playing, resume, toggle }}>
       <audio
         ref={audioRef}
         className="laila-music"
