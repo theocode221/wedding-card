@@ -131,14 +131,14 @@ function LailaMusicToggle({ playing, onToggle }: { playing: boolean; onToggle: (
       <span className="laila-music-toggle__spark laila-music-toggle__spark--3" aria-hidden />
       <svg className="laila-music-toggle__icon" viewBox="0 0 24 24" aria-hidden>
         {playing ? (
-          <path
-            fill="currentColor"
-            d="M9 5.2v13.6c0 .5-.6.8-1 .5L5.2 16H3.5A1.5 1.5 0 0 1 2 14.5v-5A1.5 1.5 0 0 1 3.5 8h1.7L8 5.7c.4-.3 1 0 1 .5Zm11.2 2.1-1.4 1.4a5.5 5.5 0 0 1 0 6.6l1.4 1.4a7.5 7.5 0 0 0 0-9.4ZM16.4 9.7 15 11.1a2.5 2.5 0 0 1 0 1.8l1.4 1.4a4.5 4.5 0 0 0 0-4.6Z"
-          />
+          <>
+            <path fill="currentColor" d="M6 5h3v14H6V5z" />
+            <path fill="currentColor" d="M15 5h3v14h-3V5z" />
+          </>
         ) : (
           <path
             fill="currentColor"
-            d="M9 5.2v13.6c0 .5-.6.8-1 .5L5.2 16H3.5A1.5 1.5 0 0 1 2 14.5v-5A1.5 1.5 0 0 1 3.5 8h1.7L8 5.7c.4-.3 1 0 1 .5Zm13.2.1-1.4 1.4-2.6 2.6-2.6 2.6-2.7 2.7-1.4 1.4 1.4 1.4 1.4-1.4 2.7-2.7 2.6-2.6 2.6-2.6 1.4-1.4Z"
+            d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"
           />
         )}
       </svg>
