@@ -1109,6 +1109,55 @@
   scroll-margin-top: 1.25rem;
 }
 
+.laila-music {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.laila-music-toggle {
+  position: fixed;
+  top: max(0.7rem, env(safe-area-inset-top));
+  right: max(0.7rem, env(safe-area-inset-right));
+  z-index: 50;
+  width: 2.35rem;
+  height: 2.35rem;
+  display: grid;
+  place-items: center;
+  appearance: none;
+  border: 1px solid rgba(92, 16, 28, 0.28);
+  border-radius: 999px;
+  background: rgba(246, 239, 228, 0.92);
+  color: var(--laila-maroon);
+  cursor: pointer;
+  box-shadow: 0 8px 22px rgba(58, 12, 20, 0.12);
+  backdrop-filter: blur(8px);
+}
+
+.laila-music-toggle svg {
+  width: 1.05rem;
+  height: 1.05rem;
+  display: block;
+}
+
+.laila-music-toggle.is-on {
+  border-color: color-mix(in srgb, var(--laila-gold) 55%, var(--laila-maroon));
+  color: var(--laila-maroon-deep);
+}
+
+.laila-music-toggle:hover,
+.laila-music-toggle:focus-visible {
+  border-color: var(--laila-maroon);
+  background: var(--laila-paper);
+}
+
+.laila-music-toggle:focus-visible {
+  outline: 2px solid var(--laila-gold);
+  outline-offset: 3px;
+}
+
 .laila-back-cover {
   position: fixed;
   top: max(0.7rem, env(safe-area-inset-top));

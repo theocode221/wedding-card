@@ -26,6 +26,7 @@ import { LailaPageDecor } from "./LailaPageDecor";
 import { LailaUcapanSpotlight } from "./LailaUcapanSpotlight";
 import { StudioCredit } from "../../components/studio/StudioCredit";
 import { usePortfolioPreviewMode } from "../../hooks/usePortfolioPreviewMode";
+import { useLailaMusic } from "./LailaMusicContext";
 import "./laila-invitation.css";
 
 const LETTER_STAGGER_S = 0.08;
@@ -99,6 +100,7 @@ export function LailaInvitationPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const { isPreview } = usePortfolioPreviewMode();
+  const { playFromStart } = useLailaMusic();
   const isOpen = location.hash.replace(/^#/, "") === LAILA_DETAILS_HASH;
   const invite = lailaInviteForPreview(isPreview);
   const names = lailaCoupleLabel(invite);
@@ -170,8 +172,9 @@ export function LailaInvitationPage() {
   }, [isOpen]);
 
   const openInvitation = useCallback(() => {
+    playFromStart();
     navigate({ pathname: location.pathname, hash: LAILA_DETAILS_HASH });
-  }, [location.pathname, navigate]);
+  }, [location.pathname, navigate, playFromStart]);
 
   const backToCover = useCallback(() => {
     navigate(LAILA_PATH);
