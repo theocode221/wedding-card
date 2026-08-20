@@ -100,7 +100,7 @@ export function LailaInvitationPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const { isPreview } = usePortfolioPreviewMode();
-  const { resume: resumeLailaMusic, blocked: lailaMusicBlocked } = useLailaMusic();
+  const { playFromStart: playLailaMusic } = useLailaMusic();
   const isOpen = location.hash.replace(/^#/, "") === LAILA_DETAILS_HASH;
   const invite = lailaInviteForPreview(isPreview);
   const names = lailaCoupleLabel(invite);
@@ -172,9 +172,9 @@ export function LailaInvitationPage() {
   }, [isOpen]);
 
   const openInvitation = useCallback(() => {
-    resumeLailaMusic();
+    playLailaMusic();
     navigate({ pathname: location.pathname, hash: LAILA_DETAILS_HASH });
-  }, [location.pathname, navigate, resumeLailaMusic]);
+  }, [location.pathname, navigate, playLailaMusic]);
 
   const backToCover = useCallback(() => {
     navigate(LAILA_PATH);
@@ -190,7 +190,7 @@ export function LailaInvitationPage() {
   return (
     <div className={`laila-page${isOpen ? " laila-page--details" : " laila-page--cover"}`} lang="ms">
       {!isOpen ? (
-      <header className="laila-cover" onPointerDown={resumeLailaMusic}>
+      <header className="laila-cover">
         <div className="laila-cover__garlands" aria-hidden>
           <img
             className="laila-garland laila-garland--top"
@@ -249,11 +249,6 @@ export function LailaInvitationPage() {
             <p className="laila-cover__venue" style={{ animationDelay: `${venueDelay}s` }}>
               {invite.venue}, Kajang
             </p>
-            {lailaMusicBlocked ? (
-              <p className="laila-cover__music-hint" aria-live="polite">
-                Ketuk skrin untuk muzik
-              </p>
-            ) : null}
             <button
               type="button"
               className="laila-cover__open"
