@@ -23,7 +23,8 @@ function isLailaPublicPath(pathname: string): boolean {
 
 type LailaMusicContextValue = {
   playing: boolean;
-  /** Play without seeking — use after navigation or on user gesture. */
+  /** Autoplay was blocked — waiting for a tap. */
+  blocked: boolean;
   resume: () => void;
   toggle: () => void;
 };
@@ -36,36 +37,13 @@ export function LailaMusicProvider({ children }: { children: ReactNode }) {
   const hasStartedRef = useRef(false);
   const userPausedRef = useRef(false);
   const [playing, setPlaying] = useState(false);
+  const [blocked, setBlocked] = useState(false);
   const isLaila = isLailaPublicPath(location.pathname);
   const isEmbed = readPortfolioPreviewSearch(location.search).isEmbed;
 
-  const resume = useCallback(() => {
+  const tryPlay = useCallback(async () => {
     const el = audioRef.current;
-    if (!el || isEmbed || userPausedRef.current) return;
-    el.volume = LAILA_MUSIC_VOLUME;
-    if (el.paused) {
-      void el.play().then(() => setPlaying(true)).catch(() => undefined);
-    }
-  }, [isEmbed]);
-
-  const toggle = useCallback(() => {
-    const el = audioRef.current;
-    if (!el || isEmbed) return;
-    if (el.paused) {
-      userPausedRef.current = false;
-      el.volume = LAILA_MUSIC_VOLUME;
-      void el.play().then(() => setPlaying(true)).catch(() => undefined);
-      return;
-    }
-    userPausedRef.current = true;
-    el.pause();
-    setPlaying(false);
-  }, [isEmbed]);
-
-  useEffect(() => {
-    if (!isLaila || isEmbed) return;
-    const el = audioRef.current;
-    if (!el || userPausedRef.current) return;
+    if (!el || isEmbed || userPausedRef.current) return false;
 
     el.volume = LAILA_MUSIC_VOLUME;
     if (!hasStartedRef.current) {
@@ -73,10 +51,59 @@ export function LailaMusicProvider({ children }: { children: ReactNode }) {
       el.currentTime = 0;
     }
 
-    if (el.paused) {
-      void el.play().then(() => setPlaying(true)).catch(() => undefined);
+    if (!el.paused) {
+      setBlocked(false);
+      return true;
     }
-  }, [isLaila, isEmbed, location.pathname]);
+
+    try {
+      await el.play();
+      setPlaying(true);
+      setBlocked(false);
+      return true;
+    } catch {
+      setBlocked(true);
+      return false;
+    }
+  }, [isEmbed]);
+
+  const resume = useCallback(() => {
+    void tryPlay();
+  }, [tryPlay]);
+
+  const toggle = useCallback(() => {
+    const el = audioRef.current;
+    if (!el || isEmbed) return;
+    if (el.paused) {
+      userPausedRef.current = false;
+      void tryPlay();
+      return;
+    }
+    userPausedRef.current = true;
+    el.pause();
+    setPlaying(false);
+  }, [isEmbed, tryPlay]);
+
+  useEffect(() => {
+    if (!isLaila || isEmbed) return;
+    void tryPlay();
+  }, [isLaila, isEmbed, location.pathname, tryPlay]);
+
+  useEffect(() => {
+    if (!blocked || !isLaila || isEmbed) return;
+
+    const unlock = () => {
+      if (userPausedRef.current) return;
+      void tryPlay();
+    };
+
+    document.addEventListener("pointerdown", unlock, { passive: true });
+    document.addEventListener("touchstart", unlock, { passive: true });
+    return () => {
+      document.removeEventListener("pointerdown", unlock);
+      document.removeEventListener("touchstart", unlock);
+    };
+  }, [blocked, isLaila, isEmbed, tryPlay]);
 
   useEffect(() => {
     if (isLaila) return;
@@ -87,34 +114,49 @@ export function LailaMusicProvider({ children }: { children: ReactNode }) {
     hasStartedRef.current = false;
     userPausedRef.current = false;
     setPlaying(false);
+    setBlocked(false);
   }, [isLaila]);
 
   return (
-    <LailaMusicContext.Provider value={{ playing, resume, toggle }}>
+    <LailaMusicContext.Provider value={{ playing, blocked, resume, toggle }}>
       <audio
         ref={audioRef}
         className="laila-music"
         src={LAILA_MUSIC_URL}
         loop
         preload="auto"
+        playsInline
         aria-hidden
-        onPlay={() => setPlaying(true)}
+        onPlay={() => {
+          setPlaying(true);
+          setBlocked(false);
+        }}
         onPause={() => setPlaying(false)}
       />
-      {isLaila && !isEmbed ? <LailaMusicToggle playing={playing} onToggle={toggle} /> : null}
+      {isLaila && !isEmbed ? (
+        <LailaMusicToggle playing={playing} blocked={blocked} onToggle={toggle} />
+      ) : null}
       {children}
     </LailaMusicContext.Provider>
   );
 }
 
-function LailaMusicToggle({ playing, onToggle }: { playing: boolean; onToggle: () => void }) {
+function LailaMusicToggle({
+  playing,
+  blocked,
+  onToggle,
+}: {
+  playing: boolean;
+  blocked: boolean;
+  onToggle: () => void;
+}) {
   return (
     <button
       type="button"
-      className={`laila-music-toggle${playing ? " is-on" : ""}`}
+      className={`laila-music-toggle${playing ? " is-on" : ""}${blocked ? " is-blocked" : ""}`}
       onClick={onToggle}
       aria-pressed={playing}
-      aria-label={playing ? "Hentikan lagu" : "Mainkan lagu"}
+      aria-label={playing ? "Hentikan lagu" : blocked ? "Ketuk untuk mainkan lagu" : "Mainkan lagu"}
     >
       {playing ? (
         <svg viewBox="0 0 24 24" aria-hidden>
@@ -131,6 +173,7 @@ function LailaMusicToggle({ playing, onToggle }: { playing: boolean; onToggle: (
           />
         </svg>
       )}
+      {!playing && blocked ? <span className="laila-music-toggle__hint">Muzik</span> : null}
     </button>
   );
 }
