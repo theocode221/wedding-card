@@ -1291,20 +1291,24 @@
   top: max(0.7rem, env(safe-area-inset-top));
   left: max(0.7rem, env(safe-area-inset-left));
   z-index: 40;
+  width: 2.45rem;
+  height: 2.45rem;
+  display: grid;
+  place-items: center;
   appearance: none;
   border: 1px solid rgba(92, 16, 28, 0.28);
   border-radius: 999px;
   background: rgba(246, 239, 228, 0.92);
   color: var(--laila-maroon);
-  font-family: var(--laila-font-display);
-  font-size: 0.58rem;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  padding: 0.62em 0.95em;
   cursor: pointer;
   box-shadow: 0 8px 22px rgba(58, 12, 20, 0.12);
   backdrop-filter: blur(8px);
+}
+
+.laila-back-cover__icon {
+  width: 1.05rem;
+  height: 1.05rem;
+  display: block;
 }
 
 .laila-back-cover:hover,

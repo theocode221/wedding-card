@@ -430,8 +430,18 @@ export function LailaInvitationPage() {
           </ScrollReveal>
         </div>
       </main>
-      <button type="button" className="laila-back-cover" onClick={backToCover}>
-        ← Kembali ke kad
+      <button
+        type="button"
+        className="laila-back-cover"
+        onClick={backToCover}
+        aria-label="Kembali ke kad"
+      >
+        <svg className="laila-back-cover__icon" viewBox="0 0 24 24" aria-hidden>
+          <path
+            fill="currentColor"
+            d="M10.8 5.2 4 12l6.8 6.8 1.4-1.4L7.8 13H20v-2H7.8l4.4-4.4-1.4-1.4z"
+          />
+        </svg>
       </button>
       </>
       )}
