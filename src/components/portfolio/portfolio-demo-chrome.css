@@ -1,0 +1,36 @@
+.portfolio-back-catalog {
+  position: fixed;
+  top: 0.85rem;
+  right: 0.85rem;
+  z-index: 40;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid rgba(28, 24, 20, 0.14);
+  background: rgba(255, 252, 248, 0.92);
+  color: #2a241c;
+  font-family: "Outfit", "Source Sans 3", system-ui, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  box-shadow: 0 8px 20px rgba(28, 24, 20, 0.12);
+  backdrop-filter: blur(8px);
+}
+
+.portfolio-back-catalog:hover,
+.portfolio-back-catalog:focus-visible {
+  background: #fff;
+  color: #1a1612;
+}
+
+.portfolio-back-catalog:focus-visible {
+  outline: 2px solid #b0893a;
+  outline-offset: 2px;
+}
+
+html.portfolio-embed .portfolio-back-catalog {
+  display: none !important;
+}

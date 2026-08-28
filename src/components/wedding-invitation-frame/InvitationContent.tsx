@@ -1,11 +1,21 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import {
+  PORTFOLIO_DEMO_ADDRESS,
+  PORTFOLIO_DEMO_COUPLE_DISPLAY,
+  PORTFOLIO_DEMO_DATE_LONG,
+  PORTFOLIO_DEMO_MAPS_URL,
+  PORTFOLIO_DEMO_VENUE,
+  PORTFOLIO_DEMO_WAZE_URL,
+  PORTFOLIO_DEMO_WEDDING_ISO,
+} from "../../data/portfolioDemoNames";
 import {
   INVITATION_PATH_DEFAULT,
   skinFromInvitationPath,
   type InvitationFlowState,
   type InvitationFramePath,
 } from "../../lib/invitationFlow";
+import { withPortfolioSearch } from "../../lib/portfolioPreview";
 import { WEDDING_EVENT_START_ISO } from "../../lib/weddingCalendar";
 import { WhatsAppContactLink } from "../shared/WhatsAppContactLink";
 import { getRemaining, pad } from "../shared/countdownUtils";
@@ -18,18 +28,35 @@ export type InvitationContentProps = {
   invitationFlowBase?: InvitationFramePath;
   /** Override couple names in hero + footer (e.g. demo). */
   coupleDisplayName?: string;
+  /** Strip real client venue, address, contacts, calendar location. */
+  demoMode?: boolean;
 };
 
-const LOCATION_QUERY = encodeURIComponent("Hotel Pintar Parit Raja");
-const GOOGLE_MAPS_URL = `https://www.google.com/maps/search/?api=1&query=${LOCATION_QUERY}`;
-const WAZE_URL = `https://www.waze.com/ul?q=${LOCATION_QUERY}&navigate=yes`;
+const LIVE_VENUE = "Hotel Pintar Parit Raja";
+const LIVE_ADDRESS = "Parit Raja, 86400, Johor, Malaysia";
+const LIVE_DATE = "27 September 2026";
+const LIVE_DATE_DETAIL = "Ahad, 27 September 2026";
+const LIVE_LOCATION_QUERY = encodeURIComponent("Hotel Pintar Parit Raja");
+const LIVE_GOOGLE_MAPS_URL = `https://www.google.com/maps/search/?api=1&query=${LIVE_LOCATION_QUERY}`;
+const LIVE_WAZE_URL = `https://www.waze.com/ul?q=${LIVE_LOCATION_QUERY}&navigate=yes`;
 
 export function InvitationContent({
   onReplay,
   invitationFlowBase = INVITATION_PATH_DEFAULT,
-  coupleDisplayName = "NAIM & NADHIRAH",
+  coupleDisplayName,
+  demoMode = false,
 }: InvitationContentProps) {
-  const target = useMemo(() => new Date(WEDDING_EVENT_START_ISO), []);
+  const location = useLocation();
+  const names = coupleDisplayName ?? (demoMode ? PORTFOLIO_DEMO_COUPLE_DISPLAY : "NAIM & NADHIRAH");
+  const venue = demoMode ? PORTFOLIO_DEMO_VENUE : LIVE_VENUE;
+  const address = demoMode ? PORTFOLIO_DEMO_ADDRESS : LIVE_ADDRESS;
+  const heroDate = demoMode ? PORTFOLIO_DEMO_DATE_LONG.replace(/^[^,]+,\s*/, "") : LIVE_DATE;
+  const detailDate = demoMode ? PORTFOLIO_DEMO_DATE_LONG : LIVE_DATE_DETAIL;
+  const mapsUrl = demoMode ? PORTFOLIO_DEMO_MAPS_URL : LIVE_GOOGLE_MAPS_URL;
+  const wazeUrl = demoMode ? PORTFOLIO_DEMO_WAZE_URL : LIVE_WAZE_URL;
+  const countdownIso = demoMode ? PORTFOLIO_DEMO_WEDDING_ISO : WEDDING_EVENT_START_ISO;
+
+  const target = useMemo(() => new Date(countdownIso), [countdownIso]);
   const satelliteState = useMemo<InvitationFlowState>(
     () => ({
       invitationReturnPath: invitationFlowBase,
@@ -37,6 +64,7 @@ export function InvitationContent({
     }),
     [invitationFlowBase],
   );
+  const rsvpTo = withPortfolioSearch("/rsvp", location.search);
   const [tick, setTick] = useState(() => getRemaining(target, new Date()));
   const [isLocationMenuOpen, setIsLocationMenuOpen] = useState(false);
   const locationMenuRef = useRef<HTMLDivElement | null>(null);
@@ -76,10 +104,10 @@ export function InvitationContent({
   return (
     <div className="wif-invitation">
       <header className="wif-invitation__hero">
-        <NnMonogramLogo className="wif-invitation__monogram" />
+        {demoMode ? null : <NnMonogramLogo className="wif-invitation__monogram" />}
         <p className="wif-invitation__hero-eyebrow">Jemputan Majlis Akad Nikah</p>
-        <h1 className="wif-invitation__names">{coupleDisplayName}</h1>
-        <p className="wif-invitation__hero-date">27 September 2026</p>
+        <h1 className="wif-invitation__names">{names}</h1>
+        <p className="wif-invitation__hero-date">{heroDate}</p>
         <p className="wif-invitation__hero-line">
           Dengan penuh kesyukuran, kami menjemput anda ke majlis kami
         </p>
@@ -96,7 +124,7 @@ export function InvitationContent({
         <ul className="wif-invitation__detail-list">
           <li>
             <span className="wif-invitation__detail-label">Tarikh</span>
-            <span className="wif-invitation__detail-value">Ahad, 27 September 2026</span>
+            <span className="wif-invitation__detail-value">{detailDate}</span>
           </li>
           <li>
             <span className="wif-invitation__detail-label">Masa</span>
@@ -104,12 +132,11 @@ export function InvitationContent({
           </li>
           <li>
             <span className="wif-invitation__detail-label">Tempat</span>
-            <span className="wif-invitation__detail-value">Hotel Pintar Parit Raja</span>
+            <span className="wif-invitation__detail-value">{venue}</span>
           </li>
           <li>
             <span className="wif-invitation__detail-label">Alamat</span>
-            <span className="wif-invitation__detail-value">
-              Parit Raja, 86400, Johor, Malaysia</span>
+            <span className="wif-invitation__detail-value">{address}</span>
           </li>
         </ul>
         <div className="wif-invitation__location" ref={locationMenuRef}>
@@ -129,7 +156,7 @@ export function InvitationContent({
             <div id="wif-location-panel" className="wif-invitation__location-panel">
               <a
                 className="wif-invitation__btn wif-invitation__btn--location-opt"
-                href={WAZE_URL}
+                href={wazeUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setIsLocationMenuOpen(false)}
@@ -138,7 +165,7 @@ export function InvitationContent({
               </a>
               <a
                 className="wif-invitation__btn wif-invitation__btn--location-opt"
-                href={GOOGLE_MAPS_URL}
+                href={mapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setIsLocationMenuOpen(false)}
@@ -148,7 +175,7 @@ export function InvitationContent({
             </div>
           ) : null}
         </div>
-        <AddToCalendar />
+        <AddToCalendar demoMode={demoMode} />
       </section>
 
       <section className="wif-invitation__note" aria-labelledby="wif-note-heading">
@@ -197,7 +224,7 @@ export function InvitationContent({
           Sila sahkan kehadiran anda. Jawapan anda membantu kami merancang majlis dengan lebih baik
         </p>
         <Link
-          to="/rsvp"
+          to={rsvpTo}
           state={satelliteState}
           className="wif-invitation__btn wif-invitation__btn--gold wif-invitation__btn--rsvp"
         >
@@ -213,13 +240,13 @@ export function InvitationContent({
           </button>
         </div>
         <div className="wif-invitation__contact">
-          <WhatsAppContactLink />
+          <WhatsAppContactLink demo={demoMode} />
         </div>
       </div>
 
       <footer className="wif-invitation__footer">
         <p>Dengan penuh kasih sayang, kami yang menantikan hari bahagia.</p>
-        <p className="wif-invitation__footer-sign">{coupleDisplayName}</p>
+        <p className="wif-invitation__footer-sign">{names}</p>
       </footer>
     </div>
   );

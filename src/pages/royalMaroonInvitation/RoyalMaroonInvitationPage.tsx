@@ -1,4 +1,5 @@
 import { useCallback, useEffect } from "react";
+import { PortfolioBackToCatalog } from "../../components/portfolio/PortfolioBackToCatalog";
 import { RoyalMaroonTheme } from "../../templates/RoyalMaroonTheme/RoyalMaroonTheme";
 import { usePortfolioPreviewMode } from "../../hooks/usePortfolioPreviewMode";
 import {
@@ -24,9 +25,14 @@ export function RoyalMaroonInvitationPage() {
   }, [invite]);
 
   const onRsvp = useCallback(() => {
-    const href = royalMaroonRsvpWhatsappUrl(invite);
-    window.open(href, "_blank", "noopener,noreferrer");
-  }, [invite]);
+    if (isPreview) return;
+    window.open(royalMaroonRsvpWhatsappUrl(invite), "_blank", "noopener,noreferrer");
+  }, [invite, isPreview]);
 
-  return <RoyalMaroonTheme event={invite} onRsvp={onRsvp} />;
+  return (
+    <>
+      <PortfolioBackToCatalog />
+      <RoyalMaroonTheme event={invite} onRsvp={onRsvp} />
+    </>
+  );
 }

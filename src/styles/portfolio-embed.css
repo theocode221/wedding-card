@@ -13,8 +13,13 @@ html.portfolio-embed .ucapan-home-link,
 html.portfolio-embed .laila-back-cover,
 html.portfolio-embed .doodle-back-cover,
 html.portfolio-embed .doodle-cover__open,
+html.portfolio-embed .travellers-back-cover,
+html.portfolio-embed .travellers-cover__open,
+html.portfolio-embed .cafe-back-cover,
+html.portfolio-embed .cafe-cover__open,
 html.portfolio-embed .ci-open,
 html.portfolio-embed .ci-skip,
-html.portfolio-embed .ci-details-cta {
+html.portfolio-embed .ci-details-cta,
+html.portfolio-embed .portfolio-back-catalog {
   display: none !important;
 }

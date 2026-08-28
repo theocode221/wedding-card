@@ -26,7 +26,7 @@ export const PORTFOLIO_CATEGORIES: readonly { id: PortfolioCategory; label: stri
 export const PORTFOLIO_ITEMS: readonly PortfolioItem[] = [
   {
     id: "laila",
-    title: "Laila — Maroon Tradisional",
+    title: "Maroon Tradisional",
     description: "Latar oval maroon, nama tulisan tangan, RSVP, galeri & ucapan tetamu.",
     path: "/laila",
     category: "jemputan",
@@ -64,8 +64,28 @@ export const PORTFOLIO_ITEMS: readonly PortfolioItem[] = [
     category: "jemputan",
     previewImage: publicUrl("demo/doodle.png"),
     posterHasCopy: true,
-    showOnDemo: true,
+    showOnDemo: false,
     tags: ["Doodle", "Pastel"],
+  },
+  {
+    id: "travellers",
+    title: "Travellers — Boarding Pass",
+    description: "Tema travel dengan boarding pass, flight path, backpack & passport stamps.",
+    path: "/travellers",
+    category: "jemputan",
+    previewGradient: "linear-gradient(155deg, #d7e7f2 0%, #f3efe6 48%, #1c2f4a 100%)",
+    showOnDemo: false,
+    tags: ["Travel", "RSVP"],
+  },
+  {
+    id: "cafe",
+    title: "Café — Today's Special",
+    description: "Menu café, steam, dan suasana date-night — RSVP & countdown.",
+    path: "/cafe",
+    category: "jemputan",
+    previewGradient: "linear-gradient(155deg, #d9e2d8 0%, #f4efe6 48%, #1f1410 100%)",
+    showOnDemo: false,
+    tags: ["Cafe", "RSVP"],
   },
   {
     id: "maroon-gold",

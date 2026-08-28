@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { PortfolioBackToCatalog } from "../components/portfolio/PortfolioBackToCatalog";
 import { CinematicInvitation } from "../components/wedding-invitation-frame/CinematicInvitation";
 import { MaroonBokehDrift } from "../components/wedding-invitation-frame/MaroonBokehDrift";
 import { InvitationContent } from "../components/wedding-invitation-frame/InvitationContent";
@@ -7,6 +8,7 @@ import { INVITATION_PATH_MAROON } from "../lib/invitationFlow";
 import { useInvitationMusic } from "../context/InvitationMusicContext";
 import { usePortfolioPreviewMode } from "../hooks/usePortfolioPreviewMode";
 import { PORTFOLIO_DEMO_CINEMATIC_COPY, PORTFOLIO_DEMO_COUPLE_DISPLAY } from "../data/portfolioDemoNames";
+import { NAIM_NADHIRAH_CINEMATIC_COPY } from "../data/cinematicInvitationCopy";
 import {
   preloadWeddingInvitationHero,
   preloadWeddingInvitationFrames,
@@ -115,12 +117,12 @@ export function WeddingInvitationFrameMaroonPage() {
 
   const handleReplay = useCallback(() => {
     stopInvitationMusic();
-    navigate(location.pathname, { replace: true, state: {} });
+    navigate({ pathname: location.pathname, search: location.search }, { replace: true, state: {} });
     setShowInvitation(false);
     setInviteShellIn(false);
     setCinematicKey((k) => k + 1);
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [navigate, location.pathname, stopInvitationMusic]);
+  }, [navigate, location.pathname, location.search, stopInvitationMusic]);
 
   const skipCinematic = skipFromState || skipFromQuery;
 
@@ -135,6 +137,7 @@ export function WeddingInvitationFrameMaroonPage() {
         .filter(Boolean)
         .join(" ")}
     >
+      <PortfolioBackToCatalog />
       {!assetsReady && (
         <div className="wif-loading-overlay" role="status" aria-live="polite">
           <div className="wif-loading">
@@ -148,7 +151,7 @@ export function WeddingInvitationFrameMaroonPage() {
         <CinematicInvitation
           key={cinematicKey}
           urls={urls}
-          copy={isPreview ? PORTFOLIO_DEMO_CINEMATIC_COPY : undefined}
+          copy={isPreview ? PORTFOLIO_DEMO_CINEMATIC_COPY : NAIM_NADHIRAH_CINEMATIC_COPY}
           onComplete={handleCinematicComplete}
           onOpenCinematic={playFromStart}
           decorMidLayer={<MaroonBokehDrift />}
@@ -170,7 +173,8 @@ export function WeddingInvitationFrameMaroonPage() {
           <InvitationContent
             onReplay={handleReplay}
             invitationFlowBase={INVITATION_PATH_MAROON}
-            coupleDisplayName={isPreview ? PORTFOLIO_DEMO_COUPLE_DISPLAY : undefined}
+            coupleDisplayName={isPreview ? PORTFOLIO_DEMO_COUPLE_DISPLAY : "NAIM & NADHIRAH"}
+            demoMode={isPreview}
           />
         </div>
       )}

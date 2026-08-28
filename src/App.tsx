@@ -26,6 +26,8 @@ import { LailaDashboardPage } from "./pages/lailaInvitation/LailaDashboardPage";
 import { PortfolioPage } from "./pages/portfolio/PortfolioPage";
 import { PortfolioAdminPage } from "./pages/portfolio/PortfolioAdminPage";
 import { DoodleInvitationPage } from "./pages/doodleInvitation/DoodleInvitationPage";
+import { TravellersInvitationPage } from "./pages/travellersInvitation/TravellersInvitationPage";
+import { CafeInvitationPage } from "./pages/cafeInvitation/CafeInvitationPage";
 
 const routerBasename =
   import.meta.env.BASE_URL === "/" ? undefined : import.meta.env.BASE_URL.replace(/\/$/, "");
@@ -47,6 +49,8 @@ export default function App() {
             <Route path="/laila/papan" element={<LailaDashboardPage />} />
             <Route path="/doodle" element={<DoodleInvitationPage />} />
             <Route path="/doodle-pastel" element={<DoodleInvitationPage variant="pastel" />} />
+            <Route path="/travellers" element={<TravellersInvitationPage />} />
+            <Route path="/cafe" element={<CafeInvitationPage />} />
             <Route path="/theocodewedding" element={<PortfolioPage />} />
             <Route path="/theocodewedding/admin" element={<PortfolioAdminPage />} />
             <Route path="/portfolio" element={<Navigate to="/theocodewedding" replace />} />

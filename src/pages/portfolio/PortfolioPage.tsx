@@ -1,25 +1,28 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { PortfolioLivePreview } from "../../components/portfolio/PortfolioLivePreview";
+import { PORTFOLIO_ITEMS } from "../../data/portfolioCatalog";
 import {
-  PORTFOLIO_CATEGORIES,
-  PORTFOLIO_ITEMS,
-  type PortfolioCategory,
-} from "../../data/portfolioCatalog";
-import { STUDIO_HANDLE, STUDIO_NAME, STUDIO_PACKAGES_COMING_SOON, STUDIO_TAGLINE } from "../../data/studioBrand";
+  STUDIO_HANDLE,
+  STUDIO_NAME,
+  STUDIO_PACKAGES,
+  STUDIO_UI,
+  STUDIO_WHATSAPP_DISPLAY,
+  STUDIO_WHATSAPP_URL,
+  studioText,
+  type StudioLocale,
+} from "../../data/studioBrand";
 import { useHiddenPortfolioIds } from "../../hooks/useHiddenPortfolioIds";
-import { usePortfolioDescriptions } from "../../hooks/usePortfolioDescriptions";
-import { resolvedPortfolioDescription } from "../../lib/portfolioDescriptions";
 import { buildPortfolioDemoPath, buildPortfolioEmbedPath } from "../../lib/portfolioPreview";
+import { LAILA_DASHBOARD_PATH } from "../lailaInvitation/lailaInviteData";
 import "../../styles/portfolio.css";
 
 const PAGE_TITLE = `${STUDIO_NAME} — Portfolio`;
 
 export function PortfolioPage() {
   const hiddenIds = useHiddenPortfolioIds();
-  const descriptions = usePortfolioDescriptions();
-  const [activeCategory, setActiveCategory] = useState<PortfolioCategory | "all">("all");
   const [playingId, setPlayingId] = useState<string | null>(null);
+  const [locale, setLocale] = useState<StudioLocale>("en");
 
   useEffect(() => {
     const prev = document.title;
@@ -29,14 +32,13 @@ export function PortfolioPage() {
     };
   }, []);
 
-  const filtered = useMemo(() => {
-    const visible = PORTFOLIO_ITEMS.filter((item) => !hiddenIds.includes(item.id));
-    if (activeCategory === "all") return visible;
-    return visible.filter((item) => item.category === activeCategory);
-  }, [activeCategory, hiddenIds]);
+  const items = useMemo(
+    () => PORTFOLIO_ITEMS.filter((item) => !hiddenIds.includes(item.id)),
+    [hiddenIds],
+  );
 
   return (
-    <main className="portfolio-page" lang="ms">
+    <main className="portfolio-page" lang={locale === "ms" ? "ms" : "en"}>
       <div className="portfolio-page__decor" aria-hidden>
         <span className="portfolio-page__corner portfolio-page__corner--tl" />
         <span className="portfolio-page__corner portfolio-page__corner--tr" />
@@ -46,36 +48,30 @@ export function PortfolioPage() {
 
       <div className="portfolio-page__inner">
         <header className="portfolio-hero">
-          <p className="portfolio-hero__eyebrow">@{STUDIO_HANDLE}</p>
+          <div className="portfolio-hero__top">
+            <p className="portfolio-hero__eyebrow">@{STUDIO_HANDLE}</p>
+            <div className="portfolio-lang" role="group" aria-label="Language">
+              <button
+                type="button"
+                className={locale === "en" ? "is-active" : undefined}
+                onClick={() => setLocale("en")}
+              >
+                {STUDIO_UI.langEn.en}
+              </button>
+              <button
+                type="button"
+                className={locale === "ms" ? "is-active" : undefined}
+                onClick={() => setLocale("ms")}
+              >
+                {STUDIO_UI.langMs.ms}
+              </button>
+            </div>
+          </div>
           <h1 className="portfolio-hero__title">{STUDIO_NAME}</h1>
-          <p className="portfolio-hero__lead">{STUDIO_TAGLINE}</p>
-          <p className="portfolio-hero__note">
-            Hover atau ketik play untuk animasi · Nama demo: Nama &amp; Nama
-          </p>
         </header>
 
-        <nav className="portfolio-filters" aria-label="Tapis reka bentuk">
-          <button
-            type="button"
-            className={activeCategory === "all" ? "is-active" : undefined}
-            onClick={() => setActiveCategory("all")}
-          >
-            Semua
-          </button>
-          {PORTFOLIO_CATEGORIES.map((cat) => (
-            <button
-              key={cat.id}
-              type="button"
-              className={activeCategory === cat.id ? "is-active" : undefined}
-              onClick={() => setActiveCategory(cat.id)}
-            >
-              {cat.label}
-            </button>
-          ))}
-        </nav>
-
         <ul className="portfolio-grid">
-          {filtered.map((item) => {
+          {items.map((item) => {
             const playing = playingId === item.id;
             return (
               <li
@@ -100,23 +96,13 @@ export function PortfolioPage() {
                           setPlayingId(item.id);
                         }}
                       >
-                        Main pratonton
+                        {studioText(STUDIO_UI.playPreview, locale)}
                       </button>
                     ) : null}
                   </div>
                   <div className="portfolio-card__body">
                     <h2 className="portfolio-card__title">{item.title}</h2>
-                    <p className="portfolio-card__desc">
-                      {resolvedPortfolioDescription(item.id, item.description, descriptions)}
-                    </p>
-                    {item.tags?.length ? (
-                      <ul className="portfolio-card__tags">
-                        {item.tags.map((tag) => (
-                          <li key={tag}>{tag}</li>
-                        ))}
-                      </ul>
-                    ) : null}
-                    <span className="portfolio-card__cta">Buka demo →</span>
+                    <span className="portfolio-card__cta">{studioText(STUDIO_UI.openDemo, locale)}</span>
                   </div>
                 </Link>
               </li>
@@ -124,23 +110,59 @@ export function PortfolioPage() {
           })}
         </ul>
 
-        <section className="portfolio-packages" aria-labelledby="portfolio-packages-title">
-          <p className="portfolio-packages__kicker">Pakej</p>
-          <h2 id="portfolio-packages-title" className="portfolio-packages__title">
-            Harga &amp; pakej
+        <p className="portfolio-more-note">{studioText(STUDIO_UI.moreDesigns, locale)}</p>
+
+        <section className="portfolio-dashboard-demo" aria-labelledby="portfolio-dashboard-title">
+          <h2 id="portfolio-dashboard-title" className="portfolio-dashboard-demo__title">
+            {studioText(STUDIO_UI.dashboardTitle, locale)}
           </h2>
-          {STUDIO_PACKAGES_COMING_SOON ? (
-            <p className="portfolio-packages__soon">
-              Senarai pakej dan harga akan ditambah tidak lama lagi. Hubungi{" "}
-              <span className="portfolio-packages__handle">@{STUDIO_HANDLE}</span> untuk sebut
-              harga.
-            </p>
-          ) : null}
+          <p className="portfolio-dashboard-demo__blurb">
+            {studioText(STUDIO_UI.dashboardBlurb, locale)}
+          </p>
+          <Link
+            to={buildPortfolioDemoPath(LAILA_DASHBOARD_PATH)}
+            className="portfolio-dashboard-demo__cta"
+          >
+            {studioText(STUDIO_UI.dashboardCta, locale)}
+          </Link>
+        </section>
+
+        <section className="portfolio-packages" aria-labelledby="portfolio-packages-title">
+          <h2 id="portfolio-packages-title" className="portfolio-packages__title">
+            {studioText(STUDIO_UI.pricingTitle, locale)}
+          </h2>
+          <ul className="portfolio-packages__list">
+            {STUDIO_PACKAGES.map((pack) => (
+              <li key={pack.id} className="portfolio-packages__card">
+                <div className="portfolio-packages__card-top">
+                  <p className="portfolio-packages__name">{studioText(pack.name, locale)}</p>
+                  <p className="portfolio-packages__price">{pack.priceLabel}</p>
+                </div>
+                <p className="portfolio-packages__blurb">{studioText(pack.blurb, locale)}</p>
+                <ul className="portfolio-packages__features">
+                  {pack.features.map((feature) => (
+                    <li key={feature.en}>{studioText(feature, locale)}</li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
+          <p className="portfolio-packages__contact">
+            {studioText(STUDIO_UI.bookAsk, locale)}{" "}
+            <a
+              className="portfolio-packages__whatsapp"
+              href={STUDIO_WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              WhatsApp {STUDIO_WHATSAPP_DISPLAY}
+            </a>
+          </p>
         </section>
 
         <footer className="portfolio-footer">
           <Link to="/" className="portfolio-footer__back">
-            ← Kembali
+            {studioText(STUDIO_UI.back, locale)}
           </Link>
           <p className="portfolio-footer__credit">—{STUDIO_HANDLE}</p>
           <Link to="/theocodewedding/admin" className="portfolio-footer__admin">

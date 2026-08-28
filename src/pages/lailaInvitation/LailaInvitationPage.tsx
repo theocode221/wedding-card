@@ -13,11 +13,11 @@ import {
   LAILA_SALAM_KHAT,
   LAILA_SALAM_LATIN,
   LAILA_TAGLINE_JAWI,
-  LAILA_WHATSAPP_CONTACTS,
   lailaCoupleLabel,
   lailaHasEventDate,
   lailaInviteForPreview,
   lailaPageTitleForInvite,
+  lailaWhatsappForPreview,
 } from "./lailaInviteData";
 import { LailaAturcara } from "./LailaAturcara";
 import { LailaButterflies } from "./LailaButterflies";
@@ -25,7 +25,9 @@ import { LailaCalendar } from "./LailaCalendar";
 import { LailaPageDecor } from "./LailaPageDecor";
 import { LailaUcapanSpotlight } from "./LailaUcapanSpotlight";
 import { StudioCredit } from "../../components/studio/StudioCredit";
+import { PortfolioBackToCatalog } from "../../components/portfolio/PortfolioBackToCatalog";
 import { usePortfolioPreviewMode } from "../../hooks/usePortfolioPreviewMode";
+import { withPortfolioSearch } from "../../lib/portfolioPreview";
 import { useLailaMusic } from "./LailaMusicContext";
 import "./laila-invitation.css";
 
@@ -103,7 +105,11 @@ export function LailaInvitationPage() {
   const { playFromStart: playLailaMusic } = useLailaMusic();
   const isOpen = location.hash.replace(/^#/, "") === LAILA_DETAILS_HASH;
   const invite = lailaInviteForPreview(isPreview);
+  const whatsappContacts = lailaWhatsappForPreview(isPreview);
   const names = lailaCoupleLabel(invite);
+  const galleryTo = withPortfolioSearch(LAILA_GALLERY_PATH, location.search);
+  const rsvpTo = withPortfolioSearch(LAILA_RSVP_PATH, location.search);
+  const coverTo = withPortfolioSearch(LAILA_PATH, location.search);
   const showCountdown = lailaHasEventDate(invite);
   const countdownTarget = useMemo(
     () => (showCountdown ? new Date(invite.weddingDateTime) : null),
@@ -173,12 +179,16 @@ export function LailaInvitationPage() {
 
   const openInvitation = useCallback(() => {
     playLailaMusic();
-    navigate({ pathname: location.pathname, hash: LAILA_DETAILS_HASH });
-  }, [location.pathname, navigate, playLailaMusic]);
+    navigate({
+      pathname: location.pathname,
+      search: location.search,
+      hash: LAILA_DETAILS_HASH,
+    });
+  }, [location.pathname, location.search, navigate, playLailaMusic]);
 
   const backToCover = useCallback(() => {
-    navigate(LAILA_PATH);
-  }, [navigate]);
+    navigate(coverTo);
+  }, [coverTo, navigate]);
 
   const brideWriteStart = 1.15;
   const ampDelay = brideWriteStart + invite.brideName.length * LETTER_STAGGER_S + 0.08;
@@ -189,6 +199,7 @@ export function LailaInvitationPage() {
 
   return (
     <div className={`laila-page${isOpen ? " laila-page--details" : " laila-page--cover"}`} lang="ms">
+      <PortfolioBackToCatalog />
       {!isOpen ? (
       <header className="laila-cover">
         <div className="laila-cover__garlands" aria-hidden>
@@ -247,7 +258,7 @@ export function LailaInvitationPage() {
               <span className="laila-cover__when">{invite.date}</span>
             </p>
             <p className="laila-cover__venue" style={{ animationDelay: `${venueDelay}s` }}>
-              {invite.venue}, Kajang
+              {invite.address ? `${invite.venue}, ${invite.address}` : invite.venue}
             </p>
             <button
               type="button"
@@ -360,7 +371,7 @@ export function LailaInvitationPage() {
             <div className="laila-contacts">
               <p className="laila-contacts__label">Nombor dihubungi</p>
               <div className="laila-contacts__list">
-                {LAILA_WHATSAPP_CONTACTS.map((contact) => (
+                {whatsappContacts.map((contact) => (
                   <a
                     key={contact.name}
                     className="laila-btn laila-btn--pill laila-btn--whatsapp"
@@ -403,7 +414,7 @@ export function LailaInvitationPage() {
             <p className="laila-kicker">Kenangan</p>
             <h2 className="laila-title">Galeri</h2>
             <p className="laila-prose">Detik indah yang dirakam untuk dikenang bersama.</p>
-            <Link to={LAILA_GALLERY_PATH} className="laila-btn laila-btn--pill">
+            <Link to={galleryTo} className="laila-btn laila-btn--pill">
               Buka galeri
             </Link>
           </ScrollReveal>
@@ -414,7 +425,7 @@ export function LailaInvitationPage() {
             <p className="laila-prose">
               Sila sahkan kehadiran anda. Jawapan anda membantu kami merancang majlis dengan lebih baik.
             </p>
-            <Link to={LAILA_RSVP_PATH} className="laila-btn laila-btn--maroon laila-btn--pill">
+            <Link to={rsvpTo} className="laila-btn laila-btn--maroon laila-btn--pill">
               Sahkan kehadiran (RSVP)
             </Link>
           </ScrollReveal>

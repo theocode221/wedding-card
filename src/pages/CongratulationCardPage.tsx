@@ -2,6 +2,7 @@ import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CongratulationCard } from "../components/CongratulationCard";
 import { InteractiveButtons } from "../components/InteractiveButtons";
+import { PortfolioBackToCatalog } from "../components/portfolio/PortfolioBackToCatalog";
 import { SenderForm } from "../components/SenderForm";
 import { publicUrl } from "../lib/publicAsset";
 import "../styles/congratulation.css";
@@ -128,6 +129,7 @@ export function CongratulationCardPage() {
 
   return (
     <div className="congrats-page">
+      <PortfolioBackToCatalog />
       <div className="congrats-page__wash" aria-hidden />
       <div className="congrats-page__batik" aria-hidden />
       <div

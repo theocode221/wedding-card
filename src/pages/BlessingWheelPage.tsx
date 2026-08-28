@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { PortfolioBackToCatalog } from "../components/portfolio/PortfolioBackToCatalog";
 import { BlessingResultCard } from "../components/blessing-wheel/BlessingResultCard";
 import { BlessingWheel } from "../components/blessing-wheel/BlessingWheel";
 import { WheelActions } from "../components/blessing-wheel/WheelActions";
@@ -194,6 +195,7 @@ export function BlessingWheelPage() {
 
   return (
     <div className="blessing-page">
+      <PortfolioBackToCatalog />
       <div className="blessing-page__ambient" aria-hidden />
 
       {showBlessingEffect && (

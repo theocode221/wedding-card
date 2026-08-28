@@ -1,8 +1,11 @@
-import { WHATSAPP_CONTACTS } from "../../data/contact";
+import { DEMO_WHATSAPP_CONTACTS, WHATSAPP_CONTACTS, type WhatsAppContact } from "../../data/contact";
 import "../../styles/whatsapp-contact.css";
 
 type WhatsAppContactLinkProps = {
   className?: string;
+  /** Use placeholder numbers — portfolio / demo-gold. Never pass client contacts here. */
+  demo?: boolean;
+  contacts?: readonly WhatsAppContact[];
 };
 
 function WhatsAppIcon({ className }: { className?: string }) {
@@ -23,19 +26,22 @@ function WhatsAppIcon({ className }: { className?: string }) {
   );
 }
 
-export function WhatsAppContactLink({ className = "" }: WhatsAppContactLinkProps) {
+export function WhatsAppContactLink({ className = "", demo = false, contacts }: WhatsAppContactLinkProps) {
+  const list = contacts ?? (demo ? DEMO_WHATSAPP_CONTACTS : WHATSAPP_CONTACTS);
+
   return (
     <div className={["wa-contact-group", className].filter(Boolean).join(" ")}>
       <p className="wa-contact-group__label">Hubungi Kami</p>
       <div className="wa-contact-group__links">
-        {WHATSAPP_CONTACTS.map((contact) => (
+        {list.map((contact) => (
           <a
             key={contact.name}
             className="wa-contact"
-            href={contact.url}
-            target="_blank"
-            rel="noopener noreferrer"
+            href={demo ? "#" : contact.url}
+            target={demo ? undefined : "_blank"}
+            rel={demo ? undefined : "noopener noreferrer"}
             aria-label={`WhatsApp ${contact.name} ${contact.displayNumber}`}
+            onClick={demo ? (event) => event.preventDefault() : undefined}
           >
             <WhatsAppIcon className="wa-contact__icon" />
             <span className="wa-contact__text">

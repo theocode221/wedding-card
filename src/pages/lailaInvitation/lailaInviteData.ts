@@ -1,7 +1,13 @@
 import { publicUrl } from "../../lib/publicAsset";
 import {
+  PORTFOLIO_DEMO_ADDRESS,
   PORTFOLIO_DEMO_BRIDE,
+  PORTFOLIO_DEMO_FATHER,
   PORTFOLIO_DEMO_GROOM,
+  PORTFOLIO_DEMO_MAPS_URL,
+  PORTFOLIO_DEMO_MOTHER,
+  PORTFOLIO_DEMO_VENUE,
+  PORTFOLIO_DEMO_WAZE_URL,
 } from "../../data/portfolioDemoNames";
 
 /**
@@ -135,7 +141,31 @@ export function lailaInviteForPreview(isPreview: boolean): LailaInvite {
     brideName: PORTFOLIO_DEMO_BRIDE,
     groomFullName: PORTFOLIO_DEMO_GROOM,
     brideFullName: PORTFOLIO_DEMO_BRIDE,
+    fatherName: PORTFOLIO_DEMO_FATHER,
+    motherName: PORTFOLIO_DEMO_MOTHER,
+    venue: PORTFOLIO_DEMO_VENUE,
+    address: PORTFOLIO_DEMO_ADDRESS,
+    mapsUrl: PORTFOLIO_DEMO_MAPS_URL,
+    wazeUrl: PORTFOLIO_DEMO_WAZE_URL,
   };
+}
+
+/** Placeholder WhatsApp contacts for portfolio demos (hide real client numbers). */
+export const LAILA_DEMO_WHATSAPP_CONTACTS: readonly LailaWhatsappContact[] = [
+  {
+    name: "Hubungan 1",
+    displayNumber: "01X-XXX XXXX",
+    whatsappUrl: "https://wa.me/60000000000",
+  },
+  {
+    name: "Hubungan 2",
+    displayNumber: "01X-XXX XXXX",
+    whatsappUrl: "https://wa.me/60000000000",
+  },
+] as const;
+
+export function lailaWhatsappForPreview(isPreview: boolean): readonly LailaWhatsappContact[] {
+  return isPreview ? LAILA_DEMO_WHATSAPP_CONTACTS : LAILA_WHATSAPP_CONTACTS;
 }
 
 export function lailaPageTitleForInvite(invite: Pick<LailaInvite, "groomName" | "brideName">): string {

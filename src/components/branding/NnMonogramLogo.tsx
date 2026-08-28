@@ -6,12 +6,10 @@ export type NnMonogramLogoProps = {
   label?: string;
 };
 
-/**
- * Wedding monogram: twin “n” in formal calligraphy (Pinyon Script) + pen flourishes.
- */
+/** Twin "n" monogram in formal calligraphy with pen flourishes. */
 export function NnMonogramLogo({
   className = "",
-  label = "Monogram N dan N — Nabil & NADHIRAH",
+  label = "Monogram N dan N",
 }: NnMonogramLogoProps) {
   const uid = useId().replace(/:/g, "");
   const gid = `nn-grad-${uid}`;
@@ -45,11 +43,9 @@ export function NnMonogramLogo({
         </linearGradient>
       </defs>
 
-      {/* Cartouche */}
       <ellipse cx="160" cy="104" rx="148" ry="90" stroke={`url(#${gidSoft})`} strokeWidth="2.35" />
       <ellipse cx="160" cy="104" rx="136" ry="82" stroke={`url(#${gid})`} strokeOpacity="0.26" strokeWidth="1.35" />
 
-      {/* Upper sweep — pen entry */}
       <path
         d="M 62 56 C 118 28 202 28 258 56"
         stroke={`url(#${gid})`}
@@ -58,7 +54,6 @@ export function NnMonogramLogo({
         opacity="0.42"
       />
 
-      {/* nn lettering */}
       <text
         x="160"
         y="148"
@@ -75,7 +70,6 @@ export function NnMonogramLogo({
         nn
       </text>
 
-      {/* Baseline flourish */}
       <path
         d="M 56 162 C 108 184 212 184 264 162"
         stroke={`url(#${gidInk})`}
@@ -91,7 +85,6 @@ export function NnMonogramLogo({
         opacity="0.38"
       />
 
-      {/* Centre knot */}
       <path
         d="M 146 168 Q 160 178 174 168"
         stroke={`url(#${gid})`}
@@ -101,7 +94,6 @@ export function NnMonogramLogo({
       />
       <ellipse cx="160" cy="171" rx="4" ry="3.5" fill={`url(#${gid})`} opacity="0.55" />
 
-      {/* Tail curls */}
       <path
         d="M 54 156 C 42 168 38 176 48 182"
         stroke={`url(#${gid})`}

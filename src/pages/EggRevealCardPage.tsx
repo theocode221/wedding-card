@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { PortfolioBackToCatalog } from "../components/portfolio/PortfolioBackToCatalog";
 import { CatchTheLoveGame } from "../components/egg-reveal/CatchTheLoveGame";
 import { CrackableEgg, type EggCrackStage } from "../components/egg-reveal/CrackableEgg";
 import { getCartoonNewlywedFrameSrcs } from "../components/egg-reveal/eggRevealConstants";
@@ -129,6 +130,7 @@ export function EggRevealCardPage({ variant = "default", marketingMode = false }
 
   return (
     <main className={pageClass}>
+      <PortfolioBackToCatalog />
       <div className="egg-reveal-page__bg" aria-hidden />
       <div className="egg-reveal-page__grain" aria-hidden />
 

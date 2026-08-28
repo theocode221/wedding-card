@@ -1,7 +1,10 @@
 import type { WeddingEventData } from "../../types/event";
 import {
+  PORTFOLIO_DEMO_ADDRESS,
   PORTFOLIO_DEMO_BRIDE,
   PORTFOLIO_DEMO_GROOM,
+  PORTFOLIO_DEMO_MAPS_URL,
+  PORTFOLIO_DEMO_VENUE,
 } from "../../data/portfolioDemoNames";
 
 const gallery = [
@@ -41,6 +44,10 @@ export function royalMaroonInviteForPreview(isPreview: boolean): WeddingEventDat
     ...ROYAL_MAROON_INVITE,
     groomName: PORTFOLIO_DEMO_GROOM,
     brideName: PORTFOLIO_DEMO_BRIDE,
+    venue: PORTFOLIO_DEMO_VENUE,
+    address: PORTFOLIO_DEMO_ADDRESS,
+    mapsUrl: PORTFOLIO_DEMO_MAPS_URL,
+    whatsappUrl: "https://wa.me/60000000000",
   };
 }
 

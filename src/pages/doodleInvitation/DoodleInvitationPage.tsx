@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState, type FormEvent } from "react";
 import { ScrollReveal } from "../../components/shared/ScrollReveal";
 import { getRemaining, pad } from "../../components/shared/countdownUtils";
 import { StudioCredit } from "../../components/studio/StudioCredit";
+import { PortfolioBackToCatalog } from "../../components/portfolio/PortfolioBackToCatalog";
 import { usePortfolioPreviewMode } from "../../hooks/usePortfolioPreviewMode";
 import { DoodleCalendar } from "./DoodleCalendar";
 import { DoodleDecor, DoodleFrame, DoodlePen } from "./DoodleDecor";
@@ -100,6 +101,7 @@ export function DoodleInvitationPage({ variant = "ink" }: DoodleInvitationPagePr
       ].join(" ")}
       lang="ms"
     >
+      <PortfolioBackToCatalog />
       {!open ? (
         <header className="doodle-cover" key={coverReady ? "cover-ready" : "cover-wait"}>
           {coverReady ? (

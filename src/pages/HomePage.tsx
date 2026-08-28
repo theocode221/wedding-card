@@ -54,7 +54,7 @@ export function HomePage() {
           </Link>
 
           <Link to="/laila" className="home-selector__card">
-            <span className="home-selector__cardTitle">Jemputan Laila</span>
+            <span className="home-selector__cardTitle">Jemputan Maroon Tradisional</span>
             <span className="home-selector__cardDesc">Tema maroon tradisional Melayu — latar oval, nama pada background</span>
           </Link>
 
@@ -68,9 +68,14 @@ export function HomePage() {
             <span className="home-selector__cardDesc">Tema sketsa tangan — kertas bergaris dan tulisan playful</span>
           </Link>
 
-          <Link to="/doodle-pastel" className="home-selector__card">
-            <span className="home-selector__cardTitle">Jemputan Doodle Pastel</span>
-            <span className="home-selector__cardDesc">Doodle lembut dengan blush, mint, dan handwritten names</span>
+          <Link to="/travellers" className="home-selector__card">
+            <span className="home-selector__cardTitle">Jemputan Travellers</span>
+            <span className="home-selector__cardDesc">Boarding pass, flight path, backpack &amp; passport stamps</span>
+          </Link>
+
+          <Link to="/cafe" className="home-selector__card">
+            <span className="home-selector__cardTitle">Jemputan Café</span>
+            <span className="home-selector__cardDesc">Menu café, steam, today&apos;s special — date-night vibe</span>
           </Link>
 
           <Link to="/demo-gold" className="home-selector__card">

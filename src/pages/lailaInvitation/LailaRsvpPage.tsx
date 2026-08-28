@@ -1,11 +1,15 @@
 import { useLayoutEffect, useState, type FormEvent } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { submitRsvpToGoogleSheet } from "../../lib/rsvpGoogleSheet";
+import { usePortfolioPreviewMode } from "../../hooks/usePortfolioPreviewMode";
+import { withPortfolioSearch } from "../../lib/portfolioPreview";
+import { PortfolioBackToCatalog } from "../../components/portfolio/PortfolioBackToCatalog";
 import { LailaPageDecor } from "./LailaPageDecor";
 import {
   getLailaRsvpScriptUrl,
   LAILA_DETAILS_TO,
   lailaCoupleLabel,
+  lailaInviteForPreview,
 } from "./lailaInviteData";
 import "./laila-invitation.css";
 
@@ -13,6 +17,11 @@ type Attending = "yes" | "no";
 type SubmitStatus = "idle" | "sending" | "success" | "error";
 
 export function LailaRsvpPage() {
+  const location = useLocation();
+  const { isPreview } = usePortfolioPreviewMode();
+  const invite = lailaInviteForPreview(isPreview);
+  const names = lailaCoupleLabel(invite);
+  const detailsTo = withPortfolioSearch(LAILA_DETAILS_TO, location.search);
   const scriptUrl = getLailaRsvpScriptUrl();
   const [name, setName] = useState("");
   const [attending, setAttending] = useState<Attending>("yes");
@@ -38,6 +47,11 @@ export function LailaRsvpPage() {
     }
 
     if (honeypot.trim()) {
+      setStatus("success");
+      return;
+    }
+
+    if (isPreview) {
       setStatus("success");
       return;
     }
@@ -71,6 +85,7 @@ export function LailaRsvpPage() {
 
   return (
     <div className="laila-page laila-satellite" lang="ms">
+      <PortfolioBackToCatalog />
       <LailaPageDecor />
       <div className="laila-satellite__card">
         {status === "success" ? (
@@ -80,7 +95,7 @@ export function LailaRsvpPage() {
             <p className="laila-prose">
               RSVP anda telah dihantar. Kami tidak sabar menanti hari bahagia ini bersama anda.
             </p>
-            <Link to={LAILA_DETAILS_TO} className="laila-btn laila-btn--pill">
+            <Link to={detailsTo} className="laila-btn laila-btn--pill">
               Kembali ke kad
             </Link>
           </div>
@@ -88,7 +103,7 @@ export function LailaRsvpPage() {
           <>
             <p className="laila-kicker">RSVP</p>
             <h1 className="laila-title">Sahkan kehadiran anda</h1>
-            <p className="laila-satellite__lead">Walimatul Urus {lailaCoupleLabel()}</p>
+            <p className="laila-satellite__lead">Walimatul Urus {names}</p>
 
             <form className="laila-form" onSubmit={onSubmit} noValidate>
               <label className="laila-form__field">
@@ -186,7 +201,7 @@ export function LailaRsvpPage() {
               </button>
             </form>
 
-            <Link to={LAILA_DETAILS_TO} className="laila-satellite__back">
+            <Link to={detailsTo} className="laila-satellite__back">
               Kembali ke jemputan
             </Link>
           </>

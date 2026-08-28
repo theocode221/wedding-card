@@ -1,3 +1,8 @@
+import {
+  PORTFOLIO_DEMO_BRIDE,
+  PORTFOLIO_DEMO_GROOM,
+} from "./portfolioDemoNames";
+
 /** WhatsApp contacts for “Hubungi Kami”. Malaysian numbers → international wa.me. */
 
 export type WhatsAppContact = {
@@ -14,6 +19,7 @@ function toWaMeUrl(localMalaysiaMobile: string): string {
   return `https://wa.me/${international}`;
 }
 
+/** Live client contacts — Naim & Nadhirah. Never use in portfolio preview. */
 export const WHATSAPP_CONTACTS: readonly WhatsAppContact[] = [
   {
     name: "Naim",
@@ -26,6 +32,24 @@ export const WHATSAPP_CONTACTS: readonly WhatsAppContact[] = [
     url: toWaMeUrl("01157451981"),
   },
 ] as const;
+
+/** Safe placeholders for portfolio / demo-gold previews. */
+export const DEMO_WHATSAPP_CONTACTS: readonly WhatsAppContact[] = [
+  {
+    name: PORTFOLIO_DEMO_GROOM,
+    displayNumber: "01X-XXX XXXX",
+    url: "https://wa.me/60000000000",
+  },
+  {
+    name: PORTFOLIO_DEMO_BRIDE,
+    displayNumber: "01X-XXX XXXX",
+    url: "https://wa.me/60000000000",
+  },
+] as const;
+
+export function whatsappContactsForDemo(isDemo: boolean): readonly WhatsAppContact[] {
+  return isDemo ? DEMO_WHATSAPP_CONTACTS : WHATSAPP_CONTACTS;
+}
 
 /** @deprecated Prefer WHATSAPP_CONTACTS — kept for older single-link usages */
 export const WHATSAPP_CONTACT_URL = WHATSAPP_CONTACTS[0].url;

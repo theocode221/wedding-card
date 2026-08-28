@@ -1,7 +1,7 @@
 /** Web Share API with clipboard fallback (same spirit as CongratulationCardPage). */
 export async function shareEggRevealHappiness(): Promise<{ ok: boolean; message: string }> {
   const url = typeof window !== "undefined" ? window.location.href : "";
-  const title = "Tahniah Haziq & Laila 💕";
+  const title = "Tahniah pengantin baru 💕";
   const text = "Main Catch the Love di kad digital ini!";
 
   if (typeof navigator !== "undefined" && typeof navigator.share === "function") {

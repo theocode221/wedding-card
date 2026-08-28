@@ -1,18 +1,37 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { PortfolioBackToCatalog } from "../../components/portfolio/PortfolioBackToCatalog";
+import {
+  PORTFOLIO_DEMO_COUPLE_LABEL,
+  PORTFOLIO_DEMO_DATE,
+  PORTFOLIO_DEMO_TIME_LABEL,
+} from "../../data/portfolioDemoNames";
+import { usePortfolioPreviewMode } from "../../hooks/usePortfolioPreviewMode";
 import { LailaPageDecor } from "./LailaPageDecor";
+import { LAILA_DASHBOARD_DEMO_ROWS } from "./lailaDashboardDemoData";
+import { LAILA_INVITE, lailaCoupleLabel, lailaInviteForPreview } from "./lailaInviteData";
 import { fetchLailaRsvpRows, isAttending, type LailaRsvpRow } from "./lailaRsvpApi";
-import { LAILA_INVITE, lailaCoupleLabel } from "./lailaInviteData";
 import "./laila-invitation.css";
 
-const PAGE_TITLE = `Papan RSVP — ${lailaCoupleLabel()}`;
-
 export function LailaDashboardPage() {
-  const names = lailaCoupleLabel();
-  const [rows, setRows] = useState<LailaRsvpRow[]>([]);
-  const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
+  const { isPreview } = usePortfolioPreviewMode();
+  const invite = lailaInviteForPreview(isPreview);
+  const names = isPreview ? PORTFOLIO_DEMO_COUPLE_LABEL : lailaCoupleLabel(invite);
+  const dateLabel = isPreview ? PORTFOLIO_DEMO_DATE : LAILA_INVITE.date;
+  const timeLabel = isPreview ? PORTFOLIO_DEMO_TIME_LABEL : LAILA_INVITE.timeLabel;
+
+  const [rows, setRows] = useState<LailaRsvpRow[]>(() =>
+    isPreview ? [...LAILA_DASHBOARD_DEMO_ROWS] : [],
+  );
+  const [status, setStatus] = useState<"loading" | "ready" | "error">(isPreview ? "ready" : "loading");
   const [errorText, setErrorText] = useState("");
 
   const load = useCallback(async () => {
+    if (isPreview) {
+      setRows([...LAILA_DASHBOARD_DEMO_ROWS]);
+      setStatus("ready");
+      setErrorText("");
+      return;
+    }
     setStatus("loading");
     setErrorText("");
     try {
@@ -23,15 +42,15 @@ export function LailaDashboardPage() {
       setStatus("error");
       setErrorText(err instanceof Error ? err.message : "Gagal memuat data.");
     }
-  }, []);
+  }, [isPreview]);
 
   useEffect(() => {
     const prev = document.title;
-    document.title = PAGE_TITLE;
+    document.title = isPreview ? `RSVP Dashboard demo — ${names}` : `Papan RSVP — ${names}`;
     return () => {
       document.title = prev;
     };
-  }, []);
+  }, [isPreview, names]);
 
   useEffect(() => {
     void load();
@@ -60,16 +79,22 @@ export function LailaDashboardPage() {
   }, []);
 
   return (
-    <div className="laila-page laila-dashboard" lang="ms">
+    <div className={`laila-page laila-dashboard${isPreview ? " laila-dashboard--demo" : ""}`} lang="ms">
+      <PortfolioBackToCatalog />
       <LailaPageDecor />
       <div className="laila-dashboard__inner">
         <header className="laila-dashboard__head">
-          <p className="laila-kicker">Papan klien</p>
+          <p className="laila-kicker">{isPreview ? "Demo" : "Papan klien"}</p>
           <h1 className="laila-title">RSVP &amp; ucapan</h1>
           <p className="laila-dashboard__lead">Walimatul Urus {names}</p>
           <p className="laila-dashboard__meta">
-            {LAILA_INVITE.date} · {LAILA_INVITE.timeLabel}
+            {dateLabel} · {timeLabel}
           </p>
+          {isPreview ? (
+            <p className="laila-dashboard__demo-banner">
+              Sample data only — not a real client dashboard.
+            </p>
+          ) : null}
         </header>
 
         {status === "loading" ? (
@@ -108,9 +133,11 @@ export function LailaDashboardPage() {
             <p className="laila-dashboard__total">{rows.length} RSVP diterima</p>
 
             <div className="laila-dashboard__toolbar">
-              <button type="button" className="laila-btn laila-btn--pill" onClick={() => void load()}>
-                Muat semula
-              </button>
+              {isPreview ? null : (
+                <button type="button" className="laila-btn laila-btn--pill" onClick={() => void load()}>
+                  Muat semula
+                </button>
+              )}
               <button
                 type="button"
                 className="laila-btn laila-btn--maroon laila-btn--pill"
@@ -186,7 +213,7 @@ export function LailaDashboardPage() {
           </p>
           <p className="laila-kicker">Kompilasi ucapan</p>
           <h2 className="laila-ucapan-book__names">{names}</h2>
-          <p className="laila-ucapan-book__date">{LAILA_INVITE.date}</p>
+          <p className="laila-ucapan-book__date">{dateLabel}</p>
           <p className="laila-ucapan-book__count">
             {ucapan.length} ucapan daripada tetamu
           </p>

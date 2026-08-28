@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { PortfolioBackToCatalog } from "../components/portfolio/PortfolioBackToCatalog";
 import { CinematicInvitation } from "../components/wedding-invitation-frame/CinematicInvitation";
 import { WhiteGoldCinematicDecor } from "../components/wedding-invitation-frame/WhiteGoldCinematicDecor";
 import { InvitationContent } from "../components/wedding-invitation-frame/InvitationContent";
@@ -15,6 +16,7 @@ import {
   DEMO_GOLD_CINEMATIC_COPY,
   DEMO_GOLD_COUPLE_DISPLAY,
 } from "../data/demoGoldInviteCopy";
+import { NAIM_NADHIRAH_CINEMATIC_COPY } from "../data/cinematicInvitationCopy";
 import "../styles/wedding-invitation-frame.css";
 import "../styles/wedding-invitation-frame-white-gold.css";
 
@@ -127,12 +129,12 @@ export function WeddingInvitationFrameWhiteGoldPage({
 
   const handleReplay = useCallback(() => {
     stopInvitationMusic();
-    navigate(location.pathname, { replace: true, state: {} });
+    navigate({ pathname: location.pathname, search: location.search }, { replace: true, state: {} });
     setShowInvitation(false);
     setInviteShellIn(false);
     setCinematicKey((k) => k + 1);
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [navigate, location.pathname, stopInvitationMusic]);
+  }, [navigate, location.pathname, location.search, stopInvitationMusic]);
 
   const skipCinematic = skipFromState || preview.skipCinematic;
 
@@ -147,6 +149,7 @@ export function WeddingInvitationFrameWhiteGoldPage({
         .filter(Boolean)
         .join(" ")}
     >
+      <PortfolioBackToCatalog force={isDemo} />
       {!assetsReady && (
         <div className="wif-loading-overlay" role="status" aria-live="polite">
           <div className="wif-loading">
@@ -160,7 +163,7 @@ export function WeddingInvitationFrameWhiteGoldPage({
         <CinematicInvitation
           key={cinematicKey}
           urls={urls}
-          copy={isDemo ? DEMO_GOLD_CINEMATIC_COPY : undefined}
+          copy={isDemo ? DEMO_GOLD_CINEMATIC_COPY : NAIM_NADHIRAH_CINEMATIC_COPY}
           onComplete={handleCinematicComplete}
           onOpenCinematic={playFromStart}
           decorMidLayer={<WhiteGoldCinematicDecor />}
@@ -183,7 +186,8 @@ export function WeddingInvitationFrameWhiteGoldPage({
           <InvitationContent
             onReplay={handleReplay}
             invitationFlowBase={invitationFlowBase}
-            coupleDisplayName={isDemo ? DEMO_GOLD_COUPLE_DISPLAY : undefined}
+            coupleDisplayName={isDemo ? DEMO_GOLD_COUPLE_DISPLAY : "NAIM & NADHIRAH"}
+            demoMode={isDemo}
           />
         </div>
       )}

@@ -1,5 +1,6 @@
 import { useCallback, useId, useState } from "react";
 import { Link } from "react-router-dom";
+import { PortfolioBackToCatalog } from "../components/portfolio/PortfolioBackToCatalog";
 import { DoaDoaButton, RevealActions } from "../components/scratch/RevealActions";
 import { ScratchRevealCard } from "../components/scratch/ScratchRevealCard";
 import { usePortfolioPreviewMode } from "../hooks/usePortfolioPreviewMode";
@@ -70,6 +71,7 @@ export function ScratchCardPage() {
 
   return (
     <div className="scratch-page">
+      <PortfolioBackToCatalog />
       <div className="scratch-page__ambient" aria-hidden />
 
       {showBlessingEffect && (

@@ -7,17 +7,20 @@ import {
 } from "../lib/invitationFlow";
 import { GalleryImage } from "../components/gallery/GalleryImage";
 import { Lightbox } from "../components/gallery/Lightbox";
+import { PortfolioBackToCatalog } from "../components/portfolio/PortfolioBackToCatalog";
 import { WhatsAppContactLink } from "../components/shared/WhatsAppContactLink";
 import {
   GALLERY_IMAGE_ALTS,
   GALLERY_IMAGE_URLS,
   GALLERY_STORY_ITEMS,
 } from "../data/galleryImages";
+import { usePortfolioPreviewMode } from "../hooks/usePortfolioPreviewMode";
 import "../styles/gallery.css";
 
 export function GalleryPage() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { isPreview } = usePortfolioPreviewMode();
   const invitationReturnPath = useMemo(() => resolveInvitationReturnPath(location.state), [location.state]);
   const satelliteSkin = useMemo(
     () => resolveInvitationSatelliteSkin(location.state),
@@ -61,6 +64,7 @@ export function GalleryPage() {
         .filter(Boolean)
         .join(" ")}
     >
+      <PortfolioBackToCatalog />
       <button type="button" className="gallery-page__back" onClick={handleBack}>
         ← Kembali
       </button>
@@ -94,7 +98,7 @@ export function GalleryPage() {
           Dengan penuh sayang — terima kasih kerana menjadi sebahagian dari kisah kami.
         </p>
         <div className="gallery-page__contact">
-          <WhatsAppContactLink />
+          <WhatsAppContactLink demo={isPreview} />
         </div>
       </footer>
 

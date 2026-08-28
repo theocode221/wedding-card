@@ -7,6 +7,9 @@ import {
   type InvitationSatelliteSkin,
 } from "../lib/invitationFlow";
 import { submitRsvpToGoogleSheet } from "../lib/rsvpGoogleSheet";
+import { PortfolioBackToCatalog } from "../components/portfolio/PortfolioBackToCatalog";
+import { usePortfolioPreviewMode } from "../hooks/usePortfolioPreviewMode";
+import { withPortfolioSearch } from "../lib/portfolioPreview";
 
 type Attending = "yes" | "no";
 type SubmitStatus = "idle" | "sending" | "success" | "error";
@@ -19,7 +22,9 @@ function themeLabel(skin: InvitationSatelliteSkin): string {
 
 export function RsvpPage() {
   const location = useLocation();
+  const { isPreview } = usePortfolioPreviewMode();
   const invitationReturnPath = useMemo(() => resolveInvitationReturnPath(location.state), [location.state]);
+  const returnTo = withPortfolioSearch(invitationReturnPath, location.search);
   const satelliteSkin = useMemo(
     () => resolveInvitationSatelliteSkin(location.state),
     [location.state],
@@ -55,6 +60,11 @@ export function RsvpPage() {
       return;
     }
 
+    if (isPreview) {
+      setStatus("success");
+      return;
+    }
+
     setStatus("sending");
     setErrorText("");
 
@@ -76,13 +86,14 @@ export function RsvpPage() {
   if (status === "success") {
     return (
       <div className={["rsvp-page", "rsvp-page--done", satelliteClass].filter(Boolean).join(" ")}>
+        <PortfolioBackToCatalog />
         <div className="rsvp-page__card rsvp-page__card--thanks" role="status">
           <p className="rsvp-page__success-title">Terima kasih!</p>
           <p className="rsvp-page__success-text">
             RSVP anda telah dihantar. Kami tidak sabar menanti hari bahagia ini bersama anda.
           </p>
           <Link
-            to={invitationReturnPath}
+            to={returnTo}
             state={{ skipCinematic: true, scrollTo: "details" as const }}
             className="rsvp-page__back rsvp-page__back--thanks"
           >
@@ -95,6 +106,7 @@ export function RsvpPage() {
 
   return (
     <div className={["rsvp-page", satelliteClass].filter(Boolean).join(" ")}>
+      <PortfolioBackToCatalog />
       <div className="rsvp-page__card">
         <p className="rsvp-page__eyebrow">RSVP</p>
         <h1 className="rsvp-page__title">Sahkan kehadiran anda</h1>
@@ -192,7 +204,7 @@ export function RsvpPage() {
         </form>
 
         <Link
-          to={invitationReturnPath}
+          to={returnTo}
           state={{ skipCinematic: true, scrollTo: "details" as const }}
           className="rsvp-page__back"
         >
