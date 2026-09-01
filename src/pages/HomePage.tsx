@@ -78,6 +78,11 @@ export function HomePage() {
             <span className="home-selector__cardDesc">Menu café, steam, today&apos;s special — date-night vibe</span>
           </Link>
 
+          <Link to="/malay-classic" className="home-selector__card">
+            <span className="home-selector__cardTitle">Jemputan Malay Classic</span>
+            <span className="home-selector__cardDesc">Foto penuh, emas antik, floral lembut</span>
+          </Link>
+
           <Link to="/demo-gold" className="home-selector__card">
             <span className="home-selector__cardTitle">Demo Gold</span>
             <span className="home-selector__cardDesc">Preview tema gold dengan nama contoh (Adam &amp; Sofea)</span>

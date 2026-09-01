@@ -117,6 +117,7 @@ export function LailaInvitationPage() {
   );
   const [isLocationMenuOpen, setIsLocationMenuOpen] = useState(false);
   const locationMenuRef = useRef<HTMLDivElement | null>(null);
+  const [coverReady, setCoverReady] = useState(false);
 
   const [tick, setTick] = useState(() =>
     countdownTarget ? getRemaining(countdownTarget, new Date()) : null,
@@ -129,6 +130,65 @@ export function LailaInvitationPage() {
       document.title = prev;
     };
   }, [invite]);
+
+  /** Wait for cover art + fonts before starting motion — avoids first-open hitch on slow networks. */
+  useEffect(() => {
+    if (isOpen) return;
+
+    let cancelled = false;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduceMotion) {
+      setCoverReady(true);
+      return;
+    }
+
+    setCoverReady(false);
+
+    const coverAssets = [LAILA_COVER_BG, LAILA_BUNGA_TOP, LAILA_BUNGA_BOTTOM];
+    const preloads = coverAssets.map((href) => {
+      const link = document.createElement("link");
+      link.rel = "preload";
+      link.as = "image";
+      link.href = href;
+      document.head.appendChild(link);
+      return link;
+    });
+
+    const loadImage = (src: string) =>
+      new Promise<void>((resolve) => {
+        const img = new Image();
+        img.decoding = "async";
+        const done = () => resolve();
+        img.onload = () => {
+          if (typeof img.decode === "function") {
+            void img.decode().then(done).catch(done);
+          } else {
+            done();
+          }
+        };
+        img.onerror = done;
+        img.src = src;
+      });
+
+    const assetsReady = Promise.all(coverAssets.map(loadImage));
+    const fontsReady =
+      "fonts" in document ? document.fonts.ready.then(() => undefined).catch(() => undefined) : Promise.resolve();
+    const timeout = new Promise<void>((resolve) => {
+      window.setTimeout(resolve, 2200);
+    });
+
+    void Promise.race([Promise.all([assetsReady, fontsReady]), timeout]).then(() => {
+      if (cancelled) return;
+      requestAnimationFrame(() => {
+        if (!cancelled) setCoverReady(true);
+      });
+    });
+
+    return () => {
+      cancelled = true;
+      preloads.forEach((link) => link.remove());
+    };
+  }, [isOpen]);
 
   useEffect(() => {
     if (!countdownTarget) return;
@@ -201,7 +261,7 @@ export function LailaInvitationPage() {
     <div className={`laila-page${isOpen ? " laila-page--details" : " laila-page--cover"}`} lang="ms">
       <PortfolioBackToCatalog />
       {!isOpen ? (
-      <header className="laila-cover">
+      <header className={`laila-cover${coverReady ? " laila-cover--ready" : ""}`}>
         <div className="laila-cover__garlands" aria-hidden>
           <img
             className="laila-garland laila-garland--top"
@@ -210,6 +270,7 @@ export function LailaInvitationPage() {
             width={1080}
             height={1920}
             decoding="async"
+            fetchPriority="high"
           />
           <img
             className="laila-garland laila-garland--bottom"
@@ -218,6 +279,7 @@ export function LailaInvitationPage() {
             width={1080}
             height={1920}
             decoding="async"
+            fetchPriority="high"
           />
         </div>
 
@@ -231,6 +293,7 @@ export function LailaInvitationPage() {
             width={1080}
             height={1920}
             decoding="async"
+            fetchPriority="high"
           />
 
           <div className="laila-cover__writing">

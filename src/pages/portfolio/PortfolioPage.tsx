@@ -15,6 +15,7 @@ import {
 import { useHiddenPortfolioIds } from "../../hooks/useHiddenPortfolioIds";
 import { buildPortfolioDemoPath, buildPortfolioEmbedPath } from "../../lib/portfolioPreview";
 import { LAILA_DASHBOARD_PATH } from "../lailaInvitation/lailaInviteData";
+import { WHITE_GOLD_DASHBOARD_PATH } from "../whiteGoldInvitation/whiteGoldInviteData";
 import "../../styles/portfolio.css";
 
 const PAGE_TITLE = `${STUDIO_NAME} — Portfolio`;
@@ -119,12 +120,20 @@ export function PortfolioPage() {
           <p className="portfolio-dashboard-demo__blurb">
             {studioText(STUDIO_UI.dashboardBlurb, locale)}
           </p>
-          <Link
-            to={buildPortfolioDemoPath(LAILA_DASHBOARD_PATH)}
-            className="portfolio-dashboard-demo__cta"
-          >
-            {studioText(STUDIO_UI.dashboardCta, locale)}
-          </Link>
+          <div className="portfolio-dashboard-demo__ctas">
+            <Link
+              to={buildPortfolioDemoPath(LAILA_DASHBOARD_PATH)}
+              className="portfolio-dashboard-demo__cta"
+            >
+              {studioText(STUDIO_UI.dashboardCta, locale)} (Laila)
+            </Link>
+            <Link
+              to={buildPortfolioDemoPath(WHITE_GOLD_DASHBOARD_PATH)}
+              className="portfolio-dashboard-demo__cta"
+            >
+              {studioText(STUDIO_UI.dashboardCta, locale)} (White &amp; Gold)
+            </Link>
+          </div>
         </section>
 
         <section className="portfolio-packages" aria-labelledby="portfolio-packages-title">

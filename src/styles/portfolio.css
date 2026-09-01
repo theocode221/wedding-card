@@ -401,6 +401,13 @@
   color: rgba(92, 61, 66, 0.72);
 }
 
+.portfolio-dashboard-demo__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  justify-content: center;
+}
+
 .portfolio-dashboard-demo__cta {
   display: inline-flex;
   align-items: center;

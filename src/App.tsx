@@ -28,6 +28,8 @@ import { PortfolioAdminPage } from "./pages/portfolio/PortfolioAdminPage";
 import { DoodleInvitationPage } from "./pages/doodleInvitation/DoodleInvitationPage";
 import { TravellersInvitationPage } from "./pages/travellersInvitation/TravellersInvitationPage";
 import { CafeInvitationPage } from "./pages/cafeInvitation/CafeInvitationPage";
+import { MalayClassicInvitationPage } from "./pages/malayClassicInvitation/MalayClassicInvitationPage";
+import { WhiteGoldDashboardPage } from "./pages/whiteGoldInvitation/WhiteGoldDashboardPage";
 
 const routerBasename =
   import.meta.env.BASE_URL === "/" ? undefined : import.meta.env.BASE_URL.replace(/\/$/, "");
@@ -51,6 +53,7 @@ export default function App() {
             <Route path="/doodle-pastel" element={<DoodleInvitationPage variant="pastel" />} />
             <Route path="/travellers" element={<TravellersInvitationPage />} />
             <Route path="/cafe" element={<CafeInvitationPage />} />
+            <Route path="/malay-classic" element={<MalayClassicInvitationPage />} />
             <Route path="/theocodewedding" element={<PortfolioPage />} />
             <Route path="/theocodewedding/admin" element={<PortfolioAdminPage />} />
             <Route path="/portfolio" element={<Navigate to="/theocodewedding" replace />} />
@@ -63,6 +66,7 @@ export default function App() {
             <Route path="/jemputan-frame" element={<WeddingInvitationFramePage />} />
             <Route path="/jemputan-frame-maroon" element={<WeddingInvitationFrameMaroonPage />} />
             <Route path="/naim-nadhirah-nikah" element={<WeddingInvitationFrameWhiteGoldPage />} />
+            <Route path="/naim-nadhirah-nikah/papan" element={<WhiteGoldDashboardPage />} />
             <Route
               path="/demo-gold"
               element={<WeddingInvitationFrameWhiteGoldPage variant="demo" />}

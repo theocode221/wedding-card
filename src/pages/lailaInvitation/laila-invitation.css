@@ -107,6 +107,9 @@
   color: var(--laila-gold-bright);
   text-shadow: 0 2px 14px rgba(0, 0, 0, 0.55);
   opacity: 0;
+}
+
+.laila-cover--ready .laila-cover__kicker {
   animation: laila-cover-in 1.1s var(--laila-ease) 0.4s both;
 }
 
@@ -116,6 +119,9 @@
   margin: 0 auto 0.45rem;
   background: linear-gradient(90deg, transparent, var(--laila-gold-bright), transparent);
   opacity: 0;
+}
+
+.laila-cover--ready .laila-cover__rule {
   animation: laila-cover-in 1.1s var(--laila-ease) 0.55s both;
 }
 
@@ -144,6 +150,9 @@
   padding: 0.12em 0.03em 0.14em;
   overflow: visible;
   opacity: 0;
+}
+
+.laila-cover--ready .laila-hand-char {
   animation: laila-hand-ink 0.42s cubic-bezier(0.22, 0.78, 0.28, 1) both;
 }
 
@@ -167,6 +176,9 @@
   line-height: 1;
   margin: 0.05em 0;
   opacity: 0;
+}
+
+.laila-cover--ready .laila-cover__amp {
   animation: laila-cover-in 0.7s var(--laila-ease) both;
 }
 
@@ -184,6 +196,9 @@
   display: grid;
   place-items: center;
   opacity: 0;
+}
+
+.laila-cover--ready .laila-cover__open {
   animation: laila-cover-in 0.9s var(--laila-ease) both;
 }
 
@@ -234,6 +249,9 @@
   align-items: center;
   gap: 0.12rem;
   opacity: 0;
+}
+
+.laila-cover--ready .laila-cover__date {
   animation: laila-cover-in 0.85s var(--laila-ease) both;
 }
 
@@ -266,6 +284,9 @@
   text-align: center;
   color: var(--laila-gold-soft);
   opacity: 0;
+}
+
+.laila-cover--ready .laila-cover__venue {
   animation: laila-cover-in 0.85s var(--laila-ease) both;
 }
 
@@ -297,6 +318,7 @@
   position: absolute;
   left: -2%;
   width: 118%;
+  max-width: none;
   height: 100%;
   object-fit: cover;
   user-select: none;
@@ -306,6 +328,9 @@
   top: 0;
   object-position: 30% top;
   opacity: 0;
+}
+
+.laila-cover--ready .laila-garland--top {
   animation: laila-garland-from-top 2.7s var(--laila-ease) 0.12s forwards;
 }
 
@@ -313,6 +338,9 @@
   bottom: 0;
   object-position: 30% bottom;
   opacity: 0;
+}
+
+.laila-cover--ready .laila-garland--bottom {
   animation: laila-garland-from-bottom 2.7s var(--laila-ease) 0.32s forwards;
 }
 
@@ -345,14 +373,22 @@
     height: 92%;
   }
 
+  /*
+   * Top bunga is denser mid-left; phones showed a bare top-right. Scale past the
+   * global img max-width and bias the crop so denser blooms cover that corner.
+   */
   .laila-garland--top {
-    top: -2%;
-    object-position: 28% 10%;
+    top: -8%;
+    left: -28%;
+    width: 168%;
+    max-width: none;
+    height: 115%;
+    object-position: 38% 0%;
   }
 
   .laila-garland--bottom {
     bottom: -2%;
-    object-position: 28% 90%;
+    object-position: 42% 90%;
   }
 
   .laila-cover__writing {
@@ -385,6 +421,15 @@
   z-index: 4;
   pointer-events: none;
   overflow: hidden;
+}
+
+.laila-cover:not(.laila-cover--ready) > .laila-butterflies {
+  opacity: 0;
+}
+
+.laila-cover--ready > .laila-butterflies {
+  opacity: 1;
+  transition: opacity 0.6s var(--laila-ease) 0.8s;
 }
 
 .laila-butterflies--top {
@@ -737,6 +782,7 @@
   position: absolute;
   left: 0;
   width: 100%;
+  max-width: none;
   object-fit: cover;
   opacity: 0.55;
   pointer-events: none;
@@ -752,6 +798,22 @@
   bottom: 0;
   height: 12rem;
   object-position: bottom center;
+}
+
+@media (max-width: 720px) {
+  /* Keep a short band crop — do not shift/scale like the cover or vines spill down the side. */
+  .laila-page-decor__flower--top {
+    left: 0;
+    width: 100%;
+    height: 11.25rem;
+    object-position: 42% top;
+  }
+
+  .laila-page-decor__flower--bottom {
+    left: 0;
+    width: 100%;
+    object-position: 42% bottom;
+  }
 }
 
 .laila-page-decor .laila-butterflies--top {

@@ -88,6 +88,16 @@ export const PORTFOLIO_ITEMS: readonly PortfolioItem[] = [
     tags: ["Cafe", "RSVP"],
   },
   {
+    id: "malay-classic",
+    title: "Malay Classic — Gold",
+    description: "Foto penuh, aksen emas, floral lembut — jemputan Melayu klasik.",
+    path: "/malay-classic",
+    category: "jemputan",
+    previewGradient: "linear-gradient(155deg, #f0e2c0 0%, #efe6d6 42%, #2c241c 100%)",
+    showOnDemo: false,
+    tags: ["Classic", "Gold", "RSVP"],
+  },
+  {
     id: "maroon-gold",
     title: "Maroon & Gold (Bingkai)",
     description: "Jemputan berbingkai dengan tema maroon diraja dan emas.",

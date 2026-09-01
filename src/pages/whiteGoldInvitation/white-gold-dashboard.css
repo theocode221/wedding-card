@@ -1,0 +1,335 @@
+/* White & Gold RSVP dashboard — ivory paper, champagne gold */
+
+.wg-dash {
+  --wg-paper: #fbf8f2;
+  --wg-paper-2: #f3ecdf;
+  --wg-ink: #1c1610;
+  --wg-ink-soft: #5a4a38;
+  --wg-gold: #c9a24d;
+  --wg-gold-deep: #8a5a28;
+  --wg-gold-soft: #e8d49a;
+  --wg-font-display: "Playfair Display", Palatino, Georgia, serif;
+  --wg-font-body: "Cormorant Garamond", Georgia, serif;
+  min-height: 100vh;
+  color: var(--wg-ink);
+  background: linear-gradient(180deg, #fffdf9 0%, var(--wg-paper) 40%, var(--wg-paper-2) 100%);
+  font-family: var(--wg-font-body);
+  font-size: 1.05rem;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wg-dash__frame {
+  position: fixed;
+  inset: 0.65rem;
+  pointer-events: none;
+  border: 1px solid rgba(201, 162, 77, 0.35);
+  box-shadow: inset 0 0 0 5px rgba(255, 253, 249, 0.5);
+  z-index: 0;
+}
+
+.wg-dash__inner {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 34rem);
+  margin: 0 auto;
+  padding: clamp(2.5rem, 6vw, 3.5rem) clamp(1.2rem, 4vw, 1.75rem) 3.5rem;
+}
+
+.wg-dash__head {
+  text-align: center;
+  margin-bottom: 1.75rem;
+}
+
+.wg-dash__kicker {
+  margin: 0 0 0.35rem;
+  font-family: var(--wg-font-display);
+  font-size: 0.62rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--wg-gold-deep);
+}
+
+.wg-dash__title {
+  margin: 0;
+  font-family: var(--wg-font-display);
+  font-size: clamp(1.55rem, 5vw, 1.95rem);
+  font-weight: 500;
+  color: var(--wg-ink);
+}
+
+.wg-dash__lead {
+  margin: 0.55rem 0 0;
+  font-family: var(--wg-font-display);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--wg-ink-soft);
+}
+
+.wg-dash__meta {
+  margin: 0.35rem 0 0;
+  font-family: var(--wg-font-display);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  color: var(--wg-gold-deep);
+}
+
+.wg-dash__demo-banner {
+  margin: 0.85rem auto 0;
+  max-width: 22rem;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid rgba(201, 162, 77, 0.4);
+  background: rgba(232, 212, 154, 0.25);
+  font-size: 0.88rem;
+  color: var(--wg-ink-soft);
+}
+
+.wg-dash__status,
+.wg-dash__error,
+.wg-dash__total,
+.wg-dash__hint {
+  text-align: center;
+}
+
+.wg-dash__error {
+  color: #8a3030;
+  padding: 0.75rem;
+  border: 1px solid rgba(138, 48, 48, 0.25);
+  background: rgba(138, 48, 48, 0.06);
+}
+
+.wg-dash__error code {
+  font-size: 0.85em;
+}
+
+.wg-dash-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin: 1.25rem 0 0.85rem;
+}
+
+.wg-dash-stat {
+  text-align: center;
+  padding: 1rem 0.6rem;
+  border: 1px solid rgba(201, 162, 77, 0.3);
+  background: rgba(255, 253, 249, 0.8);
+}
+
+.wg-dash-stat__kicker {
+  margin: 0;
+  font-family: var(--wg-font-display);
+  font-size: 0.58rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--wg-gold-deep);
+}
+
+.wg-dash-stat__num {
+  margin: 0.25rem 0 0;
+  font-family: var(--wg-font-display);
+  font-size: 2.1rem;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--wg-ink);
+}
+
+.wg-dash-stat--yes .wg-dash-stat__num {
+  color: var(--wg-gold-deep);
+}
+
+.wg-dash-stat__sub {
+  margin: 0.35rem 0 0;
+  font-size: 0.88rem;
+  color: var(--wg-ink-soft);
+}
+
+.wg-dash-bar {
+  height: 0.35rem;
+  margin: 0.35rem 0 0.65rem;
+  background: rgba(201, 162, 77, 0.18);
+  overflow: hidden;
+}
+
+.wg-dash-bar__yes {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--wg-gold-deep), var(--wg-gold));
+  min-width: 0;
+  transition: width 0.4s ease;
+}
+
+.wg-dash__total {
+  margin: 0 0 1rem;
+  font-family: var(--wg-font-display);
+  font-size: 0.92rem;
+  color: var(--wg-ink-soft);
+}
+
+.wg-dash__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.55rem;
+  margin-bottom: 0.55rem;
+}
+
+.wg-dash-btn {
+  appearance: none;
+  min-height: 2.4rem;
+  padding: 0.45rem 1.1rem;
+  border: 1px solid var(--wg-gold-deep);
+  background: transparent;
+  color: var(--wg-gold-deep);
+  font-family: var(--wg-font-display);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.wg-dash-btn--solid {
+  background: var(--wg-gold-deep);
+  color: #fffdf9;
+}
+
+.wg-dash-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.wg-dash__hint {
+  margin: 0 0 1.5rem;
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--wg-ink-soft);
+}
+
+.wg-dash-list {
+  margin: 0 0 1.5rem;
+}
+
+.wg-dash-list__title {
+  margin: 0 0 0.55rem;
+  font-family: var(--wg-font-display);
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--wg-gold-deep);
+  text-align: center;
+}
+
+.wg-dash-list__empty {
+  margin: 0;
+  text-align: center;
+  font-style: italic;
+  color: var(--wg-ink-soft);
+}
+
+.wg-dash-list__items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.wg-dash-list__items li {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid rgba(201, 162, 77, 0.22);
+}
+
+.wg-dash-list__name {
+  font-family: var(--wg-font-display);
+  color: var(--wg-ink);
+}
+
+.wg-dash-list__meta {
+  flex-shrink: 0;
+  font-size: 0.88rem;
+  color: var(--wg-ink-soft);
+}
+
+.wg-dash-ucapan {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.wg-dash-ucapan li {
+  padding: 0.85rem 0.2rem;
+  border-bottom: 1px solid rgba(201, 162, 77, 0.22);
+  text-align: center;
+}
+
+.wg-dash-ucapan__text {
+  margin: 0;
+  font-family: var(--wg-font-display);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--wg-ink);
+}
+
+.wg-dash-ucapan__from {
+  margin: 0.45rem 0 0;
+  font-size: 0.92rem;
+  color: var(--wg-gold-deep);
+}
+
+.wg-ucapan-book {
+  display: none;
+}
+
+@media print {
+  body.wg-print-ucapan .wg-dash__frame,
+  body.wg-print-ucapan .wg-dash__inner,
+  body.wg-print-ucapan .portfolio-back-catalog {
+    display: none !important;
+  }
+
+  body.wg-print-ucapan .wg-ucapan-book {
+    display: block;
+    color: #1c1610;
+    font-family: Georgia, "Times New Roman", serif;
+  }
+
+  body.wg-print-ucapan .wg-ucapan-book__cover {
+    text-align: center;
+    padding: 2rem 1rem 1.5rem;
+    page-break-after: always;
+  }
+
+  body.wg-print-ucapan .wg-ucapan-book__kicker {
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+  }
+
+  body.wg-print-ucapan .wg-ucapan-book__names {
+    font-family: "Great Vibes", cursive;
+    font-size: 2.2rem;
+    font-weight: 400;
+    margin: 0.5rem 0;
+  }
+
+  body.wg-print-ucapan .wg-ucapan-book__card {
+    padding: 1.1rem 0.5rem;
+    border-bottom: 1px solid #ddd;
+    page-break-inside: avoid;
+  }
+
+  body.wg-print-ucapan .wg-ucapan-book__message {
+    font-style: italic;
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  body.wg-print-ucapan .wg-ucapan-book__sign {
+    margin: 0.45rem 0 0;
+    text-align: right;
+  }
+}

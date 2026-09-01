@@ -104,7 +104,7 @@ export function LailaMusicProvider({ children }: { children: ReactNode }) {
         className="laila-music"
         src={LAILA_MUSIC_URL}
         loop
-        preload="auto"
+        preload="metadata"
         playsInline
         aria-hidden
         onPlay={() => setPlaying(true)}
