@@ -22,7 +22,7 @@ export const LAILA_PATH = "/laila";
 export const LAILA_RSVP_PATH = "/laila/rsvp";
 export const LAILA_GALLERY_PATH = "/laila/galeri";
 /** Client-only dashboard — not linked from the public invitation. */
-export const LAILA_DASHBOARD_PATH = "/laila/papan";
+export const LAILA_DASHBOARD_PATH = "/laila/dashboard";
 /** Details screen after “Buka Jemputan” — treated as a separate page, not a scroll. */
 export const LAILA_DETAILS_HASH = "jemputan";
 export const LAILA_DETAILS_TO = { pathname: LAILA_PATH, hash: LAILA_DETAILS_HASH } as const;

@@ -48,7 +48,8 @@ export default function App() {
             <Route path="/laila" element={<LailaInvitationPage />} />
             <Route path="/laila/rsvp" element={<LailaRsvpPage />} />
             <Route path="/laila/galeri" element={<LailaGalleryPage />} />
-            <Route path="/laila/papan" element={<LailaDashboardPage />} />
+            <Route path="/laila/dashboard" element={<LailaDashboardPage />} />
+            <Route path="/laila/papan" element={<Navigate to="/laila/dashboard" replace />} />
             <Route path="/doodle" element={<DoodleInvitationPage />} />
             <Route path="/doodle-pastel" element={<DoodleInvitationPage variant="pastel" />} />
             <Route path="/travellers" element={<TravellersInvitationPage />} />
@@ -66,7 +67,11 @@ export default function App() {
             <Route path="/jemputan-frame" element={<WeddingInvitationFramePage />} />
             <Route path="/jemputan-frame-maroon" element={<WeddingInvitationFrameMaroonPage />} />
             <Route path="/naim-nadhirah-nikah" element={<WeddingInvitationFrameWhiteGoldPage />} />
-            <Route path="/naim-nadhirah-nikah/papan" element={<WhiteGoldDashboardPage />} />
+            <Route path="/naim-nadhirah-nikah/dashboard" element={<WhiteGoldDashboardPage />} />
+            <Route
+              path="/naim-nadhirah-nikah/papan"
+              element={<Navigate to="/naim-nadhirah-nikah/dashboard" replace />}
+            />
             <Route
               path="/demo-gold"
               element={<WeddingInvitationFrameWhiteGoldPage variant="demo" />}

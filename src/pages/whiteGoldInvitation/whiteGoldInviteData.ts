@@ -3,7 +3,7 @@ import { getRsvpGoogleScriptUrl } from "../../lib/rsvpGoogleSheet";
 /** Theme value written by RsvpPage for Naim & Nadhirah. */
 export const WHITE_GOLD_RSVP_THEME = "whiteGold";
 
-export const WHITE_GOLD_DASHBOARD_PATH = "/naim-nadhirah-nikah/papan";
+export const WHITE_GOLD_DASHBOARD_PATH = "/naim-nadhirah-nikah/dashboard";
 
 export const WHITE_GOLD_COUPLE = {
   brideName: "Nadhirah",

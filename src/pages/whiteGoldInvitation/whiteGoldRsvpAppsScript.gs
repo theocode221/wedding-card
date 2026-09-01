@@ -3,7 +3,7 @@
  * Deploy → Manage deployments → Edit → New version → Deploy
  *
  * Use this if Naim & Nadhirah RSVPs already go to this sheet (theme: whiteGold).
- * Adds GET list for the client dashboard at /naim-nadhirah-nikah/papan
+ * Adds GET list for the client dashboard at /naim-nadhirah-nikah/dashboard
  *
  * Row 1: Tarikh & Masa | Nama | Kehadiran | Bilangan Tetamu | Ucapan | Tema
  *
