@@ -830,7 +830,7 @@
   font-size: 0.92rem;
 }
 
-.paan-field input,
+.paan-field input:not([type="radio"]):not([type="checkbox"]),
 .paan-field textarea {
   width: 100%;
   padding: 0.65rem 0.75rem;
@@ -841,7 +841,7 @@
   border-radius: 0;
 }
 
-.paan-field input:focus-visible,
+.paan-field input:not([type="radio"]):not([type="checkbox"]):focus-visible,
 .paan-field textarea:focus-visible {
   outline: 2px solid var(--paan-copper);
   outline-offset: 2px;
@@ -851,22 +851,52 @@
   border: none;
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.85rem 1.25rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+  align-items: stretch;
 }
 
 .paan-field--choice legend {
   padding: 0;
-  margin-bottom: 0.35rem;
+  margin-bottom: 0.45rem;
   width: 100%;
+  grid-column: 1 / -1;
 }
 
 .paan-field--choice label {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 0.4rem;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  min-width: 0;
+  min-height: 2.75rem;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid rgba(196, 160, 106, 0.35);
+  background: rgba(26, 16, 12, 0.55);
+  color: var(--paan-cream);
   cursor: pointer;
+  font-size: 0.92rem;
+  line-height: 1.25;
+}
+
+.paan-field--choice label:has(input:checked) {
+  border-color: rgba(224, 196, 138, 0.75);
+  background: rgba(196, 160, 106, 0.18);
+}
+
+.paan-field--choice input[type="radio"] {
+  width: 1rem;
+  height: 1rem;
+  margin: 0;
+  flex-shrink: 0;
+  accent-color: #c4a06a;
+}
+
+@media (max-width: 380px) {
+  .paan-field--choice {
+    grid-template-columns: 1fr;
+  }
 }
 
 .paan-btn {
