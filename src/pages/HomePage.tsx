@@ -83,6 +83,16 @@ export function HomePage() {
             <span className="home-selector__cardDesc">Foto penuh, emas antik, floral lembut</span>
           </Link>
 
+          <Link to="/jemputan-frame-malay-classic" className="home-selector__card">
+            <span className="home-selector__cardTitle">Malay Classic (Bingkai)</span>
+            <span className="home-selector__cardDesc">Tema Melayu klasik dengan animasi pembuka berbingkai</span>
+          </Link>
+
+          <Link to="/paan" className="home-selector__card">
+            <span className="home-selector__cardTitle">Paan — Chocolate Traditional</span>
+            <span className="home-selector__cardDesc">Tema coklat klasik dengan bingkai renda tembaga</span>
+          </Link>
+
           <Link to="/demo-gold" className="home-selector__card">
             <span className="home-selector__cardTitle">Demo Gold</span>
             <span className="home-selector__cardDesc">Preview tema gold dengan nama contoh (Adam &amp; Sofea)</span>

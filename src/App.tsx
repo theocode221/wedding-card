@@ -14,6 +14,7 @@ import { UcapanCardPage } from "./pages/UcapanCardPage";
 import { WeddingInvitationFramePage } from "./pages/WeddingInvitationFramePage";
 import { WeddingInvitationFrameMaroonPage } from "./pages/WeddingInvitationFrameMaroonPage";
 import { WeddingInvitationFrameWhiteGoldPage } from "./pages/WeddingInvitationFrameWhiteGoldPage";
+import { WeddingInvitationFrameMalayClassicPage } from "./pages/WeddingInvitationFrameMalayClassicPage";
 import { GalleryPage } from "./pages/GalleryPage";
 import { EggRevealCardPage } from "./pages/EggRevealCardPage";
 import { EggRevealCardPastelPage } from "./pages/EggRevealCardPastelPage";
@@ -29,6 +30,7 @@ import { DoodleInvitationPage } from "./pages/doodleInvitation/DoodleInvitationP
 import { TravellersInvitationPage } from "./pages/travellersInvitation/TravellersInvitationPage";
 import { CafeInvitationPage } from "./pages/cafeInvitation/CafeInvitationPage";
 import { MalayClassicInvitationPage } from "./pages/malayClassicInvitation/MalayClassicInvitationPage";
+import { PaanInvitationPage } from "./pages/paanInvitation/PaanInvitationPage";
 import { WhiteGoldDashboardPage } from "./pages/whiteGoldInvitation/WhiteGoldDashboardPage";
 
 const routerBasename =
@@ -55,6 +57,7 @@ export default function App() {
             <Route path="/travellers" element={<TravellersInvitationPage />} />
             <Route path="/cafe" element={<CafeInvitationPage />} />
             <Route path="/malay-classic" element={<MalayClassicInvitationPage />} />
+            <Route path="/paan" element={<PaanInvitationPage />} />
             <Route path="/theocodewedding" element={<PortfolioPage />} />
             <Route path="/theocodewedding/admin" element={<PortfolioAdminPage />} />
             <Route path="/portfolio" element={<Navigate to="/theocodewedding" replace />} />
@@ -66,6 +69,10 @@ export default function App() {
             <Route path="/roda-doa" element={<BlessingWheelPage />} />
             <Route path="/jemputan-frame" element={<WeddingInvitationFramePage />} />
             <Route path="/jemputan-frame-maroon" element={<WeddingInvitationFrameMaroonPage />} />
+            <Route
+              path="/jemputan-frame-malay-classic"
+              element={<WeddingInvitationFrameMalayClassicPage />}
+            />
             <Route path="/naim-nadhirah-nikah" element={<WeddingInvitationFrameWhiteGoldPage />} />
             <Route path="/naim-nadhirah-nikah/dashboard" element={<WhiteGoldDashboardPage />} />
             <Route

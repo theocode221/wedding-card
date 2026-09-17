@@ -17,6 +17,7 @@ type SubmitStatus = "idle" | "sending" | "success" | "error";
 function themeLabel(skin: InvitationSatelliteSkin): string {
   if (skin === "maroon") return "maroon";
   if (skin === "whiteGold") return "whiteGold";
+  if (skin === "malayClassic") return "malayClassic";
   return "default";
 }
 

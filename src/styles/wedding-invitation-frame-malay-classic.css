@@ -1,0 +1,393 @@
+/**
+ * Malay Classic skin on the framed (cinematic) invitation shell.
+ * Paper + antique gold; Great Vibes names; Amiri for khat.
+ */
+
+.wif-page.wif-page--malay-classic {
+  --wif-cream: #faf6ef;
+  --wif-cream-deep: #f3ecdf;
+  --wif-paper: #fffdf8;
+  --wif-ink: #1f1812;
+  --wif-ink-soft: #3d3228;
+  --wif-brown: #8a6b32;
+  --wif-gold: #c9a84f;
+  --wif-gold-soft: #f0e2c0;
+  --wif-gold-deep: #8a6b32;
+  --wif-sage: #9aab8e;
+  --wif-font-display: "Cormorant Garamond", Georgia, serif;
+  --wif-font-body: "Cormorant Garamond", Georgia, serif;
+  --wif-font-script: "Great Vibes", cursive;
+  --wif-font-khat: "Amiri", Georgia, serif;
+}
+
+.wif-page--malay-classic.wif-page--cinematic {
+  background-color: #1a1510;
+  background-image:
+    radial-gradient(ellipse 70% 50% at 50% 20%, rgba(201, 168, 79, 0.18) 0%, transparent 55%),
+    linear-gradient(185deg, #2a2218 0%, #1a1510 100%);
+}
+
+.wif-page--malay-classic.wif-page--cinematic.wif-page--invitation-only,
+.wif-page--malay-classic.wif-page--cinematic:not(.wif-page--invitation-only):has(.wif-invitation-shell) {
+  background-color: var(--wif-cream);
+  background-image:
+    radial-gradient(ellipse 80% 40% at 50% 0%, rgba(240, 226, 192, 0.55) 0%, transparent 55%),
+    linear-gradient(185deg, #faf6ef 0%, #f3ecdf 100%);
+  color: var(--wif-ink);
+}
+
+.wif-page--malay-classic .wif-loading-overlay {
+  background: linear-gradient(185deg, #2a2218 0%, #1a1510 100%);
+}
+
+.wif-page--malay-classic .wif-loading__ornament {
+  border-color: rgba(201, 168, 79, 0.28);
+  border-top-color: var(--wif-gold);
+}
+
+.wif-page--malay-classic .wif-loading__text {
+  color: rgba(240, 226, 192, 0.85);
+}
+
+/* Double gold frame card */
+.wif-page--malay-classic .wif-invitation-shell--over-scene {
+  margin-top: 0;
+  padding: max(1.15rem, env(safe-area-inset-top, 0px)) 1.35rem 2.25rem;
+  border-radius: 0.35rem;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  color: var(--wif-ink);
+  background:
+    linear-gradient(185deg, #fffdf8 0%, #faf6ef 45%, #f3ecdf 100%);
+  box-shadow:
+    0 18px 48px rgba(31, 24, 18, 0.22),
+    0 0 0 1px rgba(201, 168, 79, 0.65) inset,
+    0 0 0 4px rgba(250, 246, 239, 0.95) inset,
+    0 0 0 5px rgba(138, 107, 50, 0.45) inset;
+}
+
+.wif-page--malay-classic .wif-invitation__hero {
+  position: relative;
+  border-bottom: none;
+  padding-bottom: 1.75rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.wif-page--malay-classic .wif-invitation__hero::after {
+  content: "";
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(201, 168, 79, 0.35) 20%,
+    rgba(201, 168, 79, 0.9) 50%,
+    rgba(201, 168, 79, 0.35) 80%,
+    transparent
+  );
+}
+
+.wif-page--malay-classic .wif-invitation__khat {
+  margin: 0 0 0.35rem;
+  font-family: var(--wif-font-khat);
+  font-size: clamp(1.15rem, 3.5vw, 1.45rem);
+  color: var(--wif-gold-deep);
+  line-height: 1.4;
+}
+
+.wif-page--malay-classic .wif-invitation__khat--salam {
+  font-size: clamp(1rem, 3vw, 1.25rem);
+}
+
+.wif-page--malay-classic .wif-invitation__hero-eyebrow {
+  color: var(--wif-gold-deep);
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+}
+
+.wif-page--malay-classic .wif-invitation__names--script {
+  font-family: var(--wif-font-script);
+  font-weight: 400;
+  font-size: clamp(2.6rem, 9vw, 3.6rem);
+  letter-spacing: 0.02em;
+  color: var(--wif-ink);
+  -webkit-text-stroke: 0;
+  text-shadow: 0 1px 0 rgba(240, 226, 192, 0.8);
+  line-height: 1.15;
+}
+
+.wif-page--malay-classic .wif-invitation__hero-date {
+  color: var(--wif-gold);
+  font-weight: 500;
+}
+
+.wif-page--malay-classic .wif-invitation__hero-line {
+  color: var(--wif-ink-soft);
+}
+
+.wif-page--malay-classic .wif-invitation__salam {
+  text-align: center;
+  margin: 0 0 1.75rem;
+}
+
+.wif-page--malay-classic .wif-invitation__salam-latin {
+  margin: 0.35rem 0 0;
+  font-size: 0.95rem;
+  font-style: italic;
+  color: var(--wif-ink-soft);
+}
+
+.wif-page--malay-classic .wif-invitation__jemputan {
+  text-align: center;
+  margin: 0 0 1.85rem;
+}
+
+.wif-page--malay-classic .wif-invitation__parents {
+  margin: 0.65rem 0 1rem;
+  font-size: 1.05rem;
+  line-height: 1.55;
+  color: var(--wif-ink);
+}
+
+.wif-page--malay-classic .wif-invitation__invite-copy {
+  margin: 0 auto 0.85rem;
+  max-width: 22rem;
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: var(--wif-ink-soft);
+}
+
+.wif-page--malay-classic .wif-invitation__couple-note {
+  margin: 0 0 0.5rem;
+  font-style: italic;
+  color: var(--wif-gold-deep);
+  font-size: 0.95rem;
+}
+
+.wif-page--malay-classic .wif-invitation__couple-full {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  margin: 0;
+  font-family: var(--wif-font-script);
+  font-size: clamp(1.65rem, 5vw, 2.1rem);
+  color: var(--wif-ink);
+  line-height: 1.2;
+}
+
+.wif-page--malay-classic .wif-invitation__couple-amp {
+  font-family: var(--wif-font-display);
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  color: var(--wif-gold);
+}
+
+.wif-page--malay-classic .wif-invitation__section-title {
+  color: var(--wif-gold-deep);
+  font-weight: 600;
+}
+
+.wif-page--malay-classic .wif-invitation__section-title--subtle {
+  color: var(--wif-sage);
+}
+
+.wif-page--malay-classic .wif-invitation__detail-label {
+  color: var(--wif-gold);
+}
+
+.wif-page--malay-classic .wif-invitation__detail-value {
+  color: var(--wif-ink);
+}
+
+.wif-page--malay-classic .wif-invitation__detail-list li {
+  border-bottom-color: rgba(201, 168, 79, 0.2);
+}
+
+.wif-page--malay-classic .wif-invitation__btn--primary,
+.wif-page--malay-classic .wif-invitation__btn--calendar,
+.wif-page--malay-classic .wif-invitation__btn--gold,
+.wif-page--malay-classic .wif-invitation__btn--rsvp {
+  background: linear-gradient(160deg, #f0e2c0 0%, #c9a84f 42%, #8a6b32 100%);
+  color: #1a1208;
+  border: 1px solid rgba(138, 107, 50, 0.35);
+  box-shadow: 0 4px 18px rgba(138, 107, 50, 0.25);
+}
+
+.wif-page--malay-classic .wif-invitation__btn--primary:hover,
+.wif-page--malay-classic .wif-invitation__btn--gold:hover {
+  box-shadow: 0 8px 26px rgba(138, 107, 50, 0.32);
+}
+
+.wif-page--malay-classic .wif-invitation__btn--location-opt,
+.wif-page--malay-classic .wif-invitation__btn--calendar-opt {
+  background: #fffdf8;
+  color: var(--wif-ink);
+  border-color: rgba(201, 168, 79, 0.35);
+}
+
+.wif-page--malay-classic .wif-invitation__btn--ghost {
+  color: var(--wif-gold-deep);
+  border-color: rgba(201, 168, 79, 0.45);
+}
+
+.wif-page--malay-classic .wif-invitation__btn--ghost:hover {
+  background: rgba(201, 168, 79, 0.1);
+}
+
+.wif-page--malay-classic .wif-invitation__aturcara {
+  margin: 0 0 1.75rem;
+}
+
+.wif-page--malay-classic .wif-invitation__aturcara-list {
+  list-style: none;
+  margin: 0.85rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.65rem;
+}
+
+.wif-page--malay-classic .wif-invitation__aturcara-list li {
+  display: grid;
+  grid-template-columns: 5.5rem 1fr;
+  gap: 0.75rem;
+  align-items: baseline;
+  padding: 0.55rem 0.75rem;
+  background: rgba(255, 253, 248, 0.85);
+  border: 1px solid rgba(201, 168, 79, 0.22);
+}
+
+.wif-page--malay-classic .wif-invitation__aturcara-time {
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  color: var(--wif-gold-deep);
+  font-weight: 600;
+}
+
+.wif-page--malay-classic .wif-invitation__aturcara-title {
+  color: var(--wif-ink);
+  font-size: 1.02rem;
+}
+
+.wif-page--malay-classic .wif-invitation__note {
+  background: linear-gradient(160deg, rgba(255, 253, 248, 0.98), rgba(240, 226, 192, 0.35));
+  border: 1px solid rgba(201, 168, 79, 0.28);
+}
+
+.wif-page--malay-classic .wif-invitation__note-text {
+  color: var(--wif-ink-soft);
+}
+
+.wif-page--malay-classic .wif-invitation__rsvp-cta {
+  background: linear-gradient(165deg, #fffdf8 0%, #faf6ef 55%, #f3ecdf 100%);
+  box-shadow:
+    0 0 0 1px rgba(201, 168, 79, 0.4),
+    0 10px 28px rgba(31, 24, 18, 0.08);
+}
+
+.wif-page--malay-classic .wif-invitation__countdown-unit {
+  background: #fffdf8;
+  box-shadow:
+    0 0 0 1px rgba(201, 168, 79, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.wif-page--malay-classic .wif-invitation__countdown-value {
+  color: var(--wif-ink);
+}
+
+.wif-page--malay-classic .wif-invitation__countdown-label {
+  color: var(--wif-gold-deep);
+}
+
+.wif-page--malay-classic .wif-invitation__footer {
+  border-top: 1px solid rgba(201, 168, 79, 0.28);
+}
+
+.wif-page--malay-classic .wif-invitation__footer-sign {
+  font-family: var(--wif-font-script);
+  font-size: 1.65rem;
+  letter-spacing: 0.04em;
+  color: var(--wif-gold-deep);
+  font-weight: 400;
+}
+
+/* Cinematic stage */
+.wif-page--malay-classic .ci-root {
+  background-color: #1a1510;
+  background-image:
+    radial-gradient(ellipse 70% 45% at 50% 18%, rgba(201, 168, 79, 0.2) 0%, transparent 58%),
+    radial-gradient(ellipse 55% 40% at 12% 88%, rgba(138, 107, 50, 0.12) 0%, transparent 55%);
+}
+
+.wif-page--malay-classic .ci-stack {
+  border-radius: 0.25rem;
+  box-shadow:
+    0 0 0 1px rgba(201, 168, 79, 0.55),
+    0 0 0 5px rgba(26, 21, 16, 0.85),
+    0 0 0 6px rgba(201, 168, 79, 0.35),
+    0 22px 50px rgba(0, 0, 0, 0.35);
+}
+
+.wif-page--malay-classic .ci-open {
+  background: linear-gradient(160deg, #f0e2c0 0%, #c9a84f 45%, #8a6b32 100%);
+  color: #1a1208;
+  border: 1px solid rgba(240, 226, 192, 0.4);
+}
+
+.wif-page--malay-classic .ci-line--in:not(.ci-line--hand) {
+  color: #faf6ef;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.45);
+}
+
+.wif-page--malay-classic .ci-line--hand.ci-line--in {
+  font-family: var(--wif-font-script);
+  color: #f0e2c0;
+}
+
+/* Glitter rain on cinematic */
+.wif-mc-glitter {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 2;
+}
+
+.wif-mc-glitter__dot {
+  position: absolute;
+  top: -8%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #fff8e8, #c9a84f 55%, #8a6b32);
+  box-shadow: 0 0 6px rgba(201, 168, 79, 0.65);
+  opacity: 0.75;
+  animation-name: wif-mc-glitter-fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes wif-mc-glitter-fall {
+  0% {
+    transform: translate3d(0, 0, 0);
+    opacity: 0;
+  }
+  8% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate3d(var(--drift, 8px), 110vh, 0);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wif-mc-glitter__dot {
+    animation: none;
+    opacity: 0;
+  }
+}

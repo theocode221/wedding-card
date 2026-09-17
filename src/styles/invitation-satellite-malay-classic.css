@@ -1,0 +1,133 @@
+/**
+ * Galeri + RSVP when opened from `/jemputan-frame-malay-classic`
+ */
+
+.gallery-page.gallery-page--malay-classic {
+  background:
+    radial-gradient(ellipse 90% 45% at 50% 0%, rgba(240, 226, 192, 0.45) 0%, transparent 52%),
+    linear-gradient(185deg, #faf6ef 0%, #f3ecdf 48%, #ebe2d2 100%);
+  color: #1f1812;
+}
+
+.gallery-page.gallery-page--malay-classic .gallery-page__back {
+  color: #1f1812;
+  background: rgba(255, 253, 248, 0.92);
+  border: 1px solid rgba(201, 168, 79, 0.42);
+  box-shadow: 0 6px 22px rgba(31, 24, 18, 0.1);
+}
+
+.gallery-page.gallery-page--malay-classic .gallery-page__back:hover {
+  background: #fff9f0;
+  border-color: rgba(201, 168, 79, 0.62);
+}
+
+.gallery-page.gallery-page--malay-classic .gallery-page__back:focus-visible {
+  outline-color: #c9a84f;
+}
+
+.gallery-page.gallery-page--malay-classic .gallery-page__title {
+  color: #1f1812;
+}
+
+.gallery-page.gallery-page--malay-classic .gallery-page__subtitle {
+  color: #8a6b32;
+}
+
+.gallery-page.gallery-page--malay-classic .gallery-cinematic__quote-text {
+  color: rgba(31, 24, 18, 0.78);
+}
+
+.gallery-page.gallery-page--malay-classic .gallery-cinematic__frame {
+  background: rgba(255, 253, 248, 0.85);
+  box-shadow:
+    0 12px 40px rgba(31, 24, 18, 0.12),
+    0 0 0 1px rgba(201, 168, 79, 0.28);
+}
+
+.gallery-page.gallery-page--malay-classic .gallery-cinematic__frame:focus-visible {
+  outline-color: rgba(201, 168, 79, 0.7);
+}
+
+.gallery-page.gallery-page--malay-classic .gallery-page__footer {
+  border-top-color: rgba(201, 168, 79, 0.28);
+}
+
+.gallery-page.gallery-page--malay-classic .gallery-page__footer-text {
+  color: rgba(31, 24, 18, 0.72);
+}
+
+.rsvp-page.rsvp-page--malay-classic {
+  background:
+    radial-gradient(ellipse 85% 50% at 50% 100%, rgba(240, 226, 192, 0.35) 0%, transparent 55%),
+    linear-gradient(185deg, #faf6ef 0%, #f3ecdf 100%);
+  font-family: "Cormorant Garamond", Georgia, serif;
+}
+
+.rsvp-page.rsvp-page--malay-classic .rsvp-page__card {
+  background: linear-gradient(185deg, #fffdf8 0%, #faf6ef 42%, #f3ecdf 100%);
+  border: 1px solid rgba(201, 168, 79, 0.45);
+  box-shadow:
+    0 22px 52px rgba(31, 24, 18, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+.rsvp-page.rsvp-page--malay-classic .rsvp-page__eyebrow {
+  color: #8a6b32;
+}
+
+.rsvp-page.rsvp-page--malay-classic .rsvp-page__title {
+  color: #1f1812;
+}
+
+.rsvp-page.rsvp-page--malay-classic .rsvp-page__text {
+  color: rgba(31, 24, 18, 0.78);
+}
+
+.rsvp-page.rsvp-page--malay-classic .rsvp-page__back {
+  color: #8a6b32;
+  border-color: rgba(201, 168, 79, 0.48);
+}
+
+.rsvp-page.rsvp-page--malay-classic .rsvp-page__back:hover {
+  border-color: #c9a84f;
+  color: #1f1812;
+}
+
+.rsvp-page.rsvp-page--malay-classic .rsvp-page__back:focus-visible {
+  outline: 2px solid #c9a84f;
+}
+
+.rsvp-page.rsvp-page--malay-classic .rsvp-page__label {
+  color: #8a6b32;
+}
+
+.rsvp-page.rsvp-page--malay-classic .rsvp-page__input,
+.rsvp-page.rsvp-page--malay-classic .rsvp-page__textarea,
+.rsvp-page.rsvp-page--malay-classic .rsvp-page__choice {
+  background: #fffdf8;
+  border-color: rgba(201, 168, 79, 0.35);
+  color: #1f1812;
+}
+
+.rsvp-page.rsvp-page--malay-classic .rsvp-page__choice:has(input:checked) {
+  border-color: #c9a84f;
+  background: rgba(240, 226, 192, 0.35);
+}
+
+.rsvp-page.rsvp-page--malay-classic .rsvp-page__submit {
+  background: linear-gradient(160deg, #f0e2c0 0%, #c9a84f 42%, #8a6b32 100%);
+  color: #1a1208;
+  border: 1px solid rgba(138, 107, 50, 0.35);
+}
+
+.rsvp-page.rsvp-page--malay-classic .rsvp-page__success-title {
+  color: #1f1812;
+}
+
+.rsvp-page.rsvp-page--malay-classic .rsvp-page__success-text {
+  color: rgba(31, 24, 18, 0.75);
+}
+
+.rsvp-page.rsvp-page--malay-classic .rsvp-page__error {
+  color: #8a3a2a;
+}

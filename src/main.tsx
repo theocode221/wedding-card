@@ -9,6 +9,7 @@ import "./styles/studio-credit.css";
 import "./styles/portfolio-embed.css";
 import "./styles/invitation-satellite-maroon.css";
 import "./styles/invitation-satellite-white-gold.css";
+import "./styles/invitation-satellite-malay-classic.css";
 
 setupPublicAssets();
 

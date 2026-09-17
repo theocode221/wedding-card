@@ -18,3 +18,11 @@ export const NAIM_NADHIRAH_CINEMATIC_COPY: CinematicCopyTuple = [
   "“dan Kami ciptakan kamu berpasang-pasangan”",
   "An Naba' (78:8)",
 ];
+
+/** Malay Classic (frame) demo couple — Imran & Aisyah. */
+export const MALAY_CLASSIC_CINEMATIC_COPY: CinematicCopyTuple = [
+  "Walimatul Urus",
+  "Imran\n&\nAisyah",
+  "Dengan penuh rasa syukur ke hadrat Allah S.W.T",
+  "14 Mac 2027",
+];

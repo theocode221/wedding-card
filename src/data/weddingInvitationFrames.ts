@@ -44,6 +44,16 @@ export const WEDDING_INVITATION_WHITE_GOLD_CINEMATIC_URLS: readonly [string, str
   weddingInvitationAssetUrl("1 gold.png"),
 ];
 
+/**
+ * Malay Classic frame — warm garden still (same asset as standalone classic cover).
+ * Replace with client photos when available.
+ */
+export const WEDDING_INVITATION_MALAY_CLASSIC_CINEMATIC_URLS: readonly [string, string, string] = [
+  "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=85",
+  "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=85",
+  "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=85",
+];
+
 /** @deprecated Kept for compatibility; only first three frames are used in-app. */
 export const WEDDING_INVITATION_FRAME_URLS: readonly string[] = WEDDING_INVITATION_CINEMATIC_URLS;
 
