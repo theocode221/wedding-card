@@ -4,3 +4,5 @@ dist
 .DS_Store
 .env
 .env.*.local
+deploy/*.zip
+deploy/wedding-card-cpanel.zip

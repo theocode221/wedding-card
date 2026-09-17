@@ -4,6 +4,7 @@ import { getRemaining, pad } from "../../components/shared/countdownUtils";
 import { StudioCredit } from "../../components/studio/StudioCredit";
 import { PortfolioBackToCatalog } from "../../components/portfolio/PortfolioBackToCatalog";
 import { usePortfolioPreviewMode } from "../../hooks/usePortfolioPreviewMode";
+import { submitRsvpToGoogleSheet } from "../../lib/rsvpGoogleSheet";
 import {
   IconGoogleMaps,
   IconPhone,
@@ -13,6 +14,7 @@ import {
 import { PaanGlitter } from "./PaanGlitter";
 import {
   PAAN_ATURCARA,
+  PAAN_RSVP_THEME,
   PAAN_SALAM_KHAT,
   PAAN_SALAM_LATIN,
   PAAN_TAGLINE_JAWI,
@@ -20,6 +22,7 @@ import {
   PAAN_WHATSAPP,
   downloadPaanIcs,
   getPaanGoogleCalendarUrl,
+  getPaanRsvpScriptUrl,
   paanCoupleLabel,
   paanHasEventDate,
   paanInviteForPreview,
@@ -41,7 +44,9 @@ export function PaanInvitationPage() {
   const [phase, setPhase] = useState<Phase>("cover");
   const [coverReady, setCoverReady] = useState(false);
   const [now, setNow] = useState(() => new Date());
-  const [rsvp, setRsvp] = useState<"idle" | "yes" | "no">("idle");
+  const [rsvp, setRsvp] = useState<"idle" | "yes" | "no" | "sending">("idle");
+  const [rsvpError, setRsvpError] = useState("");
+  const [attendingChoice, setAttendingChoice] = useState<"ya" | "tidak">("ya");
   const [isLocationMenuOpen, setIsLocationMenuOpen] = useState(false);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const locationMenuRef = useRef<HTMLDivElement | null>(null);
@@ -133,18 +138,58 @@ export function PaanInvitationPage() {
   const backToCover = useCallback(() => {
     setPhase("cover");
     setRsvp("idle");
+    setRsvpError("");
+    setAttendingChoice("ya");
     setIsLocationMenuOpen(false);
     setIsCalendarOpen(false);
   }, []);
 
-  const onRsvp = (event: FormEvent<HTMLFormElement>) => {
+  const onRsvp = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (preview.isPreview) {
-      setRsvp("yes");
+    if (rsvp === "sending") return;
+
+    const data = new FormData(event.currentTarget);
+    const name = String(data.get("nama") || "").trim();
+    const attending = data.get("kehadiran") === "tidak" ? "no" : "yes";
+    const message = String(data.get("ucapan") || "").trim();
+    const guestsRaw = Math.floor(Number(data.get("tetamu")) || 1);
+    const guests = attending === "no" ? 1 : Math.max(1, Math.min(10, guestsRaw));
+
+    if (!name) {
+      setRsvpError("Sila masukkan nama anda.");
       return;
     }
-    const data = new FormData(event.currentTarget);
-    setRsvp(data.get("kehadiran") === "tidak" ? "no" : "yes");
+
+    if (preview.isPreview) {
+      setRsvpError("");
+      setRsvp(attending === "no" ? "no" : "yes");
+      return;
+    }
+
+    const scriptUrl = getPaanRsvpScriptUrl();
+    if (!scriptUrl) {
+      setRsvpError("RSVP akan diaktifkan apabila Google Sheet klien sedia.");
+      return;
+    }
+
+    setRsvp("sending");
+    setRsvpError("");
+    try {
+      await submitRsvpToGoogleSheet(
+        {
+          name,
+          attending,
+          guests,
+          message,
+          theme: PAAN_RSVP_THEME,
+        },
+        scriptUrl,
+      );
+      setRsvp(attending === "no" ? "no" : "yes");
+    } catch {
+      setRsvp("idle");
+      setRsvpError("Tidak dapat menghantar sekarang. Sila cuba lagi sebentar.");
+    }
   };
 
   return (
@@ -424,31 +469,61 @@ export function PaanInvitationPage() {
               <p className="paan-prose paan-rsvp__lead">
                 Sila sahkan kehadiran anda. Tinggalkan juga sedikit doa &amp; ucapan.
               </p>
-              {rsvp === "idle" ? (
-                <form className="paan-rsvp__form" onSubmit={onRsvp}>
+              {rsvp === "idle" || rsvp === "sending" ? (
+                <form className="paan-rsvp__form" onSubmit={(e) => void onRsvp(e)}>
                   <label className="paan-field">
                     <span>Nama</span>
-                    <input name="nama" required autoComplete="name" />
+                    <input name="nama" required autoComplete="name" disabled={rsvp === "sending"} />
                   </label>
-                  <fieldset className="paan-field paan-field--choice">
+                  <fieldset className="paan-field paan-field--choice" disabled={rsvp === "sending"}>
                     <legend>Kehadiran</legend>
                     <label>
-                      <input type="radio" name="kehadiran" value="ya" defaultChecked />
+                      <input
+                        type="radio"
+                        name="kehadiran"
+                        value="ya"
+                        checked={attendingChoice === "ya"}
+                        onChange={() => setAttendingChoice("ya")}
+                      />
                       Hadir
                     </label>
                     <label>
-                      <input type="radio" name="kehadiran" value="tidak" />
+                      <input
+                        type="radio"
+                        name="kehadiran"
+                        value="tidak"
+                        checked={attendingChoice === "tidak"}
+                        onChange={() => setAttendingChoice("tidak")}
+                      />
                       Tidak hadir
                     </label>
                   </fieldset>
+                  {attendingChoice === "ya" ? (
+                    <label className="paan-field">
+                      <span>Bilangan tetamu</span>
+                      <select name="tetamu" defaultValue={1} disabled={rsvp === "sending"}>
+                        {Array.from({ length: 10 }, (_, i) => i + 1).map((n) => (
+                          <option key={n} value={n}>
+                            {n}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
+                  ) : null}
                   <label className="paan-field">
                     <span>Ucapan / doa</span>
-                    <textarea name="ucapan" rows={3} placeholder="Doa dan ucapan anda…" />
+                    <textarea
+                      name="ucapan"
+                      rows={3}
+                      placeholder="Doa dan ucapan anda…"
+                      disabled={rsvp === "sending"}
+                    />
                   </label>
-                  <button type="submit" className="paan-btn">
-                    Hantar RSVP
+                  <button type="submit" className="paan-btn" disabled={rsvp === "sending"}>
+                    {rsvp === "sending" ? "Menghantar…" : "Hantar RSVP"}
                   </button>
-                  {preview.isPreview ? (
+                  {rsvpError ? <p className="paan-rsvp__note">{rsvpError}</p> : null}
+                  {preview.isPreview && !rsvpError ? (
                     <p className="paan-rsvp__note">Demo — jawapan tidak dihantar.</p>
                   ) : null}
                 </form>

@@ -1,0 +1,87 @@
+# Deploy wedding-card to cPanel (static Vite SPA)
+# Same approach as jejak-duit-app: build locally → upload dist → Apache .htaccess
+
+## What you get
+After `npm run build:cpanel`, the folder `dist/` is ready to upload.
+It already includes `.htaccess` (from `public/.htaccess`) for React Router.
+
+---
+
+## A. Domain root (recommended)
+URL example: https://yourdomain.com/  or  https://kad.yourdomain.com/
+
+### Build (on your PC)
+```bash
+cd c:\project\wedding-card-project\wedding-card
+npm ci
+npm run build:cpanel
+```
+
+Optional — bake RSVP Google Script URLs into the build (create/edit `.env` first):
+```
+VITE_RSVP_GOOGLE_SCRIPT_URL=https://script.google.com/macros/s/XXXX/exec
+VITE_LAILA_RSVP_GOOGLE_SCRIPT_URL=https://script.google.com/macros/s/YYYY/exec
+```
+Then run `npm run build:cpanel` again.
+
+### Upload (cPanel)
+1. Open **cPanel → File Manager**.
+2. Go to `public_html/` (or the subdomain document root, e.g. `kad.yourdomain.com`).
+3. Optional: delete old `index.html`, `assets/`, etc. from a previous upload (keep other sites’ folders).
+4. Upload **everything inside** `dist/` (not the `dist` folder itself):
+   - `index.html`
+   - `.htaccess`
+   - `assets/`
+   - `paan/`, `wedding-invitation/`, `demo/`, … (all public assets)
+5. Confirm `.htaccess` is visible (File Manager → Settings → show hidden files).
+
+### Check
+- Open the domain in a browser.
+- Visit a deep link e.g. `/paan` and refresh — should not 404.
+- Open `/paan` RSVP flow if used.
+
+---
+
+## B. Subfolder (e.g. public_html/kad/)
+URL example: https://yourdomain.com/kad/
+
+### Build
+```bash
+npm run build:cpanel:sub
+```
+Default subfolder name is `kad`. To use another name:
+```bash
+set VITE_BASE_PATH=/myfolder/
+npm run build
+```
+(PowerShell: `$env:VITE_BASE_PATH="/myfolder/"; npm run build`)
+
+### Upload
+1. Create `public_html/kad/` (or your folder).
+2. Upload contents of `dist/` into that folder.
+3. Replace `.htaccess` with `deploy/cpanel-subfolder.htaccess` renamed to `.htaccess`.
+4. Edit `RewriteBase` and the last `RewriteRule` path to match your folder name.
+
+---
+
+## C. Easy zip (optional)
+```bash
+npm run pack:cpanel
+```
+Creates `deploy/wedding-card-cpanel.zip` from `dist/`. Upload and extract in File Manager.
+
+---
+
+## After deploy — checklist
+1. **Hidden files** — ensure `.htaccess` uploaded (critical for `/paan`, `/laila`, etc.).
+2. **HTTPS** — prefer forcing HTTPS in cPanel (Domains / SSL).
+3. **RSVP** — if forms should write to Google Sheets, rebuild with real `VITE_*_GOOGLE_SCRIPT_URL` values (env is baked at build time).
+4. **Clear cache** — hard refresh or Cloudflare purge if you use a CDN.
+5. **Smoke test** — home, `/paan`, `/naim-nadhirah-nikah`, `/laila`, one RSVP submit (or preview).
+
+---
+
+## Notes
+- This app is **static only** (no Node needed on cPanel), unlike jejak-duit API.
+- GitHub Pages can keep using Actions; cPanel is a separate upload of `dist/`.
+- Do not upload `src/`, `node_modules/`, or `.env` to public_html.

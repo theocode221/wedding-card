@@ -15,6 +15,9 @@ import react from "@vitejs/plugin-react";
  * Manual production build for GitHub Pages (without Actions), from repo root:
  *   VITE_BASE_PATH=/your-repo-name/ npm run build
  *
+ * cPanel (domain root): npm run build:cpanel  → upload dist/ (includes .htaccess)
+ * cPanel (subfolder):   npm run build:cpanel:sub  → see deploy-cpanel.txt
+ *
  * Replace `your-repo-name` with your actual GitHub repository name.
  */
 function resolveBase(): string {

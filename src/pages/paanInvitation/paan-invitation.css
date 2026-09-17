@@ -831,6 +831,7 @@
 }
 
 .paan-field input:not([type="radio"]):not([type="checkbox"]),
+.paan-field select,
 .paan-field textarea {
   width: 100%;
   padding: 0.65rem 0.75rem;
@@ -841,7 +842,18 @@
   border-radius: 0;
 }
 
+.paan-field select {
+  max-width: 8rem;
+  cursor: pointer;
+}
+
+.paan-field select option {
+  background: #1a100c;
+  color: var(--paan-cream);
+}
+
 .paan-field input:not([type="radio"]):not([type="checkbox"]):focus-visible,
+.paan-field select:focus-visible,
 .paan-field textarea:focus-visible {
   outline: 2px solid var(--paan-copper);
   outline-offset: 2px;

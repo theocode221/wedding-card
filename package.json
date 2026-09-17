@@ -6,6 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "node ./node_modules/typescript/bin/tsc && vite build",
+    "build:cpanel": "node ./node_modules/typescript/bin/tsc && vite build",
+    "build:cpanel:sub": "node ./scripts/build-cpanel-sub.mjs",
+    "pack:cpanel": "npm run build:cpanel && node ./scripts/pack-cpanel.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

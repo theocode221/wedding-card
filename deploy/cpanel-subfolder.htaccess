@@ -1,0 +1,17 @@
+# Use this when the app is served from a subfolder, e.g.:
+#   https://yourdomain.com/kad/
+#
+# 1. Build with:  npm run build:cpanel:sub
+#    (or set VITE_BASE_PATH=/kad/ before npm run build)
+# 2. Upload dist/* into public_html/kad/
+# 3. Place this file inside public_html/kad/ and rename it to .htaccess
+# 4. Edit RewriteBase / path below to match your folder name.
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /kad/
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /kad/index.html [L]
+</IfModule>

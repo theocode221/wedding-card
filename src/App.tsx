@@ -31,6 +31,7 @@ import { TravellersInvitationPage } from "./pages/travellersInvitation/Traveller
 import { CafeInvitationPage } from "./pages/cafeInvitation/CafeInvitationPage";
 import { MalayClassicInvitationPage } from "./pages/malayClassicInvitation/MalayClassicInvitationPage";
 import { PaanInvitationPage } from "./pages/paanInvitation/PaanInvitationPage";
+import { PaanDashboardPage } from "./pages/paanInvitation/PaanDashboardPage";
 import { WhiteGoldDashboardPage } from "./pages/whiteGoldInvitation/WhiteGoldDashboardPage";
 
 const routerBasename =
@@ -58,6 +59,7 @@ export default function App() {
             <Route path="/cafe" element={<CafeInvitationPage />} />
             <Route path="/malay-classic" element={<MalayClassicInvitationPage />} />
             <Route path="/paan" element={<PaanInvitationPage />} />
+            <Route path="/paan/dashboard" element={<PaanDashboardPage />} />
             <Route path="/theocodewedding" element={<PortfolioPage />} />
             <Route path="/theocodewedding/admin" element={<PortfolioAdminPage />} />
             <Route path="/portfolio" element={<Navigate to="/theocodewedding" replace />} />

@@ -1,0 +1,16 @@
+# SPA fallback for Apache (cPanel).
+# Ensures React Router URLs work on refresh / deep links (e.g. /paan, /laila).
+#
+# Use this when the site is at the domain root:
+#   https://yourdomain.com/
+#
+# If the app lives in a subfolder (e.g. public_html/kad/), see:
+#   deploy/cpanel-subfolder.htaccess
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>

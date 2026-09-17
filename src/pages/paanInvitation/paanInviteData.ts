@@ -8,6 +8,8 @@ import {
 import { publicUrl } from "../../lib/publicAsset";
 
 export const PAAN_PATH = "/paan";
+export const PAAN_DASHBOARD_PATH = "/paan/dashboard";
+export const PAAN_RSVP_THEME = "paan";
 
 /** Lace frame asset — copper on black (`public/paan/traditional.png`). */
 export const PAAN_TRADITIONAL_FRAME = publicUrl("paan/traditional.png");
@@ -116,6 +118,12 @@ export function paanInviteForPreview(isPreview: boolean): PaanInvite {
 
 export function paanPageTitle(invite: Pick<PaanInvite, "brideName" | "groomName">): string {
   return `Walimatul Urus — ${paanCoupleLabel(invite)}`;
+}
+
+/** Google Apps Script web app for Farhan & Atheela sheet. Set in `.env`. */
+export function getPaanRsvpScriptUrl(): string {
+  const fromEnv = import.meta.env.VITE_PAAN_RSVP_GOOGLE_SCRIPT_URL;
+  return typeof fromEnv === "string" && fromEnv.trim() ? fromEnv.trim() : "";
 }
 
 export function paanHasEventDate(invite: Pick<PaanInvite, "weddingDateTime"> = PAAN_INVITE): boolean {
