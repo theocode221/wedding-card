@@ -33,6 +33,9 @@ jobs:
           VITE_BASE_PATH: /${{ github.event.repository.name }}/
           # Laila RSVP Apps Script web app URL (Settings → Secrets → Actions)
           VITE_LAILA_RSVP_GOOGLE_SCRIPT_URL: ${{ secrets.VITE_LAILA_RSVP_GOOGLE_SCRIPT_URL }}
+          # Paan (Farhan & Atheela) — optional override; code has a default
+          VITE_PAAN_RSVP_GOOGLE_SCRIPT_URL: ${{ secrets.VITE_PAAN_RSVP_GOOGLE_SCRIPT_URL }}
+          VITE_RSVP_GOOGLE_SCRIPT_URL: ${{ secrets.VITE_RSVP_GOOGLE_SCRIPT_URL }}
 
       - uses: actions/upload-pages-artifact@v3
         with:

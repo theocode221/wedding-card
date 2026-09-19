@@ -120,10 +120,15 @@ export function paanPageTitle(invite: Pick<PaanInvite, "brideName" | "groomName"
   return `Walimatul Urus — ${paanCoupleLabel(invite)}`;
 }
 
-/** Google Apps Script web app for Farhan & Atheela sheet. Set in `.env`. */
+/** Google Apps Script web app for Farhan & Atheela sheet. Env overrides the default. */
+const DEFAULT_PAAN_RSVP_SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbwK74M9AD3UU07WZ6rrAEj4Fk-EFSizLTc4Cd0rtWNhWvrzjaAI0Y9ufZgVNrJuREuj/exec";
+
 export function getPaanRsvpScriptUrl(): string {
   const fromEnv = import.meta.env.VITE_PAAN_RSVP_GOOGLE_SCRIPT_URL;
-  return typeof fromEnv === "string" && fromEnv.trim() ? fromEnv.trim() : "";
+  return typeof fromEnv === "string" && fromEnv.trim()
+    ? fromEnv.trim()
+    : DEFAULT_PAAN_RSVP_SCRIPT_URL;
 }
 
 export function paanHasEventDate(invite: Pick<PaanInvite, "weddingDateTime"> = PAAN_INVITE): boolean {
