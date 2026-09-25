@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { InvitationMusicProvider } from "./context/InvitationMusicContext";
 import { UcapanCopyProvider } from "./context/UcapanCopyContext";
 import { LailaMusicProvider } from "./pages/lailaInvitation/LailaMusicContext";
+import { PaanMusicProvider } from "./pages/paanInvitation/PaanMusicContext";
 import { CongratulationCardPage } from "./pages/CongratulationCardPage";
 import { CongratulationPartyPage } from "./pages/CongratulationPartyPage";
 import { HomePage } from "./pages/HomePage";
@@ -43,6 +44,7 @@ export default function App() {
       <BrowserRouter basename={routerBasename}>
         <InvitationMusicProvider>
           <LailaMusicProvider>
+          <PaanMusicProvider>
           <UcapanCopyProvider>
             <Routes>
             <Route path="/" element={<HomePage />} />
@@ -95,6 +97,7 @@ export default function App() {
             <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </UcapanCopyProvider>
+          </PaanMusicProvider>
           </LailaMusicProvider>
         </InvitationMusicProvider>
       </BrowserRouter>

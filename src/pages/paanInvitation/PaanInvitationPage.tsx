@@ -12,6 +12,7 @@ import {
   IconWaze,
 } from "../malayClassicInvitation/ClassicActionIcons";
 import { PaanGlitter } from "./PaanGlitter";
+import { usePaanMusic } from "./PaanMusicContext";
 import {
   PAAN_ATURCARA,
   PAAN_RSVP_THEME,
@@ -35,6 +36,7 @@ type Phase = "cover" | "details";
 /** Chocolate traditional classic — lace frame asset (`paan/traditional.png`). */
 export function PaanInvitationPage() {
   const preview = usePortfolioPreviewMode();
+  const { playFromStart: playPaanMusic } = usePaanMusic();
   const invite = paanInviteForPreview(preview.isPreview);
   const names = paanCoupleLabel(invite);
   const contacts = preview.isPreview
@@ -131,9 +133,10 @@ export function PaanInvitationPage() {
 
   const openInvitation = useCallback(() => {
     if (phase !== "cover") return;
+    playPaanMusic();
     setPhase("details");
     window.scrollTo(0, 0);
-  }, [phase]);
+  }, [phase, playPaanMusic]);
 
   const backToCover = useCallback(() => {
     setPhase("cover");
