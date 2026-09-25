@@ -30,7 +30,7 @@ export const PAAN_INVITE = {
   groomFullName: "MOHAMAD FARHAN HAIKAL BIN FARID",
   dayLabel: "Jumaat",
   date: "26.12.2025",
-  timeLabel: "11:00 pagi – 4:00 petang",
+  timeLabel: "11 pagi – 4 petang",
   venue: "Masjid Kampung Parit Terus",
   address: "Benut, Pontian",
   weddingDateTime: "2025-12-26T11:00:00",
@@ -48,7 +48,6 @@ export type PaanAturcaraItem = {
 };
 
 export const PAAN_ATURCARA: readonly PaanAturcaraItem[] = [
-  { time: "8:00 AM", title: "Akad Nikah" },
   { time: "11:00 AM", title: "Majlis Bermula" },
   { time: "12:00 PM", title: "Ketibaan Pengantin" },
   { time: "4:00 PM", title: "Majlis Berakhir" },
@@ -62,14 +61,14 @@ export type PaanWhatsappContact = {
 
 export const PAAN_WHATSAPP: readonly PaanWhatsappContact[] = [
   {
-    name: "Ibu",
-    displayNumber: "012-000 0000",
-    whatsappUrl: "https://wa.me/60120000000",
+    name: "Diana",
+    displayNumber: "013-712 9223",
+    whatsappUrl: "https://wa.me/60137129223",
   },
   {
-    name: "Ayah",
-    displayNumber: "013-000 0000",
-    whatsappUrl: "https://wa.me/60130000000",
+    name: "Wawa",
+    displayNumber: "017-706 1489",
+    whatsappUrl: "https://wa.me/60177061489",
   },
 ] as const;
 

@@ -312,7 +312,6 @@
   body.wg-print-ucapan .wg-ucapan-book__cover {
     text-align: center;
     padding: 2rem 1rem 1.5rem;
-    page-break-after: always;
   }
 
   body.wg-print-ucapan .wg-ucapan-book__kicker {
