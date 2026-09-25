@@ -584,6 +584,12 @@
   color: var(--paan-copper);
 }
 
+.paan-parents__note {
+  font-size: 0.92rem;
+  font-style: italic;
+  color: var(--paan-ink-soft);
+}
+
 .paan-prose {
   margin: 0 auto 1rem;
   max-width: 22rem;

@@ -284,9 +284,18 @@ export function PaanInvitationPage() {
               <div className="paan-rule" aria-hidden />
               <p className="paan-kicker">Jemputan</p>
               <p className="paan-parents">
-                <span>{invite.fatherName}</span>
-                <span className="paan-parents__amp">&amp;</span>
-                <span>{invite.motherName}</span>
+                {invite.parentNote ? (
+                  <>
+                    <span>{invite.motherName}</span>
+                    <span className="paan-parents__note">{invite.parentNote}</span>
+                  </>
+                ) : (
+                  <>
+                    <span>{invite.fatherName}</span>
+                    <span className="paan-parents__amp">&amp;</span>
+                    <span>{invite.motherName}</span>
+                  </>
+                )}
               </p>
               <p className="paan-prose">
                 {invite.invitation.split("\n").map((line, i, lines) => (

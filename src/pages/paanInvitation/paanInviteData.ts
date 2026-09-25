@@ -21,8 +21,9 @@ export const PAAN_SALAM_LATIN = "Assalamualaikum Warahmatullahi Wabarakatuh";
 export const PAAN_INVITE = {
   brideName: "Atheela",
   groomName: "Farhan",
-  fatherName: "nama ayah",
-  motherName: "nama mak",
+  fatherName: "",
+  motherName: "Hajah Zaliza Binti Mohamad Nasir",
+  parentNote: "(Balu kepada Allahyarham Haji Farid Bin Yusof)",
   invitation:
     "Dengan penuh rasa syukur ke hadrat Allah S.W.T,\nkami dengan segala hormatnya menjemput\nDato’ / Datin / Tuan / Puan / Encik / Cik\nke majlis perkahwinan puteri kami",
   coupleNote: "dengan pilihan hatinya",
@@ -77,6 +78,7 @@ export type PaanInvite = {
   groomName: string;
   fatherName: string;
   motherName: string;
+  parentNote?: string;
   invitation: string;
   coupleNote: string;
   brideFullName: string;
@@ -109,6 +111,7 @@ export function paanInviteForPreview(isPreview: boolean): PaanInvite {
     groomFullName: PORTFOLIO_DEMO_GROOM,
     fatherName: "Ayah Pengantin",
     motherName: "Ibu Pengantin",
+    parentNote: undefined,
     venue: PORTFOLIO_DEMO_VENUE,
     address: PORTFOLIO_DEMO_ADDRESS,
     mapsUrl: PORTFOLIO_DEMO_MAPS_URL,
