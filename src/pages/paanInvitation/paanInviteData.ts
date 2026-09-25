@@ -32,14 +32,14 @@ export const PAAN_INVITE = {
   dayLabel: "Sabtu",
   date: "26.12.2026",
   timeLabel: "11 pagi – 4 petang",
-  venue: "Masjid Kampung Parit Terus",
-  address: "Benut, Pontian",
+  venue: "Parit Ismail, Benut",
+  address: "122, Jalan Parit Ismail, Benut, Pontian, Johor",
   weddingDateTime: "2026-12-26T11:00:00",
   durationHours: 5,
   mapsUrl:
-    "https://www.google.com/maps/search/?api=1&query=Masjid+Kampung+Parit+Terus+Benut+Pontian",
+    "https://www.google.com/maps/search/?api=1&query=122+Jalan+Parit+Ismail+Benut+Pontian+Johor",
   wazeUrl:
-    "https://www.waze.com/ul?q=Masjid%20Kampung%20Parit%20Terus%20Benut%20Pontian&navigate=yes",
+    "https://www.waze.com/ul?q=122%20Jalan%20Parit%20Ismail%20Benut%20Pontian%20Johor&navigate=yes",
   footer: "Kehadiran dan doa restu anda amat dialu-alukan.",
 } as const;
 
@@ -160,7 +160,7 @@ export function getPaanGoogleCalendarUrl(invite: PaanInvite = PAAN_INVITE): stri
     text: `Walimatul Urus — ${paanCoupleLabel(invite)}`,
     dates: `${toUtcStamp(start)}/${toUtcStamp(end)}`,
     details: invite.invitation,
-    location: `${invite.venue}, ${invite.address}`,
+    location: invite.address,
   });
   return `https://calendar.google.com/calendar/render?${params.toString()}`;
 }
@@ -183,7 +183,7 @@ export function downloadPaanIcs(invite: PaanInvite = PAAN_INVITE): void {
     `DTEND:${toUtcStamp(end)}`,
     `SUMMARY:${escapeIcsText(title)}`,
     `DESCRIPTION:${escapeIcsText(invite.invitation)}`,
-    `LOCATION:${escapeIcsText(`${invite.venue}, ${invite.address}`)}`,
+    `LOCATION:${escapeIcsText(invite.address)}`,
     "END:VEVENT",
     "END:VCALENDAR",
   ];

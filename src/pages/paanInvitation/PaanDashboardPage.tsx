@@ -88,7 +88,6 @@ export function PaanDashboardPage() {
       <div className="wg-dash__frame" aria-hidden />
       <div className="wg-dash__inner">
         <header className="wg-dash__head">
-          <p className="wg-dash__kicker">{isPreview ? "Demo" : "Papan klien"}</p>
           <h1 className="wg-dash__title">RSVP &amp; ucapan</h1>
           <p className="wg-dash__lead">Walimatul Urus {names}</p>
           <p className="wg-dash__meta">
@@ -103,8 +102,7 @@ export function PaanDashboardPage() {
 
         {status === "error" ? (
           <p className="wg-dash__error" role="alert">
-            {errorText} Deploy Apps Script (lihat <code>paanRsvpAppsScript.gs</code>), set{" "}
-            <code>VITE_PAAN_RSVP_GOOGLE_SCRIPT_URL</code>, kemudian muat semula.
+            {errorText}
           </p>
         ) : null}
 
@@ -114,17 +112,11 @@ export function PaanDashboardPage() {
               <article className="wg-dash-stat wg-dash-stat--yes">
                 <p className="wg-dash-stat__kicker">Hadir</p>
                 <p className="wg-dash-stat__num">{attending.length}</p>
-                <p className="wg-dash-stat__sub">
-                  {guestTotal} tetamu
-                  {rows.length > 0 ? ` · ${attendingShare}% jawapan` : ""}
-                </p>
+                <p className="wg-dash-stat__sub">{guestTotal} tetamu</p>
               </article>
               <article className="wg-dash-stat wg-dash-stat--no">
                 <p className="wg-dash-stat__kicker">Tidak hadir</p>
                 <p className="wg-dash-stat__num">{declining.length}</p>
-                <p className="wg-dash-stat__sub">
-                  {declining.length === 1 ? "1 jawapan" : `${declining.length} jawapan`}
-                </p>
               </article>
             </section>
 
@@ -148,18 +140,6 @@ export function PaanDashboardPage() {
                 Eksport ucapan (PDF)
               </button>
             </div>
-            {ucapan.length === 0 ? (
-              <p className="wg-dash__hint">Belum ada ucapan untuk dieksport.</p>
-            ) : (
-              <p className="wg-dash__hint">
-                {ucapan.length} ucapan. Pilih “Save as PDF” pada tetingkap cetak.
-              </p>
-            )}
-
-            <p className="wg-dash__hint wg-dash__hint--sheet">
-              Selaras Google Sheet: Tarikh &amp; Masa · Nama · Kehadiran · Bilangan Tetamu · Ucapan ·
-              Tema
-            </p>
 
             <section className="wg-dash-list">
               <h2 className="wg-dash-list__title">Hadir</h2>
