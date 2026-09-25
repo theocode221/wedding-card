@@ -33,6 +33,7 @@ import { CafeInvitationPage } from "./pages/cafeInvitation/CafeInvitationPage";
 import { MalayClassicInvitationPage } from "./pages/malayClassicInvitation/MalayClassicInvitationPage";
 import { PaanInvitationPage } from "./pages/paanInvitation/PaanInvitationPage";
 import { PaanDashboardPage } from "./pages/paanInvitation/PaanDashboardPage";
+import { PAAN_DASHBOARD_PATH, PAAN_PATH } from "./pages/paanInvitation/paanInviteData";
 import { WhiteGoldDashboardPage } from "./pages/whiteGoldInvitation/WhiteGoldDashboardPage";
 
 const routerBasename =
@@ -60,8 +61,10 @@ export default function App() {
             <Route path="/travellers" element={<TravellersInvitationPage />} />
             <Route path="/cafe" element={<CafeInvitationPage />} />
             <Route path="/malay-classic" element={<MalayClassicInvitationPage />} />
-            <Route path="/paan" element={<PaanInvitationPage />} />
-            <Route path="/paan/dashboard" element={<PaanDashboardPage />} />
+            <Route path={PAAN_PATH} element={<PaanInvitationPage />} />
+            <Route path={PAAN_DASHBOARD_PATH} element={<PaanDashboardPage />} />
+            <Route path="/paan" element={<Navigate to={PAAN_PATH} replace />} />
+            <Route path="/paan/dashboard" element={<Navigate to={PAAN_DASHBOARD_PATH} replace />} />
             <Route path="/theocodewedding" element={<PortfolioPage />} />
             <Route path="/theocodewedding/admin" element={<PortfolioAdminPage />} />
             <Route path="/portfolio" element={<Navigate to="/theocodewedding" replace />} />

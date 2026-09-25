@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { PAAN_PATH } from "./paanInvitation/paanInviteData";
 
 export function HomePage() {
   return (
@@ -88,7 +89,7 @@ export function HomePage() {
             <span className="home-selector__cardDesc">Tema Melayu klasik dengan animasi pembuka berbingkai</span>
           </Link>
 
-          <Link to="/paan" className="home-selector__card">
+          <Link to={PAAN_PATH} className="home-selector__card">
             <span className="home-selector__cardTitle">Paan — Chocolate Traditional</span>
             <span className="home-selector__cardDesc">Tema coklat klasik dengan bingkai renda tembaga</span>
           </Link>

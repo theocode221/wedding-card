@@ -111,7 +111,7 @@ export const PORTFOLIO_ITEMS: readonly PortfolioItem[] = [
     id: "paan",
     title: "Paan — Chocolate Traditional",
     description: "Tema coklat klasik dengan bingkai renda tembaga traditional.",
-    path: "/paan",
+    path: "/farhan-atheela",
     category: "jemputan",
     previewImage: publicUrl("paan/traditional.png"),
     showOnDemo: false,

@@ -7,7 +7,7 @@
  * Row 1 headers (exact):
  *   Tarikh & Masa | Nama | Kehadiran | Bilangan Tetamu | Ucapan | Tema
  *
- * GET  ?action=list&callback=fn  → JSONP list for /paan/dashboard
+ * GET  ?action=list&callback=fn  → JSONP list for /farhan-atheela/dashboard
  * POST JSON { name, attending, guests, message, theme } → append row
  */
 

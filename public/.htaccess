@@ -1,5 +1,5 @@
 # SPA fallback for Apache (cPanel).
-# Ensures React Router URLs work on refresh / deep links (e.g. /paan, /laila).
+# Ensures React Router URLs work on refresh / deep links (e.g. /farhan-atheela, /laila).
 #
 # Use this when the site is at the domain root:
 #   https://yourdomain.com/

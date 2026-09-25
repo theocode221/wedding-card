@@ -7,8 +7,8 @@ import {
 } from "../../data/portfolioDemoNames";
 import { publicUrl } from "../../lib/publicAsset";
 
-export const PAAN_PATH = "/paan";
-export const PAAN_DASHBOARD_PATH = "/paan/dashboard";
+export const PAAN_PATH = "/farhan-atheela";
+export const PAAN_DASHBOARD_PATH = "/farhan-atheela/dashboard";
 export const PAAN_RSVP_THEME = "paan";
 
 /** Lace frame asset — copper on black (`public/paan/traditional.png`). */
