@@ -71,6 +71,11 @@ export const PAAN_WHATSAPP: readonly PaanWhatsappContact[] = [
     displayNumber: "017-706 1489",
     whatsappUrl: "https://wa.me/60177061489",
   },
+  {
+    name: "Wahyudi Yusof",
+    displayNumber: "017-357 5727",
+    whatsappUrl: "https://wa.me/60173575727",
+  },
 ] as const;
 
 export type PaanInvite = {
