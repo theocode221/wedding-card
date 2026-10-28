@@ -292,13 +292,9 @@ export function LailaAturcara() {
   return (
     <ScrollReveal as="section" variant="from-top" className="laila-aturcara" rootMargin="0px 0px -12% 0px">
       <div className="laila-aturcara__inner">
-        <p className="laila-kicker">Hari bahagia</p>
         <h2 className="laila-title" id={listId}>
           Aturcara Majlis
         </h2>
-        <p className="laila-prose laila-aturcara__lead">
-          Ikuti perjalanan hari — skrol perlahan, rama-rama akan menunjuk jalan.
-        </p>
 
         <div className="laila-aturcara__stage" ref={stageRef}>
           <div className="laila-aturcara__rail" aria-hidden>

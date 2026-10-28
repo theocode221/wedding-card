@@ -15,10 +15,14 @@ import {
  * Couple names, majlis details, gallery Drive IDs, and RSVP sheet URL live here.
  */
 export const LAILA_COVER_BG = encodeURI(publicUrl("lela kb/marron bg laila.png"));
-export const LAILA_BUNGA_TOP = encodeURI(publicUrl("lela kb/bunga-2.png"));
-export const LAILA_BUNGA_BOTTOM = encodeURI(publicUrl("lela kb/bunga-1.png"));
+export const LAILA_BUNGA_TOP = encodeURI(publicUrl("lela kb/bunga-bouquet-bold.png"));
+export const LAILA_BUNGA_BOTTOM = encodeURI(publicUrl("lela kb/bunga-bouquet-bold.png"));
+export const LAILA_BUNGA_HEADER = encodeURI(publicUrl("lela kb/bunga-garland-slim.png"));
+export const LAILA_BUNGA_SIDE = encodeURI(publicUrl("lela kb/bunga-spray-trimmed.png"));
 
 export const LAILA_PATH = "/laila";
+/** Side-frame floral design — alternate to the oval cover. */
+export const LAILA_BINGKAI_PATH = "/laila/bingkai";
 export const LAILA_RSVP_PATH = "/laila/rsvp";
 export const LAILA_GALLERY_PATH = "/laila/galeri";
 /** Client-only dashboard — not linked from the public invitation. */
@@ -26,6 +30,22 @@ export const LAILA_DASHBOARD_PATH = "/laila/dashboard";
 /** Details screen after “Buka Jemputan” — treated as a separate page, not a scroll. */
 export const LAILA_DETAILS_HASH = "jemputan";
 export const LAILA_DETAILS_TO = { pathname: LAILA_PATH, hash: LAILA_DETAILS_HASH } as const;
+
+/** Keep `kad=bingkai` so gallery and RSVP return to the side-frame design. */
+export function withLailaKadSearch(search: string, kad: "bingkai"): string {
+  const params = new URLSearchParams(search.startsWith("?") ? search.slice(1) : search);
+  params.set("kad", kad);
+  const query = params.toString();
+  return query ? `?${query}` : "";
+}
+
+export function lailaDetailsDestination(search: string): { pathname: string; hash: string } {
+  const params = new URLSearchParams(search.startsWith("?") ? search.slice(1) : search);
+  return {
+    pathname: params.get("kad") === "bingkai" ? LAILA_BINGKAI_PATH : LAILA_PATH,
+    hash: LAILA_DETAILS_HASH,
+  };
+}
 
 /** Cover-only Jawi for “Walimatul Urus”. Other pages keep the Rumi tagline. */
 export const LAILA_TAGLINE_JAWI = "وليمة العرس";

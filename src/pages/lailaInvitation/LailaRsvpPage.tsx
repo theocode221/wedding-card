@@ -7,8 +7,8 @@ import { PortfolioBackToCatalog } from "../../components/portfolio/PortfolioBack
 import { LailaPageDecor } from "./LailaPageDecor";
 import {
   getLailaRsvpScriptUrl,
-  LAILA_DETAILS_TO,
   lailaCoupleLabel,
+  lailaDetailsDestination,
   lailaInviteForPreview,
 } from "./lailaInviteData";
 import "./laila-invitation.css";
@@ -21,7 +21,7 @@ export function LailaRsvpPage() {
   const { isPreview } = usePortfolioPreviewMode();
   const invite = lailaInviteForPreview(isPreview);
   const names = lailaCoupleLabel(invite);
-  const detailsTo = withPortfolioSearch(LAILA_DETAILS_TO, location.search);
+  const detailsTo = withPortfolioSearch(lailaDetailsDestination(location.search), location.search);
   const scriptUrl = getLailaRsvpScriptUrl();
   const [name, setName] = useState("");
   const [attending, setAttending] = useState<Attending>("yes");

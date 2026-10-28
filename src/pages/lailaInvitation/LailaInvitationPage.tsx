@@ -1,8 +1,10 @@
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ScrollReveal } from "../../components/shared/ScrollReveal";
 import { getRemaining, pad } from "../../components/shared/countdownUtils";
 import {
+  downloadLailaIcs,
+  getLailaGoogleCalendarUrl,
   LAILA_BUNGA_BOTTOM,
   LAILA_BUNGA_TOP,
   LAILA_COVER_BG,
@@ -10,9 +12,7 @@ import {
   LAILA_GALLERY_PATH,
   LAILA_PATH,
   LAILA_RSVP_PATH,
-  LAILA_SALAM_KHAT,
   LAILA_SALAM_LATIN,
-  LAILA_TAGLINE_JAWI,
   lailaCoupleLabel,
   lailaHasEventDate,
   lailaInviteForPreview,
@@ -21,8 +21,13 @@ import {
 } from "./lailaInviteData";
 import { LailaAturcara } from "./LailaAturcara";
 import { LailaButterflies } from "./LailaButterflies";
-import { LailaCalendar } from "./LailaCalendar";
-import { LailaPageDecor } from "./LailaPageDecor";
+import { AppleBrandIcon, GoogleBrandIcon } from "../../components/wedding-invitation-frame/CalendarBrandIcons";
+import {
+  LailaCardFloral,
+  LailaPageDecor,
+  LailaSalamKhat,
+  LailaSectionFlourish,
+} from "./LailaPageDecor";
 import { LailaUcapanSpotlight } from "./LailaUcapanSpotlight";
 import { StudioCredit } from "../../components/studio/StudioCredit";
 import { PortfolioBackToCatalog } from "../../components/portfolio/PortfolioBackToCatalog";
@@ -62,6 +67,8 @@ type CountdownUnit = {
   value: number;
   padValue: boolean;
 };
+
+type QuickSheet = "none" | "contact" | "location" | "calendar";
 
 function LailaCountdownGrid({
   units,
@@ -115,8 +122,8 @@ export function LailaInvitationPage() {
     () => (showCountdown ? new Date(invite.weddingDateTime) : null),
     [invite.weddingDateTime, showCountdown],
   );
-  const [isLocationMenuOpen, setIsLocationMenuOpen] = useState(false);
-  const locationMenuRef = useRef<HTMLDivElement | null>(null);
+  const googleCalUrl = useMemo(() => getLailaGoogleCalendarUrl(invite), [invite]);
+  const [activeSheet, setActiveSheet] = useState<QuickSheet>("none");
   const [coverReady, setCoverReady] = useState(false);
 
   const [tick, setTick] = useState(() =>
@@ -199,22 +206,13 @@ export function LailaInvitationPage() {
   }, [countdownTarget]);
 
   useEffect(() => {
-    if (!isLocationMenuOpen) return;
-    const handlePointerDown = (event: PointerEvent) => {
-      const node = event.target;
-      if (!(node instanceof Node)) return;
-      if (!locationMenuRef.current?.contains(node)) setIsLocationMenuOpen(false);
+    if (activeSheet === "none") return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setActiveSheet("none");
     };
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setIsLocationMenuOpen(false);
-    };
-    window.addEventListener("pointerdown", handlePointerDown);
-    window.addEventListener("keydown", handleEscape);
-    return () => {
-      window.removeEventListener("pointerdown", handlePointerDown);
-      window.removeEventListener("keydown", handleEscape);
-    };
-  }, [isLocationMenuOpen]);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [activeSheet]);
 
   const countdownUnits = useMemo(() => {
     if (!tick || tick.done) return [];
@@ -247,45 +245,49 @@ export function LailaInvitationPage() {
   }, [location.pathname, location.search, navigate, playLailaMusic]);
 
   const backToCover = useCallback(() => {
+    setActiveSheet("none");
     navigate(coverTo);
   }, [coverTo, navigate]);
+
+  const toggleSheet = useCallback((sheet: Exclude<QuickSheet, "none">) => {
+    setActiveSheet((prev) => (prev === sheet ? "none" : sheet));
+  }, []);
 
   const brideWriteStart = 1.15;
   const ampDelay = brideWriteStart + invite.brideName.length * LETTER_STAGGER_S + 0.08;
   const groomWriteStart = ampDelay + 0.18;
   const dateDelay = groomWriteStart + invite.groomName.length * LETTER_STAGGER_S + 0.16;
-  const venueDelay = dateDelay + 0.18;
-  const buttonDelay = venueDelay + 0.22;
+  const buttonDelay = dateDelay + 0.22;
 
   return (
     <div className={`laila-page${isOpen ? " laila-page--details" : " laila-page--cover"}`} lang="ms">
       <PortfolioBackToCatalog />
       {!isOpen ? (
       <header className={`laila-cover${coverReady ? " laila-cover--ready" : ""}`}>
-        <div className="laila-cover__garlands" aria-hidden>
-          <img
-            className="laila-garland laila-garland--top"
-            src={LAILA_BUNGA_TOP}
-            alt=""
-            width={1080}
-            height={1920}
-            decoding="async"
-            fetchPriority="high"
-          />
-          <img
-            className="laila-garland laila-garland--bottom"
-            src={LAILA_BUNGA_BOTTOM}
-            alt=""
-            width={1080}
-            height={1920}
-            decoding="async"
-            fetchPriority="high"
-          />
-        </div>
-
         <LailaButterflies />
 
         <div className="laila-cover__frame">
+          <div className="laila-cover__garlands" aria-hidden>
+            <img
+              className="laila-garland laila-garland--top"
+              src={LAILA_BUNGA_TOP}
+              alt=""
+              width={1245}
+              height={363}
+              decoding="async"
+              fetchPriority="high"
+            />
+            <img
+              className="laila-garland laila-garland--bottom"
+              src={LAILA_BUNGA_BOTTOM}
+              alt=""
+              width={1245}
+              height={363}
+              decoding="async"
+              fetchPriority="high"
+            />
+          </div>
+
           <img
             className="laila-cover__bg"
             src={LAILA_COVER_BG}
@@ -297,9 +299,7 @@ export function LailaInvitationPage() {
           />
 
           <div className="laila-cover__writing">
-            <p className="laila-cover__kicker" lang="ar" dir="rtl">
-              {LAILA_TAGLINE_JAWI}
-            </p>
+            <p className="laila-cover__kicker">{invite.tagline}</p>
             <div className="laila-cover__rule" aria-hidden />
             <h1 className="laila-cover__names" aria-label={names}>
               <HandwrittenLine
@@ -319,9 +319,6 @@ export function LailaInvitationPage() {
             <p className="laila-cover__date" style={{ animationDelay: `${dateDelay}s` }}>
               <span className="laila-cover__day">{invite.dayLabel}</span>
               <span className="laila-cover__when">{invite.date}</span>
-            </p>
-            <p className="laila-cover__venue" style={{ animationDelay: `${venueDelay}s` }}>
-              {invite.address ? `${invite.venue}, ${invite.address}` : invite.venue}
             </p>
             <button
               type="button"
@@ -345,9 +342,9 @@ export function LailaInvitationPage() {
         <div className="laila-stack">
           <section id="laila-jemputan">
             <ScrollReveal as="div" variant="from-top" className="laila-invite">
-              <p className="laila-khat laila-khat--salam" lang="ar" dir="rtl" aria-label={LAILA_SALAM_LATIN}>
-                {LAILA_SALAM_KHAT}
-              </p>
+              <LailaCardFloral position="top" />
+              <LailaSalamKhat />
+              <p className="laila-salam-latin">{LAILA_SALAM_LATIN}</p>
               <div className="laila-invite__rule" aria-hidden />
               <p className="laila-kicker">Jemputan</p>
               <p
@@ -367,10 +364,11 @@ export function LailaInvitationPage() {
                 <span className="laila-puteri__note">{invite.coupleNote}</span>
                 <span className="laila-puteri__name">{invite.groomFullName}</span>
               </p>
+              <LailaSectionFlourish />
             </ScrollReveal>
           </section>
 
-          <ScrollReveal as="section" variant="from-top" className="laila-details" delayMs={1900}>
+          <ScrollReveal as="section" variant="from-top" className="laila-details" delayMs={180}>
             <dl className="laila-spec">
               <div className="laila-spec__row">
                 <dt className="laila-spec__k">Tarikh</dt>
@@ -393,77 +391,14 @@ export function LailaInvitationPage() {
                 </div>
               ) : null}
             </dl>
-
-            <div className="laila-actions">
-              <div className="laila-location" ref={locationMenuRef}>
-                <button
-                  type="button"
-                  className="laila-btn laila-btn--pill"
-                  aria-expanded={isLocationMenuOpen}
-                  aria-controls="laila-location-panel"
-                  onClick={() => setIsLocationMenuOpen((open) => !open)}
-                >
-                  Lihat lokasi {isLocationMenuOpen ? "▴" : "▾"}
-                </button>
-                {isLocationMenuOpen ? (
-                  <div id="laila-location-panel" className="laila-location__panel">
-                    <a
-                      className="laila-btn laila-btn--pill"
-                      href={invite.wazeUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => setIsLocationMenuOpen(false)}
-                    >
-                      Waze
-                    </a>
-                    <a
-                      className="laila-btn laila-btn--pill"
-                      href={invite.mapsUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => setIsLocationMenuOpen(false)}
-                    >
-                      Google Maps
-                    </a>
-                  </div>
-                ) : null}
-              </div>
-              <LailaCalendar />
-            </div>
-
-            <div className="laila-contacts">
-              <p className="laila-contacts__label">Nombor dihubungi</p>
-              <div className="laila-contacts__list">
-                {whatsappContacts.map((contact) => (
-                  <a
-                    key={contact.name}
-                    className="laila-btn laila-btn--pill laila-btn--whatsapp"
-                    href={contact.whatsappUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`WhatsApp ${contact.name} ${contact.displayNumber}`}
-                  >
-                    <svg className="laila-contacts__icon" viewBox="0 0 24 24" aria-hidden>
-                      <path
-                        fill="currentColor"
-                        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.881 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
-                      />
-                    </svg>
-                    <span className="laila-contacts__text">
-                      <span className="laila-contacts__name">{contact.name}</span>
-                      <span className="laila-contacts__number">{contact.displayNumber}</span>
-                    </span>
-                  </a>
-                ))}
-              </div>
-            </div>
+            <LailaSectionFlourish />
           </ScrollReveal>
 
           <LailaAturcara />
 
           {countdownTarget ? (
-            <ScrollReveal as="section" variant="from-top" className="laila-chrono" delayMs={2400}>
-              <p className="laila-kicker">Menanti</p>
+            <ScrollReveal as="section" variant="from-top" className="laila-chrono" delayMs={180}>
+              <LailaSectionFlourish className="laila-section-flourish laila-section-flourish--top" />
               <h2 className="laila-title">Kira detik bahagia</h2>
               {tick?.done ? (
                 <p className="laila-chrono__done">Alhamdulillah — jumpa di majlis.</p>
@@ -473,26 +408,6 @@ export function LailaInvitationPage() {
             </ScrollReveal>
           ) : null}
 
-          <ScrollReveal as="section" variant="from-top" className="laila-cta" rootMargin="0px 0px -18% 0px">
-            <p className="laila-kicker">Kenangan</p>
-            <h2 className="laila-title">Galeri</h2>
-            <p className="laila-prose">Detik indah yang dirakam untuk dikenang bersama.</p>
-            <Link to={galleryTo} className="laila-btn laila-btn--pill">
-              Buka galeri
-            </Link>
-          </ScrollReveal>
-
-          <ScrollReveal as="section" variant="from-top" className="laila-cta" rootMargin="0px 0px -18% 0px">
-            <p className="laila-kicker">Kehadiran</p>
-            <h2 className="laila-title">Sahkan kehadiran</h2>
-            <p className="laila-prose">
-              Sila sahkan kehadiran anda. Jawapan anda membantu kami merancang majlis dengan lebih baik.
-            </p>
-            <Link to={rsvpTo} className="laila-btn laila-btn--maroon laila-btn--pill">
-              Sahkan kehadiran (RSVP)
-            </Link>
-          </ScrollReveal>
-
           <ScrollReveal as="div" variant="from-top">
             <LailaUcapanSpotlight />
           </ScrollReveal>
@@ -501,9 +416,11 @@ export function LailaInvitationPage() {
             <p className="laila-footer__text">{invite.footer}</p>
             <p className="laila-footer__names">{names}</p>
             <StudioCredit className="laila-footer__studio" />
+            <LailaCardFloral position="bottom" />
           </ScrollReveal>
         </div>
       </main>
+
       <button
         type="button"
         className="laila-back-cover"
@@ -517,6 +434,226 @@ export function LailaInvitationPage() {
           />
         </svg>
       </button>
+
+      {/* Quick-action pop-up sheet above bottom dock */}
+      {activeSheet !== "none" ? (
+        <div className="laila-sheet-backdrop" onClick={() => setActiveSheet("none")}>
+          <div
+            className="laila-sheet"
+            role="dialog"
+            aria-modal="true"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="laila-sheet__head">
+              <p className="laila-sheet__title">
+                {activeSheet === "contact"
+                  ? "Hubungi Wakil Keluarga"
+                  : activeSheet === "location"
+                    ? "Pilih Aplikasi Navigasi"
+                    : "Simpan ke Kalendar"}
+              </p>
+              <button
+                type="button"
+                className="laila-sheet__close"
+                onClick={() => setActiveSheet("none")}
+                aria-label="Tutup"
+              >
+                ✕
+              </button>
+            </div>
+
+            {activeSheet === "contact" ? (
+              <div className="laila-sheet__list">
+                {whatsappContacts.map((c) => (
+                  <a
+                    key={c.name}
+                    className="laila-sheet__link"
+                    href={c.whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span>{c.name}</span>
+                    <span className="laila-sheet__muted">WhatsApp {c.displayNumber}</span>
+                  </a>
+                ))}
+              </div>
+            ) : null}
+
+            {activeSheet === "location" ? (
+              <div className="laila-sheet__list">
+                <a
+                  className="laila-sheet__link"
+                  href={invite.mapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setActiveSheet("none")}
+                >
+                  <span>Google Maps</span>
+                  <span className="laila-sheet__muted">{invite.venue}</span>
+                </a>
+                <a
+                  className="laila-sheet__link"
+                  href={invite.wazeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setActiveSheet("none")}
+                >
+                  <span>Waze</span>
+                  <span className="laila-sheet__muted">{invite.venue}</span>
+                </a>
+              </div>
+            ) : null}
+
+            {activeSheet === "calendar" ? (
+              <div className="laila-sheet__list">
+                {googleCalUrl ? (
+                  <a
+                    className="laila-sheet__link"
+                    href={googleCalUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setActiveSheet("none")}
+                  >
+                    <span className="laila-sheet__brand">
+                      <GoogleBrandIcon className="laila-sheet__brand-icon" />
+                      Google Calendar
+                    </span>
+                    <span className="laila-sheet__muted">Buka pautan</span>
+                  </a>
+                ) : null}
+                <button
+                  type="button"
+                  className="laila-sheet__link"
+                  onClick={() => {
+                    downloadLailaIcs();
+                    setActiveSheet("none");
+                  }}
+                >
+                  <span className="laila-sheet__brand">
+                    <AppleBrandIcon className="laila-sheet__brand-icon" />
+                    Apple / Outlook (.ics)
+                  </span>
+                  <span className="laila-sheet__muted">Muat turun</span>
+                </button>
+              </div>
+            ) : null}
+          </div>
+        </div>
+      ) : null}
+
+      {/* Sticky Bottom Navigation Panel inspired by jemputan.me */}
+      <nav className="laila-dock" aria-label="Tindakan pantas jemputan">
+        <button
+          type="button"
+          className={`laila-dock__btn${activeSheet === "contact" ? " is-active" : ""}`}
+          onClick={() => toggleSheet("contact")}
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M6.6 10.8a15.2 15.2 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24c1.1.36 2.3.56 3.6.56a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.6 21 3 13.4 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.56 3.6a1 1 0 0 1-.25 1L6.6 10.8Z"
+            />
+          </svg>
+          <span>Hubungi</span>
+        </button>
+
+        <button
+          type="button"
+          className={`laila-dock__btn${activeSheet === "location" ? " is-active" : ""}`}
+          onClick={() => toggleSheet("location")}
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M12 21s-6.5-5.8-6.5-11A6.5 6.5 0 1 1 18.5 10c0 5.2-6.5 11-6.5 11Z"
+            />
+            <circle cx="12" cy="10" r="2.3" fill="none" stroke="currentColor" strokeWidth="1.6" />
+          </svg>
+          <span>Lokasi</span>
+        </button>
+
+        <button
+          type="button"
+          className={`laila-dock__btn${activeSheet === "calendar" ? " is-active" : ""}`}
+          onClick={() => toggleSheet("calendar")}
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect
+              x="3.5"
+              y="5"
+              width="17"
+              height="15.5"
+              rx="2.2"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.6"
+            />
+            <path
+              d="M8 3.5v3M16 3.5v3M3.5 9.5h17"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+            />
+          </svg>
+          <span>Kalendar</span>
+        </button>
+
+        <Link to={galleryTo} className="laila-dock__btn">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect
+              x="3.5"
+              y="4.5"
+              width="17"
+              height="15"
+              rx="2.2"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.6"
+            />
+            <circle cx="9" cy="9.5" r="1.5" fill="currentColor" />
+            <path
+              d="m5.5 17 4.5-4.2 3.2 3 2.8-2.6 2.5 3.8"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+          <span>Galeri</span>
+        </Link>
+
+        <Link to={rsvpTo} className="laila-dock__btn laila-dock__btn--primary">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M3.8 6.8h16.4a1.3 1.3 0 0 1 1.3 1.3v8.8a1.3 1.3 0 0 1-1.3 1.3H3.8a1.3 1.3 0 0 1-1.3-1.3V8.1a1.3 1.3 0 0 1 1.3-1.3Z"
+            />
+            <path
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="m3.5 7.5 8.5 5.8 8.5-5.8"
+            />
+          </svg>
+          <span>RSVP</span>
+        </Link>
+      </nav>
       </>
       )}
     </div>

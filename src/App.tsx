@@ -22,6 +22,7 @@ import { EggRevealCardPastelPage } from "./pages/EggRevealCardPastelPage";
 import { EggRevealCardMarketingPage } from "./pages/EggRevealCardMarketingPage";
 import { RoyalMaroonInvitationPage } from "./pages/royalMaroonInvitation/RoyalMaroonInvitationPage";
 import { LailaInvitationPage } from "./pages/lailaInvitation/LailaInvitationPage";
+import { LailaBingkaiPage } from "./pages/lailaInvitation/LailaBingkaiPage";
 import { LailaRsvpPage } from "./pages/lailaInvitation/LailaRsvpPage";
 import { LailaGalleryPage } from "./pages/lailaInvitation/LailaGalleryPage";
 import { LailaDashboardPage } from "./pages/lailaInvitation/LailaDashboardPage";
@@ -52,6 +53,7 @@ export default function App() {
             <Route path="/invite" element={<InvitePage />} />
             <Route path="/jemputan-maroon-diraja" element={<RoyalMaroonInvitationPage />} />
             <Route path="/laila" element={<LailaInvitationPage />} />
+            <Route path="/laila/bingkai" element={<LailaBingkaiPage />} />
             <Route path="/laila/rsvp" element={<LailaRsvpPage />} />
             <Route path="/laila/galeri" element={<LailaGalleryPage />} />
             <Route path="/laila/dashboard" element={<LailaDashboardPage />} />

@@ -6,9 +6,9 @@ import { withPortfolioSearch } from "../../lib/portfolioPreview";
 import { PortfolioBackToCatalog } from "../../components/portfolio/PortfolioBackToCatalog";
 import { LailaPageDecor } from "./LailaPageDecor";
 import {
-  LAILA_DETAILS_TO,
   LAILA_GALLERY_IMAGE_URLS,
   lailaCoupleLabel,
+  lailaDetailsDestination,
   lailaInviteForPreview,
 } from "./lailaInviteData";
 import "../../styles/gallery.css";
@@ -131,7 +131,7 @@ export function LailaGalleryPage() {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const images = LAILA_GALLERY_IMAGE_URLS;
   const names = lailaCoupleLabel(invite);
-  const detailsTo = withPortfolioSearch(LAILA_DETAILS_TO, location.search);
+  const detailsTo = withPortfolioSearch(lailaDetailsDestination(location.search), location.search);
   const alts = useMemo(
     () => images.map((_, i) => `Galeri ${names} — foto ${i + 1}`),
     [images, names],

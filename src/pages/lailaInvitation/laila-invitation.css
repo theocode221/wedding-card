@@ -1,22 +1,31 @@
 /* Laila — maroon Malay traditional. Cover is the oval PNG; names sit on that field. */
 
+@font-face {
+  font-family: "DecoType Thuluth II";
+  src: url("/lela%20kb/DecoTypeThuluthII.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 .laila-page {
-  --laila-paper: #f6efe4;
-  --laila-paper-2: #efe3d2;
+  --laila-paper: #fbf5eb;
+  --laila-paper-2: #e7d4b5;
   --laila-maroon: #5c101c;
   --laila-maroon-deep: #3a0c14;
   --laila-wine: #7a1828;
-  --laila-gold: #b0893a;
+  --laila-gold: #a67c2e;
   --laila-gold-bright: #e4c98a;
   --laila-gold-soft: #f3e4c4;
-  --laila-cream: #f7efe2;
+  --laila-cream: #fbf5eb;
   --laila-ink: #3a0c14;
   --laila-font-script: "Great Vibes", "Pinyon Script", "Segoe Script", cursive;
   --laila-font-display: "Playfair Display", Georgia, serif;
-  --laila-font-khat: "Amiri", "Noto Naskh Arabic", "Traditional Arabic", serif;
+  --laila-font-body: "Cormorant Garamond", Georgia, serif;
+  --laila-font-khat: "DecoType Thuluth II", "Aref Ruqaa", "Amiri", "Noto Naskh Arabic", serif;
   --laila-ease: cubic-bezier(0.22, 1, 0.36, 1);
   color: var(--laila-maroon-deep);
-  background: var(--laila-paper);
+  background: var(--laila-paper-2);
   font-family: var(--laila-font-body);
   font-size: clamp(0.95rem, 0.2vw + 0.92rem, 1.02rem);
   line-height: 1.55;
@@ -31,17 +40,15 @@
 }
 
 .laila-page--details {
-  animation: laila-page-in 0.48s var(--laila-ease) both;
+  animation: laila-page-in 0.48s var(--laila-ease);
 }
 
 @keyframes laila-page-in {
   from {
     opacity: 0;
-    transform: translate3d(0, 14px, 0);
   }
   to {
     opacity: 1;
-    transform: translate3d(0, 0, 0);
   }
 }
 
@@ -59,13 +66,38 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--laila-paper);
+  background:
+    radial-gradient(ellipse 68% 54% at 50% 48%, #f8ebcf 0%, #dfc08d 52%, #b88b4a 100%);
   overflow: hidden;
   scroll-margin-top: 0;
 }
 
+.laila-cover::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      rgba(92, 16, 28, 0.065) 0px,
+      rgba(92, 16, 28, 0.065) 1px,
+      transparent 1px,
+      transparent 20px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      rgba(92, 16, 28, 0.065) 0px,
+      rgba(92, 16, 28, 0.065) 1px,
+      transparent 1px,
+      transparent 20px
+    );
+}
+
 .laila-cover__frame {
   position: relative;
+  z-index: 3;
   width: min(100vw, calc(100dvh * 1080 / 1920));
   height: min(100dvh, calc(100vw * 1920 / 1080));
   container-type: inline-size;
@@ -75,11 +107,12 @@
 .laila-cover__bg {
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: 2;
   width: 100%;
   height: 100%;
   object-fit: contain;
   object-position: center;
+  transform: translateY(3.6%) scale(0.92);
   user-select: none;
   pointer-events: none;
 }
@@ -91,19 +124,21 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 18% 15% 20%;
+  padding: 25% 22% 24%;
   text-align: center;
   z-index: 5;
-  transform: translateY(-3%);
+  transform: none;
 }
 
 .laila-cover__kicker {
   margin: 0 0 0.35rem;
-  font-family: var(--laila-font-khat);
-  font-size: clamp(1.05rem, 5.4cqi, 1.42rem);
-  font-weight: 400;
-  letter-spacing: 0;
-  line-height: 1.35;
+  max-width: 100%;
+  font-family: var(--laila-font-display);
+  font-size: 2.75cqi;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  line-height: 1.25;
+  text-transform: uppercase;
   color: var(--laila-gold-bright);
   text-shadow: 0 2px 14px rgba(0, 0, 0, 0.55);
   opacity: 0;
@@ -114,9 +149,9 @@
 }
 
 .laila-cover__rule {
-  width: min(4.2rem, 26%);
+  width: min(3.5rem, 22%);
   height: 1px;
-  margin: 0 auto 0.45rem;
+  margin: 0 auto 0.38rem;
   background: linear-gradient(90deg, transparent, var(--laila-gold-bright), transparent);
   opacity: 0;
 }
@@ -137,9 +172,9 @@
 .laila-cover__name {
   display: block;
   font-family: var(--laila-font-script);
-  font-size: clamp(2.05rem, 13.5cqi, 3.35rem);
+  font-size: 9.6cqi;
   font-weight: 400;
-  line-height: 1.18;
+  line-height: 1.1;
   color: var(--laila-gold-soft);
   text-shadow: 0 2px 18px rgba(0, 0, 0, 0.45);
   overflow: visible;
@@ -168,13 +203,14 @@
 }
 
 .laila-cover__amp {
-  font-family: var(--laila-font-body);
-  font-style: italic;
-  font-size: clamp(0.85rem, 4cqi, 1.05rem);
+  font-family: var(--laila-font-script);
+  font-style: normal;
+  font-size: 6cqi;
   color: var(--laila-gold-bright);
-  letter-spacing: 0.08em;
-  line-height: 1;
-  margin: 0.05em 0;
+  letter-spacing: 0.04em;
+  line-height: 0.95;
+  margin: 0.04em 0 0.08em;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.45);
   opacity: 0;
 }
 
@@ -243,11 +279,11 @@
 }
 
 .laila-cover__date {
-  margin: 0.45rem 0 0;
+  margin: 0.6rem 0 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.12rem;
+  gap: 0.18rem;
   opacity: 0;
 }
 
@@ -257,18 +293,18 @@
 
 .laila-cover__day {
   font-family: var(--laila-font-display);
-  font-size: clamp(0.62rem, 3.2cqi, 0.78rem);
-  font-weight: 500;
-  letter-spacing: 0.28em;
+  font-size: 2.4cqi;
+  font-weight: 600;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
   color: var(--laila-gold-bright);
 }
 
 .laila-cover__when {
   font-family: var(--laila-font-display);
-  font-size: clamp(0.72rem, 3.6cqi, 0.9rem);
-  font-weight: 400;
-  letter-spacing: 0.08em;
+  font-size: 3.7cqi;
+  font-weight: 600;
+  letter-spacing: 0.12em;
   color: var(--laila-gold-soft);
 }
 
@@ -306,110 +342,81 @@
   }
 }
 
-/* Full-bleed watercolor borders — bunga-2 top, bunga-1 bottom */
+/* Whole, un-cropped bold floral swags tucked behind the maroon oval curves */
 .laila-cover__garlands {
   position: absolute;
   inset: 0;
-  z-index: 2;
+  z-index: 1;
   pointer-events: none;
 }
 
 .laila-garland {
   position: absolute;
-  left: -2%;
-  width: 118%;
+  left: 50%;
+  width: 66%;
   max-width: none;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 24px rgba(32, 6, 11, 0.28));
   user-select: none;
 }
 
 .laila-garland--top {
-  top: 0;
-  object-position: 30% top;
+  top: 6.5%;
   opacity: 0;
+  transform: translate3d(-50%, 0, 0);
 }
 
 .laila-cover--ready .laila-garland--top {
-  animation: laila-garland-from-top 2.7s var(--laila-ease) 0.12s forwards;
+  animation: laila-garland-from-top 2.1s var(--laila-ease) 0.12s forwards;
 }
 
 .laila-garland--bottom {
-  bottom: 0;
-  object-position: 30% bottom;
+  bottom: 6.5%;
   opacity: 0;
+  transform: translate3d(-50%, 0, 0) rotate(180deg);
 }
 
 .laila-cover--ready .laila-garland--bottom {
-  animation: laila-garland-from-bottom 2.7s var(--laila-ease) 0.32s forwards;
+  animation: laila-garland-from-bottom 2.1s var(--laila-ease) 0.28s forwards;
 }
 
 @keyframes laila-garland-from-top {
   from {
     opacity: 0;
-    transform: translate3d(0, -28%, 0);
+    transform: translate3d(-50%, -18%, 0) scale(0.94);
   }
   to {
     opacity: 1;
-    transform: translate3d(0, 0, 0);
+    transform: translate3d(-50%, 0, 0) scale(1);
   }
 }
 
 @keyframes laila-garland-from-bottom {
   from {
     opacity: 0;
-    transform: translate3d(0, 28%, 0);
+    transform: translate3d(-50%, 18%, 0) rotate(180deg) scale(0.94);
   }
   to {
     opacity: 1;
-    transform: translate3d(0, 0, 0);
+    transform: translate3d(-50%, 0, 0) rotate(180deg) scale(1);
   }
 }
 
 @media (max-width: 720px) {
   .laila-garland {
-    width: 106%;
-    left: -3%;
-    height: 92%;
-  }
-
-  /*
-   * Top bunga is denser mid-left; phones showed a bare top-right. Scale past the
-   * global img max-width and bias the crop so denser blooms cover that corner.
-   */
-  .laila-garland--top {
-    top: -8%;
-    left: -28%;
-    width: 168%;
-    max-width: none;
-    height: 115%;
-    object-position: 38% 0%;
-  }
-
-  .laila-garland--bottom {
-    bottom: -2%;
-    object-position: 42% 90%;
-  }
-
-  .laila-cover__writing {
-    padding: 17% 14% 19%;
+    width: 74%;
   }
 }
 
-/* Desktop only — keep flowers on the invitation column, not the full widescreen. */
+/* Desktop only — keep butterflies on the invitation column, not the full widescreen. */
 @media (min-width: 1280px) {
-  .laila-cover__garlands,
   .laila-cover > .laila-butterflies {
     left: 50%;
     right: auto;
     width: min(100vw, calc(100dvh * 1080 / 1920));
     transform: translateX(-50%);
-    overflow: hidden;
-  }
-
-  .laila-garland {
-    left: 0;
-    width: 100%;
+    overflow: visible;
   }
 }
 
@@ -418,7 +425,7 @@
   position: absolute;
   left: 0;
   right: 0;
-  z-index: 4;
+  z-index: 2;
   pointer-events: none;
   overflow: hidden;
 }
@@ -748,7 +755,7 @@
 
   .laila-page--details .laila-page-decor__flower--top,
   .laila-page--details .laila-page-decor__flower--bottom {
-    opacity: 0.55;
+    opacity: 0.85;
   }
 
   .laila-invite__rule {
@@ -765,9 +772,52 @@
 .laila-main {
   position: relative;
   isolation: isolate;
-  background: var(--laila-paper);
-  padding: clamp(3.4rem, 8vw, 4.75rem) clamp(1.25rem, 5vw, 2rem) 4.5rem;
+  background:
+    repeating-linear-gradient(
+      45deg,
+      rgba(92, 16, 28, 0.055) 0px,
+      rgba(92, 16, 28, 0.055) 1px,
+      transparent 1px,
+      transparent 20px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      rgba(92, 16, 28, 0.055) 0px,
+      rgba(92, 16, 28, 0.055) 1px,
+      transparent 1px,
+      transparent 20px
+    ),
+    linear-gradient(180deg, #cba265 0%, #dec08e 20%, #dec08e 80%, #c49756 100%);
+  padding: 3.2rem clamp(1.5rem, 5vw, 2.2rem) 6.8rem;
   overflow: hidden;
+}
+
+.laila-card-floral {
+  width: clamp(11.5rem, 52vw, 14rem);
+  margin-left: auto;
+  margin-right: auto;
+  pointer-events: none;
+  user-select: none;
+}
+
+.laila-card-floral--top {
+  margin-bottom: 0.35rem;
+}
+
+.laila-card-floral--bottom {
+  margin-top: 1.1rem;
+}
+
+.laila-card-floral__img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  filter: drop-shadow(0 5px 12px rgba(58, 12, 20, 0.14));
+}
+
+.laila-card-floral__img--bottom {
+  transform: rotate(180deg);
 }
 
 .laila-page-decor {
@@ -778,42 +828,87 @@
   overflow: hidden;
 }
 
-.laila-page-decor__flower {
+.laila-page-decor__frame {
   position: absolute;
-  left: 0;
-  width: 100%;
-  max-width: none;
-  object-fit: cover;
-  opacity: 0.55;
+  top: 1.15rem;
+  bottom: 5.2rem;
+  left: 50%;
+  width: min(calc(100% - 1.5rem), 26.5rem);
+  transform: translateX(-50%);
+  background-color: #fdf9f1;
+  background-image:
+    radial-gradient(ellipse 85% 18% at 50% 0%, rgba(228, 195, 118, 0.32) 0%, transparent 72%),
+    radial-gradient(ellipse 85% 18% at 50% 100%, rgba(228, 195, 118, 0.28) 0%, transparent 72%),
+    radial-gradient(ellipse 78% 58% at 50% 50%, #fffdf9 0%, #fcf6ea 68%, #f3e3c6 100%);
+  border: 1.5px solid rgba(184, 139, 52, 0.72);
+  border-radius: 1.5rem;
+  box-shadow:
+    inset 0 0 0 5px #fdf9f1,
+    inset 0 0 0 6px rgba(184, 139, 52, 0.38),
+    inset 0 0 36px rgba(206, 165, 82, 0.22),
+    0 18px 46px rgba(58, 12, 20, 0.15);
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* Subtle gold dust / bokeh along the side edges (keeps center 100% clear for reading) */
+.laila-page-decor__shimmer {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 7% 12%, rgba(212, 168, 76, 0.55) 0 1.5px, transparent 2.5px),
+    radial-gradient(circle at 93% 16%, rgba(228, 192, 108, 0.6) 0 2px, transparent 3.5px),
+    radial-gradient(circle at 5% 28%, rgba(212, 168, 76, 0.42) 0 2.2px, transparent 4px),
+    radial-gradient(circle at 95% 34%, rgba(212, 168, 76, 0.48) 0 1.5px, transparent 2.5px),
+    radial-gradient(circle at 8% 48%, rgba(228, 192, 108, 0.52) 0 1.8px, transparent 3px),
+    radial-gradient(circle at 92% 52%, rgba(212, 168, 76, 0.45) 0 2.2px, transparent 4px),
+    radial-gradient(circle at 6% 68%, rgba(212, 168, 76, 0.5) 0 1.5px, transparent 2.5px),
+    radial-gradient(circle at 94% 72%, rgba(228, 192, 108, 0.55) 0 1.8px, transparent 3px),
+    radial-gradient(circle at 9% 86%, rgba(212, 168, 76, 0.45) 0 2px, transparent 3.5px),
+    radial-gradient(circle at 91% 89%, rgba(212, 168, 76, 0.5) 0 1.5px, transparent 2.5px);
+  animation: laila-gold-shimmer 4.5s ease-in-out infinite alternate;
   pointer-events: none;
 }
 
-.laila-page-decor__flower--top {
-  top: 0;
-  height: 11rem;
-  object-position: top center;
+@keyframes laila-gold-shimmer {
+  0% {
+    opacity: 0.55;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
-.laila-page-decor__flower--bottom {
-  bottom: 0;
-  height: 12rem;
-  object-position: bottom center;
+.laila-page-decor__corner {
+  position: absolute;
+  width: 2.5rem;
+  height: 2.5rem;
+  color: #b88933;
+  filter: drop-shadow(0 1px 2px rgba(166, 124, 46, 0.25));
 }
 
-@media (max-width: 720px) {
-  /* Keep a short band crop — do not shift/scale like the cover or vines spill down the side. */
-  .laila-page-decor__flower--top {
-    left: 0;
-    width: 100%;
-    height: 11.25rem;
-    object-position: 42% top;
-  }
+.laila-page-decor__corner--tl {
+  top: 0.55rem;
+  left: 0.55rem;
+}
 
-  .laila-page-decor__flower--bottom {
-    left: 0;
-    width: 100%;
-    object-position: 42% bottom;
-  }
+.laila-page-decor__corner--tr {
+  top: 0.55rem;
+  right: 0.55rem;
+  transform: scaleX(-1);
+}
+
+.laila-page-decor__corner--bl {
+  bottom: 0.55rem;
+  left: 0.55rem;
+  transform: scaleY(-1);
+}
+
+.laila-page-decor__corner--br {
+  bottom: 0.55rem;
+  right: 0.55rem;
+  transform: scale(-1, -1);
 }
 
 .laila-page-decor .laila-butterflies--top {
@@ -828,7 +923,7 @@
   .laila-page-decor {
     left: 0;
     right: 0;
-    width: min(24.5rem, 100%);
+    width: min(28rem, 100%);
     margin-inline: auto;
     transform: none;
   }
@@ -836,12 +931,18 @@
 
 .laila-stack {
   position: relative;
-  z-index: 1;
-  width: min(100%, 24.5rem);
+  z-index: 2;
+  width: min(100%, 23.5rem);
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: clamp(2.6rem, 6vw, 3.35rem);
+  gap: clamp(1.35rem, 3.5vw, 1.75rem);
+}
+
+.laila-page .reveal.reveal--visible,
+.laila-page .reveal.reveal--from-top.reveal--visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
 }
 
 .laila-kicker {
@@ -905,31 +1006,49 @@
 }
 
 .laila-puteri {
-  margin: 0.75rem 0 0;
+  margin: 0.7rem 0 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.18rem;
+  gap: 0.22rem;
   text-align: center;
 }
 
 .laila-puteri__name {
   display: block;
-  max-width: 15em;
-  font-family: var(--laila-font-script);
-  font-size: clamp(1.35rem, 4.6vw, 1.7rem);
-  font-weight: 400;
-  line-height: 1.25;
+  max-width: 18em;
+  font-family: var(--laila-font-display);
+  font-size: clamp(1.06rem, 3.6vw, 1.24rem);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  line-height: 1.35;
+  text-transform: uppercase;
   color: var(--laila-maroon);
 }
 
 .laila-puteri__note {
+  margin: 0.08rem 0;
   font-family: var(--laila-font-body);
-  font-size: 0.88em;
+  font-size: 0.92em;
   font-style: italic;
   line-height: 1.35;
-  color: var(--laila-maroon-deep);
-  opacity: 0.88;
+  color: var(--laila-gold);
+}
+
+.laila-section-flourish {
+  margin: 1.05rem auto 0;
+  width: 9.5rem;
+  color: var(--laila-gold);
+}
+
+.laila-section-flourish--top {
+  margin: 0 auto 1.05rem;
+}
+
+.laila-section-flourish svg {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 .laila-parents {
@@ -964,21 +1083,33 @@
 }
 
 .laila-khat {
-  margin: 0 0 1.15rem;
+  position: relative;
+  z-index: 3;
+  margin: 0 auto 0.2rem;
+  padding-top: 0.15em;
   font-family: var(--laila-font-khat);
-  font-size: clamp(1.45rem, 5.5vw, 1.95rem);
+  font-size: clamp(1.18rem, 4.5vw, 1.5rem);
   font-weight: 400;
-  line-height: 1.7;
+  line-height: 1.65;
+  white-space: nowrap;
   color: var(--laila-maroon);
-  clip-path: inset(-0.35em -0.45em -0.35em 100%);
+  clip-path: inset(-1.2em -0.6em -0.6em 100%);
 }
 
 .laila-khat--salam {
-  max-width: 16em;
+  max-width: 100%;
   margin-left: auto;
   margin-right: auto;
-  font-size: clamp(1.15rem, 4.4vw, 1.55rem);
-  line-height: 1.85;
+}
+
+.laila-salam-latin {
+  margin: 0 0 0.95rem;
+  font-family: var(--laila-font-body);
+  font-size: 0.86rem;
+  font-style: italic;
+  letter-spacing: 0.02em;
+  color: var(--laila-maroon-deep);
+  opacity: 0.82;
 }
 
 .reveal--visible .laila-khat {
@@ -987,11 +1118,11 @@
 
 @keyframes laila-khat-write {
   from {
-    clip-path: inset(-0.35em -0.45em -0.35em 100%);
+    clip-path: inset(-1.2em -0.6em -0.6em 100%);
     opacity: 0.35;
   }
   to {
-    clip-path: inset(-0.35em -0.45em -0.35em -0.45em);
+    clip-path: inset(-1.2em -0.6em -0.6em -0.6em);
     opacity: 1;
   }
 }
@@ -1058,7 +1189,7 @@
     transform: translate3d(0, -26%, 0);
   }
   to {
-    opacity: 0.55;
+    opacity: 0.88;
     transform: translate3d(0, 0, 0);
   }
 }
@@ -1069,7 +1200,7 @@
     transform: translate3d(0, 26%, 0);
   }
   to {
-    opacity: 0.55;
+    opacity: 0.88;
     transform: translate3d(0, 0, 0);
   }
 }
@@ -1394,10 +1525,10 @@
 }
 
 .laila-spec {
-  margin: 0.85rem 0 0;
+  margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.7rem;
 }
 
 .laila-spec__row {
@@ -1478,11 +1609,11 @@
   background: rgba(255, 252, 247, 0.55);
   color: var(--laila-maroon);
   font-family: var(--laila-font-display);
-  font-size: 0.62rem;
-  letter-spacing: 0.16em;
+  font-size: clamp(0.56rem, 2.4vw, 0.62rem);
+  letter-spacing: 0.13em;
   text-transform: uppercase;
   text-decoration: none;
-  padding: 0.72em 1.25em;
+  padding: 0.72em 1.35em;
   cursor: pointer;
 }
 
@@ -1571,9 +1702,177 @@
   color: var(--laila-maroon-deep);
 }
 
+/* ——— Sticky Bottom Navigation Dock & Quick-Action Sheet (Royal Maroon & Gold) ——— */
+.laila-dock {
+  position: fixed;
+  bottom: max(0.75rem, env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 45;
+  width: min(calc(100% - 1.75rem), 24.5rem);
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.22rem;
+  padding: 0.42rem 0.48rem;
+  border-radius: 999px;
+  background: rgba(58, 12, 20, 0.96);
+  border: 1px solid rgba(228, 201, 138, 0.55);
+  box-shadow: 0 14px 34px rgba(32, 6, 11, 0.42);
+  backdrop-filter: blur(10px);
+}
+
+.laila-dock__btn {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: #f3e4c4;
+  border-radius: 999px;
+  padding: 0.38rem 0.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.18rem;
+  font-family: var(--laila-font-display);
+  font-size: 0.54rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.18s ease, color 0.18s ease;
+}
+
+.laila-dock__btn svg {
+  width: 1.1rem;
+  height: 1.1rem;
+  display: block;
+}
+
+.laila-dock__btn.is-active,
+.laila-dock__btn:hover,
+.laila-dock__btn:focus-visible {
+  background: rgba(228, 201, 138, 0.18);
+  color: #ffffff;
+}
+
+.laila-dock__btn--primary {
+  background: linear-gradient(180deg, #e4c98a 0%, #b88b42 100%);
+  color: #3a0c14;
+  font-weight: 700;
+}
+
+.laila-dock__btn--primary:hover,
+.laila-dock__btn--primary:focus-visible {
+  background: linear-gradient(180deg, #eed69c 0%, #c69a4f 100%);
+  color: #3a0c14;
+}
+
+.laila-sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 44;
+  background: rgba(32, 6, 11, 0.48);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 1rem 1rem calc(5rem + env(safe-area-inset-bottom));
+}
+
+.laila-sheet {
+  width: min(100%, 24rem);
+  background: var(--laila-paper);
+  border: 1px solid rgba(166, 124, 46, 0.58);
+  border-radius: 1.2rem;
+  padding: 1.1rem 1.15rem;
+  box-shadow: 0 18px 42px rgba(32, 6, 11, 0.35);
+}
+
+.laila-sheet__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.85rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid rgba(166, 124, 46, 0.25);
+}
+
+.laila-sheet__title {
+  margin: 0;
+  font-family: var(--laila-font-display);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--laila-maroon);
+}
+
+.laila-sheet__close {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--laila-maroon);
+  font-size: 0.95rem;
+  cursor: pointer;
+  padding: 0.2rem 0.4rem;
+}
+
+.laila-sheet__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.laila-sheet__link {
+  appearance: none;
+  width: 100%;
+  border: 1px solid rgba(92, 16, 28, 0.18);
+  border-radius: 0.85rem;
+  background: #ffffff;
+  padding: 0.75rem 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  text-decoration: none;
+  font-family: var(--laila-font-display);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--laila-maroon);
+  cursor: pointer;
+}
+
+.laila-sheet__link:hover,
+.laila-sheet__link:focus-visible {
+  border-color: var(--laila-gold);
+}
+
+.laila-sheet__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.laila-sheet__brand-icon {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.laila-sheet__muted {
+  font-family: var(--laila-font-body);
+  font-size: 0.86rem;
+  font-weight: 400;
+  color: var(--laila-maroon-deep);
+  opacity: 0.75;
+}
+
 /* ——— Aturcara Majlis: scroll-guided butterfly timeline ——— */
 .laila-aturcara {
   text-align: center;
+}
+
+.laila-aturcara .laila-title {
+  margin: 0 0 0.75rem;
 }
 
 .laila-aturcara__inner {
@@ -1581,7 +1880,7 @@
 }
 
 .laila-aturcara__lead {
-  margin: 0.15rem auto 1.35rem;
+  margin: 0 auto 0.95rem;
   max-width: 18.5rem;
   font-size: 0.9em;
   opacity: 0.9;
@@ -1591,7 +1890,7 @@
   position: relative;
   width: min(100%, 23.5rem);
   margin: 0 auto;
-  padding: 0.35rem 2.6rem 0.55rem 0.15rem;
+  padding: 0.2rem 2.6rem 0.25rem 0.15rem;
   text-align: left;
   overflow: visible;
 }
@@ -1853,8 +2152,12 @@
   margin-bottom: 1.05rem;
 }
 
+.laila-chrono .laila-title {
+  margin: 0 0 0.35rem;
+}
+
 .laila-chrono__grid {
-  margin-top: 1.1rem;
+  margin-top: 0.65rem;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 0.45rem;

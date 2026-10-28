@@ -59,6 +59,11 @@ export function HomePage() {
             <span className="home-selector__cardDesc">Tema maroon tradisional Melayu — latar oval, nama pada background</span>
           </Link>
 
+          <Link to="/laila/bingkai" className="home-selector__card">
+            <span className="home-selector__cardTitle">Laila — Bingkai Sisi</span>
+            <span className="home-selector__cardDesc">Bunga kiri dan kanan, gerbang emas, Walimatul Urus</span>
+          </Link>
+
           <Link to="/naim-nadhirah-nikah" className="home-selector__card">
             <span className="home-selector__cardTitle">Jemputan White &amp; Gold</span>
             <span className="home-selector__cardDesc">Tema ivory putih dengan aksen emas champagne</span>
