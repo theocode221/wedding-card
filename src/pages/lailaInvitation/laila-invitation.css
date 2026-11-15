@@ -9,8 +9,8 @@
 }
 
 .laila-page {
-  --laila-paper: #fbf5eb;
-  --laila-paper-2: #e7d4b5;
+  --laila-paper: #fffefb;
+  --laila-paper-2: #ffffff;
   --laila-maroon: #5c101c;
   --laila-maroon-deep: #3a0c14;
   --laila-wine: #7a1828;
@@ -24,8 +24,36 @@
   --laila-font-body: "Cormorant Garamond", Georgia, serif;
   --laila-font-khat: "DecoType Thuluth II", "Aref Ruqaa", "Amiri", "Noto Naskh Arabic", serif;
   --laila-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --laila-white-texture:
+    radial-gradient(circle at 8% 12%, rgba(90, 78, 72, 0.09) 0 0.55px, transparent 1.1px),
+    radial-gradient(circle at 91% 18%, rgba(90, 78, 72, 0.08) 0 0.5px, transparent 1px),
+    radial-gradient(circle at 22% 38%, rgba(90, 78, 72, 0.07) 0 0.45px, transparent 0.95px),
+    radial-gradient(circle at 78% 44%, rgba(90, 78, 72, 0.075) 0 0.5px, transparent 1px),
+    radial-gradient(circle at 14% 68%, rgba(90, 78, 72, 0.08) 0 0.5px, transparent 1px),
+    radial-gradient(circle at 86% 72%, rgba(90, 78, 72, 0.085) 0 0.55px, transparent 1.1px),
+    radial-gradient(circle at 48% 22%, rgba(90, 78, 72, 0.06) 0 0.4px, transparent 0.85px),
+    radial-gradient(circle at 52% 58%, rgba(90, 78, 72, 0.065) 0 0.45px, transparent 0.9px),
+    radial-gradient(circle at 34% 86%, rgba(90, 78, 72, 0.07) 0 0.5px, transparent 1px),
+    radial-gradient(circle at 66% 88%, rgba(90, 78, 72, 0.075) 0 0.5px, transparent 1px),
+    repeating-linear-gradient(
+      45deg,
+      rgba(92, 16, 28, 0.022) 0px,
+      rgba(92, 16, 28, 0.022) 1px,
+      transparent 1px,
+      transparent 22px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      rgba(92, 16, 28, 0.022) 0px,
+      rgba(92, 16, 28, 0.022) 1px,
+      transparent 1px,
+      transparent 22px
+    );
+  /* Softer, washed colour + slight edge bleed (watercolour feel on PNG florals) */
+  --laila-floral-watercolor: saturate(0.68) brightness(1.1) contrast(0.84) sepia(0.1) blur(0.4px);
   color: var(--laila-maroon-deep);
-  background: var(--laila-paper-2);
+  background-color: #ffffff;
+  background-image: var(--laila-white-texture);
   font-family: var(--laila-font-body);
   font-size: clamp(0.95rem, 0.2vw + 0.92rem, 1.02rem);
   line-height: 1.55;
@@ -66,8 +94,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background:
-    radial-gradient(ellipse 68% 54% at 50% 48%, #f8ebcf 0%, #dfc08d 52%, #b88b4a 100%);
+  background-color: #ffffff;
+  background-image: var(--laila-white-texture);
   overflow: hidden;
   scroll-margin-top: 0;
 }
@@ -78,21 +106,14 @@
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background-image:
-    repeating-linear-gradient(
-      45deg,
-      rgba(92, 16, 28, 0.065) 0px,
-      rgba(92, 16, 28, 0.065) 1px,
-      transparent 1px,
-      transparent 20px
-    ),
-    repeating-linear-gradient(
-      -45deg,
-      rgba(92, 16, 28, 0.065) 0px,
-      rgba(92, 16, 28, 0.065) 1px,
-      transparent 1px,
-      transparent 20px
-    );
+  background: linear-gradient(
+    118deg,
+    transparent 38%,
+    rgba(92, 72, 54, 0.035) 48%,
+    rgba(92, 72, 54, 0.055) 50%,
+    rgba(92, 72, 54, 0.03) 52%,
+    transparent 62%
+  );
 }
 
 .laila-cover__frame {
@@ -357,7 +378,9 @@
   max-width: none;
   height: auto;
   object-fit: contain;
-  filter: drop-shadow(0 10px 24px rgba(32, 6, 11, 0.28));
+  mix-blend-mode: multiply;
+  opacity: 0.92;
+  filter: var(--laila-floral-watercolor) drop-shadow(0 8px 20px rgba(58, 12, 20, 0.12));
   user-select: none;
 }
 
@@ -387,7 +410,7 @@
     transform: translate3d(-50%, -18%, 0) scale(0.94);
   }
   to {
-    opacity: 1;
+    opacity: 0.92;
     transform: translate3d(-50%, 0, 0) scale(1);
   }
 }
@@ -398,7 +421,7 @@
     transform: translate3d(-50%, 18%, 0) rotate(180deg) scale(0.94);
   }
   to {
-    opacity: 1;
+    opacity: 0.92;
     transform: translate3d(-50%, 0, 0) rotate(180deg) scale(1);
   }
 }
@@ -772,22 +795,8 @@
 .laila-main {
   position: relative;
   isolation: isolate;
-  background:
-    repeating-linear-gradient(
-      45deg,
-      rgba(92, 16, 28, 0.055) 0px,
-      rgba(92, 16, 28, 0.055) 1px,
-      transparent 1px,
-      transparent 20px
-    ),
-    repeating-linear-gradient(
-      -45deg,
-      rgba(92, 16, 28, 0.055) 0px,
-      rgba(92, 16, 28, 0.055) 1px,
-      transparent 1px,
-      transparent 20px
-    ),
-    linear-gradient(180deg, #cba265 0%, #dec08e 20%, #dec08e 80%, #c49756 100%);
+  background-color: #ffffff;
+  background-image: var(--laila-white-texture);
   padding: 3.2rem clamp(1.5rem, 5vw, 2.2rem) 6.8rem;
   overflow: hidden;
 }
@@ -813,7 +822,9 @@
   height: auto;
   display: block;
   object-fit: contain;
-  filter: drop-shadow(0 5px 12px rgba(58, 12, 20, 0.14));
+  mix-blend-mode: multiply;
+  opacity: 0.9;
+  filter: var(--laila-floral-watercolor) drop-shadow(0 5px 14px rgba(58, 12, 20, 0.1));
 }
 
 .laila-card-floral__img--bottom {
@@ -2348,6 +2359,361 @@
 .laila-gallery-page {
   overflow-x: clip;
   overflow-y: visible;
+  color: var(--laila-maroon-deep);
+  background-color: #e3e1de;
+  background-image:
+    radial-gradient(circle at 12% 18%, rgba(90, 78, 72, 0.06) 0 0.5px, transparent 1px),
+    radial-gradient(circle at 88% 22%, rgba(90, 78, 72, 0.05) 0 0.45px, transparent 0.95px),
+    radial-gradient(circle at 40% 62%, rgba(90, 78, 72, 0.04) 0 0.4px, transparent 0.85px);
+}
+
+.laila-gallery-page__decor {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.laila-gallery-page__decor .laila-butterflies {
+  opacity: 0.9;
+}
+
+.laila-gallery-atmos {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.laila-gallery-atmos--back {
+  z-index: 0;
+}
+
+.laila-gallery-atmos--front {
+  z-index: 3;
+}
+
+/* Warm sepia lamplight breathing behind everything */
+.laila-gallery-atmos__glow {
+  position: absolute;
+  inset: -10%;
+  background:
+    radial-gradient(ellipse 60% 42% at 50% 30%, rgba(214, 170, 120, 0.16), transparent 70%),
+    radial-gradient(ellipse 55% 40% at 40% 78%, rgba(122, 31, 48, 0.08), transparent 72%);
+  animation: laila-gallery-glow 9s ease-in-out infinite alternate;
+}
+
+@keyframes laila-gallery-glow {
+  0% {
+    opacity: 0.65;
+    transform: translate3d(-1.5%, 0, 0) scale(1);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(1.5%, -1%, 0) scale(1.05);
+  }
+}
+
+/* Old-photo vignette with a faint projector flicker */
+.laila-gallery-atmos__vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 85% 75% at 50% 45%, transparent 55%, rgba(74, 34, 28, 0.2) 100%);
+  animation: laila-gallery-flicker 6s steps(1, end) infinite;
+}
+
+@keyframes laila-gallery-flicker {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  41% {
+    opacity: 0.86;
+  }
+  43% {
+    opacity: 1;
+  }
+  77% {
+    opacity: 0.92;
+  }
+  78% {
+    opacity: 1;
+  }
+}
+
+/* Floating dust in the light */
+.laila-gallery-mote {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 244, 222, 0.9);
+  box-shadow: 0 0 6px rgba(214, 170, 120, 0.55);
+  opacity: 0;
+  animation: laila-gallery-mote linear infinite;
+}
+
+@keyframes laila-gallery-mote {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0);
+  }
+  20% {
+    opacity: 0.75;
+  }
+  60% {
+    opacity: 0.45;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(12px, -60px, 0);
+  }
+}
+
+/* Falling petals */
+.laila-gallery-petal {
+  position: absolute;
+  top: -6vh;
+  display: block;
+  animation: laila-gallery-petal-fall linear infinite;
+  will-change: transform;
+}
+
+.laila-gallery-petal__leaf {
+  display: block;
+  border-radius: 150% 0 150% 0;
+  box-shadow: inset -1px -1px 2px rgba(58, 12, 20, 0.25);
+  animation: laila-gallery-petal-flutter ease-in-out infinite alternate;
+}
+
+@keyframes laila-gallery-petal-fall {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  25% {
+    transform: translate3d(calc(var(--petal-drift) * 0.6), 28vh, 0);
+  }
+  50% {
+    transform: translate3d(calc(var(--petal-drift) * -0.2), 56vh, 0);
+  }
+  75% {
+    transform: translate3d(var(--petal-drift), 84vh, 0);
+  }
+  100% {
+    transform: translate3d(calc(var(--petal-drift) * 0.4), 112vh, 0);
+  }
+}
+
+@keyframes laila-gallery-petal-flutter {
+  0% {
+    transform: rotate3d(1, 0.4, 0.2, 0deg) rotate(0deg);
+  }
+  100% {
+    transform: rotate3d(1, 0.4, 0.2, 160deg) rotate(var(--petal-spin));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .laila-gallery-petal,
+  .laila-gallery-mote {
+    display: none;
+  }
+
+  .laila-gallery-atmos__glow,
+  .laila-gallery-atmos__vignette {
+    animation: none;
+  }
+}
+
+.laila-gallery-page .laila-kicker {
+  color: var(--laila-maroon);
+  letter-spacing: 0.22em;
+}
+
+.laila-gallery-page .laila-title {
+  color: var(--laila-maroon-deep);
+}
+
+.laila-gallery-page .laila-prose {
+  color: var(--laila-maroon-deep);
+  opacity: 0.88;
+}
+
+.laila-gallery-page .laila-gallery__names {
+  color: var(--laila-maroon-deep);
+}
+
+.laila-gallery-page .laila-gallery__empty {
+  border-color: rgba(92, 16, 28, 0.35);
+  color: var(--laila-maroon-deep);
+}
+
+.laila-gallery-page .laila-memory__frame {
+  position: relative;
+  padding: 0.62rem 0.62rem 0;
+  border: 1px solid rgba(92, 16, 28, 0.85);
+  border-radius: 2px;
+  background: linear-gradient(168deg, #6e1726 0%, #5c101c 45%, #3a0c14 100%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.14) inset,
+    0 2px 4px rgba(58, 12, 20, 0.18),
+    0 20px 38px rgba(58, 12, 20, 0.24);
+}
+
+.laila-gallery-page .laila-memory--portrait .laila-memory__frame {
+  width: min(100%, calc(70dvh * var(--laila-memory-ratio, 0.8) + 1.24rem));
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Photo-album corners */
+.laila-gallery-page .laila-memory__frame::before,
+.laila-gallery-page .laila-memory__frame::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  width: 1.55rem;
+  height: 1.55rem;
+  pointer-events: none;
+  filter: drop-shadow(0 1px 1px rgba(58, 12, 20, 0.35));
+}
+
+.laila-gallery-page .laila-memory__frame::before {
+  top: 0.28rem;
+  left: 0.28rem;
+  background: linear-gradient(135deg, #efe4d2 0 50%, transparent 50%);
+}
+
+.laila-gallery-page .laila-memory__frame::after {
+  top: 0.28rem;
+  right: 0.28rem;
+  background: linear-gradient(225deg, #efe4d2 0 50%, transparent 50%);
+}
+
+.laila-gallery-page .laila-memory__stage {
+  aspect-ratio: 4 / 5;
+  background: #2e0a10;
+  box-shadow: 0 0 0 1px rgba(239, 228, 210, 0.42);
+}
+
+.laila-gallery-page .laila-memory__img {
+  height: 100%;
+  aspect-ratio: auto;
+}
+
+.laila-memory__film {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 78% 72% at 50% 48%, transparent 58%, rgba(46, 18, 10, 0.38) 100%),
+    linear-gradient(118deg, rgba(255, 168, 92, 0.16) 0%, transparent 28%),
+    linear-gradient(300deg, rgba(255, 214, 160, 0.1) 0%, transparent 34%);
+  mix-blend-mode: multiply;
+  animation: laila-memory-film-flicker 5.5s steps(1, end) infinite;
+}
+
+@keyframes laila-memory-film-flicker {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  33% {
+    opacity: 0.82;
+  }
+  35% {
+    opacity: 1;
+  }
+  71% {
+    opacity: 0.9;
+  }
+  72% {
+    opacity: 1;
+  }
+}
+
+.laila-memory__film::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.22;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+
+.laila-memory__caption {
+  display: block;
+  padding: 0.55rem 0.2rem 0.62rem;
+  font-family: var(--laila-font-display);
+  font-size: 0.78rem;
+  font-style: italic;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  text-align: right;
+  color: #efe4d2;
+}
+
+.laila-memory-chapter {
+  margin: 0.6rem 0 -0.6rem;
+  text-align: center;
+  opacity: 0;
+  transform: translate3d(0, 12px, 0);
+  transition:
+    opacity 0.9s var(--laila-ease),
+    transform 0.95s var(--laila-ease);
+}
+
+.laila-memory-chapter.is-in {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.laila-memory-chapter__title {
+  margin: 0.3rem 0 0.2rem;
+  font-family: var(--laila-font-script);
+  font-size: clamp(2rem, 8vw, 2.5rem);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--laila-maroon-deep);
+}
+
+.laila-memory-chapter .laila-memory-quote {
+  margin-top: 0;
+  max-width: 23rem;
+}
+
+.laila-gallery-page .laila-memory__frame:focus-visible {
+  outline-color: var(--laila-maroon);
+}
+
+.laila-gallery-page .laila-memory-quote__text {
+  color: var(--laila-maroon);
+}
+
+.laila-gallery-page .laila-gallery__close {
+  border-top-color: rgba(92, 16, 28, 0.28);
+}
+
+.laila-gallery-page .laila-gallery__close-text {
+  color: var(--laila-maroon-deep);
+}
+
+.laila-gallery-page .laila-satellite__back {
+  padding: 0.5em 1.15em;
+  border: 1px solid var(--laila-maroon);
+  border-radius: 999px;
+  color: #fbf3e8;
+  background: linear-gradient(165deg, #6e1726 0%, #5c101c 48%, #3a0c14 100%);
+  box-shadow: 0 8px 18px rgba(58, 12, 20, 0.2);
+  transition:
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.laila-gallery-page .laila-satellite__back:hover,
+.laila-gallery-page .laila-satellite__back:focus-visible {
+  background: linear-gradient(165deg, #7a1a2e 0%, #651222 48%, #420f18 100%);
+  box-shadow: 0 10px 22px rgba(58, 12, 20, 0.28);
 }
 
 .laila-gallery-page__inner {
@@ -2446,7 +2812,7 @@
   opacity: 0;
   transform: scale(1.06);
   transform-origin: 40% 45%;
-  filter: saturate(0.85);
+  filter: sepia(0.22) saturate(0.8) contrast(0.94) brightness(1.03);
 }
 
 .laila-memory--right .laila-memory__img {
@@ -2465,16 +2831,16 @@
   0% {
     opacity: 0;
     transform: scale(1.06) translate3d(0, 8px, 0);
-    filter: saturate(0.7) brightness(1.04);
+    filter: sepia(0.5) saturate(0.6) contrast(0.88) brightness(1.12);
   }
   18% {
     opacity: 1;
-    filter: saturate(0.9) brightness(1.01);
+    filter: sepia(0.34) saturate(0.7) contrast(0.92) brightness(1.06);
   }
   100% {
     opacity: 1;
-    transform: scale(1.02) translate3d(0, 0, 0);
-    filter: saturate(0.96) brightness(1);
+    transform: scale(1) translate3d(0, 0, 0);
+    filter: sepia(0.22) saturate(0.8) contrast(0.94) brightness(1.03);
   }
 }
 
@@ -2482,16 +2848,16 @@
   0% {
     opacity: 0;
     transform: scale(1.06) translate3d(0, 8px, 0);
-    filter: saturate(0.7) brightness(1.04);
+    filter: sepia(0.5) saturate(0.6) contrast(0.88) brightness(1.12);
   }
   18% {
     opacity: 1;
-    filter: saturate(0.9) brightness(1.01);
+    filter: sepia(0.34) saturate(0.7) contrast(0.92) brightness(1.06);
   }
   100% {
     opacity: 1;
-    transform: scale(1.02) translate3d(0, 0, 0);
-    filter: saturate(0.96) brightness(1);
+    transform: scale(1) translate3d(0, 0, 0);
+    filter: sepia(0.22) saturate(0.8) contrast(0.94) brightness(1.03);
   }
 }
 
@@ -2547,12 +2913,13 @@
 @media (prefers-reduced-motion: reduce) {
   .laila-memory,
   .laila-memory-quote,
+  .laila-memory-chapter,
+  .laila-memory__film,
   .laila-memory__img {
     opacity: 1;
     transform: none;
     transition: none;
     animation: none;
-    filter: none;
   }
 }
 

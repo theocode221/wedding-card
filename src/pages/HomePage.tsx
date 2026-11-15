@@ -55,13 +55,28 @@ export function HomePage() {
           </Link>
 
           <Link to="/laila" className="home-selector__card">
-            <span className="home-selector__cardTitle">Jemputan Maroon Tradisional</span>
-            <span className="home-selector__cardDesc">Tema maroon tradisional Melayu — latar oval, nama pada background</span>
+            <span className="home-selector__cardTitle">Laila — Jemputan Rasmi</span>
+            <span className="home-selector__cardDesc">Kertas kelabu editorial, bunga 11.png, Bodoni — kad utama pelanggan</span>
+          </Link>
+
+          <Link to="/laila/tradisional" className="home-selector__card">
+            <span className="home-selector__cardTitle">Laila — Oval Tradisional</span>
+            <span className="home-selector__cardDesc">Reka bentuk lama — latar oval maroon, nama tulisan tangan</span>
           </Link>
 
           <Link to="/laila/bingkai" className="home-selector__card">
             <span className="home-selector__cardTitle">Laila — Bingkai Sisi</span>
             <span className="home-selector__cardDesc">Bunga kiri dan kanan, gerbang emas, Walimatul Urus</span>
+          </Link>
+
+          <Link to="/laila/luxe" className="home-selector__card">
+            <span className="home-selector__cardTitle">Laila — Luxe (Atas &amp; Bawah)</span>
+            <span className="home-selector__cardDesc">KB 8/9/10 penuh — sudut bunga + rama-rama, kandungan sama seperti /laila</span>
+          </Link>
+
+          <Link to="/laila/luxe-12-13" className="home-selector__card">
+            <span className="home-selector__cardTitle">Laila — Luxe (12 &amp; 13)</span>
+            <span className="home-selector__cardDesc">Sama seperti Luxe — bunga sudut 12.png &amp; 13.png</span>
           </Link>
 
           <Link to="/naim-nadhirah-nikah" className="home-selector__card">

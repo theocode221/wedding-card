@@ -10,8 +10,9 @@ import {
   LAILA_COVER_BG,
   LAILA_DETAILS_HASH,
   LAILA_GALLERY_PATH,
-  LAILA_PATH,
   LAILA_RSVP_PATH,
+  LAILA_TRADISIONAL_PATH,
+  withLailaKadSearch,
   LAILA_SALAM_LATIN,
   lailaCoupleLabel,
   lailaHasEventDate,
@@ -114,9 +115,10 @@ export function LailaInvitationPage() {
   const invite = lailaInviteForPreview(isPreview);
   const whatsappContacts = lailaWhatsappForPreview(isPreview);
   const names = lailaCoupleLabel(invite);
-  const galleryTo = withPortfolioSearch(LAILA_GALLERY_PATH, location.search);
-  const rsvpTo = withPortfolioSearch(LAILA_RSVP_PATH, location.search);
-  const coverTo = withPortfolioSearch(LAILA_PATH, location.search);
+  const kadSearch = withLailaKadSearch(location.search, "tradisional");
+  const galleryTo = withPortfolioSearch(LAILA_GALLERY_PATH, kadSearch);
+  const rsvpTo = withPortfolioSearch(LAILA_RSVP_PATH, kadSearch);
+  const coverTo = withPortfolioSearch(LAILA_TRADISIONAL_PATH, kadSearch);
   const showCountdown = lailaHasEventDate(invite);
   const countdownTarget = useMemo(
     () => (showCountdown ? new Date(invite.weddingDateTime) : null),

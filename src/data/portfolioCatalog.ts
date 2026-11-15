@@ -26,8 +26,8 @@ export const PORTFOLIO_CATEGORIES: readonly { id: PortfolioCategory; label: stri
 export const PORTFOLIO_ITEMS: readonly PortfolioItem[] = [
   {
     id: "laila",
-    title: "Maroon Tradisional",
-    description: "Latar oval maroon, nama tulisan tangan, RSVP, galeri & ucapan tetamu.",
+    title: "Laila — Editorial Grey",
+    description: "Kertas kelabu, florals 11.png, serif Bodoni, dock kaca — RSVP, galeri & ucapan.",
     path: "/laila",
     category: "jemputan",
     previewImage: publicUrl("demo/laila.png"),

@@ -37,6 +37,11 @@ export function pickUcapanSpotlight(rows: LailaRsvpRow[], limit = 4): LailaUcapa
     }));
 }
 
+/** Every ucapan with text, newest first. */
+export function pickAllUcapan(rows: LailaRsvpRow[]): LailaUcapanSnippet[] {
+  return pickUcapanSpotlight(rows, rows.length);
+}
+
 export function fetchLailaRsvpRows(): Promise<LailaRsvpRow[]> {
   const base = getLailaRsvpScriptUrl();
   if (!base) return Promise.reject(new Error("RSVP script URL missing."));

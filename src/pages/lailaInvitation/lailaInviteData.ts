@@ -20,9 +20,38 @@ export const LAILA_BUNGA_BOTTOM = encodeURI(publicUrl("lela kb/bunga-bouquet-bol
 export const LAILA_BUNGA_HEADER = encodeURI(publicUrl("lela kb/bunga-garland-slim.png"));
 export const LAILA_BUNGA_SIDE = encodeURI(publicUrl("lela kb/bunga-spray-trimmed.png"));
 
+/** Client-approved main card — grey editorial + `11.png`. */
 export const LAILA_PATH = "/laila";
+/** Previous oval maroon cover — portfolio / comparison only. */
+export const LAILA_TRADISIONAL_PATH = "/laila/tradisional";
+/** @deprecated Same as {@link LAILA_PATH}; use redirect `/laila/editorial` → `/laila`. */
+export const LAILA_EDITORIAL_PATH = LAILA_PATH;
 /** Side-frame floral design — alternate to the oval cover. */
 export const LAILA_BINGKAI_PATH = "/laila/bingkai";
+/** White paper + top/bottom florals (Scarlet Luxe–inspired trial for client). */
+export const LAILA_LUXE_PATH = "/laila/luxe";
+const LAILA_EDITORIAL_SIDE_VERSION = 4;
+export const LAILA_EDITORIAL_SIDE = `${encodeURI(publicUrl("lela kb/11.png"))}?v=${LAILA_EDITORIAL_SIDE_VERSION}`;
+/** Full-frame KB assets (9 = top corner, 8 = bottom corner, 10 = butterfly) — use whole PNG, no crop. */
+export const LAILA_LUXE_CORNER_TOP = encodeURI(publicUrl("lela kb/9.png"));
+export const LAILA_LUXE_CORNER_BOTTOM = encodeURI(publicUrl("lela kb/8.png"));
+export const LAILA_LUXE_BUTTERFLY = encodeURI(publicUrl("lela kb/10.png"));
+export const LAILA_LUXE_COVER_FLORALS = [
+  LAILA_LUXE_CORNER_TOP,
+  LAILA_LUXE_CORNER_BOTTOM,
+  LAILA_LUXE_BUTTERFLY,
+] as const;
+/** Same layout as /laila/luxe — corner assets 12.png & 13.png only. */
+export const LAILA_LUXE_1213_PATH = "/laila/luxe-12-13";
+/** 9→13 (top-left slot), 8→12 (bottom-right slot). */
+export const LAILA_LUXE_1213_CORNER_TOP = encodeURI(publicUrl("lela kb/13.png"));
+export const LAILA_LUXE_1213_CORNER_BOTTOM = encodeURI(publicUrl("lela kb/12.png"));
+/** Same as /laila/luxe — only corner PNGs are 12 & 13. */
+export const LAILA_LUXE_1213_COVER_FLORALS = [
+  LAILA_LUXE_1213_CORNER_TOP,
+  LAILA_LUXE_1213_CORNER_BOTTOM,
+  LAILA_LUXE_BUTTERFLY,
+] as const;
 export const LAILA_RSVP_PATH = "/laila/rsvp";
 export const LAILA_GALLERY_PATH = "/laila/galeri";
 /** Client-only dashboard — not linked from the public invitation. */
@@ -31,18 +60,35 @@ export const LAILA_DASHBOARD_PATH = "/laila/dashboard";
 export const LAILA_DETAILS_HASH = "jemputan";
 export const LAILA_DETAILS_TO = { pathname: LAILA_PATH, hash: LAILA_DETAILS_HASH } as const;
 
-/** Keep `kad=bingkai` so gallery and RSVP return to the side-frame design. */
-export function withLailaKadSearch(search: string, kad: "bingkai"): string {
+/** Keep `kad` so gallery and RSVP return to the same card design. */
+export type LailaKadVariant = "bingkai" | "luxe" | "luxe-12-13" | "tradisional";
+
+export function withLailaKadSearch(search: string, kad: LailaKadVariant): string {
   const params = new URLSearchParams(search.startsWith("?") ? search.slice(1) : search);
   params.set("kad", kad);
   const query = params.toString();
   return query ? `?${query}` : "";
 }
 
+/** Main `/laila` (editorial) — keep portfolio params, drop `kad`. */
+export function withLailaMainSearch(search: string): string {
+  const params = new URLSearchParams(search.startsWith("?") ? search.slice(1) : search);
+  params.delete("kad");
+  const query = params.toString();
+  return query ? `?${query}` : "";
+}
+
 export function lailaDetailsDestination(search: string): { pathname: string; hash: string } {
   const params = new URLSearchParams(search.startsWith("?") ? search.slice(1) : search);
+  const kad = params.get("kad");
+  let pathname = LAILA_PATH;
+  if (kad === "bingkai") pathname = LAILA_BINGKAI_PATH;
+  else if (kad === "luxe") pathname = LAILA_LUXE_PATH;
+  else if (kad === "luxe-12-13") pathname = LAILA_LUXE_1213_PATH;
+  else if (kad === "tradisional") pathname = LAILA_TRADISIONAL_PATH;
+  else if (kad === "editorial") pathname = LAILA_PATH;
   return {
-    pathname: params.get("kad") === "bingkai" ? LAILA_BINGKAI_PATH : LAILA_PATH,
+    pathname,
     hash: LAILA_DETAILS_HASH,
   };
 }
@@ -202,16 +248,30 @@ export function getLailaRsvpScriptUrl(): string {
 }
 
 /**
- * Photos in `public/lela kb/gallery/` (png, jpg, webp, gif).
- * Drop files in that folder — they are picked up automatically, sorted by filename.
+ * Photos in `public/lela kb/gallery/`, sorted by filename (1.jpg … 12.jpg).
+ * When any JPEG is present only JPEGs are used; older PNG placeholders are ignored.
  */
 const LAILA_GALLERY_MODULES = import.meta.glob(
   "../../../public/lela kb/gallery/*.{png,jpg,jpeg,webp,gif,PNG,JPG,JPEG,WEBP,GIF}",
   { eager: true, query: "?url", import: "default" },
 ) as Record<string, string>;
 
-export const LAILA_GALLERY_IMAGE_URLS: readonly string[] = Object.entries(LAILA_GALLERY_MODULES)
+export const LAILA_GALLERY_MAX = 12;
+
+const LAILA_GALLERY_JPEG = /\.jpe?g$/i;
+
+/** 8–10.png are design mockups, not photos. */
+const LAILA_GALLERY_DECOR_ONLY = /[/\\](8|9|10)\.png$/i;
+
+const lailaGalleryEntries = Object.entries(LAILA_GALLERY_MODULES);
+const lailaGalleryHasJpeg = lailaGalleryEntries.some(([path]) => LAILA_GALLERY_JPEG.test(path));
+
+export const LAILA_GALLERY_IMAGE_URLS: readonly string[] = lailaGalleryEntries
+  .filter(([path]) =>
+    lailaGalleryHasJpeg ? LAILA_GALLERY_JPEG.test(path) : !LAILA_GALLERY_DECOR_ONLY.test(path),
+  )
   .sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" }))
+  .slice(0, LAILA_GALLERY_MAX)
   .map(([, url]) => url);
 
 function lailaEventLocation(invite: Pick<LailaInvite, "venue" | "address">): string {

@@ -1,5 +1,6 @@
 const TONES = {
   gold: { wing: "#e8d5a0", wingDark: "#c4a45d", spot: "#fff6dc", body: "#3d151c" },
+  maroon: { wing: "#dba3ad", wingDark: "#7a1f30", spot: "#f8ecef", body: "#3a0c14" },
   rose: { wing: "#e8b4c4", wingDark: "#b85a6a", spot: "#fde8ee", body: "#4a1820" },
   lilac: { wing: "#c9b8e4", wingDark: "#8b6fb0", spot: "#f3ecfb", body: "#3a2748" },
   cream: { wing: "#f4ead6", wingDark: "#d2b48a", spot: "#fffdf8", body: "#5c3d2e" },
@@ -57,34 +58,41 @@ function ButterflySvg({ tone }: { tone: Tone }) {
   );
 }
 
-function Butterfly({ spec }: { spec: ButterflySpec }) {
+function Butterfly({ spec, accent = "mixed" }: { spec: ButterflySpec; accent?: "mixed" | "maroon" }) {
+  const tone: Tone = accent === "maroon" ? "maroon" : spec.tone;
   return (
     <div
-      className={`laila-butterfly laila-butterfly--path${spec.path}`}
+      className={`laila-butterfly laila-butterfly--path${spec.path}${accent === "maroon" ? " laila-butterfly--maroon" : ""}`}
       style={{
         width: spec.size,
         animationDuration: spec.dur,
         animationDelay: spec.delay,
       }}
     >
-      <ButterflySvg tone={spec.tone} />
+      <ButterflySvg tone={tone} />
     </div>
   );
 }
 
-export function LailaButterflies({ density = "full" }: { density?: "full" | "sparse" }) {
+export function LailaButterflies({
+  density = "full",
+  accent = "mixed",
+}: {
+  density?: "full" | "sparse";
+  accent?: "mixed" | "maroon";
+}) {
   const top = density === "sparse" ? TOP_SPARSE : TOP;
   const bottom = density === "sparse" ? BOTTOM_SPARSE : BOTTOM;
   return (
     <>
       <div className="laila-butterflies laila-butterflies--top" aria-hidden>
         {top.map((spec) => (
-          <Butterfly key={spec.id} spec={spec} />
+          <Butterfly key={spec.id} spec={spec} accent={accent} />
         ))}
       </div>
       <div className="laila-butterflies laila-butterflies--bottom" aria-hidden>
         {bottom.map((spec) => (
-          <Butterfly key={spec.id} spec={spec} />
+          <Butterfly key={spec.id} spec={spec} accent={accent} />
         ))}
       </div>
     </>

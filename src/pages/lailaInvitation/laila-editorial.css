@@ -1,0 +1,583 @@
+/* /laila — main editorial card; full 1080×1920 `11.png`, type on the right rail */
+
+.laila-editorial-page {
+  --le-paper: #e3e1de;
+  --le-paper-texture:
+    radial-gradient(circle at 12% 18%, rgba(90, 78, 72, 0.06) 0 0.5px, transparent 1px),
+    radial-gradient(circle at 88% 22%, rgba(90, 78, 72, 0.05) 0 0.45px, transparent 0.95px),
+    radial-gradient(circle at 40% 62%, rgba(90, 78, 72, 0.04) 0 0.4px, transparent 0.85px);
+  --le-ink: #5c101c;
+  --le-ink-deep: #3a0c14;
+  --le-font-display: "Libre Bodoni", "Playfair Display", Georgia, serif;
+  --le-card-w: min(100vw, calc(100dvh * 1080 / 1920));
+  --le-type-rail: clamp(11.25rem, 46%, 15.5rem);
+}
+
+.laila-editorial-page.laila-page--cover,
+.laila-editorial-page.laila-page--details {
+  background-color: var(--le-paper);
+  background-image: var(--le-paper-texture);
+  color: var(--le-ink-deep);
+}
+
+/* ——— Cover: show whole PNG (like asset preview), copy on the right ——— */
+.le-cover {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  max-width: var(--le-card-w);
+  margin: 0 auto;
+  overflow: hidden;
+  padding: 0;
+}
+
+.le-cover__floral {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 100dvh;
+  object-fit: contain;
+  object-position: left center;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+.le-cover__writing {
+  position: relative;
+  z-index: 2;
+  margin-left: auto;
+  width: var(--le-type-rail);
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: clamp(1.35rem, 5.5vh, 2.25rem) clamp(0.75rem, 3.5vw, 1.15rem) clamp(1.35rem, 5.5vh, 2.25rem)
+    clamp(0.35rem, 2vw, 0.65rem);
+}
+
+.le-cover__kicker {
+  margin: 0 0 0.45rem;
+  font-family: var(--le-font-display);
+  font-size: clamp(0.58rem, 2.6vw, 0.72rem);
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--le-ink);
+  opacity: 0;
+}
+
+.le-cover__rule {
+  width: min(4.25rem, 52%);
+  height: 1px;
+  margin: 0 auto 0.85rem;
+  background: linear-gradient(90deg, transparent, var(--le-ink), transparent);
+  opacity: 0;
+}
+
+.le-cover__names {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1em;
+  font-family: var(--le-font-display);
+  font-weight: 400;
+  line-height: 0.9;
+  color: var(--le-ink-deep);
+  max-width: 100%;
+}
+
+.le-cover__name {
+  display: block;
+  max-width: 100%;
+  font-size: clamp(2.05rem, 9.8vw, 3.95rem);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  opacity: 0;
+}
+
+.le-cover__amp {
+  font-size: clamp(1.45rem, 6.8vw, 2.45rem);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 0.8;
+  margin: 0.06em 0 0.04em;
+  color: var(--le-ink);
+  opacity: 0;
+}
+
+.le-cover__date {
+  margin: 1.05rem 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  opacity: 0;
+}
+
+.le-cover__day {
+  font-family: var(--le-font-display);
+  font-size: clamp(0.62rem, 2.8vw, 0.78rem);
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--le-ink);
+}
+
+.le-cover__when {
+  font-family: var(--le-font-display);
+  font-size: clamp(0.95rem, 4.2vw, 1.15rem);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  color: var(--le-ink-deep);
+}
+
+.le-cover__open {
+  margin-top: 1.35rem;
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--le-ink);
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  opacity: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.le-cover__open-icon {
+  width: 1.85rem;
+  height: 1.85rem;
+}
+
+.le-cover__open-icon circle,
+.le-cover__open-icon path {
+  stroke: currentColor;
+  stroke-width: 0.85;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+
+.le-cover__open:focus-visible {
+  outline: 2px solid var(--le-ink);
+  outline-offset: 3px;
+  border-radius: 50%;
+}
+
+.le-cover--ready .le-cover__kicker {
+  animation: le-fade-up 0.9s var(--laila-ease) 0.35s both;
+}
+
+.le-cover--ready .le-cover__rule {
+  animation: le-fade-up 0.85s var(--laila-ease) 0.45s both;
+}
+
+.le-cover--ready .le-cover__name:nth-child(1) {
+  animation: le-fade-up 0.9s var(--laila-ease) 0.55s both;
+}
+
+.le-cover--ready .le-cover__amp {
+  animation: le-fade-up 0.8s var(--laila-ease) 0.68s both;
+}
+
+.le-cover--ready .le-cover__name:nth-child(3) {
+  animation: le-fade-up 0.9s var(--laila-ease) 0.8s both;
+}
+
+.le-cover--ready .le-cover__date {
+  animation: le-fade-up 0.85s var(--laila-ease) 0.92s both;
+}
+
+.le-cover--ready .le-cover__open {
+  animation: le-fade-up 0.8s var(--laila-ease) 1.02s both;
+}
+
+@keyframes le-fade-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* ——— Details (inside) only — cover styles above stay separate ——— */
+.laila-editorial-page.laila-page--details .le-main {
+  background: transparent;
+  background-image: none;
+}
+
+.laila-editorial-page.laila-page--details .laila-main {
+  background: transparent;
+  background-image: none;
+  padding: 0;
+}
+
+.le-main {
+  position: relative;
+  isolation: isolate;
+  min-height: 100%;
+  padding: 0 0 6.5rem;
+  overflow: hidden;
+}
+
+.le-main__floral-bg {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: var(--le-card-w);
+  height: 100dvh;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.le-main__floral {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: left center;
+  pointer-events: none;
+  user-select: none;
+}
+
+.laila-editorial-page.laila-page--details .le-main__floral {
+  opacity: 0.9;
+  filter: saturate(0.98);
+}
+
+.le-main__content {
+  position: relative;
+  z-index: 2;
+  max-width: var(--le-card-w);
+  margin: 0 auto;
+  padding: 1.65rem clamp(0.65rem, 3vw, 1rem) 1.5rem;
+}
+
+.laila-editorial-page .le-main .laila-butterflies {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(100vw, var(--le-card-w));
+  z-index: 1;
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.laila-editorial-page .le-main .laila-butterflies--top {
+  top: 0;
+}
+
+.laila-editorial-page .le-main .laila-butterflies--bottom {
+  bottom: 5.5rem;
+}
+
+.laila-editorial-page .laila-butterfly--maroon {
+  opacity: 0.92;
+}
+
+.le-main__panel {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 23.75rem);
+  margin: 0 auto;
+  padding: 2.05rem clamp(1.1rem, 4.2vw, 1.5rem) 2.35rem;
+  border-radius: 1.55rem;
+  background: linear-gradient(
+    152deg,
+    rgba(255, 255, 255, 0.68) 0%,
+    rgba(225, 223, 220, 0.52) 42%,
+    rgba(205, 203, 200, 0.45) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.78);
+  box-shadow:
+    0 26px 52px rgba(58, 12, 20, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.88),
+    inset 0 -1px 0 rgba(92, 16, 28, 0.06);
+  backdrop-filter: blur(16px) saturate(1.2);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+}
+
+.laila-editorial-page.laila-page--details .laila-stack {
+  max-width: 22rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.laila-editorial-page.laila-page--details .laila-khat,
+.laila-editorial-page.laila-page--details .laila-salam-latin,
+.laila-editorial-page.laila-page--details .laila-kicker,
+.laila-editorial-page.laila-page--details .laila-title,
+.laila-editorial-page.laila-page--details .laila-parents__name,
+.laila-editorial-page.laila-page--details .laila-parents__amp,
+.laila-editorial-page.laila-page--details .laila-prose,
+.laila-editorial-page.laila-page--details .laila-puteri__name,
+.laila-editorial-page.laila-page--details .laila-spec__v,
+.laila-editorial-page.laila-page--details .laila-footer__text,
+.laila-editorial-page.laila-page--details .laila-footer__names {
+  color: var(--le-ink-deep);
+}
+
+.laila-editorial-page.laila-page--details .laila-khat {
+  color: var(--le-ink-deep);
+}
+
+.laila-editorial-page.laila-page--details .laila-puteri__name {
+  font-family: var(--laila-font-script);
+  text-transform: none;
+  font-weight: 400;
+  font-size: clamp(1.12rem, 4.2vw, 1.38rem);
+  line-height: 1.14;
+  letter-spacing: 0.02em;
+  color: var(--le-ink-deep);
+}
+
+.laila-editorial-page.laila-page--details .laila-puteri {
+  gap: 0.06rem;
+}
+
+.laila-editorial-page.laila-page--details .laila-puteri__note,
+.laila-editorial-page.laila-page--details .laila-spec__k,
+.laila-editorial-page.laila-page--details .laila-salam-latin {
+  color: var(--le-ink);
+  opacity: 0.88;
+}
+
+.laila-editorial-page.laila-page--details .laila-kicker,
+.laila-editorial-page.laila-page--details .laila-title {
+  color: var(--le-ink-deep);
+  letter-spacing: 0.14em;
+}
+
+.laila-editorial-page.laila-page--details .laila-invite__rule {
+  background: linear-gradient(90deg, transparent, var(--le-ink), transparent);
+}
+
+.laila-editorial-page.laila-page--details .laila-section-flourish {
+  color: var(--le-ink);
+  opacity: 0.72;
+}
+
+.laila-editorial-page.laila-page--details .laila-chrono__num,
+.laila-editorial-page.laila-page--details .laila-chrono__unit,
+.laila-editorial-page.laila-page--details .laila-chrono__done {
+  color: var(--le-ink-deep);
+}
+
+.laila-editorial-page.laila-page--details .laila-chrono__cell {
+  border-color: rgba(92, 16, 28, 0.28);
+  background: rgba(255, 255, 255, 0.42);
+}
+
+.laila-editorial-page.laila-page--details .laila-ucapan-spot__frame {
+  border-color: rgba(92, 16, 28, 0.22);
+  background: rgba(255, 255, 255, 0.48);
+}
+
+.laila-editorial-page.laila-page--details .laila-ucapan-spot__kicker,
+.laila-editorial-page.laila-page--details .laila-ucapan-spot__text,
+.laila-editorial-page.laila-page--details .laila-ucapan-spot__from {
+  color: var(--le-ink-deep);
+}
+
+.laila-editorial-page.laila-page--details .laila-ucapan-spot__dots span.is-active {
+  background: var(--le-ink-deep);
+}
+
+/* All guest wishes — scrollable wall under the closing names */
+.laila-ucapan-wall {
+  margin: 1.35rem 0 1.1rem;
+  padding: 1.05rem 0.85rem 0.9rem;
+  border: 1px solid rgba(92, 16, 28, 0.2);
+  border-radius: 1.1rem;
+  background: rgba(255, 255, 255, 0.42);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
+  text-align: center;
+  color: var(--le-ink-deep);
+}
+
+.laila-ucapan-wall__kicker {
+  margin: 0;
+  font-family: var(--le-font-display);
+  font-size: 0.68rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--le-ink);
+}
+
+.laila-ucapan-wall__count {
+  margin: 0.3rem 0 0;
+  font-family: var(--laila-font-script);
+  font-size: 1.3rem;
+  line-height: 1.1;
+  color: var(--le-ink-deep);
+}
+
+.laila-ucapan-wall__note {
+  margin: 0.75rem 0 0.2rem;
+  font-size: 0.86rem;
+  font-style: italic;
+  line-height: 1.6;
+  opacity: 0.8;
+}
+
+.laila-ucapan-wall__scroll {
+  position: relative;
+  max-height: min(26rem, 58dvh);
+  margin-top: 0.8rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(92, 16, 28, 0.4) transparent;
+  mask-image: linear-gradient(180deg, transparent 0, #000 0.9rem, #000 calc(100% - 1.4rem), transparent 100%);
+}
+
+.laila-ucapan-wall__scroll:focus-visible {
+  outline: 2px solid var(--le-ink);
+  outline-offset: 3px;
+  border-radius: 0.6rem;
+}
+
+.laila-ucapan-wall__list {
+  margin: 0;
+  padding: 0.7rem 0.15rem 1.2rem;
+  list-style: none;
+}
+
+.laila-ucapan-wall__item {
+  padding: 0.85rem 0.35rem;
+  border-bottom: 1px solid rgba(92, 16, 28, 0.14);
+}
+
+.laila-ucapan-wall__item:last-child {
+  border-bottom: 0;
+}
+
+.laila-ucapan-wall__text {
+  margin: 0;
+  font-family: var(--laila-font-display);
+  font-size: 0.95rem;
+  font-style: italic;
+  line-height: 1.65;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+  color: var(--le-ink-deep);
+}
+
+.laila-ucapan-wall__from {
+  margin: 0.4rem 0 0;
+  font-family: var(--le-font-display);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--le-ink);
+}
+
+.laila-editorial-page.laila-page--details .laila-aturcara__lead,
+.laila-editorial-page.laila-page--details .laila-aturcara__time,
+.laila-editorial-page.laila-page--details .laila-aturcara__label {
+  color: var(--le-ink-deep);
+}
+
+.laila-editorial-page.laila-page--details .laila-aturcara__trail-path {
+  stroke: rgba(92, 16, 28, 0.55);
+}
+
+.laila-editorial-page.laila-page--details .laila-aturcara__rail {
+  background: rgba(92, 16, 28, 0.18);
+}
+
+.laila-editorial-page.laila-page--details .laila-aturcara__rail-fill {
+  background: linear-gradient(180deg, var(--le-ink), rgba(92, 16, 28, 0.35), transparent);
+  box-shadow: 0 0 12px rgba(92, 16, 28, 0.2);
+}
+
+.laila-editorial-page.laila-page--details .laila-aturcara__step:hover,
+.laila-editorial-page.laila-page--details .laila-aturcara__step:focus-visible {
+  background: rgba(92, 16, 28, 0.06);
+}
+
+.laila-editorial-page.laila-page--details .laila-aturcara__step.is-active {
+  background: rgba(92, 16, 28, 0.1);
+  box-shadow: 0 8px 18px rgba(58, 12, 20, 0.08);
+}
+
+.laila-editorial-page.laila-page--details .laila-aturcara__bf-wing {
+  fill: #dba3ad;
+  stroke: #7a1f30;
+}
+
+.laila-editorial-page.laila-page--details .reveal--visible {
+  animation-timing-function: var(--laila-ease);
+}
+
+.laila-editorial-page.laila-page--details .laila-back-cover {
+  color: var(--le-ink-deep);
+  border-color: rgba(92, 16, 28, 0.35);
+  background: rgba(255, 255, 255, 0.65);
+}
+
+@media (max-width: 640px) {
+  .laila-editorial-page {
+    --le-type-rail: clamp(10.5rem, 48%, 14.25rem);
+  }
+
+  .le-cover__name {
+    font-size: clamp(1.88rem, 8.8vw, 2.35rem);
+    line-height: 0.92;
+  }
+
+  .le-cover__amp {
+    font-size: clamp(1.2rem, 5.4vw, 1.55rem);
+  }
+
+  .le-cover__kicker {
+    letter-spacing: 0.24em;
+    font-size: clamp(0.5rem, 2.35vw, 0.62rem);
+  }
+
+  .le-main__panel {
+    width: min(100%, calc(100% - 0.25rem));
+    padding: 1.85rem clamp(0.95rem, 4vw, 1.25rem) 2.1rem;
+    border-radius: 1.35rem;
+  }
+
+  .laila-editorial-page .le-main .laila-butterflies--bottom {
+    bottom: 5.75rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .le-cover,
+  .le-main {
+    max-width: var(--le-card-w);
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .le-cover--ready .le-cover__kicker,
+  .le-cover--ready .le-cover__rule,
+  .le-cover--ready .le-cover__name,
+  .le-cover--ready .le-cover__amp,
+  .le-cover--ready .le-cover__date,
+  .le-cover--ready .le-cover__open {
+    animation: none;
+    opacity: 1;
+  }
+}

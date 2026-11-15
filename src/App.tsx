@@ -1,4 +1,4 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { InvitationMusicProvider } from "./context/InvitationMusicContext";
 import { UcapanCopyProvider } from "./context/UcapanCopyContext";
 import { LailaMusicProvider } from "./pages/lailaInvitation/LailaMusicContext";
@@ -23,6 +23,9 @@ import { EggRevealCardMarketingPage } from "./pages/EggRevealCardMarketingPage";
 import { RoyalMaroonInvitationPage } from "./pages/royalMaroonInvitation/RoyalMaroonInvitationPage";
 import { LailaInvitationPage } from "./pages/lailaInvitation/LailaInvitationPage";
 import { LailaBingkaiPage } from "./pages/lailaInvitation/LailaBingkaiPage";
+import { LailaLuxePage } from "./pages/lailaInvitation/LailaLuxePage";
+import { LailaLuxe1213Page } from "./pages/lailaInvitation/LailaLuxe1213Page";
+import { LailaEditorialPage } from "./pages/lailaInvitation/LailaEditorialPage";
 import { LailaRsvpPage } from "./pages/lailaInvitation/LailaRsvpPage";
 import { LailaGalleryPage } from "./pages/lailaInvitation/LailaGalleryPage";
 import { LailaDashboardPage } from "./pages/lailaInvitation/LailaDashboardPage";
@@ -40,6 +43,12 @@ import { WhiteGoldDashboardPage } from "./pages/whiteGoldInvitation/WhiteGoldDas
 const routerBasename =
   import.meta.env.BASE_URL === "/" ? undefined : import.meta.env.BASE_URL.replace(/\/$/, "");
 
+/** Legacy `/laila/editorial` bookmarks → main `/laila`. */
+function LailaEditorialRedirect() {
+  const { search, hash } = useLocation();
+  return <Navigate to={{ pathname: "/laila", search, hash }} replace />;
+}
+
 export default function App() {
   return (
     <>
@@ -52,8 +61,12 @@ export default function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/invite" element={<InvitePage />} />
             <Route path="/jemputan-maroon-diraja" element={<RoyalMaroonInvitationPage />} />
-            <Route path="/laila" element={<LailaInvitationPage />} />
+            <Route path="/laila" element={<LailaEditorialPage />} />
+            <Route path="/laila/tradisional" element={<LailaInvitationPage />} />
             <Route path="/laila/bingkai" element={<LailaBingkaiPage />} />
+            <Route path="/laila/luxe" element={<LailaLuxePage />} />
+            <Route path="/laila/luxe-12-13" element={<LailaLuxe1213Page />} />
+            <Route path="/laila/editorial" element={<LailaEditorialRedirect />} />
             <Route path="/laila/rsvp" element={<LailaRsvpPage />} />
             <Route path="/laila/galeri" element={<LailaGalleryPage />} />
             <Route path="/laila/dashboard" element={<LailaDashboardPage />} />
