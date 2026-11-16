@@ -73,11 +73,11 @@ Creates `deploy/wedding-card-cpanel.zip` from `dist/`. Upload and extract in Fil
 ---
 
 ## After deploy — checklist
-1. **Hidden files** — ensure `.htaccess` uploaded (critical for `/farhan-atheela`, `/laila`, etc.).
+1. **Hidden files** — ensure `.htaccess` uploaded (critical for `/farhan-atheela`, `/suhailah-hazziq`, etc.).
 2. **HTTPS** — prefer forcing HTTPS in cPanel (Domains / SSL).
 3. **RSVP** — if forms should write to Google Sheets, rebuild with real `VITE_*_GOOGLE_SCRIPT_URL` values (env is baked at build time).
 4. **Clear cache** — hard refresh or Cloudflare purge if you use a CDN.
-5. **Smoke test** — home, `/farhan-atheela`, `/naim-nadhirah-nikah`, `/laila`, one RSVP submit (or preview).
+5. **Smoke test** — home, `/farhan-atheela`, `/naim-nadhirah-nikah`, `/suhailah-hazziq`, one RSVP submit (or preview).
 
 ---
 

@@ -10,7 +10,7 @@ import {
 import { useLocation } from "react-router-dom";
 import { readPortfolioPreviewSearch } from "../../lib/portfolioPreview";
 import { publicUrl } from "../../lib/publicAsset";
-import { LAILA_DASHBOARD_PATH } from "./lailaInviteData";
+import { LAILA_DASHBOARD_PATH, LAILA_PATH } from "./lailaInviteData";
 import "./laila-invitation.css";
 
 const LAILA_MUSIC_URL = encodeURI(publicUrl("lela kb/laila-song.mp3"));
@@ -18,7 +18,7 @@ const LAILA_MUSIC_VOLUME = 0.48;
 
 function isLailaPublicPath(pathname: string): boolean {
   if (pathname === LAILA_DASHBOARD_PATH) return false;
-  return pathname === "/laila" || pathname.startsWith("/laila/");
+  return pathname === LAILA_PATH || pathname.startsWith(`${LAILA_PATH}/`);
 }
 
 type LailaMusicContextValue = {

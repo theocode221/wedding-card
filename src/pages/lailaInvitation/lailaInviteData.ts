@@ -21,15 +21,17 @@ export const LAILA_BUNGA_HEADER = encodeURI(publicUrl("lela kb/bunga-garland-sli
 export const LAILA_BUNGA_SIDE = encodeURI(publicUrl("lela kb/bunga-spray-trimmed.png"));
 
 /** Client-approved main card — grey editorial + `11.png`. */
-export const LAILA_PATH = "/laila";
+export const LAILA_PATH = "/suhailah-hazziq";
+/** Old base URL; every `/laila/...` link redirects to the same page under {@link LAILA_PATH}. */
+export const LAILA_LEGACY_PATH = "/laila";
 /** Previous oval maroon cover — portfolio / comparison only. */
-export const LAILA_TRADISIONAL_PATH = "/laila/tradisional";
-/** @deprecated Same as {@link LAILA_PATH}; use redirect `/laila/editorial` → `/laila`. */
+export const LAILA_TRADISIONAL_PATH = `${LAILA_PATH}/tradisional`;
+/** @deprecated Same as {@link LAILA_PATH}; `/laila/editorial` redirects to the main card. */
 export const LAILA_EDITORIAL_PATH = LAILA_PATH;
 /** Side-frame floral design — alternate to the oval cover. */
-export const LAILA_BINGKAI_PATH = "/laila/bingkai";
+export const LAILA_BINGKAI_PATH = `${LAILA_PATH}/bingkai`;
 /** White paper + top/bottom florals (Scarlet Luxe–inspired trial for client). */
-export const LAILA_LUXE_PATH = "/laila/luxe";
+export const LAILA_LUXE_PATH = `${LAILA_PATH}/luxe`;
 const LAILA_EDITORIAL_SIDE_VERSION = 4;
 export const LAILA_EDITORIAL_SIDE = `${encodeURI(publicUrl("lela kb/11.png"))}?v=${LAILA_EDITORIAL_SIDE_VERSION}`;
 /** Full-frame KB assets (9 = top corner, 8 = bottom corner, 10 = butterfly) — use whole PNG, no crop. */
@@ -41,8 +43,8 @@ export const LAILA_LUXE_COVER_FLORALS = [
   LAILA_LUXE_CORNER_BOTTOM,
   LAILA_LUXE_BUTTERFLY,
 ] as const;
-/** Same layout as /laila/luxe — corner assets 12.png & 13.png only. */
-export const LAILA_LUXE_1213_PATH = "/laila/luxe-12-13";
+/** Same layout as the luxe card — corner assets 12.png & 13.png only. */
+export const LAILA_LUXE_1213_PATH = `${LAILA_PATH}/luxe-12-13`;
 /** 9→13 (top-left slot), 8→12 (bottom-right slot). */
 export const LAILA_LUXE_1213_CORNER_TOP = encodeURI(publicUrl("lela kb/13.png"));
 export const LAILA_LUXE_1213_CORNER_BOTTOM = encodeURI(publicUrl("lela kb/12.png"));
@@ -52,10 +54,10 @@ export const LAILA_LUXE_1213_COVER_FLORALS = [
   LAILA_LUXE_1213_CORNER_BOTTOM,
   LAILA_LUXE_BUTTERFLY,
 ] as const;
-export const LAILA_RSVP_PATH = "/laila/rsvp";
-export const LAILA_GALLERY_PATH = "/laila/galeri";
+export const LAILA_RSVP_PATH = `${LAILA_PATH}/rsvp`;
+export const LAILA_GALLERY_PATH = `${LAILA_PATH}/galeri`;
 /** Client-only dashboard — not linked from the public invitation. */
-export const LAILA_DASHBOARD_PATH = "/laila/dashboard";
+export const LAILA_DASHBOARD_PATH = `${LAILA_PATH}/dashboard`;
 /** Details screen after “Buka Jemputan” — treated as a separate page, not a scroll. */
 export const LAILA_DETAILS_HASH = "jemputan";
 export const LAILA_DETAILS_TO = { pathname: LAILA_PATH, hash: LAILA_DETAILS_HASH } as const;
@@ -70,7 +72,7 @@ export function withLailaKadSearch(search: string, kad: LailaKadVariant): string
   return query ? `?${query}` : "";
 }
 
-/** Main `/laila` (editorial) — keep portfolio params, drop `kad`. */
+/** Main card (editorial) — keep portfolio params, drop `kad`. */
 export function withLailaMainSearch(search: string): string {
   const params = new URLSearchParams(search.startsWith("?") ? search.slice(1) : search);
   params.delete("kad");

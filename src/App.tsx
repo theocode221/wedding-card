@@ -29,6 +29,17 @@ import { LailaEditorialPage } from "./pages/lailaInvitation/LailaEditorialPage";
 import { LailaRsvpPage } from "./pages/lailaInvitation/LailaRsvpPage";
 import { LailaGalleryPage } from "./pages/lailaInvitation/LailaGalleryPage";
 import { LailaDashboardPage } from "./pages/lailaInvitation/LailaDashboardPage";
+import {
+  LAILA_BINGKAI_PATH,
+  LAILA_DASHBOARD_PATH,
+  LAILA_GALLERY_PATH,
+  LAILA_LEGACY_PATH,
+  LAILA_LUXE_1213_PATH,
+  LAILA_LUXE_PATH,
+  LAILA_PATH,
+  LAILA_RSVP_PATH,
+  LAILA_TRADISIONAL_PATH,
+} from "./pages/lailaInvitation/lailaInviteData";
 import { PortfolioPage } from "./pages/portfolio/PortfolioPage";
 import { PortfolioAdminPage } from "./pages/portfolio/PortfolioAdminPage";
 import { DoodleInvitationPage } from "./pages/doodleInvitation/DoodleInvitationPage";
@@ -43,10 +54,13 @@ import { WhiteGoldDashboardPage } from "./pages/whiteGoldInvitation/WhiteGoldDas
 const routerBasename =
   import.meta.env.BASE_URL === "/" ? undefined : import.meta.env.BASE_URL.replace(/\/$/, "");
 
-/** Legacy `/laila/editorial` bookmarks → main `/laila`. */
-function LailaEditorialRedirect() {
-  const { search, hash } = useLocation();
-  return <Navigate to={{ pathname: "/laila", search, hash }} replace />;
+/** Old `/laila/...` links → same page under `/suhailah-hazziq`, keeping query and hash. */
+function LailaLegacyRedirect() {
+  const { pathname, search, hash } = useLocation();
+  let rest = pathname.slice(LAILA_LEGACY_PATH.length).replace(/\/$/, "");
+  if (rest === "/editorial") rest = "";
+  if (rest === "/papan") rest = "/dashboard";
+  return <Navigate to={{ pathname: `${LAILA_PATH}${rest}`, search, hash }} replace />;
 }
 
 export default function App() {
@@ -61,16 +75,17 @@ export default function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/invite" element={<InvitePage />} />
             <Route path="/jemputan-maroon-diraja" element={<RoyalMaroonInvitationPage />} />
-            <Route path="/laila" element={<LailaEditorialPage />} />
-            <Route path="/laila/tradisional" element={<LailaInvitationPage />} />
-            <Route path="/laila/bingkai" element={<LailaBingkaiPage />} />
-            <Route path="/laila/luxe" element={<LailaLuxePage />} />
-            <Route path="/laila/luxe-12-13" element={<LailaLuxe1213Page />} />
-            <Route path="/laila/editorial" element={<LailaEditorialRedirect />} />
-            <Route path="/laila/rsvp" element={<LailaRsvpPage />} />
-            <Route path="/laila/galeri" element={<LailaGalleryPage />} />
-            <Route path="/laila/dashboard" element={<LailaDashboardPage />} />
-            <Route path="/laila/papan" element={<Navigate to="/laila/dashboard" replace />} />
+            <Route path={LAILA_PATH} element={<LailaEditorialPage />} />
+            <Route path={LAILA_TRADISIONAL_PATH} element={<LailaInvitationPage />} />
+            <Route path={LAILA_BINGKAI_PATH} element={<LailaBingkaiPage />} />
+            <Route path={LAILA_LUXE_PATH} element={<LailaLuxePage />} />
+            <Route path={LAILA_LUXE_1213_PATH} element={<LailaLuxe1213Page />} />
+            <Route path={LAILA_RSVP_PATH} element={<LailaRsvpPage />} />
+            <Route path={LAILA_GALLERY_PATH} element={<LailaGalleryPage />} />
+            <Route path={LAILA_DASHBOARD_PATH} element={<LailaDashboardPage />} />
+            <Route path={`${LAILA_PATH}/papan`} element={<Navigate to={LAILA_DASHBOARD_PATH} replace />} />
+            <Route path={LAILA_LEGACY_PATH} element={<LailaLegacyRedirect />} />
+            <Route path={`${LAILA_LEGACY_PATH}/*`} element={<LailaLegacyRedirect />} />
             <Route path="/doodle" element={<DoodleInvitationPage />} />
             <Route path="/doodle-pastel" element={<DoodleInvitationPage variant="pastel" />} />
             <Route path="/travellers" element={<TravellersInvitationPage />} />

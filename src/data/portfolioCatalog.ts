@@ -28,7 +28,7 @@ export const PORTFOLIO_ITEMS: readonly PortfolioItem[] = [
     id: "laila",
     title: "Laila — Editorial Grey",
     description: "Kertas kelabu, florals 11.png, serif Bodoni, dock kaca — RSVP, galeri & ucapan.",
-    path: "/laila",
+    path: "/suhailah-hazziq",
     category: "jemputan",
     previewImage: publicUrl("demo/laila.png"),
     posterHasCopy: true,
