@@ -8,6 +8,7 @@ import { LailaButterflies } from "./LailaButterflies";
 import { LailaGalleryAtmosphere } from "./LailaGalleryAtmosphere";
 import {
   LAILA_GALLERY_IMAGE_URLS,
+  LAILA_HASHTAG,
   lailaCoupleLabel,
   lailaDetailsDestination,
   lailaInviteForPreview,
@@ -246,7 +247,7 @@ export function LailaGalleryPage() {
           <p className="laila-gallery__close-text">
             Terima kasih kerana menjadi sebahagian daripada kisah kami.
           </p>
-          <p className="laila-gallery__names">{names}</p>
+          <p className="laila-gallery__names">{isPreview ? names : LAILA_HASHTAG}</p>
           <Link to={detailsTo} className="laila-satellite__back laila-gallery__back-bottom">
             ← Kembali
           </Link>
