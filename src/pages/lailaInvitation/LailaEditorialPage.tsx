@@ -8,6 +8,7 @@ import {
   LAILA_DETAILS_HASH,
   LAILA_EDITORIAL_SIDE,
   LAILA_GALLERY_PATH,
+  LAILA_HASHTAG,
   LAILA_PATH,
   LAILA_RSVP_PATH,
   withLailaMainSearch,
@@ -345,7 +346,7 @@ export function LailaEditorialPage() {
 
           <ScrollReveal as="footer" variant="from-top" className="laila-footer">
             <p className="laila-footer__text">{invite.footer}</p>
-            <p className="laila-footer__names">{names}</p>
+            <p className="laila-footer__names">{isPreview ? names : LAILA_HASHTAG}</p>
           </ScrollReveal>
 
           <ScrollReveal as="div" variant="from-top">
