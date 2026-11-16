@@ -22,8 +22,8 @@ import { LailaAturcara } from "./LailaAturcara";
 import { LailaButterflies } from "./LailaButterflies";
 import { AppleBrandIcon, GoogleBrandIcon } from "../../components/wedding-invitation-frame/CalendarBrandIcons";
 import { LailaSalamKhat, LailaSectionFlourish } from "./LailaPageDecor";
-import { LailaUcapanSpotlight } from "./LailaUcapanSpotlight";
 import { LailaUcapanWall } from "./LailaUcapanWall";
+import { LailaPetalRain } from "./LailaGalleryAtmosphere";
 import { StudioCredit } from "../../components/studio/StudioCredit";
 import { PortfolioBackToCatalog } from "../../components/portfolio/PortfolioBackToCatalog";
 import { usePortfolioPreviewMode } from "../../hooks/usePortfolioPreviewMode";
@@ -272,6 +272,7 @@ export function LailaEditorialPage() {
           />
         </div>
         <LailaButterflies density="sparse" accent="maroon" />
+        <LailaPetalRain className="le-main__petals" />
         <div className="le-main__content">
         <div className="le-main__panel">
         <div className="laila-stack">
@@ -341,10 +342,6 @@ export function LailaEditorialPage() {
               )}
             </ScrollReveal>
           ) : null}
-
-          <ScrollReveal as="div" variant="from-top">
-            <LailaUcapanSpotlight />
-          </ScrollReveal>
 
           <ScrollReveal as="footer" variant="from-top" className="laila-footer">
             <p className="laila-footer__text">{invite.footer}</p>

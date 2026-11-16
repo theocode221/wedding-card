@@ -28,9 +28,6 @@ export function LailaUcapanWall() {
   return (
     <section className="laila-ucapan-wall" aria-label="Semua ucapan tetamu">
       <p className="laila-ucapan-wall__kicker">Ucapan &amp; doa tetamu</p>
-      {state.status === "ready" && items.length > 0 ? (
-        <p className="laila-ucapan-wall__count">{items.length} ucapan</p>
-      ) : null}
 
       {state.status === "loading" ? (
         <p className="laila-ucapan-wall__note">Memuatkan ucapan…</p>

@@ -215,9 +215,7 @@ export function LailaGalleryPage() {
         </Link>
 
         <header className="laila-gallery__head">
-          <p className="laila-kicker">Kenangan</p>
-          <h1 className="laila-title">Galeri hati</h1>
-          <p className="laila-gallery__names">{names}</p>
+          <h1 className="laila-gallery__names">{names}</h1>
         </header>
 
         {images.length === 0 ? (

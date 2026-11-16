@@ -84,9 +84,9 @@ export function LailaRsvpPage() {
   };
 
   return (
-    <div className="laila-page laila-satellite" lang="ms">
+    <div className="laila-page laila-satellite laila-rsvp-page" lang="ms">
       <PortfolioBackToCatalog />
-      <LailaPageDecor />
+      <LailaPageDecor tone="silver" />
       <div className="laila-satellite__card">
         {status === "success" ? (
           <div role="status">

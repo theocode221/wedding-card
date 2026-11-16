@@ -289,6 +289,18 @@
   opacity: 0.92;
 }
 
+.le-main__petals {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: var(--le-card-w);
+  height: 100dvh;
+  z-index: 3;
+  pointer-events: none;
+  overflow: hidden;
+}
+
 .le-main__panel {
   position: relative;
   z-index: 1;
@@ -416,14 +428,6 @@
   letter-spacing: 0.26em;
   text-transform: uppercase;
   color: var(--le-ink);
-}
-
-.laila-ucapan-wall__count {
-  margin: 0.3rem 0 0;
-  font-family: var(--laila-font-script);
-  font-size: 1.3rem;
-  line-height: 1.1;
-  color: var(--le-ink-deep);
 }
 
 .laila-ucapan-wall__note {
@@ -558,6 +562,117 @@
 
   .laila-editorial-page .le-main .laila-butterflies--bottom {
     bottom: 5.75rem;
+  }
+}
+
+/*
+ * Portrait tablet: card fills the screen. 11.png keeps full height on the left
+ * (never cropped) and the paper runs to the right edge, giving the names more room.
+ */
+@media (min-width: 600px) and (min-aspect-ratio: 9 / 16) and (max-aspect-ratio: 1 / 1) {
+  .laila-editorial-page {
+    --le-card-w: 100vw;
+    --le-type-rail: clamp(15rem, 42%, 22rem);
+  }
+
+  .le-cover__kicker {
+    font-size: clamp(0.62rem, 1.6vw, 0.8rem);
+  }
+
+  .le-cover__name {
+    font-size: clamp(2.6rem, 6.6vw, 3.6rem);
+  }
+
+  .le-cover__amp {
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+  }
+
+  .le-cover__day {
+    font-size: clamp(0.66rem, 1.7vw, 0.84rem);
+  }
+
+  .le-cover__when {
+    font-size: clamp(1.05rem, 2.6vw, 1.3rem);
+  }
+
+  .le-cover__writing {
+    padding-right: clamp(1.25rem, 4vw, 2.5rem);
+  }
+
+  .le-main__panel {
+    width: min(100%, 28rem);
+  }
+}
+
+/*
+ * Laptop / landscape: the 9:16 card sits on a darker silver backdrop
+ * so its edges (and the cut side of 11.png) read as a real card.
+ * Portrait phones never match this, so the phone view is unchanged.
+ */
+@media (min-width: 600px) and (min-aspect-ratio: 1 / 1) {
+  .laila-editorial-page.laila-page--cover,
+  .laila-editorial-page.laila-page--details {
+    position: relative;
+    isolation: isolate;
+    background-color: #cdcac6;
+    background-image:
+      radial-gradient(ellipse 70% 60% at 50% 42%, rgba(255, 255, 255, 0.32) 0%, transparent 70%),
+      var(--le-paper-texture);
+    background-attachment: fixed;
+  }
+
+  .laila-editorial-page.laila-page--cover::before,
+  .laila-editorial-page.laila-page--details::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    z-index: 0;
+    width: var(--le-card-w);
+    transform: translateX(-50%);
+    background-color: var(--le-paper);
+    background-image: var(--le-paper-texture);
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.55),
+      0 0 0 2px rgba(92, 16, 28, 0.08),
+      0 28px 70px rgba(58, 12, 20, 0.2),
+      0 6px 18px rgba(58, 12, 20, 0.08);
+    pointer-events: none;
+  }
+
+  .le-cover {
+    z-index: 1;
+  }
+
+  /* Size cover type to the card (not the viewport), matching phone proportions */
+  .le-cover__kicker {
+    font-size: clamp(0.5rem, calc(var(--le-card-w) * 0.0235), 0.72rem);
+  }
+
+  .le-cover__name {
+    font-size: clamp(1.88rem, calc(var(--le-card-w) * 0.088), 3.1rem);
+  }
+
+  .le-cover__amp {
+    font-size: clamp(1.2rem, calc(var(--le-card-w) * 0.054), 1.95rem);
+  }
+
+  .le-cover__day {
+    font-size: clamp(0.62rem, calc(var(--le-card-w) * 0.028), 0.78rem);
+  }
+
+  .le-cover__when {
+    font-size: clamp(0.95rem, calc(var(--le-card-w) * 0.042), 1.15rem);
+  }
+
+  .le-main__panel {
+    width: min(100%, 26rem);
+  }
+
+  .le-cover__writing {
+    padding-right: clamp(0.75rem, calc(var(--le-card-w) * 0.035), 1.15rem);
+    padding-left: clamp(0.35rem, calc(var(--le-card-w) * 0.02), 0.65rem);
   }
 }
 

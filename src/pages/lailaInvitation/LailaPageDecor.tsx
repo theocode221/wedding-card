@@ -85,9 +85,9 @@ function CornerGoldFiligree({ className }: { className: string }) {
  * Clean ivory reading surface with soft gold light effects, gold filigree corners,
  * and subtle twinkling gold dust along the outer margins.
  */
-export function LailaPageDecor() {
+export function LailaPageDecor({ tone = "gold" }: { tone?: "gold" | "silver" }) {
   return (
-    <div className="laila-page-decor" aria-hidden>
+    <div className={`laila-page-decor${tone === "silver" ? " laila-page-decor--silver" : ""}`} aria-hidden>
       <div className="laila-page-decor__frame">
         <div className="laila-page-decor__shimmer" />
         <CornerGoldFiligree className="laila-page-decor__corner laila-page-decor__corner--tl" />
@@ -95,7 +95,7 @@ export function LailaPageDecor() {
         <CornerGoldFiligree className="laila-page-decor__corner laila-page-decor__corner--bl" />
         <CornerGoldFiligree className="laila-page-decor__corner laila-page-decor__corner--br" />
       </div>
-      <LailaButterflies density="sparse" />
+      <LailaButterflies density="sparse" accent={tone === "silver" ? "maroon" : "mixed"} />
     </div>
   );
 }
