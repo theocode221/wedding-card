@@ -1,21 +1,33 @@
-/**
- * Laila / Hazziq RSVP — paste into Extensions → Apps Script, then:
- * Deploy → Manage deployments → Edit → New version → Deploy
+﻿/**
+ * Laila / Hazziq RSVP ONLY — bind to the live RSVP spreadsheet (do not add wishes here).
+ * Wishlist uses a separate sheet — see lailaWishesOnlyAppsScript.gs
  *
- * Row 1: Tarikh & Masa | Nama | Kehadiran | Bilangan Tetamu | Ucapan | Tema
- * G / H / I are unused.
+ * Deploy â†’ Manage deployments â†’ Edit â†’ New version â†’ Deploy
  *
- * GET  ?action=list&callback=fn  → JSONP list for the client dashboard
- * POST JSON { name, attending, guests, message, theme } → append row
+ * Tab "rsvp" (or "Sheet1"): Tarikh & Masa | Nama | Kehadiran | Bilangan Tetamu | Ucapan | Tema
+ *
+ * GET  ?action=list&callback=fn  â†’ RSVP rows (dashboard)
+ * POST JSON { name, attending, guests, message, theme } â†’ RSVP row
  */
 
-var SHEET_NAME = "Sheet1";
+function sheetByNames_(names) {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  for (var i = 0; i < names.length; i++) {
+    var s = ss.getSheetByName(names[i]);
+    if (s) return s;
+  }
+  return null;
+}
+
+function getRsvpSheet_() {
+  return sheetByNames_(["rsvp", "Sheet1"]);
+}
 
 function doPost(e) {
   try {
     var data = parseBody_(e);
-    var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME);
-    if (!sheet) throw new Error("Missing tab: " + SHEET_NAME);
+    var sheet = getRsvpSheet_();
+    if (!sheet) throw new Error('Missing RSVP tab (name it "rsvp" or "Sheet1").');
 
     ensureHeaders_(sheet);
 
@@ -56,8 +68,8 @@ function parseBody_(e) {
 }
 
 function listRows_() {
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME);
-  if (!sheet) throw new Error("Missing tab: " + SHEET_NAME);
+  var sheet = getRsvpSheet_();
+  if (!sheet) throw new Error('Missing RSVP tab (name it "rsvp" or "Sheet1").');
   var lastRow = sheet.getLastRow();
   var lastCol = Math.max(sheet.getLastColumn(), 6);
   if (lastRow < 2) return [];
@@ -135,6 +147,12 @@ function ensureHeaders_(sheet) {
   sheet.getRange(1, 1, 1, 6).setFontWeight("bold");
 }
 
+function json_(obj) {
+  return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(
+    ContentService.MimeType.JSON,
+  );
+}
+
 function jsonp_(e, obj) {
   var text = JSON.stringify(obj);
   var cb = e && e.parameter && e.parameter.callback;
@@ -144,10 +162,4 @@ function jsonp_(e, obj) {
     );
   }
   return json_(obj);
-}
-
-function json_(obj) {
-  return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(
-    ContentService.MimeType.JSON,
-  );
 }

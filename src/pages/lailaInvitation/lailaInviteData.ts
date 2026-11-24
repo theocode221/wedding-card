@@ -56,6 +56,10 @@ export const LAILA_LUXE_1213_COVER_FLORALS = [
 ] as const;
 export const LAILA_RSVP_PATH = `${LAILA_PATH}/rsvp`;
 export const LAILA_GALLERY_PATH = `${LAILA_PATH}/galeri`;
+/** Gift wishlist — UI prototype; not linked from the card until client approves. */
+export const LAILA_WISHES_PATH = `${LAILA_PATH}/wishes`;
+/** Couple-only; share this URL privately (no password). */
+export const LAILA_WISHES_ADMIN_PATH = `${LAILA_PATH}/wishes-admin`;
 /** Client-only dashboard — not linked from the public invitation. */
 export const LAILA_DASHBOARD_PATH = `${LAILA_PATH}/dashboard`;
 
@@ -249,6 +253,16 @@ const DEFAULT_LAILA_RSVP_SCRIPT_URL =
 export function getLailaRsvpScriptUrl(): string {
   const fromEnv = import.meta.env.VITE_LAILA_RSVP_GOOGLE_SCRIPT_URL;
   return typeof fromEnv === "string" && fromEnv.trim() ? fromEnv.trim() : DEFAULT_LAILA_RSVP_SCRIPT_URL;
+}
+
+/** Separate spreadsheet + web app — never the live RSVP sheet. Paste deploy URL after setup (lailaWishesOnlyAppsScript.gs). */
+const DEFAULT_LAILA_WISHES_SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbxOg4TXsUlPGjmsJMxA9F3P2DsUdONH6GKJK0kVt3AspnT7bbW4ieAKJLqJJrO4UTBO/exec";
+
+export function getLailaWishesScriptUrl(): string {
+  const fromEnv = import.meta.env.VITE_LAILA_WISHES_GOOGLE_SCRIPT_URL;
+  if (typeof fromEnv === "string" && fromEnv.trim()) return fromEnv.trim();
+  return DEFAULT_LAILA_WISHES_SCRIPT_URL.trim();
 }
 
 /**

@@ -3435,3 +3435,734 @@
     font-size: clamp(1.85rem, 13cqi, 2.7rem);
   }
 }
+
+/* ——— Wishes / Granted (standalone satellite, English) ——— */
+.laila-wishes-page {
+  overflow-x: clip;
+  color: var(--laila-maroon-deep);
+  background-color: #e3e1de;
+  background-image:
+    radial-gradient(circle at 12% 18%, rgba(90, 78, 72, 0.06) 0 0.5px, transparent 1px),
+    radial-gradient(circle at 88% 22%, rgba(90, 78, 72, 0.05) 0 0.45px, transparent 0.95px),
+    radial-gradient(circle at 40% 62%, rgba(90, 78, 72, 0.04) 0 0.4px, transparent 0.85px);
+}
+
+.laila-wishes-page__decor {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.laila-wishes-page__decor .laila-butterflies {
+  opacity: 0.75;
+}
+
+.laila-wishes-page__petals {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  max-width: none;
+}
+
+.laila-wishes-page__inner {
+  width: min(100%, 26.5rem);
+  text-align: left;
+}
+
+.laila-wishes-page .laila-satellite__back--top {
+  display: inline-block;
+}
+
+.laila-wishes__hero {
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.laila-wishes-page .laila-kicker {
+  color: var(--le-ink, #5c101c);
+  letter-spacing: 0.32em;
+}
+
+.laila-wishes__title {
+  margin: 0.35rem 0 0.5rem;
+  font-family: "Libre Bodoni", var(--laila-font-display);
+  font-weight: 500;
+  font-size: clamp(1.85rem, 6vw, 2.35rem);
+  line-height: 1.12;
+  color: #3a0c14;
+}
+
+.laila-wishes__couple {
+  margin: 0 0 1rem;
+  font-family: var(--laila-font-display);
+  font-size: 0.92rem;
+  letter-spacing: 0.06em;
+  color: var(--laila-maroon);
+}
+
+.laila-wishes__lead {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--laila-maroon-deep);
+  text-align: left;
+}
+
+.laila-wishes__ui-note {
+  margin: 0.85rem 0 0;
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(255, 252, 247, 0.65);
+  border: 1px solid rgba(92, 16, 28, 0.12);
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+  color: var(--laila-maroon);
+  text-align: center;
+}
+
+.laila-wishes__flourish {
+  margin: 1.15rem auto 1.35rem;
+  color: var(--laila-maroon);
+  opacity: 0.85;
+}
+
+.laila-wishes__section {
+  margin-bottom: 1.65rem;
+}
+
+.laila-wishes__section--granted {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(92, 16, 28, 0.2);
+}
+
+.laila-wishes__section-title {
+  margin: 0 0 0.65rem;
+  font-family: "Libre Bodoni", var(--laila-font-display);
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: #3a0c14;
+}
+
+.laila-wishes__section-note {
+  margin: 0 0 0.85rem;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--laila-maroon);
+  opacity: 0.9;
+}
+
+.laila-wishes__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.laila-wishes__empty {
+  text-align: center;
+  font-size: 0.95rem;
+  color: var(--laila-maroon);
+  padding: 1rem 0;
+}
+
+.laila-wishes__card {
+  padding: 1rem 1.05rem 1.05rem;
+  border-radius: 6px;
+  border: 1px solid rgba(92, 16, 28, 0.22);
+  background: rgba(255, 252, 247, 0.72);
+  box-shadow: 0 6px 16px rgba(58, 12, 20, 0.06);
+}
+
+.laila-wishes__card--granted {
+  opacity: 0.92;
+  background: rgba(255, 252, 247, 0.45);
+  border-style: dashed;
+  border-color: rgba(92, 16, 28, 0.16);
+}
+
+.laila-wishes__card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.laila-wishes__card-title {
+  margin: 0;
+  font-family: var(--laila-font-display);
+  font-size: 1.08rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--laila-maroon-deep);
+}
+
+.laila-wishes__ribbon {
+  flex-shrink: 0;
+  padding: 0.18rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: rgba(79, 107, 87, 0.14);
+  color: #4f6b57;
+}
+
+.laila-wishes__thumb {
+  display: block;
+  margin-top: 0.65rem;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid rgba(92, 16, 28, 0.14);
+  background: #fff;
+}
+
+.laila-wishes__thumb img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 11rem;
+  object-fit: contain;
+  object-position: center;
+}
+
+.laila-wishes__thumb--skeleton {
+  min-height: 8.5rem;
+  background: linear-gradient(110deg, #eceae7 28%, #f7f5f2 48%, #eceae7 68%);
+  background-size: 220% 100%;
+  animation: laila-wish-skel 1.2s ease-in-out infinite;
+}
+
+@keyframes laila-wish-skel {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
+
+.laila-wishes__card--granted .laila-wishes__thumb {
+  opacity: 0.85;
+}
+
+.laila-wishes__card-body {
+  margin-top: 0.45rem;
+}
+
+.laila-wishes__desc {
+  margin: 0 0 0.5rem;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--laila-maroon);
+}
+
+.laila-wishes__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.85rem;
+  font-size: 0.82rem;
+}
+
+.laila-wishes__price {
+  font-variant-numeric: tabular-nums;
+  color: var(--laila-maroon-deep);
+}
+
+.laila-wishes__status {
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.laila-wishes__status.is-open {
+  background: rgba(154, 123, 79, 0.15);
+  color: #7a5f3a;
+}
+
+.laila-wishes__status.is-granted {
+  background: rgba(79, 107, 87, 0.14);
+  color: #4f6b57;
+}
+
+.laila-wishes__link {
+  display: inline-block;
+  margin-top: 0.55rem;
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  color: var(--laila-maroon);
+  text-underline-offset: 0.2em;
+}
+
+.laila-wishes__grant-btn {
+  width: 100%;
+  margin-top: 0.85rem;
+}
+
+.laila-wishes__foot {
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(92, 16, 28, 0.18);
+  text-align: center;
+}
+
+.laila-wishes__foot-text {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--laila-maroon-deep);
+}
+
+.laila-wishes__hashtag {
+  margin: 0.85rem 0 0.35rem;
+  font-family: var(--laila-font-script);
+  font-size: clamp(1.5rem, 6vw, 1.85rem);
+  color: #3a0c14;
+}
+
+.laila-wishes__event {
+  margin: 0;
+  font-size: 0.82rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--laila-maroon);
+  opacity: 0.85;
+}
+
+.laila-wishes-page .laila-form__label {
+  color: var(--laila-maroon-deep);
+}
+
+.laila-wishes-page .laila-form__input,
+.laila-wishes-page .laila-form__textarea,
+.laila-wishes-page .laila-form__input select {
+  border-color: rgba(92, 16, 28, 0.28);
+  background: rgba(255, 255, 255, 0.75);
+  color: var(--laila-maroon-deep);
+}
+
+.laila-wishes-admin-page select.laila-form__input {
+  appearance: none;
+  padding-right: 2rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath fill='%235c101c' d='M1 1.5 6 6.5 11 1.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 12px 8px;
+}
+
+.laila-wishes-page .laila-form__input:focus,
+.laila-wishes-page .laila-form__textarea:focus {
+  border-color: var(--laila-maroon);
+  box-shadow: 0 0 0 2px rgba(92, 16, 28, 0.12);
+}
+
+.laila-wishes-page .laila-btn--maroon {
+  background: linear-gradient(165deg, #6e1726 0%, #5c101c 48%, #3a0c14 100%);
+}
+
+.laila-wishes-grant {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  place-items: end center;
+  padding: 1rem 1rem 1.5rem;
+  background: rgba(58, 12, 20, 0.42);
+  backdrop-filter: blur(4px);
+}
+
+.laila-wishes-grant__panel {
+  width: min(100%, 24rem);
+  padding: 1.35rem 1.25rem 1.4rem;
+  border-radius: 10px;
+  border: 1px solid rgba(92, 16, 28, 0.22);
+  background: #f7f5f2;
+  box-shadow: 0 14px 40px rgba(58, 12, 20, 0.22);
+  text-align: center;
+}
+
+.laila-wishes-grant__title {
+  margin: 0.25rem 0 1rem;
+  font-family: "Libre Bodoni", var(--laila-font-display);
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: #3a0c14;
+}
+
+.laila-wishes-grant__form {
+  text-align: left;
+}
+
+.laila-wishes-grant__actions {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 0.55rem;
+  margin-top: 0.25rem;
+}
+
+.laila-wishes-grant__cancel {
+  border: 1px solid rgba(92, 16, 28, 0.35);
+  background: rgba(255, 255, 255, 0.6);
+  color: var(--laila-maroon-deep);
+}
+
+.laila-wishes-grant__thanks .laila-wishes__lead {
+  text-align: center;
+  margin-bottom: 1.1rem;
+}
+
+@media (min-width: 480px) {
+  .laila-wishes-grant {
+    place-items: center;
+    padding: 2rem;
+  }
+}
+
+/* Wishlist admin (couple) */
+.laila-wishes-admin-page__inner {
+  width: min(100%, 26.5rem);
+}
+
+@media (min-width: 480px) {
+  .laila-wishes-admin-page__inner {
+    width: min(100%, 30rem);
+  }
+}
+
+.laila-wishes-admin__head {
+  margin-bottom: 0;
+}
+
+.laila-wishes-admin__lead {
+  text-align: center;
+  max-width: 24em;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.laila-wishes-admin__flourish {
+  margin-top: 0.85rem;
+  margin-bottom: 1.1rem;
+}
+
+.laila-wishes-admin__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  justify-content: center;
+  margin-top: 1.1rem;
+}
+
+.laila-wishes-admin__pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  appearance: none;
+  border: 1px solid rgba(92, 16, 28, 0.32);
+  background: rgba(255, 252, 247, 0.85);
+  color: var(--laila-maroon-deep);
+  font: 600 0.78rem/1.1 var(--laila-font-body);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.5rem 0.95rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease;
+}
+
+.laila-wishes-admin__pill:hover,
+.laila-wishes-admin__pill:focus-visible {
+  border-color: var(--laila-maroon);
+  background: #fff;
+}
+
+.laila-wishes-admin__pill--ghost {
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.laila-wishes-admin__form {
+  margin-top: 0.25rem;
+  padding: 1.15rem 1.05rem 1.2rem;
+  border: 1px solid rgba(92, 16, 28, 0.2);
+  border-radius: 8px;
+  background: rgba(255, 252, 247, 0.82);
+  box-shadow: 0 6px 16px rgba(58, 12, 20, 0.06);
+  text-align: left;
+}
+
+.laila-wishes-admin__form-row {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 400px) {
+  .laila-wishes-admin__form-row--split {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    align-items: end;
+  }
+
+  .laila-wishes-admin__form-row--split .laila-wishes-admin__qty {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+.laila-wishes-admin__photo-block {
+  margin: 0;
+  padding: 0.9rem 0.85rem 0.95rem;
+  border: 1px dashed rgba(92, 16, 28, 0.22);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.4);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.laila-wishes-admin__photo-block > .laila-form__label {
+  float: none;
+  width: 100%;
+  padding: 0;
+  margin: 0 0 0.15rem;
+}
+
+.laila-wishes-admin__photo-hint {
+  margin: -0.35rem 0 0;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--laila-maroon);
+  opacity: 0.92;
+}
+
+.laila-wishes-admin__sublabel {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--laila-maroon);
+  opacity: 0.88;
+}
+
+.laila-wishes-admin__file {
+  padding: 0.5em 0.65em;
+  font-size: 0.86rem;
+}
+
+.laila-wishes-admin__file::file-selector-button {
+  margin-right: 0.65rem;
+  padding: 0.4em 0.75em;
+  border: 1px solid rgba(92, 16, 28, 0.25);
+  border-radius: 999px;
+  background: rgba(255, 252, 247, 0.95);
+  color: var(--laila-maroon-deep);
+  font: 600 0.72rem/1 var(--laila-font-body);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.laila-wishes-admin__form-title {
+  margin: 0 0 1rem;
+  font-family: "Libre Bodoni", var(--laila-font-display);
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #3a0c14;
+  text-align: center;
+}
+
+.laila-wishes-admin__preview {
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid rgba(92, 16, 28, 0.14);
+  max-height: 12rem;
+}
+
+.laila-wishes-admin__preview img {
+  display: block;
+  width: 100%;
+  max-height: 12rem;
+  object-fit: contain;
+  background: #fff;
+}
+
+.laila-wishes-admin__form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  justify-content: stretch;
+  margin-top: 0.35rem;
+}
+
+.laila-wishes-admin__cancel {
+  flex: 1 1 auto;
+  min-width: 7.5rem;
+  border: 1px solid rgba(92, 16, 28, 0.22);
+  background: rgba(255, 255, 255, 0.55);
+  color: var(--laila-maroon-deep);
+}
+
+.laila-wishes-admin__submit {
+  flex: 1 1 10rem;
+}
+
+.laila-wishes-admin__ok {
+  margin: 0;
+  font-size: 0.88rem;
+  color: #4f6b57;
+}
+
+.laila-wishes-admin__list {
+  margin-top: 2rem;
+  text-align: left;
+}
+
+.laila-wishes-admin__list-title {
+  text-align: center;
+  margin-bottom: 0.85rem;
+}
+
+.laila-wishes-admin__items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.laila-wishes-admin__item {
+  display: grid;
+  grid-template-columns: 5.25rem 1fr;
+  gap: 0.85rem;
+  align-items: start;
+  padding: 0.85rem 0.8rem;
+  border: 1px solid rgba(92, 16, 28, 0.18);
+  border-radius: 8px;
+  background: rgba(255, 252, 247, 0.72);
+  box-shadow: 0 4px 12px rgba(58, 12, 20, 0.04);
+}
+
+@media (max-width: 360px) {
+  .laila-wishes-admin__item {
+    grid-template-columns: 1fr;
+  }
+
+  .laila-wishes-admin__thumb,
+  .laila-wishes-admin__thumb--empty {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    min-height: 5.5rem;
+    max-height: 9rem;
+    object-fit: cover;
+  }
+}
+
+.laila-wishes-admin__item.is-hidden {
+  opacity: 0.65;
+  border-style: dashed;
+}
+
+.laila-wishes-admin__thumb {
+  width: 5.25rem;
+  height: 5.25rem;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid rgba(92, 16, 28, 0.12);
+  background: #fff;
+}
+
+.laila-wishes-admin__thumb--empty {
+  display: grid;
+  place-items: center;
+  font-size: 0.65rem;
+  color: var(--laila-maroon);
+  text-align: center;
+  padding: 0.25rem;
+}
+
+.laila-wishes-admin__item-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.laila-wishes-admin__item-title {
+  margin: 0;
+  font-family: var(--laila-font-display);
+  font-weight: 600;
+  font-size: 0.98rem;
+  line-height: 1.3;
+  color: var(--laila-maroon-deep);
+}
+
+.laila-wishes-admin__badge {
+  flex-shrink: 0;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--laila-maroon);
+  padding: 0.2rem 0.45rem;
+  border-radius: 999px;
+  border: 1px solid rgba(92, 16, 28, 0.22);
+  background: rgba(255, 255, 255, 0.65);
+}
+
+.laila-wishes-admin__item-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.5rem;
+  margin: 0.35rem 0 0;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--laila-maroon);
+}
+
+.laila-wishes-admin__item-meta span:not(:last-child)::after {
+  content: "·";
+  margin-left: 0.5rem;
+  opacity: 0.55;
+}
+
+.laila-wishes-admin__item-actions {
+  display: flex;
+  gap: 0.65rem;
+  margin-top: 0.45rem;
+}
+
+.laila-wishes-admin__text-btn {
+  appearance: none;
+  border: 0;
+  padding: 0;
+  background: none;
+  color: var(--laila-maroon-deep);
+  font: 600 0.78rem/1 var(--laila-font-body);
+  letter-spacing: 0.04em;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  cursor: pointer;
+}
+
+.laila-wishes-admin__foot {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(92, 16, 28, 0.14);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--laila-maroon);
+  text-align: center;
+}
