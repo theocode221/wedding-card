@@ -22,6 +22,7 @@ import { normalizeWishImageUrl, wishImageFallbackUrls } from "./lailaWishImageUr
 import "./laila-invitation.css";
 
 const CATEGORIES = ["Home", "Kitchen", "Living", "Bedroom", "Flexible", "General"];
+const QTY_OPTIONS = Array.from({ length: 20 }, (_, i) => i + 1);
 
 const emptyForm = {
   title: "",
@@ -254,14 +255,17 @@ export function LailaWishesAdminPage() {
 
             <label className="laila-form__field">
               <span className="laila-form__label">Quantity</span>
-              <input
-                className="laila-form__input laila-form__input--narrow laila-wishes-admin__qty"
-                type="number"
-                min={1}
-                max={20}
+              <select
+                className="laila-form__input laila-wishes-admin__qty"
                 value={form.qty}
-                onChange={(e) => setForm((f) => ({ ...f, qty: Math.max(1, Number(e.target.value) || 1) }))}
-              />
+                onChange={(e) => setForm((f) => ({ ...f, qty: Number(e.target.value) }))}
+              >
+                {QTY_OPTIONS.map((n) => (
+                  <option key={n} value={n}>
+                    {n}
+                  </option>
+                ))}
+              </select>
             </label>
           </div>
 
