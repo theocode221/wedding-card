@@ -4,12 +4,7 @@ import { withPortfolioSearch } from "../../lib/portfolioPreview";
 import { LailaButterflies } from "./LailaButterflies";
 import { LailaPetalRain } from "./LailaGalleryAtmosphere";
 import { LailaSectionFlourish } from "./LailaPageDecor";
-import {
-  LAILA_WISHES_PATH,
-  lailaCoupleLabel,
-  lailaDetailsDestination,
-  lailaInviteForPreview,
-} from "./lailaInviteData";
+import { LAILA_WISHLIST_PATH, lailaCoupleLabel, lailaDetailsDestination, lailaInviteForPreview } from "./lailaInviteData";
 import {
   fetchLailaWishesAdmin,
   readImageFileAsBase64,
@@ -34,10 +29,15 @@ const emptyForm = {
   qty: 1,
 };
 
-export function LailaWishesAdminPage() {
+type LailaWishesAdminPageProps = {
+  /** Rendered inside the couple dashboard (no full-page chrome). */
+  embedded?: boolean;
+};
+
+export function LailaWishesAdminPage({ embedded = false }: LailaWishesAdminPageProps) {
   const location = useLocation();
   const names = lailaCoupleLabel(lailaInviteForPreview(false));
-  const publicWishesTo = withPortfolioSearch(LAILA_WISHES_PATH, location.search);
+  const publicWishesTo = withPortfolioSearch(LAILA_WISHLIST_PATH, location.search);
   const detailsTo = withPortfolioSearch(lailaDetailsDestination(location.search), location.search);
 
   const [rows, setRows] = useState<LailaWishAdminRow[]>([]);
@@ -64,16 +64,17 @@ export function LailaWishesAdminPage() {
   }, []);
 
   useLayoutEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+    if (!embedded) window.scrollTo(0, 0);
+  }, [embedded]);
 
   useEffect(() => {
+    if (embedded) return;
     const prev = document.title;
     document.title = `Wishlist admin — ${names}`;
     return () => {
       document.title = prev;
     };
-  }, [names]);
+  }, [embedded, names]);
 
   useEffect(() => {
     void load();
@@ -190,37 +191,48 @@ export function LailaWishesAdminPage() {
     return () => URL.revokeObjectURL(previewSrc);
   }, [imageFile, previewSrc]);
 
-  return (
-    <div className="laila-page laila-satellite laila-wishes-page laila-wishes-admin-page" lang="en">
-      <div className="laila-wishes-page__decor" aria-hidden>
-        <LailaButterflies density="sparse" accent="maroon" />
-        <LailaPetalRain className="laila-wishes-page__petals" />
-      </div>
-
-      <div className="laila-satellite__inner laila-wishes-page__inner laila-wishes-admin-page__inner">
-        <Link to={detailsTo} className="laila-satellite__back laila-satellite__back--top">
-          ← Back to invitation
-        </Link>
-
-        <header className="laila-wishes__hero laila-wishes-admin__head">
-          <p className="laila-kicker">Private</p>
-          <h1 className="laila-wishes__title">Wishlist admin</h1>
-          <p className="laila-wishes__couple">{names}</p>
-          <p className="laila-wishes__lead laila-wishes-admin__lead">
-            Add gifts for guests to grant. Upload one product photo per wish — guests will see it on the public wish
-            page.
-          </p>
-          <div className="laila-wishes-admin__toolbar">
-            <Link to={publicWishesTo} className="laila-wishes-admin__pill">
-              View public page
+  const adminBody = (
+    <>
+        {embedded ? (
+          <header className="laila-wishes-admin-embed__head">
+            <h2 className="laila-wishes-admin-embed__title">Gift wishlist</h2>
+            <p className="laila-wishes-admin-embed__lead">
+              Add gifts for guests to grant. Upload one product photo per wish.
+            </p>
+            <div className="laila-wishes-admin__toolbar">
+              <Link to={publicWishesTo} className="laila-wishes-admin__pill">
+                View public page
+              </Link>
+              <button type="button" className="laila-wishes-admin__pill laila-wishes-admin__pill--ghost" onClick={() => void load()}>
+                Refresh list
+              </button>
+            </div>
+          </header>
+        ) : (
+          <>
+            <Link to={detailsTo} className="laila-satellite__back laila-satellite__back--top">
+              ← Back to invitation
             </Link>
-            <button type="button" className="laila-wishes-admin__pill laila-wishes-admin__pill--ghost" onClick={() => void load()}>
-              Refresh list
-            </button>
-          </div>
-        </header>
-
-        <LailaSectionFlourish className="laila-wishes__flourish laila-wishes-admin__flourish" />
+            <header className="laila-wishes__hero laila-wishes-admin__head">
+              <p className="laila-kicker">Private</p>
+              <h1 className="laila-wishes__title">Wishlist admin</h1>
+              <p className="laila-wishes__couple">{names}</p>
+              <p className="laila-wishes__lead laila-wishes-admin__lead">
+                Add gifts for guests to grant. Upload one product photo per wish — guests will see it on the public wish
+                page.
+              </p>
+              <div className="laila-wishes-admin__toolbar">
+                <Link to={publicWishesTo} className="laila-wishes-admin__pill">
+                  View public page
+                </Link>
+                <button type="button" className="laila-wishes-admin__pill laila-wishes-admin__pill--ghost" onClick={() => void load()}>
+                  Refresh list
+                </button>
+              </div>
+            </header>
+            <LailaSectionFlourish className="laila-wishes__flourish laila-wishes-admin__flourish" />
+          </>
+        )}
 
         <form className="laila-wishes-admin__form laila-form" onSubmit={(e) => void onSubmit(e)} noValidate>
           <h2 className="laila-wishes-admin__form-title">{editId ? "Edit wish" : "Add wish"}</h2>
@@ -413,7 +425,20 @@ export function LailaWishesAdminPage() {
             If upload fails: Apps Script → run <strong>authorizeWishlistDrive_</strong> → Allow → Deploy new version.
           </p>
         </footer>
+    </>
+  );
+
+  if (embedded) {
+    return <div className="laila-wishes-admin-embed">{adminBody}</div>;
+  }
+
+  return (
+    <div className="laila-page laila-satellite laila-wishes-page laila-wishes-admin-page" lang="en">
+      <div className="laila-wishes-page__decor" aria-hidden>
+        <LailaButterflies density="sparse" accent="maroon" />
+        <LailaPetalRain className="laila-wishes-page__petals" />
       </div>
+      <div className="laila-satellite__inner laila-wishes-page__inner laila-wishes-admin-page__inner">{adminBody}</div>
     </div>
   );
 }

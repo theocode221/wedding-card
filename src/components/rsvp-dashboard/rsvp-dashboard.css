@@ -651,3 +651,87 @@
     margin: 18mm 16mm;
   }
 }
+
+/* Laila couple hub — RSVP + wishlist on one dashboard URL */
+.laila-couple-hub {
+  min-height: 100dvh;
+  background: var(--rd-bg, #faf9f7);
+  font-family: var(--rd-sans, "Source Sans 3", sans-serif);
+}
+
+.laila-couple-hub__screen {
+  width: min(100%, 68rem);
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 4vw, 2.5rem) 2.5rem;
+}
+
+.laila-couple-hub__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 1.1rem 0 1rem;
+  border-bottom: 1px solid var(--rd-line, #ebe7e1);
+}
+
+.laila-couple-hub__tab {
+  appearance: none;
+  border: 1px solid var(--rd-line-strong, #d9d3ca);
+  background: var(--rd-surface, #fff);
+  color: var(--rd-ink-soft, #57524c);
+  font: 600 0.82rem/1.2 var(--rd-sans, sans-serif);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.55rem 1.1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.laila-couple-hub__tab.is-active {
+  border-color: var(--rd-accent, #9a7b4f);
+  background: var(--rd-accent-tint, #f6f1e9);
+  color: var(--rd-accent-deep, #7a5f3a);
+}
+
+.laila-couple-hub .rsvp-dash {
+  min-height: 0;
+}
+
+.laila-couple-hub .rsvp-dash__screen {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+.laila-wishes-admin-embed {
+  padding: 1.25rem 0 2rem;
+  color: var(--laila-maroon-deep, #3a0c14);
+}
+
+.laila-wishes-admin-embed__head {
+  margin-bottom: 1rem;
+}
+
+.laila-wishes-admin-embed__title {
+  margin: 0 0 0.35rem;
+  font-family: var(--rd-serif, "Cormorant Garamond", serif);
+  font-size: clamp(1.45rem, 4.5vw, 1.75rem);
+  font-weight: 600;
+  color: var(--rd-ink, #1f1d1b);
+}
+
+.laila-wishes-admin-embed__lead {
+  margin: 0 0 0.85rem;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--rd-ink-soft, #57524c);
+  max-width: 36em;
+}
+
+.laila-wishes-admin-embed .laila-wishes-admin__form {
+  max-width: 32rem;
+}

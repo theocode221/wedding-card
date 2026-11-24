@@ -56,10 +56,10 @@ export const LAILA_LUXE_1213_COVER_FLORALS = [
 ] as const;
 export const LAILA_RSVP_PATH = `${LAILA_PATH}/rsvp`;
 export const LAILA_GALLERY_PATH = `${LAILA_PATH}/galeri`;
-/** Gift wishlist — UI prototype; not linked from the card until client approves. */
-export const LAILA_WISHES_PATH = `${LAILA_PATH}/wishes`;
-/** Couple-only; share this URL privately (no password). */
-export const LAILA_WISHES_ADMIN_PATH = `${LAILA_PATH}/wishes-admin`;
+/** Guest wishlist (grant a wish). */
+export const LAILA_WISHLIST_PATH = `${LAILA_PATH}/wishlist`;
+/** @deprecated Use LAILA_WISHLIST_PATH */
+export const LAILA_WISHES_PATH = LAILA_WISHLIST_PATH;
 /** Client-only dashboard — not linked from the public invitation. */
 export const LAILA_DASHBOARD_PATH = `${LAILA_PATH}/dashboard`;
 

@@ -30,7 +30,6 @@ import { LailaRsvpPage } from "./pages/lailaInvitation/LailaRsvpPage";
 import { LailaGalleryPage } from "./pages/lailaInvitation/LailaGalleryPage";
 import { LailaDashboardPage } from "./pages/lailaInvitation/LailaDashboardPage";
 import { LailaWishesPage } from "./pages/lailaInvitation/LailaWishesPage";
-import { LailaWishesAdminPage } from "./pages/lailaInvitation/LailaWishesAdminPage";
 import {
   LAILA_BINGKAI_PATH,
   LAILA_DASHBOARD_PATH,
@@ -40,8 +39,7 @@ import {
   LAILA_LUXE_PATH,
   LAILA_PATH,
   LAILA_RSVP_PATH,
-  LAILA_WISHES_PATH,
-  LAILA_WISHES_ADMIN_PATH,
+  LAILA_WISHLIST_PATH,
   LAILA_TRADISIONAL_PATH,
 } from "./pages/lailaInvitation/lailaInviteData";
 import { PortfolioPage } from "./pages/portfolio/PortfolioPage";
@@ -86,8 +84,12 @@ export default function App() {
             <Route path={LAILA_LUXE_1213_PATH} element={<LailaLuxe1213Page />} />
             <Route path={LAILA_RSVP_PATH} element={<LailaRsvpPage />} />
             <Route path={LAILA_GALLERY_PATH} element={<LailaGalleryPage />} />
-            <Route path={LAILA_WISHES_PATH} element={<LailaWishesPage />} />
-            <Route path={LAILA_WISHES_ADMIN_PATH} element={<LailaWishesAdminPage />} />
+            <Route path={LAILA_WISHLIST_PATH} element={<LailaWishesPage />} />
+            <Route path={`${LAILA_PATH}/wishes`} element={<Navigate to={LAILA_WISHLIST_PATH} replace />} />
+            <Route
+              path={`${LAILA_PATH}/wishes-admin`}
+              element={<Navigate to={{ pathname: LAILA_DASHBOARD_PATH, search: "?tab=wishlist" }} replace />}
+            />
             <Route path={LAILA_DASHBOARD_PATH} element={<LailaDashboardPage />} />
             <Route path={`${LAILA_PATH}/papan`} element={<Navigate to={LAILA_DASHBOARD_PATH} replace />} />
             <Route path={LAILA_LEGACY_PATH} element={<LailaLegacyRedirect />} />
