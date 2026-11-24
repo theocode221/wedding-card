@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useLayoutEffect, useMemo, useState, type FormEvent } from "react";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { withPortfolioSearch } from "../../lib/portfolioPreview";
 import { LailaButterflies } from "./LailaButterflies";
@@ -47,6 +47,7 @@ export function LailaWishesAdminPage() {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [saveState, setSaveState] = useState<"idle" | "saving" | "ok" | "error">("idle");
   const [saveError, setSaveError] = useState("");
+  const photoInputRef = useRef<HTMLInputElement>(null);
 
   const load = useCallback(async () => {
     setLoadState("loading");
@@ -301,15 +302,19 @@ export function LailaWishesAdminPage() {
           <fieldset className="laila-wishes-admin__photo-block">
             <legend className="laila-form__label">Product photo (required)</legend>
             <p className="laila-wishes-admin__photo-hint">Take or choose a photo from your gallery. JPG, PNG, or WebP, under 4&nbsp;MB.</p>
-            <label className="laila-form__field">
+            <div className="laila-wishes-admin__pick-wrap">
+              <span className="laila-btn laila-btn--maroon laila-btn--pill laila-wishes-admin__pick-face">
+                {imageFile ? "Change photo" : "Choose or take photo"}
+              </span>
               <input
-                className="laila-form__input laila-wishes-admin__file"
+                ref={photoInputRef}
+                className="laila-wishes-admin__file-overlay"
                 type="file"
-                accept="image/jpeg,image/png,image/webp,image/gif"
-                capture="environment"
+                accept="image/*"
                 onChange={(e) => setImageFile(e.target.files?.[0] ?? null)}
               />
-            </label>
+            </div>
+            {imageFile ? <p className="laila-wishes-admin__photo-name">{imageFile.name}</p> : null}
             {previewSrc ? (
               <div className="laila-wishes-admin__preview">
                 <img src={previewSrc} alt="" referrerPolicy="no-referrer" />
