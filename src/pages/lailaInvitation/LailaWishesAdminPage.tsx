@@ -17,6 +17,7 @@ import {
   upsertLailaWish,
   type LailaWishAdminRow,
 } from "./lailaWishesAdminApi";
+import { normalizeWishImageUrl } from "./lailaWishImageUrl";
 import "./laila-invitation.css";
 
 const CATEGORIES = ["Home", "Kitchen", "Living", "Bedroom", "Flexible", "General"];
@@ -112,6 +113,13 @@ export function LailaWishesAdminPage() {
       setSaveError("Add a photo: upload a file or paste an image URL.");
       return;
     }
+    if (form.imageUrl.trim() && !imageFile && !normalizeWishImageUrl(form.imageUrl)) {
+      setSaveState("error");
+      setSaveError(
+        "That link is not a direct image (e.g. Bing or a shop page). Upload a photo or right‑click the product image → copy image address.",
+      );
+      return;
+    }
 
     setSaveState("saving");
     setSaveError("");
@@ -173,7 +181,7 @@ export function LailaWishesAdminPage() {
 
   const previewSrc = useMemo(() => {
     if (imageFile) return URL.createObjectURL(imageFile);
-    return form.imageUrl.trim() || "";
+    return normalizeWishImageUrl(form.imageUrl);
   }, [imageFile, form.imageUrl]);
 
   useEffect(() => {
@@ -293,7 +301,10 @@ export function LailaWishesAdminPage() {
 
           <fieldset className="laila-wishes-admin__photo-block">
             <legend className="laila-form__label">Product photo</legend>
-            <p className="laila-wishes-admin__photo-hint">Upload a clear product image, or paste a direct image URL (not the shop page).</p>
+            <p className="laila-wishes-admin__photo-hint">
+              Upload a photo, or paste a <strong>direct image</strong> link (ends in .jpg/.png or “copy image address” — not Bing,
+              not the IKEA product page).
+            </p>
             <label className="laila-form__field">
               <span className="laila-wishes-admin__sublabel">Upload from phone or computer</span>
               <input
@@ -315,7 +326,7 @@ export function LailaWishesAdminPage() {
             </label>
             {previewSrc ? (
               <div className="laila-wishes-admin__preview">
-                <img src={previewSrc} alt="" />
+                <img src={previewSrc} alt="" referrerPolicy="no-referrer" />
               </div>
             ) : null}
           </fieldset>
@@ -364,7 +375,13 @@ export function LailaWishesAdminPage() {
               {rows.map((row) => (
                 <li key={row.id} className={`laila-wishes-admin__item${row.active === false ? " is-hidden" : ""}`}>
                   {row.imageUrl ? (
-                    <img className="laila-wishes-admin__thumb" src={row.imageUrl} alt="" loading="lazy" />
+                    <img
+                      className="laila-wishes-admin__thumb"
+                      src={row.imageUrl}
+                      alt=""
+                      loading="lazy"
+                      referrerPolicy="no-referrer"
+                    />
                   ) : (
                     <div className="laila-wishes-admin__thumb laila-wishes-admin__thumb--empty">No image</div>
                   )}

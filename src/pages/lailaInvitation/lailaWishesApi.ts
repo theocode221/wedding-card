@@ -1,4 +1,5 @@
 import { getLailaWishesScriptUrl } from "./lailaInviteData";
+import { mapWishImageField } from "./lailaWishImageUrl";
 import type { LailaWish } from "./lailaWishesDemoData";
 
 export type LailaLinkPreview = {
@@ -52,7 +53,7 @@ export function fetchLailaWishes(): Promise<LailaWish[]> {
   const base = getLailaWishesScriptUrl();
   if (!base) return Promise.reject(new Error("Wishlist script URL missing."));
   return jsonpGet<{ wishes: LailaWish[] }>(base, { action: "wishlist" }).then((p) =>
-    Array.isArray(p.wishes) ? p.wishes : [],
+    Array.isArray(p.wishes) ? p.wishes.map(mapWishImageField) : [],
   );
 }
 

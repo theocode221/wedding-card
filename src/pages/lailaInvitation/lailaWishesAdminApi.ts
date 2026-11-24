@@ -1,4 +1,5 @@
 import { getLailaWishesScriptUrl } from "./lailaInviteData";
+import { mapWishImageField } from "./lailaWishImageUrl";
 import type { LailaWish } from "./lailaWishesDemoData";
 
 export type LailaWishAdminRow = LailaWish & {
@@ -47,7 +48,7 @@ function jsonpGet<T>(params: Record<string, string>): Promise<T> {
 
 export function fetchLailaWishesAdmin(): Promise<LailaWishAdminRow[]> {
   return jsonpGet<{ wishes: LailaWishAdminRow[] }>({ action: "wishlistAdmin" }).then((p) =>
-    Array.isArray(p.wishes) ? p.wishes : [],
+    Array.isArray(p.wishes) ? p.wishes.map(mapWishImageField) : [],
   );
 }
 

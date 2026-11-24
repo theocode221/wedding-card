@@ -54,7 +54,13 @@ function WishCard({ wish, onGrant, subdued, previewLoading }: WishCardProps) {
           tabIndex={wish.link ? 0 : -1}
           aria-hidden={wish.link ? undefined : true}
         >
-          <img src={wish.imageUrl} alt="" loading="lazy" decoding="async" />
+          <img
+            src={wish.imageUrl}
+            alt=""
+            loading="lazy"
+            decoding="async"
+            referrerPolicy="no-referrer"
+          />
         </a>
       ) : null}
       <div className="laila-wishes__card-body">

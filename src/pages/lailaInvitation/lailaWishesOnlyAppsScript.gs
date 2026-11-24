@@ -288,7 +288,7 @@ function listWishesFromSheet_(activeOnly) {
 
     var link = String(rowCell_(row, cols.link) || "").trim();
     var title = String(rowCell_(row, cols.title) || "").trim();
-    var imageUrl = String(rowCell_(row, cols.image) || "").trim();
+    var imageUrl = normalizeWishImageUrl_(String(rowCell_(row, cols.image) || "").trim());
     var priceHint = String(rowCell_(row, cols.price) || "").trim();
     var description = String(rowCell_(row, cols.description) || "").trim();
 
@@ -328,6 +328,8 @@ function wishUpsert_(data) {
       String(data.imageMime || "image/jpeg"),
       String(data.imageName || "wish-photo.jpg"),
     );
+  } else if (imageUrl) {
+    imageUrl = normalizeWishImageUrl_(imageUrl);
   }
 
   var w = data.wish || data;
@@ -425,7 +427,33 @@ function saveWishImageFromBase64_(base64, mimeType, filename) {
   } catch (err) {
     /* sharing may require authorization */
   }
-  return "https://drive.google.com/uc?export=view&id=" + file.getId();
+  return driveImagePublicUrl_(file.getId());
+}
+
+function extractDriveFileId_(url) {
+  url = String(url || "").trim();
+  var m = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+  if (m) return m[1];
+  m = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+  if (m) return m[1];
+  m = url.match(/lh3\.googleusercontent\.com\/d\/([a-zA-Z0-9_-]+)/);
+  if (m) return m[1];
+  return "";
+}
+
+function driveImagePublicUrl_(fileId) {
+  return "https://lh3.googleusercontent.com/d/" + fileId + "=w1200";
+}
+
+/** Drive “uc?” and Bing short links do not work in &lt;img&gt; on the wedding site. */
+function normalizeWishImageUrl_(url) {
+  url = String(url || "").trim();
+  if (!url) return "";
+  var driveId = extractDriveFileId_(url);
+  if (driveId) return driveImagePublicUrl_(driveId);
+  if (/^https?:\/\/sl\.bing\.net\//i.test(url)) return "";
+  if (/bing\.com\/images\/search/i.test(url)) return "";
+  return url;
 }
 
 function wishColumnIndex_(headers) {
