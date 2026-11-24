@@ -226,11 +226,10 @@ export function LailaWishesPage() {
           <h1 className="laila-wishes__title">Grant a wish</h1>
           <p className="laila-wishes__couple">Walimatul Urus · {names}</p>
           <p className="laila-wishes__lead">
-            These are gentle ideas for our new home — not obligations. When you grant a wish, you are letting us know
-            you intend to give it, so we do not receive the same gift twice. You do not pay through this page. Your
-            presence and prayers mean the most to us.
+            These are gentle ideas for our new home — not obligations. When you grant a wish, you are letting us know you
+            intend to give it, so we do not receive the same gift twice. Your presence and prayers mean the most to us.
           </p>
-          <p className="laila-wishes__ui-note">Wish list is managed by the couple via their private admin link.</p>
+          <p className="laila-wishes__see-you">Hope to see you on our special day!</p>
         </header>
 
         <LailaSectionFlourish className="laila-wishes__flourish" />
