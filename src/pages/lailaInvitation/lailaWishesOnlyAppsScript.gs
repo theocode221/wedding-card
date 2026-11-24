@@ -10,6 +10,7 @@
  *
  * GET  ?action=wishlist&callback=fn
  * GET  ?action=wishlistAdmin&callback=fn
+ * GET  ?action=wishImage&id=DRIVE_FILE_ID  → image bytes (upload photos)
  * POST { action: "grant", wishId, name, note? }
  * POST { action: "wishUpsert", wish: {...}, imageBase64?, ... }
  * POST { action: "wishSetActive", id, active }
@@ -30,6 +31,9 @@ function doGet(e) {
     }
     if (action === "wishlistAdmin") {
       return jsonp_(e, { ok: true, wishes: listWishesAdmin_() });
+    }
+    if (action === "wishImage") {
+      return serveWishImage_(e);
     }
     return jsonp_(e, { ok: true, service: "laila-wishes" });
   } catch (err) {
@@ -360,7 +364,11 @@ function wishUpsert_(data) {
 
   if (!imageUrl) {
     var existing = String(sheet.getRange(rowNum, cols.image).getValue() || "").trim();
-    if (existing) imageUrl = existing;
+    if (existing) imageUrl = normalizeWishImageUrl_(existing);
+  }
+
+  if (!imageUrl) {
+    throw new Error("Upload a product photo.");
   }
 
   sheet.getRange(rowNum, cols.id).setValue(id);
@@ -427,13 +435,27 @@ function saveWishImageFromBase64_(base64, mimeType, filename) {
   } catch (err) {
     /* sharing may require authorization */
   }
-  return driveImagePublicUrl_(file.getId());
+  return wishImagePublicUrl_(file.getId());
+}
+
+function serveWishImage_(e) {
+  var id = String((e && e.parameter && e.parameter.id) || "").trim();
+  if (!id) throw new Error("Missing image id");
+  var file = DriveApp.getFileById(id);
+  var blob = file.getBlob();
+  return ContentService.createBinaryOutput(blob.getBytes()).setMimeType(blob.getContentType() || "image/jpeg");
 }
 
 function extractDriveFileId_(url) {
   url = String(url || "").trim();
-  var m = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
-  if (m) return m[1];
+  if (!url) return "";
+  if (/^drive:/i.test(url)) return url.replace(/^drive:/i, "");
+
+  var wm = url.match(/[?&]action=wishImage&id=([a-zA-Z0-9_-]+)/i);
+  if (wm) return wm[1];
+
+  var m = url.match(/[?&]id=([a-zA-Z0-9_-]{10,})/);
+  if (m && /drive\.google/i.test(url)) return m[1];
   m = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
   if (m) return m[1];
   m = url.match(/lh3\.googleusercontent\.com\/d\/([a-zA-Z0-9_-]+)/);
@@ -441,19 +463,27 @@ function extractDriveFileId_(url) {
   return "";
 }
 
-function driveImagePublicUrl_(fileId) {
-  return "https://lh3.googleusercontent.com/d/" + fileId + "=w1200";
+function wishImagePublicUrl_(fileId) {
+  fileId = String(fileId || "").trim();
+  if (!fileId) return "";
+  var base = "";
+  try {
+    base = ScriptApp.getService().getUrl();
+  } catch (err) {
+    base = "";
+  }
+  if (!base) return "drive:" + fileId;
+  var sep = base.indexOf("?") >= 0 ? "&" : "?";
+  return base + sep + "action=wishImage&id=" + encodeURIComponent(fileId);
 }
 
-/** Drive “uc?” and Bing short links do not work in &lt;img&gt; on the wedding site. */
+/** Upload-only: only Drive-backed images are exposed (via wishImage proxy). */
 function normalizeWishImageUrl_(url) {
   url = String(url || "").trim();
   if (!url) return "";
   var driveId = extractDriveFileId_(url);
-  if (driveId) return driveImagePublicUrl_(driveId);
-  if (/^https?:\/\/sl\.bing\.net\//i.test(url)) return "";
-  if (/bing\.com\/images\/search/i.test(url)) return "";
-  return url;
+  if (!driveId) return "";
+  return wishImagePublicUrl_(driveId);
 }
 
 function wishColumnIndex_(headers) {

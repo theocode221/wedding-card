@@ -108,16 +108,14 @@ export function LailaWishesAdminPage() {
       setSaveError("Title is required.");
       return;
     }
-    if (!form.imageUrl.trim() && !imageFile) {
+    if (!imageFile && !editId) {
       setSaveState("error");
-      setSaveError("Add a photo: upload a file or paste an image URL.");
+      setSaveError("Upload a product photo.");
       return;
     }
-    if (form.imageUrl.trim() && !imageFile && !normalizeWishImageUrl(form.imageUrl)) {
+    if (!imageFile && editId && !form.imageUrl.trim()) {
       setSaveState("error");
-      setSaveError(
-        "That link is not a direct image (e.g. Bing or a shop page). Upload a photo or right‑click the product image → copy image address.",
-      );
+      setSaveError("Upload a photo for this wish.");
       return;
     }
 
@@ -142,7 +140,7 @@ export function LailaWishesAdminPage() {
         category: form.category,
         priceHint: form.priceHint.trim(),
         link: form.link.trim(),
-        imageUrl: form.imageUrl.trim(),
+        imageUrl: imageFile ? "" : form.imageUrl.trim(),
         qty: form.qty,
         imageBase64,
         imageMime,
@@ -206,8 +204,8 @@ export function LailaWishesAdminPage() {
           <h1 className="laila-wishes__title">Wishlist admin</h1>
           <p className="laila-wishes__couple">{names}</p>
           <p className="laila-wishes__lead laila-wishes-admin__lead">
-            Add gifts for guests to grant. Upload a photo or paste an image URL — guests will see these on the public
-            wish page.
+            Add gifts for guests to grant. Upload one product photo per wish — guests will see it on the public wish
+            page.
           </p>
           <div className="laila-wishes-admin__toolbar">
             <Link to={publicWishesTo} className="laila-wishes-admin__pill">
@@ -300,34 +298,24 @@ export function LailaWishesAdminPage() {
           </label>
 
           <fieldset className="laila-wishes-admin__photo-block">
-            <legend className="laila-form__label">Product photo</legend>
-            <p className="laila-wishes-admin__photo-hint">
-              Upload a photo, or paste a <strong>direct image</strong> link (ends in .jpg/.png or “copy image address” — not Bing,
-              not the IKEA product page).
-            </p>
+            <legend className="laila-form__label">Product photo (required)</legend>
+            <p className="laila-wishes-admin__photo-hint">Take or choose a photo from your gallery. JPG, PNG, or WebP, under 4&nbsp;MB.</p>
             <label className="laila-form__field">
-              <span className="laila-wishes-admin__sublabel">Upload from phone or computer</span>
               <input
                 className="laila-form__input laila-wishes-admin__file"
                 type="file"
                 accept="image/jpeg,image/png,image/webp,image/gif"
+                capture="environment"
                 onChange={(e) => setImageFile(e.target.files?.[0] ?? null)}
-              />
-            </label>
-            <label className="laila-form__field">
-              <span className="laila-wishes-admin__sublabel">Or image URL</span>
-              <input
-                className="laila-form__input"
-                type="url"
-                value={form.imageUrl}
-                onChange={(e) => setForm((f) => ({ ...f, imageUrl: e.target.value }))}
-                placeholder="https://…"
               />
             </label>
             {previewSrc ? (
               <div className="laila-wishes-admin__preview">
                 <img src={previewSrc} alt="" referrerPolicy="no-referrer" />
               </div>
+            ) : null}
+            {editId && form.imageUrl && !imageFile ? (
+              <p className="laila-wishes-admin__photo-hint">Current photo is kept until you upload a new one.</p>
             ) : null}
           </fieldset>
 
