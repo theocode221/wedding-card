@@ -435,7 +435,7 @@ function saveWishImageFromBase64_(base64, mimeType, filename) {
   } catch (err) {
     /* sharing may require authorization */
   }
-  return wishImagePublicUrl_(file.getId());
+  return "drive:" + file.getId();
 }
 
 function serveWishImage_(e) {
@@ -477,13 +477,13 @@ function wishImagePublicUrl_(fileId) {
   return base + sep + "action=wishImage&id=" + encodeURIComponent(fileId);
 }
 
-/** Upload-only: only Drive-backed images are exposed (via wishImage proxy). */
+/** Upload-only: store drive:FILE_ID; site builds lh3/proxy URLs when listing. */
 function normalizeWishImageUrl_(url) {
   url = String(url || "").trim();
   if (!url) return "";
   var driveId = extractDriveFileId_(url);
   if (!driveId) return "";
-  return wishImagePublicUrl_(driveId);
+  return "drive:" + driveId;
 }
 
 function wishColumnIndex_(headers) {

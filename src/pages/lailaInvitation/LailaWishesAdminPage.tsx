@@ -17,7 +17,8 @@ import {
   upsertLailaWish,
   type LailaWishAdminRow,
 } from "./lailaWishesAdminApi";
-import { normalizeWishImageUrl } from "./lailaWishImageUrl";
+import { LailaWishPhoto } from "./LailaWishPhoto";
+import { normalizeWishImageUrl, wishImageFallbackUrls } from "./lailaWishImageUrl";
 import "./laila-invitation.css";
 
 const CATEGORIES = ["Home", "Kitchen", "Living", "Bedroom", "Flexible", "General"];
@@ -362,14 +363,8 @@ export function LailaWishesAdminPage() {
             <ul className="laila-wishes-admin__items">
               {rows.map((row) => (
                 <li key={row.id} className={`laila-wishes-admin__item${row.active === false ? " is-hidden" : ""}`}>
-                  {row.imageUrl ? (
-                    <img
-                      className="laila-wishes-admin__thumb"
-                      src={row.imageUrl}
-                      alt=""
-                      loading="lazy"
-                      referrerPolicy="no-referrer"
-                    />
+                  {row.imageUrl && wishImageFallbackUrls(row.imageUrl).length > 0 ? (
+                    <LailaWishPhoto className="laila-wishes-admin__thumb" imageUrl={row.imageUrl} loading="lazy" />
                   ) : (
                     <div className="laila-wishes-admin__thumb laila-wishes-admin__thumb--empty">No image</div>
                   )}

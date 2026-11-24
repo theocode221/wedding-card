@@ -14,6 +14,8 @@ import {
   lailaDetailsDestination,
   lailaInviteForPreview,
 } from "./lailaInviteData";
+import { LailaWishPhoto } from "./LailaWishPhoto";
+import { wishImageFallbackUrls } from "./lailaWishImageUrl";
 import { LAILA_WISHES_DEMO, type LailaWish } from "./lailaWishesDemoData";
 import "./laila-invitation.css";
 
@@ -45,7 +47,7 @@ function WishCard({ wish, onGrant, subdued, previewLoading }: WishCardProps) {
       {previewLoading && wish.link && !wish.imageUrl ? (
         <div className="laila-wishes__thumb laila-wishes__thumb--skeleton" aria-hidden />
       ) : null}
-      {wish.imageUrl ? (
+      {wish.imageUrl && wishImageFallbackUrls(wish.imageUrl).length > 0 ? (
         <a
           className="laila-wishes__thumb"
           href={wish.link || wish.imageUrl}
@@ -54,13 +56,7 @@ function WishCard({ wish, onGrant, subdued, previewLoading }: WishCardProps) {
           tabIndex={wish.link ? 0 : -1}
           aria-hidden={wish.link ? undefined : true}
         >
-          <img
-            src={wish.imageUrl}
-            alt=""
-            loading="lazy"
-            decoding="async"
-            referrerPolicy="no-referrer"
-          />
+          <LailaWishPhoto imageUrl={wish.imageUrl} loading="lazy" />
         </a>
       ) : null}
       <div className="laila-wishes__card-body">
